@@ -283,21 +283,21 @@ echo '	<td colspan="2" width="100%" valign="top" class="windowbg8"><span class="
 					<form action="', $scripturl, '?action=search2" method="post" accept-charset="', $context['character_set'], '" class="middletext" style="margin: 0; margin-top: 7px;">
 						<div>
 							<b>', $txt['search'], ': </b><input type="text" name="search" value="" style="width: 190px;" />&nbsp;
-							<input type="submit" name="submit" value="', $txt['search'], '" style="width: 8ex;" />&nbsp;
-							<a href="', $scripturl, '?action=search;advanced">', $txt['search_advanced'], '</a>
-							<input type="hidden" name="advanced" value="0" />';
+							<input type="submit" name="submit" value="', $txt['search'], '" style="width: 8ex;" />&nbsp;';
 
 	// Search within current topic?
 	if (!empty($context['current_topic']))
 		echo '
-							<input type="hidden" name="topic" value="', $context['current_topic'], '" />';
+							<input type="checkbox" name="topic" value="', $context['current_topic'], '" />in current topic';
 
 		// If we're on a certain board, limit it to this board ;).
 	elseif (!empty($context['current_board']))
 		echo '
-							<input type="hidden" name="brd[', $context['current_board'], ']" value="', $context['current_board'], '" />';
+							<input type="checkbox" name="brd[', $context['current_board'], ']" value="', $context['current_board'], '" />in current board';
 
 	echo '
+					 <a href="', $scripturl, '?action=search;advanced">', $txt['search_advanced'], '</a>
+							<input type="hidden" name="advanced" value="0" />
 						</div>
 					</form>
 

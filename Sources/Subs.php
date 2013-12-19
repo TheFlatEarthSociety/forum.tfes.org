@@ -3906,13 +3906,25 @@ function setupMenuContext()
 	if (($menu_buttons = cache_get_data('menu_buttons-' . implode('_', $user_info['groups']) . '-' . $user_info['language'], $cacheTime)) === null || time() - $cacheTime <= $modSettings['settings_updated'])
 	{
 		$buttons = array(
+			'realhome' => array (
+				'title' => "Home",
+				'href'  => "http://www.tfes.org/",
+				'show'  => true,
+				'sub_buttons' => array (),
+				'is_last' => $context['right_to_left'],
+			),
 			'home' => array(
 				'title' => $txt['home'],
 				'href' => $scripturl,
 				'show' => true,
 				'sub_buttons' => array(
 				),
-				'is_last' => $context['right_to_left'],
+			),
+			'wiki' => array(
+				'title' => "Wiki",
+				'href'  => "http://wiki.tfes.org/",
+				'show'  => true,
+				'sub_buttons' => array (),
 			),
 			'help' => array(
 				'title' => $txt['help'],

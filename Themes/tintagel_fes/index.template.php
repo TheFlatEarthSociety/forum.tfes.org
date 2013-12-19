@@ -83,6 +83,11 @@ function template_html_above()
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"', $context['right_to_left'] ? ' dir="rtl"' : '', '>
 <head>';
+	//favicon pls
+	//hi i am pplanet i know how comments
+	echo 
+	'
+	<link rel="shortcut icon" href="/favicon.ico" />';
 
 	// The ?fin20 part of this link is just here to make sure browsers don't cache it wrongly.
 	echo '

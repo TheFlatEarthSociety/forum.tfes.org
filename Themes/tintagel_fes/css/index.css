@@ -3535,13 +3535,13 @@ ul.basic_helplist
 
 #header {
 	 position: relative;
-	 height: 177px;
+	 height: 187px;
 	 overflow: hidden;
 	 background: #00426F url(../images/img/hdr-bg.jpg) 0 0 repeat-x;
 }
 
 #head-r {
-	 height: 177px;
+	 height: 187px;
 	 background: url(../images/img/hdr-r.png) 100% 0 no-repeat;
 }
 
@@ -3551,13 +3551,13 @@ ul.basic_helplist
 /* BANNER / LOGOS */
 #logo a {
 	 position: absolute;
-	 top: 15px;
-	 left: 15px;
+	 top: 10px;
+	 left: 10px;
 	 display: block;
 	 width: 328px!important;
-	 height: 99px!important;
+	 height: 125px!important;
 	 cursor: pointer;
-	 background: url(../images/img/logo.png) no-repeat!important;
+	 background: url(../images/img/logo_new.png) no-repeat!important;
 }
 /* Avatar Fix */
 #my-avatar {
@@ -3567,7 +3567,7 @@ ul.basic_helplist
 }
 #userarea {
 	 float: right;
-	 padding: 25px 35px 0 0;
+	 padding: 10px 35px 0 0;
 	 text-align: right;
 	 color: #FFF;
 	 width: 38em;
@@ -3581,17 +3581,18 @@ ul.basic_helplist
 }
 #searcharea {
 	 float: right;
-	 padding: 2.8em 35px 0 0;
+	 padding: 4px 35px 0 0;
 	 margin: 0;
 	 clear: both;
+	 color: #fff;
 }
 /* NEWS */
 #news {
 	clear: both;
 	position: absolute;
-	top: 12em;
-	left: 2em;
-	width: 50%;
+	top: 135px;
+	left: 20px;
+	width: 70%;
 	text-align: left;
 	color: #FFFFFF;
 	font-size: 8pt;

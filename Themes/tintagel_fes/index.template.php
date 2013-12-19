@@ -256,7 +256,7 @@ function template_body_above()
 				<div id="bodyarea">';
 
 					// Show the navigation tree.
-					theme_linktree();
+					theme_linktree(false, true);
 }
 
 function template_body_below()
@@ -305,7 +305,7 @@ function template_html_below()
 }
 
 // Show a linktree. This is that thing that shows "My Community | General Category | General Discussion"..
-function theme_linktree($force_show = false)
+function theme_linktree($force_show = false, $header = false)
 {
 	global $context, $settings, $options, $shown_linktree;
 
@@ -325,7 +325,7 @@ function theme_linktree($force_show = false)
 	foreach ($context['linktree'] as $link_num => $tree)
 	{
 		echo '
-			<li', ($link_num == count($context['linktree']) - 1) ? ' class="last"' : '', '>';
+			<li', ($link_num == count($context['linktree']) - 1) ? ' class="last">' . ($header ? '<h1>' : '' ) : '>' . ($header ? '<h2>' : '');
 
 		// Don't show a separator for the last one (RTL mode)
 		if ($link_num != count($context['linktree']) - 1 && $context['right_to_left'])
@@ -348,7 +348,7 @@ function theme_linktree($force_show = false)
 			echo '&nbsp;&#187;';
 
 		echo '
-			</li>';
+			' . ($header ? (($link_num == count($context['linktree']) - 1) ? '</h1>' : '</h2>') : '') . '</li>';
 	}
 	echo '
 		</ul>

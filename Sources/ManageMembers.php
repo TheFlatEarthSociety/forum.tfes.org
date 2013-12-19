@@ -449,7 +449,7 @@ function ViewMemberlist()
 		}
 
 		// Construct the where part of the query.
-		$where = empty($query_parts) ? '1' : implode('
+		$where = empty($query_parts) ? '1=1' : implode('
 			AND ', $query_parts);
 
 		$search_params = base64_encode(serialize($_POST));

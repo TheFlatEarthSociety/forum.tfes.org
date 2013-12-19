@@ -1745,6 +1745,8 @@ function list_getMessageIcons($start, $items_per_page, $sort)
 // This function sorts the smiley table by code length, it is needed as MySQL withdrew support for functions in order by.
 function sortSmileyTable()
 {
+	return 0;
+
 	global $smcFunc;
 
 	db_extend('packages');

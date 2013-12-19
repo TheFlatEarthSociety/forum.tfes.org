@@ -78,6 +78,13 @@ function ViewMembers()
 	// Default to sub action 'index' or 'settings' depending on permissions.
 	$_REQUEST['sa'] = isset($_REQUEST['sa']) && isset($subActions[$_REQUEST['sa']]) ? $_REQUEST['sa'] : 'all';
 
+	// Load Stop Spammer Functions
+	if ('all' == $_REQUEST['sa'] || 'browse' == $_REQUEST['sa'] || 'query' == $_REQUEST['sa'] || 'approve' == $_REQUEST['sa'])
+	{
+		global $sourcedir;
+		require_once($sourcedir . '/StopSpammer.php');
+	}
+
 	// We know the sub action, now we know what you're allowed to do.
 	isAllowedTo($subActions[$_REQUEST['sa']][1]);
 
@@ -176,6 +183,27 @@ function ViewMemberlist()
 	// Set the current sub action.
 	$context['sub_action'] = $_REQUEST['sa'];
 
+	// Are we performing a check or report?
+	if ((isset($_POST['spammers_checks']) || isset($_POST['spammers_report'])) && !empty($_POST['delete']))
+	{
+		checkSession();
+
+		// Clean the input.
+		foreach ($_POST['delete'] as $key => $value)
+		{
+			$_POST['delete'][$key] = (int) $value;
+			// Don't report yourself, idiot :P
+			if ($value == $user_info['id'] || '1' == $value)
+				unset($_POST['delete'][$key]);
+		}
+
+		$modSettings['registration_method'] = 2;
+
+		// Check and/or Report This Members
+		if (!empty($_POST['delete']))
+			checkreportMembers($_POST['delete'], isset($_POST['spammers_report']));
+	}
+
 	// Are we performing a delete?
 	if (isset($_POST['delete_members']) && !empty($_POST['delete']) && allowedTo('profile_remove_any'))
 	{
@@ -198,7 +226,7 @@ function ViewMemberlist()
 		}
 	}
 
-	if ($context['sub_action'] == 'query' && !empty($_REQUEST['params']) && empty($_POST))
+	if ($context['sub_action'] == 'query' && !empty($_REQUEST['params']) && (empty($_POST) || ((isset($_POST['spammers_checks']) || isset($_POST['spammers_report'])) && !empty($_POST['delete']))))
 		$_POST += @unserialize(base64_decode($_REQUEST['params']));
 
 	// Check input after a member search has been submitted.
@@ -476,13 +504,11 @@ function ViewMemberlist()
 					'value' => $txt['username'],
 				),
 				'data' => array(
-					'sprintf' => array(
-						'format' => '<a href="' . strtr($scripturl, array('%' => '%%')) . '?action=profile;u=%1$d">%2$s</a>',
-						'params' => array(
-							'id_member' => false,
-							'member_name' => false,
-						),
-					),
+					'function' => create_function('$rowData', '
+						global $scripturl;
+						$url = strtr($scripturl, array(\'%\' => \'%%\')) . \'?action=profile;u=\' . $rowData[\'id_member\'];
+						return sprintfspamer($rowData, $url, \'member_name\', 2);
+					'),
 				),
 				'sort' => array(
 					'default' => 'member_name',
@@ -494,13 +520,11 @@ function ViewMemberlist()
 					'value' => $txt['display_name'],
 				),
 				'data' => array(
-					'sprintf' => array(
-						'format' => '<a href="' . strtr($scripturl, array('%' => '%%')) . '?action=profile;u=%1$d">%2$s</a>',
-						'params' => array(
-							'id_member' => false,
-							'real_name' => false,
-						),
-					),
+					'function' => create_function('$rowData', '
+						global $scripturl;
+						$url = strtr($scripturl, array(\'%\' => \'%%\')) . \'?action=profile;u=\' . $rowData[\'id_member\'];
+						return sprintfspamer($rowData, $url, \'real_name\', 0);
+					'),
 				),
 				'sort' => array(
 					'default' => 'real_name',
@@ -512,13 +536,11 @@ function ViewMemberlist()
 					'value' => $txt['email_address'],
 				),
 				'data' => array(
-					'sprintf' => array(
-						'format' => '<a href="mailto:%1$s">%1$s</a>',
-						'params' => array(
-							'email_address' => true,
-						),
-					),
-					'class' => 'windowbg',
+					'function' => create_function('$rowData', '
+						global $scripturl;
+						$url = \'mailto:\' . $rowData[\'email_address\'];
+						return sprintfspamer($rowData, $url, \'email_address\', 3);
+					'),
 				),
 				'sort' => array(
 					'default' => 'email_address',
@@ -530,12 +552,11 @@ function ViewMemberlist()
 					'value' => $txt['ip_address'],
 				),
 				'data' => array(
-					'sprintf' => array(
-						'format' => '<a href="' . strtr($scripturl, array('%' => '%%')) . '?action=trackip;searchip=%1$s">%1$s</a>',
-						'params' => array(
-							'member_ip' => false,
-						),
-					),
+					'function' => create_function('$rowData', '
+						global $scripturl;
+						$url = strtr($scripturl, array(\'%\' => \'%%\')) . \'?action=trackip;searchip=\' . $rowData[\'member_ip\'];
+						return sprintfspamer($rowData, $url, \'member_ip\', 1);
+					'),
 				),
 				'sort' => array(
 					'default' => 'INET_ATON(member_ip)',
@@ -615,6 +636,34 @@ function ViewMemberlist()
 			'include_sort' => true,
 		),
 		'additional_rows' => array(
+			!$modSettings['stopspammer_enable'] ? '' :
+			array(
+				'position' => 'below_table_data',
+				'value' => '
+					<div style="text-align: center">' . $modSettings['stopspammer_count'] . ' ' . $txt['stopspammer_count'] . '</div>',
+				'class' => 'titlebg',
+			),
+			!$modSettings['stopspammer_enable'] ? '' :
+			array(
+				'position' => 'below_table_data',
+				'value' => '
+					<div style="margin: auto" class="leyend_stopspammer">
+						<img src="' . $GLOBALS['settings']['default_images_url'] . '/icons/moreinfo.gif" alt="Icon MoreInfo" style="vertical-align: middle" /> ' . $txt['stopspammer_leyd01'] . '<br />
+						<img src="' . $GLOBALS['settings']['default_images_url'] . '/icons/suspect.gif" alt="Icon Suspect" style="vertical-align: middle" /> ' . $txt['stopspammer_leyd02'] . '<br />
+						<img src="' . $GLOBALS['settings']['default_images_url'] . '/icons/spammer.gif" alt="Icon Spammer" style="vertical-align: middle" /> ' . $txt['stopspammer_leyd03'] . '<br />
+					</div>',
+				'class' => 'titlebg',
+			),
+			!$modSettings['stopspammer_enable'] ? '' :
+			array(
+				'position' => 'below_table_data',
+				'value' => '
+					<label>' . $txt['in_stop_forum_spam'] . '</label>
+					<input type="submit" name="spammers_checks" value="' . $txt['spammers_checks'] . '" onclick="return confirm(\'' . $txt['confirm_spammers_checks'] . '\');" />
+					<input type="submit" name="spammers_report" value="' . $txt['spammers_report'] . '" onclick="return confirm(\'' . $txt['confirm_spammers_report'] . '\');" />',
+				'class' => 'titlebg','titlebg',
+				'style' => 'text-align: right;',
+			),
 			array(
 				'position' => 'below_table_data',
 				'value' => '<input type="submit" name="delete_members" value="' . $txt['admin_delete_members'] . '" onclick="return confirm(\'' . $txt['confirm_delete_members'] . '\');" class="button_submit" />',
@@ -840,13 +889,11 @@ function MembersAwaitingActivation()
 					'value' => $txt['username'],
 				),
 				'data' => array(
-					'sprintf' => array(
-						'format' => '<a href="' . strtr($scripturl, array('%' => '%%')) . '?action=profile;u=%1$d">%2$s</a>',
-						'params' => array(
-							'id_member' => false,
-							'member_name' => false,
-						),
-					),
+					'function' => create_function('$rowData', '
+						global $scripturl;
+						$url = strtr($scripturl, array(\'%\' => \'%%\')) . \'?action=profile;u=\' . $rowData[\'id_member\'];
+						return sprintfspamer($rowData, $url, \'member_name\', 2);
+					'),
 				),
 				'sort' => array(
 					'default' => 'member_name',
@@ -858,13 +905,11 @@ function MembersAwaitingActivation()
 					'value' => $txt['email_address'],
 				),
 				'data' => array(
-					'sprintf' => array(
-						'format' => '<a href="mailto:%1$s">%1$s</a>',
-						'params' => array(
-							'email_address' => true,
-						),
-					),
-					'class' => 'windowbg',
+					'function' => create_function('$rowData', '
+						global $scripturl;
+						$url = \'mailto:\' . $rowData[\'email_address\'];
+						return sprintfspamer($rowData, $url, \'email_address\', 3);
+					'),
 				),
 				'sort' => array(
 					'default' => 'email_address',
@@ -876,12 +921,11 @@ function MembersAwaitingActivation()
 					'value' => $txt['ip_address'],
 				),
 				'data' => array(
-					'sprintf' => array(
-						'format' => '<a href="' . strtr($scripturl, array('%' => '%%')) . '?action=trackip;searchip=%1$s">%1$s</a>',
-						'params' => array(
-							'member_ip' => false,
-						),
-					),
+					'function' => create_function('$rowData', '
+						global $scripturl;
+						$url = strtr($scripturl, array(\'%\' => \'%%\')) . \'?action=trackip;searchip=\' . $rowData[\'member_ip\'];
+						return sprintfspamer($rowData, $url, \'member_ip\', 1);
+					'),
 				),
 				'sort' => array(
 					'default' => 'INET_ATON(member_ip)',
@@ -965,6 +1009,34 @@ function MembersAwaitingActivation()
 			),
 		),
 		'additional_rows' => array(
+			!$modSettings['stopspammer_enable'] ? '' :
+			array(
+				'position' => 'below_table_data',
+				'value' => '
+					<div style="text-align: center">' . $modSettings['stopspammer_count'] . ' ' . $txt['stopspammer_count'] . '</div>',
+				'class' => 'titlebg',
+			),
+			!$modSettings['stopspammer_enable'] ? '' :
+			array(
+				'position' => 'below_table_data',
+				'value' => '
+					<div style="margin: auto" class="leyend_stopspammer">
+						<img src="' . $GLOBALS['settings']['default_images_url'] . '/icons/moreinfo.gif" alt="Icon MoreInfo" style="vertical-align: middle" /> ' . $txt['stopspammer_leyd01'] . '<br />
+						<img src="' . $GLOBALS['settings']['default_images_url'] . '/icons/suspect.gif" alt="Icon Suspect" style="vertical-align: middle" /> ' . $txt['stopspammer_leyd02'] . '<br />
+						<img src="' . $GLOBALS['settings']['default_images_url'] . '/icons/spammer.gif" alt="Icon Spammer" style="vertical-align: middle" /> ' . $txt['stopspammer_leyd03'] . '<br />
+					</div>',
+				'class' => 'titlebg',
+			),
+			!$modSettings['stopspammer_enable'] ? '' :
+			array(
+				'position' => 'below_table_data',
+				'value' => '
+					<label>' . $txt['in_stop_forum_spam'] . '</label>
+					<input type="submit" name="spammers_checks" value="' . $txt['spammers_checks'] . '" onclick="return confirm(\'' . $txt['confirm_spammers_checks'] . '\');" />
+					<input type="submit" name="spammers_report" value="' . $txt['spammers_report'] . '" onclick="return confirm(\'' . $txt['confirm_spammers_report'] . '\');" />',
+				'class' => 'titlebg','titlebg',
+				'style' => 'text-align: right;',
+			),
 			array(
 				'position' => 'below_table_data',
 				'value' => '
@@ -1033,6 +1105,27 @@ function AdminApprove()
 	checkSession();
 
 	require_once($sourcedir . '/Subs-Post.php');
+
+	// Are we performing a check or report?
+	if ((isset($_POST['spammers_checks']) || isset($_POST['spammers_report'])) && !empty($_POST['todoAction']))
+	{
+		checkSession();
+
+		// Clean the input.
+		foreach ($_POST['todoAction'] as $key => $value)
+		{
+			$_POST['delete'][$key] = (int) $value;
+			// Don't report yourself, idiot :P
+			if ($value == $user_info['id'] || '1' == $value)
+				unset($_POST['todoAction'][$key]);
+		}
+
+		$modSettings['registration_method'] = 2;
+
+		// Check and/or Report This Members
+		if (!empty($_POST['todoAction']))
+			checkreportMembers($_POST['todoAction'], isset($_POST['spammers_report']));
+	}
 
 	// We also need to the login languages here - for emails.
 	loadLanguage('Login');

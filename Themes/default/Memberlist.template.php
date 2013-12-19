@@ -55,7 +55,7 @@ function template_main()
 		elseif ($column['selected'])
 			echo '
 					<th scope="col" class="', isset($column['class']) ? ' ' . $column['class'] : '', '" style="width: auto;"' . (isset($column['colspan']) ? ' colspan="' . $column['colspan'] . '"' : '') . ' nowrap="nowrap">
-						<a href="' . $column['href'] . '" rel="nofollow">' . $column['label'] . ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" /></a></th>';
+						<a href="' . $column['href'] . '" rel="nofollow">' . $column['label'] . ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="Sort '.$context['sort_direction'].'" /></a></th>';
 		// This is just some column... show the link and be done with it.
 		else
 			echo '
@@ -175,7 +175,7 @@ function template_search()
 		<div id="memberlist">
 			<div class="cat_bar">
 				<h3 class="catbg mlist">
-					<span class="ie6_header floatleft">', !empty($settings['use_buttons']) ? '<img src="' . $settings['images_url'] . '/buttons/search.gif" alt="" class="icon" />' : '', $txt['mlist_search'], '</span>
+					<span class="ie6_header floatleft">', !empty($settings['use_buttons']) ? '<img src="' . $settings['images_url'] . '/buttons/search.gif" alt="'.$txt['mlist_search'].'" class="icon" />' : '', $txt['mlist_search'], '</span>
 				</h3>
 			</div>
 			<div class="pagesection">

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<theme-info xmlns="http://www.simplemachines.org/xml/theme-info" xmlns:smf="http://www.simplemachines.org/">
+        <!-- Theme name, used purely for aesthetics. -->
+        <name>Christmas Season</name>
+				<!-- For the id, always use something unique - put your name, a colon, and then the package name. -->
+	     <id>TreetopClimber:Christmas Season</id>
+	      <!-- The SMF version your theme is designed for. -->
+	      <version>2.0 RC2</version>
+        <!-- Author: TreetopClimber -->
+        <author name="TreetopClimber">ttclimbr@globalbt-dev.info</author>
+        <!-- Website... where to get updates and more information. -->
+        <website>http://globalbt-dev.info/forum/</website>
+        <!-- Template layers to use, defaults to "main". -->
+        <layers>html,body</layers>
+        <!-- Templates to load on startup.  Default is "index". -->
+        <templates>index</templates>
+        <!-- Base this theme off another?  Default is blank, or no.  It could be "default". -->
+        <based-on></based-on>
+</theme-info>

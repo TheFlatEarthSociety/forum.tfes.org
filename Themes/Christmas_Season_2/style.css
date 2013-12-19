@@ -1,0 +1,839 @@
+/* Normal, standard links. */
+a:link, a:visited {
+	color: #890E0A;
+	text-decoration: none;
+}
+a:hover {
+	color: #A90A00;
+	text-decoration: underline;
+}
+
+/* Navigation links - for the link tree. */
+.nav, .nav:link, .nav:visited {
+	color: #A67C4B; 
+	text-decoration: none;
+}
+a.nav:hover {
+	color: #890E0A;
+	text-decoration: underline;
+}
+
+/* Tables should show empty cells too. */
+table {
+	empty-cells: show;
+}
+
+/* By default (td, body..) use verdana in black. */
+body, td, th , tr
+{
+	color: #000000;
+	font-size: 8pt;
+	font-family: verdana, sans-serif;
+}
+
+/* By default (td, body..) use Verdana in black. */
+body {
+	color: #E5E5E8;
+	background-color: #0B0C1E;/*#99CCBB;*/
+	font-size: small;
+	font-family: verdana, arial, helvetica, sans-serif;
+  margin: 5px;
+	padding: 10px 10px 0px 10px;
+}
+
+* html body {
+  background-repeat: repeat-x;
+}
+
+#headerarea {
+  background: url("images/img262.gif");
+	background-color: #332244;/*#0B0C1E;*/
+}
+
+.headtop{
+  background: url("../images/htbg.png") repeat-x; height: 20px;
+}
+
+#boardarea {
+	padding: 1ex 10px 0ex 10px;
+	background: #D8D8D7;
+}
+
+.bleft{
+  background: url("../images/lbc.png") no-repeat; width: 20px; height: 20px; padding: 1px;
+
+}
+.bcenter{
+  background: url("../images/bc.png") repeat-x; height: 20px;
+
+}
+
+.bright{
+  background: url("../images/rbc.png") no-repeat; width: 20px; height: 20px; padding: 1px;
+
+}
+.lights {
+  background-image: url("images/lights.gif");
+  background-repeat: repeat-x;
+  position: relative;
+}
+
+.ice { 
+background-image: url("images/ice.gif");
+background-repeat: repeat-x;
+}
+
+img
+{
+  border: 0;
+}
+
+h1 {
+
+  font-size: 16px;
+}
+
+.menubg {
+  
+	background-color: #000; 
+	
+}
+
+/* Input boxes - just a bit smaller than normal so they align well. */
+textarea {
+	font-size: 9pt;
+	color: #000;
+/*	border: 1px solid #AB2500;*/
+	font-family: verdana, arial, helvetica, sans-serif;
+	background-color: #D8D8D7;
+}
+
+/* Checkboxes shouldn't have a background color. */
+input.check {
+	background-color: transparent;
+}
+
+/* Selects are a bit smaller, because it makes them look even better 8). */
+input, select, button {
+	font-size: 8pt;
+	font-weight: normal;
+	color: #7A7E81;
+	font-family: verdana, arial, helvetica, sans-serif;
+	
+}
+
+/* Standard horizontal rule.. */
+hr {
+	color: #F3F7F9;
+	background-color: transparent;
+}
+/* A more colorful hr.. */
+.hrcolor {
+	height: 1px;
+	border: 0;
+	color: #7A7E81;
+	background-color: #F3F7F9;
+}
+
+/* A quote, perhaps from another post. */
+.quote {
+  text-align:left;
+	color: #000000;
+	background-color: #9999DD;
+	border: 1px solid #95A0B9;
+	margin: 1px;
+	padding: 1px;
+	font-size: 11px;
+	line-height: 1.4em;
+
+}
+
+/* A code block - maybe even PHP ;). */
+
+.code {
+  text-align:left;
+	color: #222;
+	background-color: #D8D8C7;
+	font-family: "courier new", "times new roman", monospace;
+	font-size: 11px;
+	line-height: 1.3em;
+	/* Put a nice border around it. */
+	border: 1px solid #95A0B9;
+	margin: 1px auto 1px auto;
+	padding: 1px;
+	width: 99%;
+	/* Don't wrap its contents, and show scrollbars. */
+	white-space: nowrap;
+	overflow: auto;
+	/* Stop after about 24 lines, and just show a scrollbar. */
+	max-height: 24em;
+
+}
+
+/* The "Quote:" and "Code:" header parts... */
+
+.quoteheader, .codeheader {
+	color: #4E8EC0;
+	text-align:left;
+	text-decoration: none;
+	font-style: normal;
+	font-weight: bold;
+	font-size: x-small;
+	line-height: 1.2em;
+}
+
+/* the today container in calendar */
+
+.calendar_today {
+
+	background-color: #A9C6AA;
+	border: 1px solid #A90A00;
+
+}
+
+/* Generally, those [?] icons. */
+
+.help {
+	cursor: help;
+	background-color: transparent;
+}
+
+/* /me uses this a lot. */
+
+.meaction {
+	color: #5B7F8F;
+	background-color: transparent;
+}
+
+/* The main post box - this makes it as wide as possible. */
+
+.editor {
+	width: 90%;
+}
+
+/* Highlighted text - such as search results. */
+
+.highlight {
+	background-color: #3939AA;
+	font-weight: bold;
+	color: #F3F7F9;
+}
+
+/* Alternating backgrounds... */
+
+.windowbg {
+
+	color: #B84603;
+	text-align:left; 
+	background-color: #E8E8E7;
+	border: 1px inset #720904;
+}
+
+.windowbg1 {
+
+	color: #332244;
+	text-align:left;
+	font-weight: bold;
+	background-color: #ccddbb;
+	border: 1px #444;
+}
+
+.windowbg2 {
+
+	color: #9C7342;
+	text-align:left;
+	background-image: url('images/bg2.gif');
+	background-repeat: repeat-x;
+	background-color: #D7C6A9;  
+	border: 1px inset #720904; 
+	 
+}
+
+.windowbg3 {
+
+	color: #000;
+	text-align:left;
+	background-color: #D8D8C7; //#99AAAA;
+  border: 1px #720904;
+}
+
+.windowbg4 {
+
+  color: #000000;
+	text-align:left;
+  background: transparent;
+	
+}
+
+.windowbg5 {
+	color: #F1EFEF;
+	text-align:left;
+  background-color: #333;
+
+}
+
+.windowbg6 {
+  text-align:left;
+  background-color: transparent; 
+	
+}
+
+.windowbg8 {
+
+	color: #9C7342;
+	text-align:left;
+	background-image: url('images/bg2.gif');
+	background-repeat: repeat-x;
+	background-color: #D7C6A9;  
+ 
+	 
+}
+
+.windowbg9 {
+background-color:#E8E8E7
+}
+
+/* Titles - such as table headers. */
+
+tr.titlebg td {
+
+	font-size: small;
+	color: #111111;
+	background-color: #E8E8E7;
+	background-image: url(images/titlebg.gif);
+	background-repeat: repeat-x;
+}
+
+/* Titles - such as table headers. */
+
+.titlebg {
+	font-weight: bold;
+	background-color: #990000;
+	background-image: url(images/red_bar.gif);
+	color: #000; 
+	background-repeat: repeat-x;
+
+/*	padding: 10px;*/
+  
+}
+
+.titlebg a:link, .titlebg a:visited {
+  background-color: transparent;
+	color: #141414;#333;
+}
+
+.titlebg a:hover {
+	color: #000;
+	
+}
+
+/* same as titlebg, but used where bold text is not needed */
+
+.titlebg2 a:link, .titlebg2 a:visited {
+	
+	color: #000017;
+	font-style: normal;
+	text-decoration: none;
+
+
+}
+
+/*This is only for the bottom of the calendar*/
+.titlebg3 {
+	background-image: url("images/titlebg.gif");
+	background-repeat: repeat-x;
+}
+
+.titlebg4 {
+
+	color: #9C7342;
+	background-image: url('images/bg2.gif');
+	background-repeat: repeat-x;
+	background-color: #D7C6A9;
+	padding: 10px;
+  
+}
+
+.titlebg5 {
+background-image: url('images/stripes.gif');
+}
+
+.titlebg6 {
+background-image: url('images/calbg.gif');
+}
+/* This is used for categories, page indexes, and several other areas in the forum.
+
+.catbg and .catbg2 is for boardindex, while .catbg3 is for messageindex and display headers*/
+
+.catbg , tr.catbg td  {
+
+	background-color: transparent;
+	background-image: url('images/red_bar2.gif');
+	height: 24px;
+	font-weight:bold;
+	color: #000;
+
+}
+
+.catbg2 , tr.catbg2 td {
+
+	background-color: transparent;
+	background-image: url('images/grn2.gif');
+	height: 24px;
+	font-weight:bold;
+	color: #000;
+	padding:0px;
+  text-align:left;
+}
+
+.catbg3 , tr.catbg3 td {
+
+
+	background-image: url('images/grn2.gif');
+	height: 29px;
+	color: #F1EFEF;
+	padding: 0px;
+
+}
+
+.catbg, .catbg2, .catbg3 {
+
+  border-top: 0px solid #afbbc7;
+	border-right: 0px solid #afbbc7;
+	border-left: 0px solid #afbbc7;
+	border-bottom: solid 0px #2c6ec0;
+	background-repeat: repeat-x;
+
+}
+
+.catbg, .catbg2 {
+
+	/*font-weight: bold;*/
+
+}
+
+.catbg3, tr.catbg3 td, .catbg3 a:link, .catbg3 a:visited {
+
+	font-size: 10pt;
+	color: #141414;
+	text-decoration: none;
+
+}
+
+.catbg a:link, .catbg a:visited , .catbg2 a:link, .catbg2 a:visited {
+
+	color: #141414;
+	text-decoration: none;
+
+}
+
+.catbg a:hover, .catbg2 a:hover, .catbg3 a:hover {
+
+	color: #000;
+
+}
+
+/* The borders around things. */
+.bordercolor 
+{
+  
+	background-color: transparent; 
+	color: #000; /*#FFF7D6;*/
+	
+}
+
+.tborder 
+{
+	border: 1px dashed #A90A00;
+}
+/* These are whitish/gray */
+.top_ls {
+background: url("images/top_ls.png") left top no-repeat; width: 20px; height: 20px; padding: 4px; 
+}
+
+.top {
+background: url("images/top_bg.png") top repeat-x; height: 20px;
+}
+
+.top_rs {
+background: url("images/top_rs.png") right top no-repeat; width: 20px; height: 20px; padding: 4px;
+}
+
+.btm_ls {
+background: url("images/btm_ls.png") left bottom no-repeat; width: 20px; height: 20px; padding: 4px;
+}
+
+.btm {
+background: url("images/btm.png") bottom repeat-x;  height: 20px; 
+}
+
+.btm_rs {
+background: url("images/btm_rs.png") right bottom no-repeat; width: 20px; height: 20px; padding: 4px;
+}
+/* These are green */
+.top_ls1 {
+background: url("images/imgbgs/top_ls1.png") left top no-repeat; width: 20px; height: 20px; padding: 4px; 
+}
+
+.top1 {
+background: url("images/imgbgs/top_bg1.png") top repeat-x; height: 20px; 
+}
+
+.top_rs1 {
+background: url("images/imgbgs/top_rs1.png") right top no-repeat; width: 20px; height: 20px; padding: 4px;
+}
+
+.btm_ls1 {
+background: url("images/imgbgs/btm_ls1.png") left bottom no-repeat; width: 20px; height: 20px; padding: 4px;
+}
+
+.btm1 {
+background: url("images/imgbgs/btm1.png") bottom repeat-x; height: 20px; 
+}
+
+.btm_rs1 {
+background: url("images/imgbgs/btm_rs1.png") right bottom no-repeat; width: 20px; height: 20px; padding: 4px;
+}
+/* These are red */
+.top_ls2 {
+background: url("images/imgbgs/top_ls.png") left top no-repeat; width: 20px; height: 20px; padding: 4px; 
+}
+
+.top2 {
+background: url("images/imgbgs/top.png") top repeat-x; height: 20px; 
+}
+
+.top_rs2 {
+background: url("images/imgbgs/top_rs.png") right top no-repeat; width: 20px; height: 20px; padding: 4px;
+}
+.btm_ls2 {
+background: url("images/imgbgs/btm_ls.png") left bottom no-repeat; width: 20px; height: 20px; padding: 4px;
+}
+
+.btm2 {
+background: url("images/imgbgs/btm.png") bottom repeat-x; height: 20px; 
+}
+
+.btm_rs2 {
+background: url("images/imgbgs/btm_rs.png") right bottom no-repeat; width: 20px; height: 20px; padding: 4px;
+}
+/* Default font sizes. */
+
+.smalltext {
+	font-size: x-small;
+}
+.normaltext {
+	font-size: small;
+}
+.largetext {
+	font-size: large;
+}
+.middletext {	font-size: 90%;	color:#000; }
+/* And this is the bottom, where the copyright is, etc. */
+#footerarea {
+	background-image: transparent; font-size: 8pt;  
+}
+
+/* Image border fix */
+img {
+	border:0;
+}
+
+/* definitions for the main tab, active means the tab reflects which page is displayed */
+.maintab_first, .maintab_back, .maintab_last, .maintab_active_first, .maintab_active_back, .maintab_active_last
+{
+	color: white;
+	text-transform: uppercase;
+	vertical-align: top;
+
+}
+.maintab_back, .maintab_active_back
+{
+	color: white;
+	text-decoration: none;
+	font-size:  9px;
+	vertical-align: top;
+	padding: 2px 6px 6px 6px;
+	font-family: tahoma, sans-serif;
+}
+
+.maintab_first
+{
+	background: url(images/maintab_first.gif) left bottom no-repeat;
+	width: 10px;
+}
+.maintab_back
+{
+	background: url(images/maintab_back.gif) left bottom repeat-x;
+}
+.maintab_last
+{
+	background: url(images/maintab_last.gif) left bottom no-repeat;
+	width: 8px;
+}
+.maintab_active_first
+{
+	background: url(images/maintab_active_first.gif) left bottom no-repeat;
+	width: 6px;
+}
+.maintab_active_back
+{
+	background: url(images/maintab_active_back.gif) left bottom repeat-x;
+}
+.maintab_active_last
+{
+	background: url(images/maintab_active_last.gif) left bottom no-repeat;
+	width: 8px;
+}
+
+/* how links behave in main tab. */
+.maintab_back a:link , .maintab_back a:visited, .maintab_active_back a:link , .maintab_active_back a:visited
+{
+	color: white;
+	text-decoration: none;
+}
+
+.maintab_back a:hover, .maintab_active_back a:hover
+{
+	color: #e0e0ff;
+	text-decoration: none;
+}
+/* definitions for the mirror tab */
+.mirrortab_first, .mirrortab_back, .mirrortab_last, .mirrortab_active_first, .mirrortab_active_back, .mirrortab_active_last
+{
+	color: white;
+	text-transform: uppercase;
+	vertical-align: top;
+}
+.mirrortab_back, .mirrortab_active_back
+{
+	color: white;
+	text-decoration: none;
+	font-size: 9px;
+	vertical-align: bottom;
+	padding: 6px 6px 2px 6px;
+	font-family: tahoma, sans-serif;
+}
+
+.mirrortab_first
+{
+	background: url(images/mirrortab_first.gif) no-repeat;
+	width: 10px;
+}
+.mirrortab_back
+{
+	background: url(images/mirrortab_back.gif) repeat-x;
+}
+.mirrortab_last
+{
+	background: url(images/mirrortab_last.gif) no-repeat;
+	width: 6px;
+}
+.mirrortab_active_first
+{
+	background: url(images/mirrortab_active_first.gif) no-repeat;
+	width: 6px;
+}
+.mirrortab_active_back
+{
+	background: url(images/mirrortab_active_back.gif) repeat-x;
+}
+.mirrortab_active_last
+{
+	background: url(images/mirrortab_active_last.gif) no-repeat;
+	width: 8px;
+}
+
+/* how links behave in mirror tab. */
+.mirrortab_back a:link , .mirrortab_back a:visited, .mirrortab_active_back a:link , .mirrortab_active_back a:visited
+{
+	color: white;
+	text-decoration: none;
+}
+
+.mirrortab_back a:hover, .mirrortab_active_back a:hover
+{
+	color: #e0e0ff;
+	text-decoration: none;
+}
+
+/* Calendar colours for birthdays, events and holidays */
+.birthday
+{
+	color: #920AC4;
+}
+
+.event
+{
+	color: #078907;
+}
+
+.holiday
+{
+	color: #000080;
+}
+
+/* Colours for warnings */
+.warn_mute
+{
+	color: red;
+}
+
+.warn_moderate
+{
+	color: orange;
+}
+
+.warn_watch
+{
+	color: green;
+}
+
+/* The AJAX notifier */
+#ajax_in_progress
+{
+	background: #32CD32;
+	color: white;
+	text-align: center;
+	font-weight: bold;
+	font-size: 18pt;
+	padding: 3px;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+#ajax_in_progress a
+{
+	color: white;
+	text-decoration: underline;
+	font-size: smaller;
+	float: right;
+}
+
+/* Styling for BBC tags */
+.bbc_color a
+{
+	color: inherit;
+}
+
+.bbc_img
+{
+	border: 0;
+}
+
+.bbc_list
+{
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.bbc_size
+{
+	line-height: 1.3em;
+}
+
+.bbc_table
+{
+	font: inherit;
+	color: inherit;
+}
+
+.bbc_table td
+{
+	font: inherit;
+	color: inherit;
+	vertical-align: top;
+}
+
+.bbc_u
+{
+	text-decoration: underline;
+}
+
+.button_strip_submit
+{
+	background: transparent;
+	color: white;
+	text-transform: uppercase;
+	vertical-align: top;
+	text-decoration: none;
+	font-size: 9px;
+	font-family: tahoma, sans-serif;
+	border: 0;
+}
+
+.button_strip_submit:hover
+{
+	color: #e0e0ff;
+}
+
+.openid_login
+{
+	background: white url(images/openid.gif) no-repeat;
+	padding-left: 18px;
+}
+
+a.moderation_link, a.moderation_link:visited
+{
+	color: red;
+	font-weight: bold;
+}
+
+/* These are for the auto suggest floating div type thing. */
+.auto_suggest_div
+{
+	border: 1px solid black;
+	position: absolute;
+}
+
+/* An auto suggest item */
+.auto_suggest_item
+{
+	background-color: #DDDDDD;
+}
+
+/* hovered auto suggest item */
+.auto_suggest_item_hover
+{
+	background-color: #888888;
+	cursor: pointer;
+	color: #EEEEEE;
+}
+
+/* Moderation Notes */
+.moderation_notes
+{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	overflow: auto;
+	height: 9.5em;
+}
+.moderation_notes li
+{
+	padding: 4px 0px 4px 4px;
+	border-bottom: 1px solid #cccccc;
+}
+
+/* Credits page */
+#credits p, #credits h4
+{
+	padding: 0 10px;
+}
+
+#credits h3
+{
+	margin: 0;
+}
+
+#credits ul
+{
+	list-style-type: none;
+}
+
+#credits ul li
+{
+	margin-bottom: 0.5em;
+}

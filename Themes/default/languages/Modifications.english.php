@@ -59,4 +59,10 @@ $txt['stopspammer_all_ok'] = 'Mod Stop Spammer is ON, it is up-to-date and the c
 $txt['stopspammer_is_off'] = 'Mod Stop Spammer is OFF.';
 //	MOD Stop Spammer - END
 
+//	Ban List
+$txt['banlist_menu'] = 'Banlist';
+$txt['permissionname_view_banlist'] = 'View the Ban List';
+$txt['permissionhelp_view_banlist'] = 'The banlist shows all members that have are banned on your forum. The list can be sorted.'; 
+$txt['cannot_view_banlist'] = 'You can\'t view the banlist because you don\'t have permission to.';
+$txt['whoallow_banlist'] = 'Viewing <a href="' . $scripturl . '?action=banlist">Banlist</a>.';
 ?>

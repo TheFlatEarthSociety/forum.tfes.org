@@ -1464,6 +1464,7 @@ function loadAllPermissions($loadType = 'classic')
 			'view_stats' => array(false, 'general', 'view_basic_info'),
 			'view_mlist' => array(false, 'general', 'view_basic_info'),
 			'who_view' => array(false, 'general', 'view_basic_info'),
+			'view_banlist' => array(false, 'general', 'view_basic_info'),
 			'search_posts' => array(false, 'general', 'view_basic_info'),
 			'karma_edit' => array(false, 'general', 'moderate_general'),
 			'pm_read' => array(false, 'pm', 'use_pm_system'),

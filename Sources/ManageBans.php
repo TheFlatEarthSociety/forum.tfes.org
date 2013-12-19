@@ -186,7 +186,7 @@ function BanList()
 	$listOptions = array(
 		'id' => 'ban_list',
 		'items_per_page' => 20,
-		'base_href' => $scripturl . '?action=admin;area=ban;sa=list',
+		'base_href' => $scripturl . '?action=' . (empty($context['view_banlist']) ? 'admin;area=ban;sa=list' : 'banlist'),
 		'default_sort_col' => 'added',
 		'default_sort_dir' => 'desc',
 		'get_items' => array(
@@ -331,6 +331,10 @@ function BanList()
 		),
 	);
 
+	// Deleted Data unnecessary
+	if (!empty($context['view_banlist']) && !allowedTo('manage_bans'))
+		unset($listOptions['columns']['notes'], $listOptions['columns']['num_triggers'], $listOptions['columns']['actions'], $listOptions['columns']['check'], $listOptions['form'], $listOptions['additional_rows']);
+
 	require_once($sourcedir . '/Subs-List.php');
 	createList($listOptions);
 
@@ -343,9 +347,10 @@ function list_getBans($start, $items_per_page, $sort)
 	global $smcFunc;
 
 	$request = $smcFunc['db_query']('', '
-		SELECT bg.id_ban_group, bg.name, bg.ban_time, bg.expire_time, bg.reason, bg.notes, COUNT(bi.id_ban) AS num_triggers
+		SELECT bg.name, bg.ban_time, bg.expire_time, bg.reason' . (allowedTo('manage_bans') ? ', bg.notes, COUNT(bi.id_ban) AS num_triggers, bg.id_ban_group
 		FROM {db_prefix}ban_groups AS bg
-			LEFT JOIN {db_prefix}ban_items AS bi ON (bi.id_ban_group = bg.id_ban_group)
+			LEFT JOIN {db_prefix}ban_items AS bi ON (bi.id_ban_group = bg.id_ban_group)' : '
+		FROM {db_prefix}ban_groups AS bg') . '
 		GROUP BY bg.id_ban_group, bg.name, bg.ban_time, bg.expire_time, bg.reason, bg.notes
 		ORDER BY {raw:sort}
 		LIMIT {int:offset}, {int:limit}',
@@ -1725,6 +1730,26 @@ function updateBanMembers()
 
 	// Update the latest member and our total members as banning may change them.
 	updateStats('member');
+}
+
+// MOD Ban List - Lite List
+function BanListView()
+{
+	global $txt, $context;
+
+	// Make sure they can view the banlist.
+	isAllowedTo('view_banlist');
+
+	$context['view_banlist'] = true;
+
+	loadLanguage('Admin');
+
+	$context['page_title'] = &$txt['ban_title'];
+
+	// Hi hacker =)
+	unset($_POST['removeBans'], $_POST['remove']);
+
+	BanList();
 }
 
 ?>

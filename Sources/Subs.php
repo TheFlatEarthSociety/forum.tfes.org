@@ -1654,6 +1654,13 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 			);
 		}
 
+		// BBC [you] tag. ;)
+		$codes[] = array(
+				'tag' => 'you',
+				'type' => 'closed',
+				'content' => (!$context['user']['is_guest'] ? $context['user']['name'] : (!empty($txt[28]) ? $txt[28] : $txt['guest'])),
+		);
+
 		foreach ($codes as $code)
 		{
 			// If we are not doing every tag only do ones we are interested in.

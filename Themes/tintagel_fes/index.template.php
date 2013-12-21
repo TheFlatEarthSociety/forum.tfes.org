@@ -129,7 +129,7 @@ function template_html_above()
 	<meta http-equiv="Content-Type" content="text/html; charset=', $context['character_set'], '" />
 	<meta name="description" content="The Flat Earth Society: ', $context['page_title_html_safe'], '" />', !empty($context['meta_keywords']) ? '
 	<meta name="keywords" content="' . $context['meta_keywords'] . '" />' : '', '
-	<meta http-equiv="content-language" content="en-us">
+	<meta http-equiv="content-language" content="en-us" />
 	<title>', $context['page_title_html_safe'], '</title>';
 
 	// Please don't index these Mr Robot.

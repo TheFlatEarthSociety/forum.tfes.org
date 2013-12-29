@@ -1043,6 +1043,11 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 				'before' => '<span id="post_$1">',
 				'after' => '</span>',
 			),
+            array(
+                'tag' => 'audio',
+                'type' => 'unparsed_content',
+                'content' => '<div class="bbc_audio"><audio controls src="$1">Your browser does not support the HTML5 Audio element.</audio><br /><a href="$1" class="bbc_link" target="_blank">$1</a></div>',
+            ),
 			array(
 				'tag' => 'b',
 				'before' => '<strong>',

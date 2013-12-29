@@ -1590,6 +1590,11 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 				'disabled_after' => ' ($1)',
 			),
 			array(
+                'tag' => 'video',
+                'type' => 'unparsed_content',
+                'content' => '<div class="bbc_video"><video controls src="$1">Your browser does not support the HTML5 Video element.</video><br /><a href="$1" class="bbc_link" target="_blank">$1</a></div>',
+			),
+			array(
 				'tag' => 'youtube',
 				'type' => 'unparsed_content',
 				'content' => '<iframe style="border:0;" width="642" height="392" src="http://www.youtube.com/embed/$1" allowfullscreen></iframe>',

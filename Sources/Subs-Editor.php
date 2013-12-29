@@ -1589,6 +1589,13 @@ function create_control_richedit($editorOptions)
 				'description' => $txt['audio']
 			),
 			array(
+				'image' => 'video',
+				'code' => 'video',
+				'before' => '[video]',
+				'after' => '[/video]',
+				'description' => $txt['video']
+			),
+			array(
 				'image' => 'url',
 				'code' => 'url',
 				'before' => '[url]',

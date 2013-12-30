@@ -1661,12 +1661,12 @@ function create_control_richedit($editorOptions)
 				'description' => $txt['teletype']
 			),
 			array(
-                'image' => 'abbr',
-                'code' => 'abbr',
-                'before' => '[abbr=""]',
-                'after' => '[/abbr]',
-                'description' => $txt['abbr']
-            ),
+				'image' => 'abbr',
+				'code' => 'abbr',
+				'before' => '[abbr=""]',
+				'after' => '[/abbr]',
+				'description' => $txt['abbr']
+			),
 			array(),
 			array(
 				'image' => 'table',

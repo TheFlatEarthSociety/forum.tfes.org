@@ -300,6 +300,16 @@ code.bbc_code
 	font-family: "dejavu sans mono", "monaco", "lucida console", "courier new", monospace;
 }
 
+/* pplanet's video tag */
+.bbc_video
+{
+	width: 100%;
+}
+video
+{
+	max-width: 100%;
+}
+
 /* Generally, those [?] icons.  This makes your cursor a help icon. */
 .help
 {

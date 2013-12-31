@@ -282,12 +282,10 @@ function template_body_below()
 				<div id="footerarea">
 					 <div id="footer_section">
 					<ul class="reset">
-					  <li class="copyright">', theme_copyright(), '</li>
-					  <li><b>Anecdota</b> by, <a href="http://www.jpr62.com/theme/" target="_blank" class="new_win" title=""><span><b>Crip</b></span></a></li>
-					<li><a id="button_xhtml" href="http://validator.w3.org/check?uri=referer" target="_blank" class="new_win" title="', $txt['valid_xhtml'], '"><span>', $txt['xhtml'], '</span></a></li>
-					 ', !empty($modSettings['xmlnews_enable']) && (!empty($modSettings['allow_guestAccess']) || $context['user']['is_logged']) ? '<li><a id="button_rss" href="' . $scripturl . '?action=.xml;type=rss" class="new_win"><span>' . $txt['rss'] . '</span></a></li>' : '', '
-					 <li class="last"><a id="button_wap2" href="', $scripturl , '?action=forum;wap2" class="new_win"><span>', $txt['wap2'], '</span></a></li>
-				  </ul>';
+						<li class="copyright">', theme_copyright(), '</li>
+						<li><b>Anecdota</b> by <a href="http://www.jpr62.com/theme/" target="_blank" class="new_win" title=""><span><b>Crip</b></span></a></li>
+						<li class="last"><a id="button_wap2" href="', $scripturl , '?action=forum;wap2" class="new_win"><span>', $txt['wap2'], '</span></a></li>
+					</ul>';
 
 	// Show the load time?
 	if ($context['show_load_time'])

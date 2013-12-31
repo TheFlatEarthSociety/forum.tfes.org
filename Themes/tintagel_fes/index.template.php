@@ -133,7 +133,7 @@ function template_html_above()
 	<meta property="og:site_name" content="The Flat Earth Society" />
 	<meta property="og:title" content="', $context['page_title_html_safe'], '" />
 	<meta property="og:description" content="This is the forum of the world-famous Flat Earth Society, a place for free thinkers and the intellectual exchange of ideas." />
-	<meta property="og:image" content="http://forum.tfes.org/Themes/tintagel_fes/images/img/logo_new.png" />
+	<meta property="og:image" content="http://forum.tfes.org/logo.png" />
 	<meta property="og:url" content="', $context['canonical_url'], '" />
 	<meta property="og:locale" content="en_US" />
 	<title>', $context['page_title_html_safe'], '</title>';

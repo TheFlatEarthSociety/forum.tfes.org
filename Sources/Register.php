@@ -252,7 +252,7 @@ function Register2($verifiedOpenID = false)
 
 		// Handle spambots who filled in the fake form
 		if (empty($_SESSION['antibotuf']))
-			fatal_lang_error('registration_disabled', false);// Error for sidetrack
+			fatal_lang_error('fake_form_filled', false); // An intentionally ambiguous error
 
 		$form_names = array ('user', 'email', 'passwrd1', 'passwrd2');
 

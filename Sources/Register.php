@@ -73,6 +73,9 @@ function Register($reg_errors = array())
 		$_SESSION['antibotuf'][$value] = chr(mt_rand(97, 122)) . md5(mt_rand());
 
 	unset($form_names);
+	
+	// Let's not cache random values.
+	header('Cache-Control: no-store');
 
 	// Under age restrictions?
 	if ($context['show_coppa'])

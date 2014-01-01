@@ -123,7 +123,7 @@ function template_registration_form()
 	}
 
 	echo '
-		<form action="', $scripturl, '?action=register2" method="post" accept-charset="', $context['character_set'], '" name="registration" id="registration" onsubmit="return verifyAgree();">
+		<form action="', $scripturl, '?action=register2" method="post" accept-charset="', $context['character_set'], '" name="registration" id="registration" autocomplete="off" onsubmit="return verifyAgree();">
 			<div class="cat_bar">
 				<h3 class="catbg">', $txt['registration_form'], '</h3>
 			</div>

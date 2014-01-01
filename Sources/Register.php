@@ -66,6 +66,14 @@ function Register($reg_errors = array())
 	$context['registration_passed_agreement'] = !empty($_SESSION['registration_agreed']);
 	$context['show_coppa'] = !empty($modSettings['coppaAge']);
 
+	// Generate hashes for the registration form
+	$form_names = array ('user', 'email', 'passwrd1', 'passwrd2');
+
+	foreach ($form_names as $value)
+		$_SESSION['antibotuf'][$value] = chr(mt_rand(97, 122)) . md5(mt_rand());
+
+	unset($form_names);
+
 	// Under age restrictions?
 	if ($context['show_coppa'])
 	{
@@ -238,6 +246,23 @@ function Register2($verifiedOpenID = false)
 		// Make sure they came from *somewhere*, have a session.
 		if (!isset($_SESSION['old_url']))
 			redirectexit('action=register');
+
+		// Handle spambots who filled in the fake form
+		if (empty($_SESSION['antibotuf']))
+			fatal_lang_error('registration_disabled', false);// Error for sidetrack
+
+		$form_names = array ('user', 'email', 'passwrd1', 'passwrd2');
+
+		foreach ($form_names as $value)
+		{
+			// If any of these values has been set by the client, kindly tell them to GTFO
+			if (!empty($_POST[$value]))
+				fatal_lang_error('fake_form_filled', false); // An intentionally ambiguous error
+
+			// Restoring Real Values
+			$_POST[$value] = $_POST[$_SESSION['antibotuf'][$value]];
+		}
+		unset($form_names, $_SESSION['antibotuf']);
 
 		// Are they under age, and under age users are banned?
 		if (!empty($modSettings['coppaAge']) && empty($modSettings['coppaType']) && empty($_SESSION['skip_coppa']))

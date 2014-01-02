@@ -259,15 +259,23 @@ function template_main()
 <table cellpadding="0" cellspacing="0" border="0" width="100%" class="bordercolor">';
 
 	$removableMessageIDs = array();
-
+	$ignoredMsgs = array();
 	// Get all the messages...
 	while ($message = $context['get_message']())
 	{
+		$ignoring = false;
 		if ($message['can_remove'])
 			$removableMessageIDs[] = $message['id'];
 
 		echo '
 	<tr><td style="padding: 1px 1px 0 1px;">';
+
+		// Are we ignoring this message?
+		if (!empty($message['is_ignored']))
+		{
+			$ignoring = true;
+			$ignoredMsgs[] = $message['id'];
+		}
 
 		// Show the message anchor and a "new" anchor if this message is new.
 		if ($message['id'] != $context['first_message'])
@@ -347,7 +355,9 @@ function template_main()
 			}
 
 			echo '<br />';
+			//Extra info starts here
 
+			echo '<div id="msg_', $message['id'], '_extra_info">';
 			// Show avatars, images, etc.?
 			if (!empty($settings['show_user_images']) && empty($options['show_no_avatars']) && !empty($message['member']['avatar']['image']))
 				echo '
@@ -410,7 +420,7 @@ function template_main()
 
 		// Done with the information about the poster... on to the post itself.
 		echo '
-							</div>
+							</div></div>
 						</td>
 						<td valign="top" width="85%" height="100%">
 							<table width="100%" border="0"><tr>
@@ -458,6 +468,14 @@ function template_main()
 		if (!empty($options['display_quick_mod']) && $options['display_quick_mod'] == 1 && $message['can_remove'])
 			echo '
 									<div style="display: none;" id="in_topic_mod_check_', $message['id'], '"></div>';
+
+		// Ignoring this user? Hide the post.
+		if ($ignoring)
+			echo '
+							<div class="post" id="msg_', $message['id'], '_ignored_prompt">
+								', $txt['ignoring_user'], '
+								<strong><a href="#" id="msg_', $message['id'], '_ignored_link" style="display: none;">', $txt['show_ignore_user_post'], '</a></strong>
+							</div>';
 
 		// Show the post itself, finally!
 		echo '
@@ -592,7 +610,7 @@ function template_main()
 		// Show the member's signature?
 		if (!empty($message['member']['signature']) && empty($options['show_no_signatures']) && $context['signature_enabled'])
 			echo '
-							<div class="signature">', $message['member']['signature'], '</div>';
+							<div class="signature" id="msg_', $message['id'], '_signature">', $message['member']['signature'], '</div>';
 
 		echo '
 						</td>
@@ -813,8 +831,40 @@ function template_main()
 			sItemBackground: "transparent",
 			sItemBackgroundHover: "#e0e0f0"
 		});
+	}';
+
+if (!empty($ignoredMsgs))
+	{
+		echo '
+					var aIgnoreToggles = new Array();';
+
+		foreach ($ignoredMsgs as $msgid)
+		{
+			echo '
+					aIgnoreToggles[', $msgid, '] = new smc_Toggle({
+						bToggleEnabled: true,
+						bCurrentlyCollapsed: true,
+						aSwappableContainers: [
+							\'msg_', $msgid, '_extra_info\',
+							\'msg_', $msgid, '\',
+							\'msg_', $msgid, '_footer\',
+							\'msg_', $msgid, '_quick_mod\',
+							\'modify_button_', $msgid, '\',
+							\'msg_', $msgid, '_signature\'
+
+						],
+						aSwapLinks: [
+							{
+								sId: \'msg_', $msgid, '_ignored_link\',
+								msgExpanded: \'\',
+								msgCollapsed: ', JavaScriptEscape($txt['show_ignore_user_post']), '
+							}
+						]
+					});';
+		}
 	}
-// ]]></script>';
+
+echo '// ]]></script>';
 
 }
 

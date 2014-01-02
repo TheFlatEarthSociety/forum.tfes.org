@@ -469,18 +469,21 @@ function template_main()
 			echo '
 									<div style="display: none;" id="in_topic_mod_check_', $message['id'], '"></div>';
 
+		// End pre-post stuff
+		echo '
+										</td>
+							</tr></table>';
+									
 		// Ignoring this user? Hide the post.
 		if ($ignoring)
 			echo '
-							<div class="post" id="msg_', $message['id'], '_ignored_prompt">
+							<div class="ignored_post" id="msg_', $message['id'], '_ignored_prompt">
 								', $txt['ignoring_user'], '
 								<strong><a href="#" id="msg_', $message['id'], '_ignored_link" style="display: none;">', $txt['show_ignore_user_post'], '</a></strong>
 							</div>';
 
 		// Show the post itself, finally!
 		echo '
-								</td>
-							</tr></table>
 							<hr width="100%" size="1" class="hrcolor" />
 							<div class="post"', $message['can_modify'] ? ' id="msg_' . $message['id'] . '"' : '', '>', $message['body'], '</div>', $message['can_modify'] ? '
 							<img src="' . $settings['images_url'] . '/icons/modify_inline.gif" alt="" title="' . $txt['modify_msg'] . '" align="right" id="modify_button_' . $message['id'] . '" style="cursor: pointer;" onclick="oQuickModify.modifyMsg(\'' . $message['id'] . '\', \'' . $context['session_id'] . '\', \'' . $context['session_var'] . '\')" />' : '', '

@@ -1671,6 +1671,19 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 				'content' => (!$context['user']['is_guest'] ? $context['user']['name'] : (!empty($txt[28]) ? $txt[28] : $txt['guest'])),
 		);
 
+		// [tex] tag for writing LaTeX.
+		$codes [] = array (
+				'tag' => 'tex',
+				'type' => 'unparsed_content',
+				'content' => '<img src="http://mathtex.tfes.org/$1" alt="$1" />',
+				'validate' => create_function('&$tag, &$data, $disabled', '
+					$data = strtr($data, array(\'&nbsp;\' => \' \', \'<br />\' => \'
+\'));
+					$data = rawurlencode($data);
+				'),
+				'disabled_content' => '($1)',
+		);
+
 		foreach ($codes as $code)
 		{
 			// If we are not doing every tag only do ones we are interested in.

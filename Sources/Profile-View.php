@@ -127,7 +127,7 @@ function summary($memID)
 	if (allowedTo('moderate_forum'))
 	{
 		// Make sure it's a valid ip address; otherwise, don't bother...
-		if (preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/', $memberContext[$memID]['ip']) == 1 && empty($modSettings['disableHostnameLookup']))
+		if (preg_match('/^[\da-f.:*]+$/', $memberContext[$memID]['ip']) == 1 && empty($modSettings['disableHostnameLookup']))
 			$context['member']['hostname'] = host_from_ip($memberContext[$memID]['ip']);
 		else
 			$context['member']['hostname'] = '';
@@ -1232,7 +1232,7 @@ function TrackIP($memID = 0)
 	if (isset($_REQUEST['searchip']))
 		$context['ip'] = trim($_REQUEST['searchip']);
 
-	if (preg_match('/^\d{1,3}\.(\d{1,3}|\*)\.(\d{1,3}|\*)\.(\d{1,3}|\*)$/', $context['ip']) == 0)
+	if (preg_match('/^[\da-f.:*]+$/', $context['ip']) == 0)
 		fatal_lang_error('invalid_tracking_ip', false);
 
 	$ip_var = str_replace('*', '%', $context['ip']);

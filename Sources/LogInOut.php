@@ -75,6 +75,7 @@ function Login()
 	$context['default_username'] = &$_REQUEST['u'];
 	$context['default_password'] = '';
 	$context['never_expire'] = false;
+	$context['canonical_url'] = $scripturl . '?action=login';
 
 	// Add the login chain to the link tree.
 	$context['linktree'][] = array(

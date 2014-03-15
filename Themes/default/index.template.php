@@ -147,11 +147,20 @@ function template_html_above()
 		echo '
 	<link rel="alternate" type="application/rss+xml" title="', $context['forum_name_html_safe'], ' - ', $txt['rss'], '" href="', $scripturl, '?type=rss;action=.xml" />';
 
-	// If we're viewing a topic, these should be the previous and next topics, respectively.
+	// If we're viewing a topic, these should be the previous and next pages of the same topic, respectively.
+	// For some reason SMF developers thought that the best thing to put down as the "next page" is the next thread.
+	// That's retarded, and thus now fixed.
 	if (!empty($context['current_topic']))
-		echo '
-	<link rel="prev" href="', $scripturl, '?topic=', $context['current_topic'], '.0;prev_next=prev" />
-	<link rel="next" href="', $scripturl, '?topic=', $context['current_topic'], '.0;prev_next=next" />';
+	{
+		$next_page = $context['start'] + $context['messages_per_page'];
+		$prev_page = $context['start'] - $context['messages_per_page'];
+		if($prev_page >= 0)
+			echo '
+	<link rel="prev" href="', $scripturl, '?topic=', $context['current_topic'], '.', $prev_page,'" />';
+		if($next_page < $context['total_visible_posts'])
+			echo '
+	<link rel="next" href="', $scripturl, '?topic=', $context['current_topic'], '.', $next_page,'" />';
+	}
 
 	// If we're in a board, or a topic for that matter, the index will be the board's index.
 	if (!empty($context['current_board']))

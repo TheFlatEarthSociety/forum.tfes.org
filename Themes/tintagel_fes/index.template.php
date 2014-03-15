@@ -134,7 +134,6 @@ function template_html_above()
 	<meta property="og:title" content="', $context['page_title_html_safe'], '" />
 	<meta property="og:description" content="This is the forum of the world-famous Flat Earth Society, a place for free thinkers and the intellectual exchange of ideas." />
 	<meta property="og:image" content="http://forum.tfes.org/logo.png" />
-	<meta property="og:url" content="', $context['canonical_url'], '" />
 	<meta property="og:locale" content="en_US" />
 	<title>', $context['page_title_html_safe'], '</title>';
 
@@ -146,6 +145,7 @@ function template_html_above()
 	// Present a canonical url for search engines to prevent duplicate content in their indices.
 	if (!empty($context['canonical_url']))
 		echo '
+	<meta property="og:url" content="', $context['canonical_url'], '" />
 	<link rel="canonical" href="', $context['canonical_url'], '" />';
 
 	// Show all the relative links, such as help, search, contents, and the like.

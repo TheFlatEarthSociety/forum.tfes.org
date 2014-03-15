@@ -121,6 +121,9 @@ function Register($reg_errors = array())
 		'name' => $txt['register'],
 	);
 
+	// And set the canonical URL
+	$context['canonical_url'] = $scripturl . '?action=register';
+
 	// If you have to agree to the agreement, it needs to be fetched from the file.
 	if ($context['require_agreement'])
 	{

@@ -650,21 +650,18 @@ function constructPageIndex($base_url, &$start, $max_value, $num_per_page, $flex
 
 	$base_link = '<a class="navPages" href="' . ($flexible_start ? $base_url : strtr($base_url, array('%' => '%%')) . ';start=%1$d') . '">%2$s</a> ';
 
+	$pageindex = '';
+
+	// Show the left arrow.
+	$pageindex .= $start == 0 ? ' ' : sprintf($base_link, $start - $num_per_page, '&#171;');
+
 	// Compact pages is off or on?
 	if (empty($modSettings['compactTopicPagesEnable']))
 	{
-		// Show the left arrow.
-		$pageindex = $start == 0 ? ' ' : sprintf($base_link, $start - $num_per_page, '&#171;');
-
 		// Show all the pages.
 		$display_page = 1;
 		for ($counter = 0; $counter < $max_value; $counter += $num_per_page)
 			$pageindex .= $start == $counter && !$start_invalid ? '[<strong id="currentPage">' . $display_page++ . '</strong>] ' : sprintf($base_link, $counter, $display_page++);
-
-		// Show the right arrow.
-		$display_page = ($start + $num_per_page) > $max_value ? $max_value : ($start + $num_per_page);
-		if ($start != $counter - $max_value && !$start_invalid)
-			$pageindex .= $display_page > $counter - $num_per_page ? ' ' : sprintf($base_link, $display_page, '&#187;');
 	}
 	else
 	{
@@ -673,9 +670,9 @@ function constructPageIndex($base_url, &$start, $max_value, $num_per_page, $flex
 
 		// Show the first page. (>1< ... 6 7 [8] 9 10 ... 15)
 		if ($start > $num_per_page * $PageContiguous)
-			$pageindex = sprintf($base_link, 0, '1');
+			$pageindex .= sprintf($base_link, 0, '1');
 		else
-			$pageindex = '';
+			$pageindex .= '';
 
 		// Show the ... after the first page.  (1 >...< 6 7 [8] 9 10 ... 15)
 		if ($start > $num_per_page * ($PageContiguous + 1))
@@ -686,7 +683,7 @@ function constructPageIndex($base_url, &$start, $max_value, $num_per_page, $flex
 			if ($start >= $num_per_page * $nCont)
 			{
 				$tmpStart = $start - $num_per_page * $nCont;
-				$pageindex.= sprintf($base_link, $tmpStart, $tmpStart / $num_per_page + 1);
+				$pageindex .= sprintf($base_link, $tmpStart, $tmpStart / $num_per_page + 1);
 			}
 
 		// Show the current page. (1 ... 6 7 >[8]< 9 10 ... 15)
@@ -712,6 +709,11 @@ function constructPageIndex($base_url, &$start, $max_value, $num_per_page, $flex
 		if ($start + $num_per_page * $PageContiguous < $tmpMaxPages)
 			$pageindex .= sprintf($base_link, $tmpMaxPages, $tmpMaxPages / $num_per_page + 1);
 	}
+      
+	// Show the right arrow
+	$next_page = $start + $num_per_page;
+	if (($next_page < $max_value) && !$start_invalid)
+		$pageindex .= sprintf($base_link, $next_page, '&#187;');
 
 	return $pageindex;
 }

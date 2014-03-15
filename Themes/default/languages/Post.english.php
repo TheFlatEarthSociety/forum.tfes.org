@@ -3,6 +3,10 @@
 
 global $context;
 
+$txt['audio'] = 'Insert Audio File';
+$txt['video'] = 'Insert Video File';
+$txt['abbr'] = 'Insert Abbreviation';
+
 $txt['post_reply'] = 'Post reply';
 $txt['enter_verification_details'] = 'Complete verification details';
 $txt['message_icon'] = 'Message icon';

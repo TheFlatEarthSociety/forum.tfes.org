@@ -130,7 +130,7 @@ function template_html_above()
 		$descr = $context['description'];
 	}
 	//If it's a topic, try to describe it.
-	else if (!empty($context['current_topic']))
+	else if (!empty($context['current_topic']) && empty($context['current_action']))
 	{
 		//Grab first post of current page.
 		$descr = $context['get_message']()['body'];

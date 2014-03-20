@@ -133,7 +133,9 @@ function template_html_above()
 	else if (!empty($context['current_topic']))
 	{
 		//Grab first post of current page.
-		$descr = strip_tags($context['get_message']()['body']);
+		$descr = $context['get_message']()['body'];
+		//Strip HTML tags.
+		$descr = trim(preg_replace('/(<[^>]*>)+/', ' ', $descr));
 		//Truncate it to <160 characters (reasonable length for meta description)
 		if(strlen($descr) > 160)
 		{

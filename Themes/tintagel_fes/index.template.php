@@ -124,15 +124,34 @@ function template_html_above()
 		var ajax_notification_text = "', $txt['ajax_in_progress'], '";
 		var ajax_notification_cancel_text = "', $txt['modify_cancel'], '";
 	// ]]></script>';
-
+	//If it has a defined description, use that.
+	if (!empty($context['description']))
+	{
+		echo '
+	<meta name="description" content="'. $context['description'] .'" />
+	<meta property="og:description" content="'. $context['description'] .'" />';
+	}
+	//If it's a topic, try to describe it.
+	//This can be done much better - perhaps quoting part of the OP would be appropriate
+	else if (!empty($context['current_topic']))
+	{
+		echo '
+	<meta name="description" content="&quot;'. $context['page_title_html_safe'] . '&quot; at ' . $context['forum_name_html_safe']  .'" />
+	<meta property="og:description" content="&quot;'. $context['page_title_html_safe'] . '&quot; at ' . $context['forum_name_html_safe']  .'" />';
+	}
+	//Default description
+	else
+	{
+		echo '
+	<meta name="description" content="'. $context['page_title_html_safe'] . '" />
+	<meta property="og:description" content="This is the forum of the world-famous Flat Earth Society, a place for free thinkers and the intellectual exchange of ideas." />';
+	}
 	echo '
-	<meta http-equiv="Content-Type" content="text/html; charset=', $context['character_set'], '" />
-	<meta name="description" content="', $context['page_title_html_safe'], '" />', !empty($context['meta_keywords']) ? '
+	<meta http-equiv="Content-Type" content="text/html; charset=', $context['character_set'], '" />', !empty($context['meta_keywords']) ? '
 	<meta name="keywords" content="' . $context['meta_keywords'] . '" />' : '', '
 	<meta http-equiv="content-language" content="en-us" />
 	<meta property="og:site_name" content="The Flat Earth Society" />
 	<meta property="og:title" content="', $context['page_title_html_safe'], '" />
-	<meta property="og:description" content="This is the forum of the world-famous Flat Earth Society, a place for free thinkers and the intellectual exchange of ideas." />
 	<meta property="og:image" content="http://forum.tfes.org/logo.png" />
 	<meta property="og:locale" content="en_US" />
 	<title>', $context['page_title_html_safe'], '</title>';

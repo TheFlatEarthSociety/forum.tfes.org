@@ -127,25 +127,31 @@ function template_html_above()
 	//If it has a defined description, use that.
 	if (!empty($context['description']))
 	{
-		echo '
-	<meta name="description" content="'. $context['description'] .'" />
-	<meta property="og:description" content="'. $context['description'] .'" />';
+		$descr = $context['description'];
 	}
 	//If it's a topic, try to describe it.
-	//This can be done much better - perhaps quoting part of the OP would be appropriate
 	else if (!empty($context['current_topic']))
 	{
-		echo '
-	<meta name="description" content="&quot;'. $context['page_title_html_safe'] . '&quot; at ' . $context['forum_name_html_safe']  .'" />
-	<meta property="og:description" content="&quot;'. $context['page_title_html_safe'] . '&quot; at ' . $context['forum_name_html_safe']  .'" />';
+		//Grab first post of current page.
+		$descr = strip_tags($context['get_message']()['body']);
+		//Truncate it to <160 characters (reasonable length for meta description)
+		if(strlen($descr) > 160)
+		{
+			$descr = substr($descr, 0, 156);
+			$descr = substr($descr, 0, strrpos($descr, " "));
+			$descr .= '...';
+		}
+		//Reset counter so that the first post doesn't get omitted in the actual display.
+		$context['get_message'](true);
 	}
 	//Default description
 	else
 	{
-		echo '
-	<meta name="description" content="'. $context['page_title_html_safe'] . '" />
-	<meta property="og:description" content="This is the forum of the world-famous Flat Earth Society, a place for free thinkers and the intellectual exchange of ideas." />';
+		$descr = 'This is the forum of the world-famous Flat Earth Society, a place for free thinkers and the intellectual exchange of ideas.';
 	}
+	echo '
+	<meta name="description" content="'. $descr  .'" />
+	<meta property="og:description" content="'. $descr  .'" />';
 	echo '
 	<meta http-equiv="Content-Type" content="text/html; charset=', $context['character_set'], '" />', !empty($context['meta_keywords']) ? '
 	<meta name="keywords" content="' . $context['meta_keywords'] . '" />' : '', '

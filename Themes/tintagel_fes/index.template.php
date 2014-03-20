@@ -190,7 +190,7 @@ function template_html_above()
 	// If we're viewing a topic, these should be the previous and next pages of the same topic, respectively.
 	// For some reason SMF developers thought that the best thing to put down as the "next page" is the next thread.
 	// That's retarded, and thus now fixed.
-	if (!empty($context['current_topic']))
+	if (!empty($context['current_topic']) && empty($context['current_action']))
 	{
 		$next_page = $context['start'] + $context['messages_per_page'];
 		$prev_page = $context['start'] - $context['messages_per_page'];

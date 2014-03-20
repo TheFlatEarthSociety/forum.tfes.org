@@ -135,7 +135,8 @@ function template_html_above()
 		//Grab first post of current page.
 		$descr = $context['get_message']()['body'];
 		//Strip HTML tags.
-		$descr = trim(preg_replace('/(<[^>]*>)+/', ' ', $descr));
+		$descr = preg_replace('/(<\/?(strong|em|span)[^>]*>)+/', '', $descr);
+		$descr = trim(preg_replace('/((<[^>]*>|&nbsp;))+/', ' ', $descr));
 		//Truncate it to <160 characters (reasonable length for meta description)
 		if(strlen($descr) > 160)
 		{

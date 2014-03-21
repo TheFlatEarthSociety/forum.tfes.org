@@ -197,9 +197,15 @@ function template_html_above()
 		if($prev_page >= 0)
 			echo '
 	<link rel="prev" href="', $scripturl, '?topic=', $context['current_topic'], '.', $prev_page,'" />';
+		else
+      echo '
+	<link rel="first" />';
 		if($next_page < $context['total_visible_posts'])
 			echo '
 	<link rel="next" href="', $scripturl, '?topic=', $context['current_topic'], '.', $next_page,'" />';
+		else
+      echo '
+	<link rel="last" />';
 	}
 
 	// If we're in a board, or a topic for that matter, the index will be the board's index.

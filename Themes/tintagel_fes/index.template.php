@@ -82,7 +82,9 @@ function template_html_above()
 	// Show right to left and the character set for ease of translating.
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"', $context['right_to_left'] ? ' dir="rtl"' : '', '>
-<head>';
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=', $context['character_set'], '" />';
+
 	//favicon pls
 	//hi i am pplanet i know how comments
 	echo 
@@ -155,8 +157,7 @@ function template_html_above()
 	echo '
 	<meta name="description" content="'. $descr  .'" />
 	<meta property="og:description" content="'. $descr  .'" />';
-	echo '
-	<meta http-equiv="Content-Type" content="text/html; charset=', $context['character_set'], '" />', !empty($context['meta_keywords']) ? '
+	echo !empty($context['meta_keywords']) ? '
 	<meta name="keywords" content="' . $context['meta_keywords'] . '" />' : '', '
 	<meta http-equiv="content-language" content="en-us" />
 	<meta property="og:site_name" content="The Flat Earth Society" />

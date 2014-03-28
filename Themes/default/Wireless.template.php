@@ -241,7 +241,7 @@ function template_imode_above()
 		<meta http-equiv="Content-Type" content="text/html; charset=', $context['character_set'], '" />';
 
 	// Present a canonical url for search engines to prevent duplicate content in their indices.
-	if ($user_info['is_guest'] && !empty($context['canonical_url']))
+	if (!empty($context['canonical_url']))
 		echo '
 		<link rel="canonical" href="', $context['canonical_url'], '" />';
 
@@ -898,7 +898,7 @@ function template_wap2_above()
 		<title>', $context['page_title'], '</title>';
 
 	// Present a canonical url for search engines to prevent duplicate content in their indices.
-	if ($user_info['is_guest'] && !empty($context['canonical_url']))
+	if (!empty($context['canonical_url']))
 		echo '
 		<link rel="canonical" href="', $context['canonical_url'], '" />';
 

@@ -141,6 +141,7 @@ if (WIRELESS)
 	// Some cellphones can't handle output compression...
 	$modSettings['enableCompressedOutput'] = '0';
 	// !!! Do we want these hard coded?
+	$modSettings['defaultMaxMessages_orig'] = $modSettings['defaultMaxMessages'];
 	$modSettings['defaultMaxMessages'] = 5;
 	$modSettings['defaultMaxTopics'] = 9;
 

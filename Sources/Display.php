@@ -86,6 +86,9 @@ function Display()
 
 	// How much are we sticking on each page?
 	$context['messages_per_page'] = empty($modSettings['disableCustomPerPage']) && !empty($options['messages_per_page']) && !WIRELESS ? $options['messages_per_page'] : $modSettings['defaultMaxMessages'];
+	if (WIRELESS) {
+		$context['messages_per_page_canonical'] = empty($modSettings['disableCustomPerPage']) && !empty($options['messages_per_page']) ? $options['messages_per_page'] : $modSettings['defaultMaxMessages_orig'];
+	}
 
 	// Let's do some work on what to search index.
 	if (count($_GET) > 2)
@@ -532,7 +535,15 @@ function Display()
 	$context['mark_unread_time'] = $topicinfo['new_from'];
 
 	// Set a canonical URL for this page.
-	$context['canonical_url'] = $scripturl . '?topic=' . $topic . '.' . $context['start'];
+	if (WIRELESS) {
+		// The canonical URL goes to the non-WIRELESS display,
+		// so for WIRELESS we need to make sure start is a
+		// multiple of messages_per_page_canonical.
+		$start_canonical = max(0, (int) $context['start'] - ((int) $context['start'] % (int) $context['messages_per_page_canonical']));
+	} else {
+		$start_canonical = $context['start'];
+	}
+	$context['canonical_url'] = $scripturl . '?topic=' . $topic . '.' . $start_canonical;
 
 	// For quick reply we need a response prefix in the default forum language.
 	if (!isset($context['response_prefix']) && !($context['response_prefix'] = cache_get_data('response_prefix', 600)))

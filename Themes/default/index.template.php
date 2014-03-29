@@ -126,15 +126,14 @@ function template_html_above()
 	<meta name="keywords" content="' . $context['meta_keywords'] . '" />' : '', '
 	<title>', $context['page_title_html_safe'], '</title>';
 
-	// Please don't index these Mr Robot.
-	if (!empty($context['robot_no_index']))
-		echo '
-	<meta name="robots" content="noindex" />';
-
 	// Present a canonical url for search engines to prevent duplicate content in their indices.
 	if (!empty($context['canonical_url']))
 		echo '
 	<link rel="canonical" href="', $context['canonical_url'], '" />';
+	// Don't respect SMF's noindex value if we have a perfectly good canonical URL to work with.
+	else if(!empty($context['robot_no_index']))
+		echo '
+	<meta name="robots" content="noindex" />';
 
 	// Show all the relative links, such as help, search, contents, and the like.
 	echo '

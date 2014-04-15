@@ -1807,6 +1807,7 @@ p#whoisviewing
 {
 	float: left;
 	width: 15em;
+	word-wrap: break-word;
 }
 .postarea, .moderatorbar
 {

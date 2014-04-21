@@ -142,7 +142,9 @@ function template_html_above()
 		$descr = preg_replace('/<a[^>]*>http:\/\/[^<]*<\/a>/', '', $descr);
 		//Strip all other HTML tags.
 		$descr = preg_replace('/(<\/?(strong|em|span|del)[^>]*>)+/', '', $descr);
-		$descr = trim(preg_replace('/((<[^>]*>|&nbsp;))+/', ' ', $descr));
+		$descr = preg_replace('/((<[^>]*>|&nbsp;))+/', ' ', $descr);
+		//Clean up whitespace
+		$descr = trim(preg_replace('/\s+/', ' ', $descr));
 		//Truncate it to <160 characters (reasonable length for meta description)
 		if(strlen($descr) > 160)
 		{

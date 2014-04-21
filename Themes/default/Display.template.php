@@ -412,7 +412,7 @@ function template_main()
 									<h5 id="subject_', $message['id'], '">
 										<a href="', $message['href'], '" rel="nofollow">', $message['subject'], '</a>
 									</h5>
-									<div class="smalltext">&#171; <strong>', !empty($message['counter']) ? $txt['reply_noun'] . ' #' . $message['counter'] : '', ' ', $txt['on'], ':</strong> ', $message['time'], ' &#187;</div>
+									<div class="smalltext">&#171; <strong>', !empty($message['counter']) ? $txt['reply_noun'] . ' #' . $message['counter'] : '', ' ', $txt['on'], ':</strong> ', '<time datetime="', date('c', ($message['timestamp']-$user_info['time_offset']*3600)), '">', $message['time'], '</time> &#187;</div>
 									<div id="msg_', $message['id'], '_quick_mod"></div>
 								</div>';
 
@@ -555,7 +555,7 @@ function template_main()
 		// Show "� Last Edit: Time by Person �" if this post was edited.
 		if ($settings['show_modify'] && !empty($message['modified']['name']))
 			echo '
-								&#171; <em>', $txt['last_edit'], ': ', $message['modified']['time'], ' ', $txt['by'], ' ', $message['modified']['name'], '</em> &#187;';
+								&#171; <em>', $txt['last_edit'], ': <time datetime="', date('c', ($message['modified']['timestamp']-$user_info['time_offset']*3600)), '">', $message['modified']['time'], '</time> ', $txt['by'], ' ', $message['modified']['name'], '</em> &#187;';
 
 		echo '
 							</div>

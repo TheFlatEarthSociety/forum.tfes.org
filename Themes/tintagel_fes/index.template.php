@@ -138,7 +138,9 @@ function template_html_above()
 		$descr = $context['get_message']()['body'];
 		//Strip "Quote from: [...]" lines
 		$descr = preg_replace('/<div class=\"topslice_quote\">.*?<\/div>/', '', $descr);
-		//Strip HTML tags.
+		//Strip <a> tags whose text isn't meaningful for a descritpion
+		$descr = preg_replace('/<a[^>]*>http:\/\/[^<]*<\/a>/', '', $descr);
+		//Strip all other HTML tags.
 		$descr = preg_replace('/(<\/?(strong|em|span|del)[^>]*>)+/', '', $descr);
 		$descr = trim(preg_replace('/((<[^>]*>|&nbsp;))+/', ' ', $descr));
 		//Truncate it to <160 characters (reasonable length for meta description)

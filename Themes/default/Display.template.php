@@ -12,7 +12,7 @@
 
 function template_main()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings;
+	global $context, $settings, $options, $txt, $scripturl, $modSettings, $user_info;
 
 	// Let them know, if their report was a success!
 	if ($context['report_sent'])

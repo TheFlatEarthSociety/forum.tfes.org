@@ -553,6 +553,7 @@ div.pagesection div.floatright input
 	overflow: auto;
 	line-height: 1.4em;
 	padding: 0.1em 0;
+	word-wrap: break-word;
 }
 
 /* All the signatures used in the forum.  If your forum users use Mozilla, Opera, or Safari, you might add max-height here ;). */
@@ -1848,6 +1849,7 @@ p#whoisviewing
 .poster li.stars, .poster li.avatar, .poster li.blurb, li.postcount, li.im_icons ul
 {
 	margin-top: 0.5em;
+	word-wrap: break-word;
 }
 .poster li.avatar
 {
@@ -2782,6 +2784,7 @@ dl
 .signature, .custom_fields_above_signature
 {
 	border-top: 1px #bbb solid;
+	word-wrap: break-word;
 }
 .signature h5
 {

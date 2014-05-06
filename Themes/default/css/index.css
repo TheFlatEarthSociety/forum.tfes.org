@@ -557,6 +557,7 @@ div.pagesection div.floatright input
 	overflow: auto;
 	line-height: 1.4em;
 	padding: 0.1em 0;
+	word-wrap: break-word;
 }
 
 /* All the signatures used in the forum.  If your forum users use Mozilla, Opera, or Safari, you might add max-height here ;). */
@@ -2909,6 +2910,7 @@ dl
 .signature, .custom_fields_above_signature
 {
 	border-top: 1px #ccc solid;
+	word-wrap: break-word;
 }
 .signature h5
 {

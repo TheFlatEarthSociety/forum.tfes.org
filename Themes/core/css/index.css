@@ -454,6 +454,7 @@ table.table_grid thead tr.catbg th.smalltext
 	width: 100%;
 	overflow: auto;
 	line-height: 1.4em;
+	word-wrap: break-word;
 }
 
 /* All the signatures used in the forum.  If your forum users use Mozilla, Opera, or Safari, you might add max-height here ;). */
@@ -465,6 +466,7 @@ table.table_grid thead tr.catbg th.smalltext
 	border-top: 1px solid #666;
 	line-height: 1.4em;
 	font-size: 0.85em;
+	word-wrap: break-word;
 }
 .custom_fields_above_signature
 {
@@ -1784,6 +1786,7 @@ div#pollmoderation
 {
 	width: 15em;
 	float: left;
+	word-wrap: break-word;
 }
 .post
 {

@@ -789,10 +789,12 @@ div#pollmoderation
 {
 	width: 15em;
 	float: left;
+	word-wrap: break word;
 }
 .post
 {
 	clear: right;
+	word-wrap: break-word;
 }
 .postarea
 {
@@ -1596,6 +1598,7 @@ dl
 {
 	width: 100%;
 	border-top: 1px #666 solid;
+	word-wrap: break-word;
 }
 .signature h5
 {

@@ -25,13 +25,24 @@ function smc_toggleImageDimensions()
 	var oImages = document.getElementsByTagName('IMG');
 	for (oImage in oImages)
 	{
-		// Not a resized image? Skip it.
-		if (oImages[oImage].className == undefined || oImages[oImage].className.indexOf('bbc_img resized') == -1)
+		// Not a BBC image? Skip it.
+		if (oImages[oImage].className == undefined || oImages[oImage].className.indexOf('bbc_img') == -1)
 			continue;
 
 		oImages[oImage].style.cursor = 'pointer';
-		oImages[oImage].onclick = function() {
-			this.style.width = this.style.height = this.style.width == 'auto' ? null : 'auto';
+		oImages[oImage].style.maxWidth = '700px';
+		oImages[oImage].onclick = function()
+		{
+			if(this.style.width == 'auto')
+			{
+				this.style.width = this.style.height = null;
+				this.style.maxWidth = '700px';
+			}
+			else
+			{
+				this.style.width = this.style.height = 'auto';
+				this.style.maxWidth = null;
+			}
 		};
 	}
 }

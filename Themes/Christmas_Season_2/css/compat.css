@@ -2331,3 +2331,10 @@ span.hidelink
 	margin: 0 0.2em 0 0 !important;
 	padding: 0 !important;
 }
+
+/* give quotes a min-width */
+
+.bbc_standard_quote .bbc_alternate_quote
+{
+	min-width: 400px;
+}

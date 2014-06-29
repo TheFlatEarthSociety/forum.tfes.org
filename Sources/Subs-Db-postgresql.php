@@ -293,7 +293,7 @@ function smf_db_query($identifier, $db_string, $db_values = array(), $connection
 			'~(.)$~' => '$1 ORDER BY LENGTH(user_agent) DESC',
 		),
 		'unread_replies' => array(
-			'~SELECT\\s+DISTINCT\\s+t.id_topic~' => 'SELECT t.id_topic, {raw:sort}',
+			'~SELECT\\s+DISTINCT\\s+t.id_topic~' => 'SELECT DISTINCT t.id_topic, {raw:sort}',
 		),
 		'profile_board_stats' => array(
 			'~COUNT\(\*\) \/ MAX\(b.num_posts\)~' => 'CAST(COUNT(*) AS DECIMAL) / CAST(b.num_posts AS DECIMAL)',

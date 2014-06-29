@@ -8,10 +8,10 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.7
+ * @version 2.0.8
  */
 
-$GLOBALS['current_smf_version'] = '2.0.7';
+$GLOBALS['current_smf_version'] = '2.0.8';
 $GLOBALS['db_script_version'] = '2-0';
 
 $GLOBALS['required_php_version'] = '4.1.0';
@@ -1962,11 +1962,6 @@ function updateSettingsFile($vars)
 	}
 	fwrite($fp, $settingsArray[$i] . '?' . '>');
 	fclose($fp);
-
-	// Even though on normal installations the filemtime should prevent this being used by the installer incorrectly
-	// it seems that there are times it might not. So let's MAKE it dump the cache.
-	if (function_exists('opcache_invalidate'))
-		opcache_invalidate(dirname(__FILE__) . '/Settings.php', true);
 
 	return true;
 }

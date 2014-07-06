@@ -307,7 +307,7 @@ function smf_db_query($identifier, $db_string, $db_values = array(), $connection
 		$db_string = preg_replace(array_keys($replacements[$identifier]), array_values($replacements[$identifier]), $db_string);
 
 	// Limits need to be a little different.
-	$db_string = preg_replace('~LIMIT\s(\d+|{int:.+}),\s*(\d+|{int:.+})\s*$~i', 'LIMIT $2 OFFSET $1', $db_string);
+	$db_string = preg_replace('~(\s)LIMIT\s(\d+|{int:.+}),\s*(\d+|{int:.+})\s*$~i', '$1LIMIT $3 OFFSET $2', $db_string);
 
 	if (trim($db_string) == '')
 		return false;

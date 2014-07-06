@@ -985,7 +985,7 @@ function action_get_participated_topic()
         FROM {db_prefix}messages AS m
             INNER JOIN {db_prefix}boards AS b ON (b.id_board = m.id_board AND {query_see_board})
         WHERE m.id_member = {int:current_member}
-        GROUP BY m.id_topic
+        GROUP BY b.id_board, m.id_topic
         ORDER BY id_msg DESC
         LIMIT {int:offset}, {int:items_per_page}',
         array(

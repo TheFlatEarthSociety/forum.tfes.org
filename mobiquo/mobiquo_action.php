@@ -143,7 +143,7 @@ function build_board($boards, $is_cat = false)
     {
         if(empty($board['id'])) continue;
         $new_post = false;
-        if ($board['new'] || $board['children_new'] || $row['board_read'] < $row['id_msg_updated']) {
+        if ($board['new'] || $board['children_new']) {
             $new_post = true;
             $logo_url = $settings['images_url'].'/'.$context['theme_variant_url'].'on'.($board['new'] ? '' : '2').'.png';
         }

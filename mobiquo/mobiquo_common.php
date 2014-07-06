@@ -568,7 +568,7 @@ function mobiquo_parse_bbc($message, $smileys = true, $cache_id = '', $parse_tag
     $user_info['time_format'] = $user_info['user_time_format'];
     $modSettings['todayMod'] = $modSettings['todayMod_bak'];
     $message = isset($context['user_post_avaible']) && $context['user_post_avaible']? $message : preg_replace('/\[hide\](.*?)\[\/hide\]/','',$message);
-    $message = str_replace('[spoiler]', "\nSpoiler for Hiden:\n[quote]", $message);
+    $message = str_replace('[spoiler]', "\nSpoiler:\n[quote]", $message);
     $message = str_replace('[/spoiler]', '[/quote]', $message);
     $message = parse_bbc($message, $smileys, $cache_id, $parse_tags);
     $user_info['time_format'] = '%Y%m%dT%H:%M:%S+00:00';

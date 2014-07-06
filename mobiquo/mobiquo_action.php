@@ -2186,6 +2186,7 @@ function before_action_get_thread()
 
 function before_action_admin_invite()
 {
+    return;
     global $boardurl, $sourcedir, $smcFunc;
     
     require_once('include/PHPMailer/class.phpmailer.php');

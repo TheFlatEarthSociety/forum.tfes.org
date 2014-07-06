@@ -10,7 +10,7 @@ defined('IN_MOBIQUO') or exit;
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0
+ * @version 2.0.7
  */
 
 if (!defined('SMF'))
@@ -93,6 +93,9 @@ function Display()
 
 	// How much are we sticking on each page?
 	//$context['messages_per_page'] = empty($modSettings['disableCustomPerPage']) && !empty($options['messages_per_page']) && !WIRELESS ? $options['messages_per_page'] : $modSettings['defaultMaxMessages'];
+	//if (WIRELESS) {
+	//	$context['messages_per_page_canonical'] = empty($modSettings['disableCustomPerPage']) && !empty($options['messages_per_page']) ? $options['messages_per_page'] : $modSettings['defaultMaxMessages_orig'];
+	//}
 	$context['messages_per_page'] = isset($GLOBALS['post_per_page']) ? intval($GLOBALS['post_per_page']) : 20;
 
 	// Let's do some work on what to search index.
@@ -553,7 +556,15 @@ function Display()
 	$context['mark_unread_time'] = $topicinfo['new_from'];
 
 	// Set a canonical URL for this page.
-	$context['canonical_url'] = $scripturl . '?topic=' . $topic . '.' . $context['start'];
+	if (WIRELESS) {
+		// The canonical URL goes to the non-WIRELESS display,
+		// so for WIRELESS we need to make sure start is a
+		// multiple of messages_per_page_canonical.
+		$start_canonical = max(0, (int) $context['start'] - ((int) $context['start'] % (int) $context['messages_per_page_canonical']));
+	} else {
+		$start_canonical = $context['start'];
+	}
+	$context['canonical_url'] = $scripturl . '?topic=' . $topic . '.' . $start_canonical;
 
 	// For quick reply we need a response prefix in the default forum language.
 	if (!isset($context['response_prefix']) && !($context['response_prefix'] = cache_get_data('response_prefix', 600)))
@@ -831,7 +842,7 @@ function Display()
 			'blank_id_member' => 0,
 		)
 	);
-	
+
 	if (!isset($context['new_position'])) $context['new_position'] = $start + 1;
 
 	$messages = array();
@@ -1401,13 +1412,13 @@ function Download()
 
 	// Different browsers like different standards...
 	if ($context['browser']['is_firefox'])
-		header('Content-Disposition: ' . $disposition . '; filename*="UTF-8\'\'' . preg_replace('~&#(\d{3,8});~e', '$fixchar(\'$1\')', $utf8name) . '"');
+		header('Content-Disposition: ' . $disposition . '; filename*=UTF-8\'\'' . rawurlencode(preg_replace_callback('~&#(\d{3,8});~', 'fixchar__callback', $utf8name)));
 
 	elseif ($context['browser']['is_opera'])
-		header('Content-Disposition: ' . $disposition . '; filename="' . preg_replace('~&#(\d{3,8});~e', '$fixchar(\'$1\')', $utf8name) . '"');
+		header('Content-Disposition: ' . $disposition . '; filename="' . preg_replace_callback('~&#(\d{3,8});~', 'fixchar__callback', $utf8name) . '"');
 
 	elseif ($context['browser']['is_ie'])
-		header('Content-Disposition: ' . $disposition . '; filename="' . urlencode(preg_replace('~&#(\d{3,8});~e', '$fixchar(\'$1\')', $utf8name)) . '"');
+		header('Content-Disposition: ' . $disposition . '; filename="' . urlencode(preg_replace_callback('~&#(\d{3,8});~', 'fixchar__callback', $utf8name)) . '"');
 
 	else
 		header('Content-Disposition: ' . $disposition . '; filename="' . $utf8name . '"');

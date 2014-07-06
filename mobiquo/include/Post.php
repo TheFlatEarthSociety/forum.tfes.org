@@ -10,7 +10,7 @@ defined('IN_MOBIQUO') or exit;
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0
+ * @version 2.0.7
  */
 
 if (!defined('SMF'))
@@ -821,53 +821,53 @@ function Post()
 			$message_content = '';
 			foreach($pids as $value)
 			{
-				// Make sure they _can_ quote this post, and if so get it.
-				$request = $smcFunc['db_query']('', '
-					SELECT m.subject, IFNULL(mem.real_name, m.poster_name) AS poster_name, m.poster_time, m.body
-					FROM {db_prefix}messages AS m
-						INNER JOIN {db_prefix}boards AS b ON (b.id_board = m.id_board AND {query_see_board})
-						LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = m.id_member)
-					WHERE m.id_msg = {int:id_msg}' . (!$modSettings['postmod_active'] || allowedTo('approve_posts') ? '' : '
-						AND m.approved = {int:is_approved}') . '
-					LIMIT 1',
-					array(
+			// Make sure they _can_ quote this post, and if so get it.
+			$request = $smcFunc['db_query']('', '
+				SELECT m.subject, IFNULL(mem.real_name, m.poster_name) AS poster_name, m.poster_time, m.body
+				FROM {db_prefix}messages AS m
+					INNER JOIN {db_prefix}boards AS b ON (b.id_board = m.id_board AND {query_see_board})
+					LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = m.id_member)
+				WHERE m.id_msg = {int:id_msg}' . (!$modSettings['postmod_active'] || allowedTo('approve_posts') ? '' : '
+					AND m.approved = {int:is_approved}') . '
+				LIMIT 1',
+				array(
 						'id_msg' => (int) $value,
-						'is_approved' => 1,
-					)
-				);
-				if ($smcFunc['db_num_rows']($request) == 0)
-					fatal_lang_error('quoted_post_deleted', false);
-				list ($form_subject, $mname, $mdate, $form_message) = $smcFunc['db_fetch_row']($request);
-				$smcFunc['db_free_result']($request);
-	
-				// Add 'Re: ' to the front of the quoted subject.
-				if (trim($context['response_prefix']) != '' && $smcFunc['strpos']($form_subject, trim($context['response_prefix'])) !== 0)
-					$form_subject = $context['response_prefix'] . $form_subject;
-	
-				// Censor the message and subject.
-				censorText($form_message);
-				censorText($form_subject);
-	
-				// But if it's in HTML world, turn them into htmlspecialchar's so they can be edited!
-				if (strpos($form_message, '[html]') !== false)
-				{
-					$parts = preg_split('~(\[/code\]|\[code(?:=[^\]]+)?\])~i', $form_message, -1, PREG_SPLIT_DELIM_CAPTURE);
-					for ($i = 0, $n = count($parts); $i < $n; $i++)
-					{
-						// It goes 0 = outside, 1 = begin tag, 2 = inside, 3 = close tag, repeat.
-						if ($i % 4 == 0)
-							$parts[$i] = preg_replace('~\[html\](.+?)\[/html\]~ise', '\'[html]\' . preg_replace(\'~<br\s?/?' . '>~i\', \'&lt;br /&gt;<br />\', \'$1\') . \'[/html]\'', $parts[$i]);
-					}
-					$form_message = implode('', $parts);
-				}
-	
-				$form_message = preg_replace('~<br ?/?' . '>~i', "\n", $form_message);
-	
-				// Remove any nested quotes, if necessary.
-				if (!empty($modSettings['removeNestedQuotes']))
-					$form_message = preg_replace(array('~\n?\[quote.*?\].+?\[/quote\]\n?~is', '~^\n~', '~\[/quote\]~'), '', $form_message);
+					'is_approved' => 1,
+				)
+			);
+			if ($smcFunc['db_num_rows']($request) == 0)
+				fatal_lang_error('quoted_post_deleted', false);
+			list ($form_subject, $mname, $mdate, $form_message) = $smcFunc['db_fetch_row']($request);
+			$smcFunc['db_free_result']($request);
 
-				// Add a quote string on the front and end.
+			// Add 'Re: ' to the front of the quoted subject.
+			if (trim($context['response_prefix']) != '' && $smcFunc['strpos']($form_subject, trim($context['response_prefix'])) !== 0)
+				$form_subject = $context['response_prefix'] . $form_subject;
+
+			// Censor the message and subject.
+			censorText($form_message);
+			censorText($form_subject);
+
+			// But if it's in HTML world, turn them into htmlspecialchar's so they can be edited!
+			if (strpos($form_message, '[html]') !== false)
+			{
+				$parts = preg_split('~(\[/code\]|\[code(?:=[^\]]+)?\])~i', $form_message, -1, PREG_SPLIT_DELIM_CAPTURE);
+				for ($i = 0, $n = count($parts); $i < $n; $i++)
+				{
+					// It goes 0 = outside, 1 = begin tag, 2 = inside, 3 = close tag, repeat.
+					if ($i % 4 == 0)
+						$parts[$i] = preg_replace_callback('~\[html\](.+?)\[/html\]~is', create_function('$m', ' return \'[html]\' . preg_replace(\'~<br\s?/?' . '>~i\', \'&lt;br /&gt;<br />\', "$m[1]") . \'[/html]\';'), $parts[$i]);
+				}
+				$form_message = implode('', $parts);
+			}
+
+			$form_message = preg_replace('~<br ?/?' . '>~i', "\n", $form_message);
+
+			// Remove any nested quotes, if necessary.
+			if (!empty($modSettings['removeNestedQuotes']))
+				$form_message = preg_replace(array('~\n?\[quote.*?\].+?\[/quote\]\n?~is', '~^\n~', '~\[/quote\]~'), '', $form_message);
+
+			// Add a quote string on the front and end.
 				$message_content .= '[quote author=' . $mname . ' link=topic=' . $topic . '.msg' . (int) $value . '#msg' . (int) $value . ' date=' . $mdate . ']' . "\n" . rtrim($form_message) . "\n[/quote]\n\n";
 			}
 			$form_message = $message_content;
@@ -1219,7 +1219,7 @@ function Post2()
 	global $board, $topic, $txt, $modSettings, $sourcedir, $context;
 	global $user_info, $board_info, $options, $smcFunc;
 	global $request_name;
-	
+
 	// Sneaking off, are we?
 	if (empty($_POST) && empty($topic))
 		redirectexit('action=post;board=' . $board . '.0');
@@ -1541,7 +1541,7 @@ function Post2()
 		preparsecode($_POST['message']);
 
 		// Let's see if there's still some content left without the tags.
-		if ($smcFunc['htmltrim'](strip_tags(parse_bbc($_POST['message'], false), '<img>')) === '' && (!allowedTo('admin_forum') || strpos($_POST['message'], '[html]') === false))
+		if ($smcFunc['htmltrim'](strip_tags(parse_bbc($_POST['message'], false), '<object><embed><iframe><object><embed><iframe><img>')) === '' && (!allowedTo('admin_forum') || strpos($_POST['message'], '[html]') === false))
 			$post_errors[] = 'no_message';
 	}
 	if (isset($_POST['calendar']) && !isset($_REQUEST['deleteevent']) && $smcFunc['htmltrim']($_POST['evtitle']) === '')
@@ -2103,7 +2103,7 @@ function Post2()
 				tapatalk_push_quote_tag($msgOptions['id'], true);
 			else if(file_exists($boarddir . '/mobiquo/push_hook.php'))
 			{
-				include($boarddir . '/mobiquo/push_hook.php');
+				include_once($boarddir . '/mobiquo/push_hook.php');
 				tapatalk_push_quote_tag($msgOptions['id'], true);
 			}
 		}
@@ -2118,7 +2118,7 @@ function Post2()
 					tapatalk_push_reply($msgOptions['id']);
 				else if(file_exists($boarddir . '/mobiquo/push_hook.php'))
 				{
-					include($boarddir . '/mobiquo/push_hook.php');
+					include_once($boarddir . '/mobiquo/push_hook.php');
 					tapatalk_push_reply($msgOptions['id']);
 				}
 			}

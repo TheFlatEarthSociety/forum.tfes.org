@@ -106,17 +106,17 @@ function Notify()
     }
     else
     {
-    		// Just turn notifications off.
-    		$smcFunc['db_query']('', '
-        			DELETE FROM {db_prefix}log_notify
-        			WHERE id_member = {int:current_member}
-        				AND id_topic = {int:current_topic}',
-    			array(
-    				'current_member' => $user_info['id'],
-    				'current_topic' => $topic,
-    			)
-    		);
-    }
+		// Just turn notifications off.
+		$smcFunc['db_query']('', '
+			DELETE FROM {db_prefix}log_notify
+			WHERE id_member = {int:current_member}
+				AND id_topic = {int:current_topic}',
+			array(
+				'current_member' => $user_info['id'],
+				'current_topic' => $topic,
+			)
+		);
+	}
 	}
 
 	// Send them back to the topic.
@@ -178,7 +178,7 @@ function BoardNotify()
 	// ...or off?
 	else
 	{
-    checkSession('get');
+		checkSession('get');
     if ($_GET['isUnsubscribeAll'])
     {
         $smcFunc['db_query']('', '
@@ -191,17 +191,17 @@ function BoardNotify()
     }
     else
     {
-        // Turn notification off for this board.
-        $smcFunc['db_query']('', '
-            	DELETE FROM {db_prefix}log_notify
-            	WHERE id_member = {int:current_member}
-            		AND id_board = {int:current_board}',
-        	array(
-        		'current_board' => $board,
-        		'current_member' => $user_info['id'],
-        	)
-        );
-    }
+		// Turn notification off for this board.
+		$smcFunc['db_query']('', '
+			DELETE FROM {db_prefix}log_notify
+			WHERE id_member = {int:current_member}
+				AND id_board = {int:current_board}',
+			array(
+				'current_board' => $board,
+				'current_member' => $user_info['id'],
+			)
+		);
+	}
 	}
 
 	// Back to the board!

@@ -10,7 +10,7 @@ defined('IN_MOBIQUO') or exit;
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.6
+ * @version 2.0.7
  */
 
 if (!defined('SMF'))
@@ -526,7 +526,7 @@ function updateMemberData($members, $data)
 		{
 			$val = $var . ' ' . $val . ' 1';
 			$type = 'raw';
-	}
+		}
 		// Ensure Thank-o_matic posts don't overflow or underflow.
 		if (isset($modSettings['integrate_pre_include']) && strpos($modSettings['integrate_pre_include'],'$sourcedir/Subs-ThankYou.php') && in_array($var, array('thank_you_post_became', 'thank_you_post_made')))
 		{
@@ -667,21 +667,18 @@ function constructPageIndex($base_url, &$start, $max_value, $num_per_page, $flex
 
 	$base_link = '<a class="navPages" href="' . ($flexible_start ? $base_url : strtr($base_url, array('%' => '%%')) . ';start=%1$d') . '">%2$s</a> ';
 
+	$pageindex = '';
+
+	// Show the left arrow.
+	$pageindex .= $start == 0 ? ' ' : sprintf($base_link, $start - $num_per_page, '&lt;&nbsp;Back&nbsp;');
+
 	// Compact pages is off or on?
 	if (empty($modSettings['compactTopicPagesEnable']))
 	{
-		// Show the left arrow.
-		$pageindex = $start == 0 ? ' ' : sprintf($base_link, $start - $num_per_page, '&#171;');
-
 		// Show all the pages.
 		$display_page = 1;
 		for ($counter = 0; $counter < $max_value; $counter += $num_per_page)
-			$pageindex .= $start == $counter && !$start_invalid ? '<strong>' . $display_page++ . '</strong> ' : sprintf($base_link, $counter, $display_page++);
-
-		// Show the right arrow.
-		$display_page = ($start + $num_per_page) > $max_value ? $max_value : ($start + $num_per_page);
-		if ($start != $counter - $max_value && !$start_invalid)
-			$pageindex .= $display_page > $counter - $num_per_page ? ' ' : sprintf($base_link, $display_page, '&#187;');
+			$pageindex .= $start == $counter && !$start_invalid ? '[<strong id="currentPage">' . $display_page++ . '</strong>] ' : sprintf($base_link, $counter, $display_page++);
 	}
 	else
 	{
@@ -690,9 +687,9 @@ function constructPageIndex($base_url, &$start, $max_value, $num_per_page, $flex
 
 		// Show the first page. (>1< ... 6 7 [8] 9 10 ... 15)
 		if ($start > $num_per_page * $PageContiguous)
-			$pageindex = sprintf($base_link, 0, '1');
+			$pageindex .= sprintf($base_link, 0, '1');
 		else
-			$pageindex = '';
+			$pageindex .= '';
 
 		// Show the ... after the first page.  (1 >...< 6 7 [8] 9 10 ... 15)
 		if ($start > $num_per_page * ($PageContiguous + 1))
@@ -703,12 +700,12 @@ function constructPageIndex($base_url, &$start, $max_value, $num_per_page, $flex
 			if ($start >= $num_per_page * $nCont)
 			{
 				$tmpStart = $start - $num_per_page * $nCont;
-				$pageindex.= sprintf($base_link, $tmpStart, $tmpStart / $num_per_page + 1);
+				$pageindex .= sprintf($base_link, $tmpStart, $tmpStart / $num_per_page + 1);
 			}
 
 		// Show the current page. (1 ... 6 7 >[8]< 9 10 ... 15)
 		if (!$start_invalid)
-			$pageindex .= '[<strong>' . ($start / $num_per_page + 1) . '</strong>] ';
+			$pageindex .= '[<strong id="currentPage">' . ($start / $num_per_page + 1) . '</strong>] ';
 		else
 			$pageindex .= sprintf($base_link, $start, $start / $num_per_page + 1);
 
@@ -729,6 +726,11 @@ function constructPageIndex($base_url, &$start, $max_value, $num_per_page, $flex
 		if ($start + $num_per_page * $PageContiguous < $tmpMaxPages)
 			$pageindex .= sprintf($base_link, $tmpMaxPages, $tmpMaxPages / $num_per_page + 1);
 	}
+      
+	// Show the right arrow
+	$next_page = $start + $num_per_page;
+	if (($next_page < $max_value) && !$start_invalid)
+		$pageindex .= sprintf($base_link, $next_page, '&nbsp;Next&nbsp;&gt;');
 
 	return $pageindex;
 }
@@ -1060,6 +1062,11 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 				'test' => '[#]?([A-Za-z][A-Za-z0-9_\-]*)\]',
 				'before' => '<span id="post_$1">',
 				'after' => '</span>',
+			),
+			array(
+				'tag' => 'audio',
+				'type' => 'unparsed_content',
+				'content' => '<div class="bbc_audio"><audio controls src="$1">Your browser does not support the HTML5 Audio element.</audio><br /><a href="$1" class="bbc_link" target="_blank">$1</a></div>',
 			),
 			/*
 			array(
@@ -1613,6 +1620,23 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 				'disabled_after' => ' ($1)',
 			),
 			array(
+				'tag' => 'video',
+				'type' => 'unparsed_content',
+				'content' => '<div class="bbc_video"><video controls src="$1">Your browser does not support the HTML5 Video element.</video><br /><a href="$1" class="bbc_link" target="_blank">$1</a></div>',
+			),
+			array(
+				'tag' => 'youtube',
+				'type' => 'unparsed_content',
+				'content' => '<iframe style="border:0;" width="642" height="392" src="http://www.youtube.com/embed/$1" allowfullscreen></iframe>',
+				'validate' => create_function('&$tag, &$data, $disabled', '
+				if (isset($disabled[\'url\']))
+					$tag[\'content\'] = \'http://www.youtube.com/watch?v=$1\';
+				$pattern = \'~(?:http|https|)(?::\/\/|)(?:www.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[a-z0-9;:@?&%=+\/\$_.-]*~i\';
+				if (preg_match($pattern, $data, $matches))
+					$data = $matches[1];'),
+				'disabled_content' => 'http://www.youtube.com/watch?v=$1',
+			),
+			array(
 				'tag' => 'white',
 				'before' => '<span style="color: white;" class="bbc_color">',
 				'after' => '</span>',
@@ -1669,6 +1693,43 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 				'after' => ' :-*</span>',
 			);
 		}
+
+		// BBC [you] tag. ;)
+		$codes[] = array(
+				'tag' => 'you',
+				'type' => 'closed',
+				'content' => (!$context['user']['is_guest'] ? $context['user']['name'] : (!empty($txt[28]) ? $txt[28] : $txt['guest'])),
+		);
+
+		// [tex] tag for writing LaTeX.
+		$codes [] = array (
+				'tag' => 'tex',
+				'type' => 'unparsed_content',
+				'content' => '<img src="http://mathtex.tfes.org/$1" alt="$1" />',
+				'validate' => create_function('&$tag, &$data, $disabled', '
+					$data = strtr($data, array(\'&nbsp;\' => \' \', \'<br />\' => \'
+\'));
+					$data = rawurlencode($data);
+				'),
+				'disabled_content' => '($1)',
+		);
+    
+		// [spoiler] tag
+		$codes[] = array(
+				'tag' => 'spoiler',
+				'type' => 'unparsed_content',
+ 				'content' => '<span style="background: black; color: black" onclick="(function(obj){ (obj.style.background.indexOf(\'black\') != -1) ? obj.style.background = \'\' : obj.style.background = \'black\'; })(this)">$1</span>'
+		);
+
+		// [spoiler color=plzcolor]
+		$codes[] = array(
+				'tag' => 'spoiler',
+				'type' => 'unparsed_content',
+				'parameters' => array(
+					'color' => array('match' => '(#[\da-fA-F]{3}|#[\da-fA-F]{6}|[A-Za-z]{1,20}|rgb\(\d{1,3}, ?\d{1,3}, ?\d{1,3}\))'),
+				),
+				'content' => '<span style="background: {color}; color: {color}" onclick="(function(obj){ (obj.style.background.indexOf(\'{color}\') != -1) ? obj.style.background = \'\' : obj.style.background = \'{color}\'; })(this)">$1</span>'
+		);
 
 		foreach ($codes as $code)
 		{
@@ -1855,11 +1916,14 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 						$data = strtr($data, array('&#039;' => '\'', '&nbsp;' => $context['utf8'] ? "\xC2\xA0" : "\xA0", '&quot;' => '>">', '"' => '<"<', '&lt;' => '<lt<'));
 
 						// Only do this if the preg survives.
+						//First line in each array added by "Simple_Youtube_Video_Embed_BBC" mod to parse youtube videos automatically
 						if (is_string($result = preg_replace(array(
+							'~(?:http|https|)(?::\/\/|)(?:www.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[a-z0-9;:@?&%=+\/\$_.-]*~i',
 							'~(?<=[\s>\.(;\'"]|^)((?:http|https)://[\w\-_%@:|]+(?:\.[\w\-_%]+)*(?::\d+)?(?:/[\w\-_\~%\.@!,\?&;=#(){}+:\'\\\\]*)*[/\w\-_\~%@\?;=#}\\\\])~i',
 							'~(?<=[\s>\.(;\'"]|^)((?:ftp|ftps)://[\w\-_%@:|]+(?:\.[\w\-_%]+)*(?::\d+)?(?:/[\w\-_\~%\.@,\?&;=#(){}+:\'\\\\]*)*[/\w\-_\~%@\?;=#}\\\\])~i',
 							'~(?<=[\s>(\'<]|^)(www(?:\.[\w\-_]+)+(?::\d+)?(?:/[\w\-_\~%\.@!,\?&;=#(){}+:\'\\\\]*)*[/\w\-_\~%@\?;=#}\\\\])~i'
 						), array(
+							'[youtube]$1[/youtube]',
 							'[url]$1[/url]',
 							'[ftp]$1[/ftp]',
 							'[url=http://$1]$1[/url]'
@@ -1887,9 +1951,9 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 				{
 					// This is done in a roundabout way because $breaker has "long words" :P.
 					$data = strtr($data, array($breaker => '< >', '&nbsp;' => $context['utf8'] ? "\xC2\xA0" : "\xA0"));
-					$data = preg_replace(
-						'~(?<=[>;:!? ' . $non_breaking_space . '\]()]|^)([\w' . ($context['utf8'] ? '\pL' : '') . '\.]{' . $modSettings['fixLongWords'] . ',})~e' . ($context['utf8'] ? 'u' : ''),
-						'preg_replace(\'/(.{' . ($modSettings['fixLongWords'] - 1) . '})/' . ($context['utf8'] ? 'u' : '') . '\', \'\\$1< >\', \'$1\')',
+					$data = preg_replace_callback(
+						'~(?<=[>;:!? ' . $non_breaking_space . '\]()]|^)([\w' . ($context['utf8'] ? '\pL' : '') . '\.]{' . $modSettings['fixLongWords'] . ',})~' . ($context['utf8'] ? 'u' : ''),
+						create_function('$m', 'return preg_replace(\'~(.{' . ($modSettings['fixLongWords'] - 1) . '})~' . ($context['utf8'] ? 'u' : '') . '\', \'$1< >\', "$m[1]");'),
 						$data);
 					$data = strtr($data, array('< >' => $breaker, $context['utf8'] ? "\xC2\xA0" : "\xA0" => '&nbsp;'));
 				}
@@ -2451,6 +2515,9 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 	// Cleanup whitespace.
 	$message = strtr($message, array('  ' => ' &nbsp;', "\r" => '', "\n" => '<br />', '<br /> ' => '<br />&nbsp;', '&#13;' => "\n"));
 
+	// Parse tapatalk emojis.
+	$message = preg_replace('/\[emoji(\d+)\]/i', '<img src="https://s3.amazonaws.com/tapatalk-emoji/emoji$1.png" />', $message);
+
 	// Cache the output if it took some time...
 	if (isset($cache_key, $cache_t) && array_sum(explode(' ', microtime())) - array_sum(explode(' ', $cache_t)) > 0.05)
 		cache_put_data($cache_key, $message, 240);
@@ -2534,13 +2601,38 @@ function parsesmileys(&$message)
 			$searchParts[] = preg_quote(htmlspecialchars($smileysfrom[$i], ENT_QUOTES), '~');
 		}
 
-		$smileyPregSearch = '~(?<=[>:\?\.\s' . $non_breaking_space . '[\]()*\\\;]|^)(' . implode('|', $searchParts) . ')(?=[^[:alpha:]0-9]|$)~e' . ($context['utf8'] ? 'u' : '');
+		$smileyPregSearch = '~(?<=[>:\?\.\s' . $non_breaking_space . '[\]()*\\\;]|^)(' . implode('|', $searchParts) . ')(?=[^[:alpha:]0-9]|$)~' . ($context['utf8'] ? 'u' : '');
 	}
 
 	// Replace away!
-	$message = preg_replace($smileyPregSearch, 'isset($smileyPregReplacements[\'$1\']) ? $smileyPregReplacements[\'$1\'] : \'\'', $message);
+
+	// TODO: When SMF supports only PHP 5.3+, we can change this to "uses" keyword and simplify this.
+	$callback = pregReplaceCurry('smielyPregReplaceCallback', 2);
+	$message = preg_replace_callback($smileyPregSearch, $callback($smileyPregReplacements), $message);
 }
 
+// This allows use to do delayed argument binding and bring in the replacement variables for some preg replacements.
+function pregReplaceCurry($func, $arity)
+{
+	return create_function('', "
+		\$args = func_get_args();
+		if(count(\$args) >= $arity)
+			return call_user_func_array('$func', \$args);
+		\$args = var_export(\$args, 1);
+		return create_function('','
+			\$a = func_get_args();
+			\$z = ' . \$args . ';
+			\$a = array_merge(\$z,\$a);
+			return call_user_func_array(\'$func\', \$a);
+		');
+	");
+}
+
+// Our callback that does the actual smiley replacements.
+function smielyPregReplaceCallback($replacements, $matches)
+{
+    return $replacements[$matches[1]];
+}
 // Highlight any code...
 function highlight_php_code($code)
 {
@@ -2641,11 +2733,10 @@ function writeLog($force = false)
 
 		$smcFunc['db_query']('', '
 			UPDATE {db_prefix}log_online
-			SET log_time = {int:log_time}, ip = IFNULL(INET_ATON({string:ip}), 0), url = {string:url}
+			SET log_time = {int:log_time}, ip = \'' . $user_info['ip'] . '\', url = {string:url}
 			WHERE session = {string:session}',
 			array(
 				'log_time' => time(),
-				'ip' => $user_info['ip'],
 				'url' => $serialized,
 				'session' => $session_id,
 			)
@@ -2674,7 +2765,7 @@ function writeLog($force = false)
 		$smcFunc['db_insert']($do_delete ? 'ignore' : 'replace',
 			'{db_prefix}log_online',
 			array('session' => 'string', 'id_member' => 'int', 'id_spider' => 'int', 'log_time' => 'int', 'ip' => 'raw', 'url' => 'string'),
-			array($session_id, $user_info['id'], empty($_SESSION['id_robot']) ? 0 : $_SESSION['id_robot'], time(), 'IFNULL(INET_ATON(\'' . $user_info['ip'] . '\'), 0)', $serialized),
+			array($session_id, $user_info['id'], empty($_SESSION['id_robot']) ? 0 : $_SESSION['id_robot'], time(), '\'' . $user_info['ip'] . '\'', $serialized),
 			array('session')
 		);
 	}
@@ -2708,7 +2799,7 @@ function writeLog($force = false)
 function redirectexit($setLocation = '', $refresh = false)
 {
 	global $scripturl, $context, $modSettings, $db_show_debug, $db_cache;
-	
+
 	if (defined('IN_MOBIQUO')) return mobiquo_exit($setLocation);
 
 	// In case we have mail to send, better do that - as obExit doesn't always quite make it...
@@ -2743,9 +2834,9 @@ function redirectexit($setLocation = '', $refresh = false)
 	if (!empty($modSettings['queryless_urls']) && (empty($context['server']['is_cgi']) || @ini_get('cgi.fix_pathinfo') == 1 || @get_cfg_var('cgi.fix_pathinfo') == 1) && (!empty($context['server']['is_apache']) || !empty($context['server']['is_lighttpd'])))
 	{
 		if (defined('SID') && SID != '')
-			$setLocation = preg_replace('/^' . preg_quote($scripturl, '/') . '\?(?:' . SID . '(?:;|&|&amp;))((?:board|topic)=[^#]+?)(#[^"]*?)?$/e', "\$scripturl . '/' . strtr('\$1', '&;=', '//,') . '.html\$2?' . SID", $setLocation);
+			$setLocation = preg_replace_callback('~"' . preg_quote($scripturl, '/') . '\?(?:' . SID . '(?:;|&|&amp;))((?:board|topic)=[^#]+?)(#[^"]*?)?$~', create_function('$m', 'global $scripturl; return $scripturl . \'/\' . strtr("$m[1]", \'&;=\', \'//,\') . \'.html?\' . SID . (isset($m[2]) ? "$m[2]" : "");'), $setLocation);
 		else
-			$setLocation = preg_replace('/^' . preg_quote($scripturl, '/') . '\?((?:board|topic)=[^#"]+?)(#[^"]*?)?$/e', "\$scripturl . '/' . strtr('\$1', '&;=', '//,') . '.html\$2'", $setLocation);
+			$setLocation = preg_replace_callback('~"' . preg_quote($scripturl, '/') . '\?((?:board|topic)=[^#"]+?)(#[^"]*?)?$~', create_function('$m', 'global $scripturl; return $scripturl . \'/\' . strtr("$m[1]", \'&;=\', \'//,\') . \'.html\' . (isset($m[2]) ? "$m[2]" : "");'), $setLocation);
 	}
 
 	// Maybe integrations want to change where we are heading?
@@ -2769,7 +2860,7 @@ function obExit($header = null, $do_footer = null, $from_index = false, $from_fa
 {
 	global $context, $settings, $modSettings, $txt, $smcFunc;
 	static $header_done = false, $footer_done = false, $level = 0, $has_fatal_error = false;
-    
+
     // tapatalk add
     if ($_GET['action'] == 'admin' || isset($context['kick_message']))
     {
@@ -3266,7 +3357,7 @@ function setupThemeContext($forceload = false)
 		$_SESSION['unread_messages'] = $user_info['unread_messages'];
 
 		if (allowedTo('moderate_forum'))
-			$context['unapproved_members'] = (!empty($modSettings['registration_method']) && $modSettings['registration_method'] == 2) || !empty($modSettings['approveAccountDeletion']) ? $modSettings['unapprovedMembers'] : 0;
+			$context['unapproved_members'] = $modSettings['unapprovedMembers'];
 		$context['show_open_reports'] = empty($user_settings['mod_prefs']) || $user_settings['mod_prefs'][0] == 1;
 
 		$context['user']['avatar'] = array();
@@ -3756,55 +3847,14 @@ function ip2range($fullip)
 	return $ip_array;
 }
 
-// Lookup an IP; try shell_exec first because we can do a timeout on it.
+// Lookup an IP.
 function host_from_ip($ip)
 {
-	global $modSettings;
-
 	if (($host = cache_get_data('hostlookup-' . $ip, 600)) !== null)
 		return $host;
-	$t = microtime();
 
-	// If we can't access nslookup/host, PHP 4.1.x might just crash.
-	if (@version_compare(PHP_VERSION, '4.2.0') == -1)
-		$host = false;
-
-	// Try the Linux host command, perhaps?
-	if (!isset($host) && (strpos(strtolower(PHP_OS), 'win') === false || strpos(strtolower(PHP_OS), 'darwin') !== false) && mt_rand(0, 1) == 1)
-	{
-		if (!isset($modSettings['host_to_dis']))
-			$test = @shell_exec('host -W 1 ' . @escapeshellarg($ip));
-		else
-			$test = @shell_exec('host ' . @escapeshellarg($ip));
-
-		// Did host say it didn't find anything?
-		if (strpos($test, 'not found') !== false)
-			$host = '';
-		// Invalid server option?
-		elseif ((strpos($test, 'invalid option') || strpos($test, 'Invalid query name 1')) && !isset($modSettings['host_to_dis']))
-			updateSettings(array('host_to_dis' => 1));
-		// Maybe it found something, after all?
-		elseif (preg_match('~\s([^\s]+?)\.\s~', $test, $match) == 1)
-			$host = $match[1];
-	}
-
-	// This is nslookup; usually only Windows, but possibly some Unix?
-	if (!isset($host) && strpos(strtolower(PHP_OS), 'win') !== false && strpos(strtolower(PHP_OS), 'darwin') === false && mt_rand(0, 1) == 1)
-	{
-		$test = @shell_exec('nslookup -timeout=1 ' . @escapeshellarg($ip));
-		if (strpos($test, 'Non-existent domain') !== false)
-			$host = '';
-		elseif (preg_match('~Name:\s+([^\s]+)~', $test, $match) == 1)
-			$host = $match[1];
-	}
-
-	// This is the last try :/.
-	if (!isset($host) || $host === false)
-		$host = @gethostbyaddr($ip);
-
-	// It took a long time, so let's cache it!
-	if (array_sum(explode(' ', microtime())) - array_sum(explode(' ', $t)) > 0.5)
-		cache_put_data('hostlookup-' . $ip, $host, 600);
+	$host = @gethostbyaddr($ip);
+	cache_put_data('hostlookup-' . $ip, $host, 600);
 
 	return $host;
 }
@@ -3944,6 +3994,7 @@ function setupMenuContext()
 	$context['allow_search'] = allowedTo('search_posts');
 	$context['allow_admin'] = allowedTo(array('admin_forum', 'manage_boards', 'manage_permissions', 'moderate_forum', 'manage_membergroups', 'manage_bans', 'send_mail', 'edit_news', 'manage_attachments', 'manage_smileys'));
 	$context['allow_edit_profile'] = !$user_info['is_guest'] && allowedTo(array('profile_view_own', 'profile_view_any', 'profile_identity_own', 'profile_identity_any', 'profile_extra_own', 'profile_extra_any', 'profile_remove_own', 'profile_remove_any', 'moderate_forum', 'manage_membergroups', 'profile_title_own', 'profile_title_any'));
+	$context['allow_banlist'] = allowedTo('view_banlist');
 	$context['allow_memberlist'] = allowedTo('view_mlist');
 	$context['allow_calendar'] = allowedTo('calendar_view') && !empty($modSettings['cal_enabled']);
 	$context['allow_moderation_center'] = $context['user']['can_mod'];
@@ -3955,13 +4006,25 @@ function setupMenuContext()
 	if (($menu_buttons = cache_get_data('menu_buttons-' . implode('_', $user_info['groups']) . '-' . $user_info['language'], $cacheTime)) === null || time() - $cacheTime <= $modSettings['settings_updated'])
 	{
 		$buttons = array(
+			'realhome' => array (
+				'title' => "Home",
+				'href'  => "http://www.tfes.org/",
+				'show'  => true,
+				'sub_buttons' => array (),
+				'is_last' => $context['right_to_left'],
+			),
 			'home' => array(
 				'title' => $txt['home'],
 				'href' => $scripturl,
 				'show' => true,
 				'sub_buttons' => array(
 				),
-				'is_last' => $context['right_to_left'],
+			),
+			'wiki' => array(
+				'title' => "Wiki",
+				'href'  => "http://wiki.tfes.org/",
+				'show'  => true,
+				'sub_buttons' => array (),
 			),
 			'help' => array(
 				'title' => $txt['help'],
@@ -4092,6 +4155,11 @@ function setupMenuContext()
 					),
 				),
 			),
+			'banlist' => array(
+				'title' => $txt['banlist_menu'],
+				'href' => $scripturl . '?action=banlist',
+				'show' => $context['allow_banlist'],
+			),
 			'mlist' => array(
 				'title' => $txt['members_title'],
 				'href' => $scripturl . '?action=mlist',
@@ -4161,11 +4229,11 @@ function setupMenuContext()
 							unset($button['sub_buttons'][$key]);
 
 						// 2nd level sub buttons next...
-						if(!empty($subbutton['sub_buttons']))
+						if (!empty($subbutton['sub_buttons']))
 						{
-							foreach($subbutton['sub_buttons'] as $key2 => $sub_button2)
+							foreach ($subbutton['sub_buttons'] as $key2 => $sub_button2)
 							{
-								if(empty($sub_button2['show']))
+								if (empty($sub_button2['show']))
 									unset($button['sub_buttons'][$key]['sub_buttons'][$key2]);
 							}
 						}
@@ -4296,6 +4364,98 @@ function add_integration_function($hook, $function, $permanent = true)
 
 	$functions[] = $function;
 	$modSettings[$hook] = implode(',', $functions);
+}
+
+// Decode numeric html entities to their ascii or UTF8 equivalent character.
+function replaceEntities__callback($matches)
+{
+	global $context;
+
+	if (!isset($matches[2]))
+		return '';
+
+	$num = $matches[2][0] === 'x' ? hexdec(substr($matches[2], 1)) : (int) $matches[2];
+
+	// remove left to right / right to left overrides
+	if ($num === 0x202D || $num === 0x202E)
+		return '';
+
+	// Quote, Ampersand, Apostrophe, Less/Greater Than get html replaced
+	if (in_array($num, array(0x22, 0x26, 0x27, 0x3C, 0x3E)))
+		return '&#' . $num . ';';
+
+	if (empty($context['utf8']))
+	{
+		// no control characters
+		if ($num < 0x20)
+			return '';
+		// text is text
+		elseif ($num < 0x80)
+			return chr($num);
+		// all others get html-ised
+		else
+			return '&#' . $matches[2] . ';';
+	}
+	else
+	{
+		// <0x20 are control characters, 0x20 is a space, > 0x10FFFF is past the end of the utf8 character set
+		// 0xD800 >= $num <= 0xDFFF are surrogate markers (not valid for utf8 text)
+		if ($num < 0x20 || $num > 0x10FFFF || ($num >= 0xD800 && $num <= 0xDFFF))
+			return '';
+		// <0x80 (or less than 128) are standard ascii characters a-z A-Z 0-9 and puncuation
+		elseif ($num < 0x80)
+			return chr($num);
+		// <0x800 (2048)
+		elseif ($num < 0x800)
+			return chr(($num >> 6) + 192) . chr(($num & 63) + 128);
+		// < 0x10000 (65536)
+		elseif ($num < 0x10000)
+			return chr(($num >> 12) + 224) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
+		// <= 0x10FFFF (1114111)
+		else
+			return chr(($num >> 18) + 240) . chr((($num >> 12) & 63) + 128) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
+	}
+}
+
+// Converts html entities to utf8 equivalents.
+function fixchar__callback($matches)
+{
+	if (!isset($matches[1]))
+		return '';
+
+	$num = $matches[1][0] === 'x' ? hexdec(substr($matches[1], 1)) : (int) $matches[1];
+
+	// <0x20 are control characters, > 0x10FFFF is past the end of the utf8 character set
+	// 0xD800 >= $num <= 0xDFFF are surrogate markers (not valid for utf8 text), 0x202D-E are left to right overrides
+	if ($num < 0x20 || $num > 0x10FFFF || ($num >= 0xD800 && $num <= 0xDFFF) || $num === 0x202D || $num === 0x202E)
+		return '';
+	// <0x80 (or less than 128) are standard ascii characters a-z A-Z 0-9 and puncuation
+	elseif ($num < 0x80)
+		return chr($num);
+	// <0x800 (2048)
+	elseif ($num < 0x800)
+		return chr(($num >> 6) + 192) . chr(($num & 63) + 128);
+	// < 0x10000 (65536)
+	elseif ($num < 0x10000)
+		return chr(($num >> 12) + 224) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
+	// <= 0x10FFFF (1114111)
+	else
+		return chr(($num >> 18) + 240) . chr((($num >> 12) & 63) + 128) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
+}
+
+// Strips out invalid html entities, replaces others with html style &#123; codes.
+function entity_fix__callback($matches)
+{
+	if (!isset($matches[2]))
+		return '';
+
+	$num = $matches[2][0] === 'x' ? hexdec(substr($matches[2], 1)) : (int) $matches[2];
+
+	// we don't allow control characters, characters out of range, byte markers, etc
+	if ($num < 0x20 || $num > 0x10FFFF || ($num >= 0xD800 && $num <= 0xDFFF) || $num == 0x202D || $num == 0x202E)
+		return '';
+	else
+		return '&#' . $num . ';';
 }
 
 // Remove an integration hook function.

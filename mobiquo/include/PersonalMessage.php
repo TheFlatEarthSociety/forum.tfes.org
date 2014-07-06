@@ -2272,13 +2272,14 @@ function MessagePost2()
 			)
 		);
 	}
+
 	//Tapatalk pm push - start
 	global $boarddir;
 	if (function_exists('tapatalk_push_pm'))
 		tapatalk_push_pm();
 	else if(file_exists($boarddir . '/mobiquo/push_hook.php'))
 	{
-		include($boarddir . '/mobiquo/push_hook.php');
+		include_once($boarddir . '/mobiquo/push_hook.php');
 		tapatalk_push_pm();
 	}
 	//Tapatalk pm push - end
@@ -2288,6 +2289,7 @@ function MessagePost2()
 			'to' => array_intersect($recipientList['to'], $context['send_log']['failed']),
 			'bcc' => array_intersect($recipientList['bcc'], $context['send_log']['failed'])
 		));
+
 	// Message sent successfully?
 	if (!empty($context['send_log']) && empty($context['send_log']['failed']))
 		$context['current_label_redirect'] = $context['current_label_redirect'] . ';done=sent';

@@ -10,7 +10,7 @@ defined('IN_MOBIQUO') or exit;
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.3
+ * @version 2.0.7
  */
 
 if (!defined('SMF'))
@@ -171,7 +171,7 @@ function reloadSettings()
 
 	// Set a list of common functions.
 	$ent_list = empty($modSettings['disableEntityCheck']) ? '&(#\d{1,7}|quot|amp|lt|gt|nbsp);' : '&(#021|quot|amp|lt|gt|nbsp);';
-	$ent_check = empty($modSettings['disableEntityCheck']) ? array('preg_replace(\'~(&#(\d{1,7}|x[0-9a-fA-F]{1,6});)~e\', \'$smcFunc[\\\'entity_fix\\\'](\\\'\\2\\\')\', ', ')') : array('', '');
+	$ent_check = empty($modSettings['disableEntityCheck']) ? array('preg_replace_callback(\'~(&#(\d{1,7}|x[0-9a-fA-F]{1,6});)~\', \'entity_fix__callback\', ', ')') : array('', '');
 
 	// Preg_replace can handle complex characters only for higher PHP versions.
 	$space_chars = $utf8 ? (@version_compare(PHP_VERSION, '4.3.3') != -1 ? '\x{A0}\x{AD}\x{2000}-\x{200F}\x{201F}\x{202F}\x{3000}\x{FEFF}' : "\xC2\xA0\xC2\xAD\xE2\x80\x80-\xE2\x80\x8F\xE2\x80\x9F\xE2\x80\xAF\xE2\x80\x9F\xE3\x80\x80\xEF\xBB\xBF") : '\x00-\x08\x0B\x0C\x0E-\x19\xA0';
@@ -428,7 +428,7 @@ function loadUserSettings()
 			// If it was *at least* five hours ago...
 			if ($visitTime < time() - 5 * 3600)
 			{
-				updateMemberData($id_member, array('id_msg_last_visit' => (int) $modSettings['maxMsgID'], 'last_login' => time(), 'member_ip' => $_SERVER['REMOTE_ADDR'], 'member_ip2' => $_SERVER['BAN_CHECK_IP']));
+				updateMemberData($id_member, array('id_msg_last_visit' => (int) $modSettings['maxMsgID'], 'last_login' => time(), 'member_ip' => preg_replace('/^::ffff:/', '', $_SERVER['REMOTE_ADDR']), 'member_ip2' => $_SERVER['BAN_CHECK_IP']));
 				$user_settings['last_login'] = time();
 
 				if (!empty($modSettings['cache_enable']) && $modSettings['cache_enable'] >= 2)
@@ -501,7 +501,7 @@ function loadUserSettings()
 		'is_admin' => in_array(1, $user_info['groups']),
 		'theme' => empty($user_settings['id_theme']) ? 0 : $user_settings['id_theme'],
 		'last_login' => empty($user_settings['last_login']) ? 0 : $user_settings['last_login'],
-		'ip' => $_SERVER['REMOTE_ADDR'],
+		'ip' => preg_replace('/^::ffff:/', '', $_SERVER['REMOTE_ADDR']),
 		'ip2' => $_SERVER['BAN_CHECK_IP'],
 		'posts' => empty($user_settings['posts']) ? 0 : $user_settings['posts'],
 		'time_format' => empty($user_settings['time_format']) ? $modSettings['time_format'] : $user_settings['time_format'],
@@ -813,7 +813,7 @@ function loadBoard()
 			is_not_guest($txt['topic_gone']);
 		}
 		else
-		    fatal_lang_error('topic_gone', false);
+			fatal_lang_error('topic_gone', false);
 	}
 
 	if ($user_info['is_mod'])
@@ -1199,7 +1199,7 @@ function loadMemberContext($user, $display_custom_fields = false)
 		'posts' => $profile['posts'],
 		'avatar' => array(
 			'name' => $profile['avatar'],
-			'image' => $profile['avatar'] == '' ? ($profile['id_attach'] > 0 ? '<img class="avatar" src="' . (empty($profile['attachment_type']) ? $scripturl . '?action=dlattach;attach=' . $profile['id_attach'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $profile['filename']) . '" alt="" />' : '') : (stristr($profile['avatar'], 'http://') ? '<img class="avatar" src="' . $profile['avatar'] . '"' . $avatar_width . $avatar_height . ' alt="" />' : '<img class="avatar" src="' . $modSettings['avatar_url'] . '/' . htmlspecialchars($profile['avatar']) . '" alt="" />'),
+			'image' => $profile['avatar'] == '' ? ($profile['id_attach'] > 0 ? '<img class="avatar" src="' . (empty($profile['attachment_type']) ? $scripturl . '?action=dlattach;attach=' . $profile['id_attach'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $profile['filename']) . '" alt="'.$profile['member_name'].'\'s avatar" />' : '') : (stristr($profile['avatar'], 'http://') ? '<img class="avatar" src="' . $profile['avatar'] . '"' . $avatar_width . $avatar_height . ' alt="'.$profile['member_name'].'\'s avatar" />' : '<img class="avatar" src="' . $modSettings['avatar_url'] . '/' . htmlspecialchars($profile['avatar']) . '" alt="'.$profile['member_name'].'\'s avatar" />'),
 			'href' => $profile['avatar'] == '' ? ($profile['id_attach'] > 0 ? (empty($profile['attachment_type']) ? $scripturl . '?action=dlattach;attach=' . $profile['id_attach'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $profile['filename']) : '') : (stristr($profile['avatar'], 'http://') ? $profile['avatar'] : $modSettings['avatar_url'] . '/' . $profile['avatar']),
 			'url' => $profile['avatar'] == '' ? '' : (stristr($profile['avatar'], 'http://') ? $profile['avatar'] : $modSettings['avatar_url'] . '/' . $profile['avatar'])
 		),
@@ -1573,6 +1573,7 @@ function loadTheme($id_theme = 0, $initialize = true)
 	if (!isset($context['html_headers']))
 		$context['html_headers'] = '';
 
+	include_once($boarddir.'/mobiquo/smartbanner.php');
 	$context['menu_separator'] = !empty($settings['use_image_buttons']) ? ' ' : ' | ';
 	$context['session_var'] = $_SESSION['session_var'];
 	$context['session_id'] = $_SESSION['session_value'];
@@ -2648,21 +2649,31 @@ function cache_put_data($key, $value, $ttl = 120)
 		else
 		{
 			$cache_data = '<' . '?' . 'php if (!defined(\'SMF\')) die; if (' . (time() + $ttl) . ' < time()) $expired = true; else{$expired = false; $value = \'' . addcslashes($value, '\\\'') . '\';}' . '?' . '>';
-			$fh = @fopen($cachedir . '/data_' . $key . '.php', 'w');
-			if ($fh)
-			{
 				// Write the file.
-				set_file_buffer($fh, 0);
-				flock($fh, LOCK_EX);
-				$cache_bytes = fwrite($fh, $cache_data);
-				flock($fh, LOCK_UN);
-				fclose($fh);
+				if (function_exists('file_put_contents'))
+				{
+					$cache_bytes = @file_put_contents($cachedir . '/data_' . $key . '.php', $cache_data, LOCK_EX);
+					if ($cache_bytes != strlen($cache_data))
+						@unlink($cachedir . '/data_' . $key . '.php');
+				}
+				else
+				{
+					$fh = @fopen($cachedir . '/data_' . $key . '.php', 'w');
+					if ($fh)
+					{
+						// Write the file.
+						set_file_buffer($fh, 0);
+						flock($fh, LOCK_EX);
+						$cache_bytes = fwrite($fh, $cache_data);
+						flock($fh, LOCK_UN);
+						fclose($fh);
 
-				// Check that the cache write was successful; all the data should be written
-				// If it fails due to low diskspace, remove the cache file
-				if ($cache_bytes != strlen($cache_data))
-					@unlink($cachedir . '/data_' . $key . '.php');
-			}
+						// Check that the cache write was successful; all the data should be written
+						// If it fails due to low diskspace, remove the cache file
+						if ($cache_bytes != strlen($cache_data))
+							@unlink($cachedir . '/data_' . $key . '.php');
+					}
+				}
 		}
 	}
 
@@ -2715,7 +2726,7 @@ function cache_get_data($key, $ttl = 120)
 	// Otherwise it's SMF data!
 	elseif (file_exists($cachedir . '/data_' . $key . '.php') && filesize($cachedir . '/data_' . $key . '.php') > 10)
 	{
-		require($cachedir . '/data_' . $key . '.php');
+		@include($cachedir . '/data_' . $key . '.php');
 		if (!empty($expired) && isset($value))
 		{
 			@unlink($cachedir . '/data_' . $key . '.php');

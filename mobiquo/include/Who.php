@@ -164,7 +164,7 @@ function Who()
 	// Look for people online, provided they don't mind if you see they are.
 	$request = $smcFunc['db_query']('', '
 		SELECT
-			lo.log_time, lo.id_member, lo.url, INET_NTOA(lo.ip) AS ip, mem.real_name,
+			lo.log_time, lo.id_member, lo.url, lo.ip, mem.real_name,
 			lo.session, mg.online_color, IFNULL(mem.show_online, 1) AS show_online,
 			lo.id_spider
 		FROM {db_prefix}log_online AS lo
@@ -282,6 +282,7 @@ function determineActions($urls, $preferred_prefix = false)
 	$allowedActions = array(
 		'admin' => array('moderate_forum', 'manage_membergroups', 'manage_bans', 'admin_forum', 'manage_permissions', 'send_mail', 'manage_attachments', 'manage_smileys', 'manage_boards', 'edit_news'),
 		'ban' => array('manage_bans'),
+		'banlist' => array('view_banlist'),
 		'boardrecount' => array('admin_forum'),
 		'calendar' => array('calendar_view'),
 		'editnews' => array('edit_news'),

@@ -10,7 +10,7 @@ defined('IN_MOBIQUO') or exit;
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.6
+ * @version 2.0.7
  */
 
 if (!defined('SMF'))
@@ -77,6 +77,7 @@ function Login()
 	$context['default_username'] = &$_REQUEST['u'];
 	$context['default_password'] = '';
 	$context['never_expire'] = false;
+	$context['canonical_url'] = $scripturl . '?action=login';
 
 	// Add the login chain to the link tree.
 	$context['linktree'][] = array(
@@ -200,9 +201,9 @@ function Login2()
 	{
 		if(!$tid_sign_in)
 		{
-			$context['login_errors'] = array($txt['no_password']);
-			return;
-		}
+		$context['login_errors'] = array($txt['no_password']);
+		return;
+	}
 	}
 
 	// No funky symbols either.
@@ -212,15 +213,22 @@ function Login2()
 		return;
 	}
 
+	// And if it's too long, trim it back.
+	if ($smcFunc['strlen']($_POST['user']) > 80)
+	{
+		$_POST['user'] = $smcFunc['substr']($_POST['user'], 0, 79);
+		$context['default_username'] = preg_replace('~&amp;#(\\d{1,7}|x[0-9a-fA-F]{1,6});~', '&#\\1;', $smcFunc['htmlspecialchars']($_POST['user']));
+	}
+
 	// Are we using any sort of integration to validate the login?
 	if (in_array('retry', call_integration_hook('integrate_validate_login', array($_POST['user'], isset($_POST['hash_passwrd']) && strlen($_POST['hash_passwrd']) == 40 ? $_POST['hash_passwrd'] : null, $modSettings['cookieTime'])), true))
 	{
 		if(!$tid_sign_in)
 		{
-			$context['login_errors'] = array($txt['login_hash_error']);
-			$context['disable_login_hashing'] = true;
-			return;
-		}
+		$context['login_errors'] = array($txt['login_hash_error']);
+		$context['disable_login_hashing'] = true;
+		return;
+	}
 	}
 
 	// Load the data up!
@@ -266,7 +274,7 @@ function Login2()
 if(!$tid_sign_in)
 {
 	// Figure out the password using SMF's encryption - if what they typed is right.
-	if (isset($_POST['hash_passwrd']) && strlen($_POST['hash_passwrd']) == 40 )
+	if (isset($_POST['hash_passwrd']) && strlen($_POST['hash_passwrd']) == 40)
 	{
 		// Needs upgrading?
 		if (strlen($user_settings['passwd']) != 40)
@@ -416,7 +424,7 @@ if(!$tid_sign_in)
 		updateMemberData($user_settings['id_member'], array('passwd_flood' => ''));
 	}
 }
-    
+
 	// Correct password, but they've got no salt; fix it!
 	if ($user_settings['password_salt'] == '')
 	{

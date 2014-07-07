@@ -243,7 +243,6 @@ function template_html_above()
 function template_body_above()
 {
 	global $context, $settings, $options, $scripturl, $txt, $modSettings;
-	echo $context['tapatalk_body_hook'];
 
 
 	echo !empty($settings['forum_width']) ? '

@@ -171,7 +171,6 @@ function template_main_above()
 function template_body_above()
 {
 	global $context, $settings, $options, $scripturl, $txt, $modSettings;
-	echo $context['tapatalk_body_hook'];
 */
 
 	// Because of the way width/padding are calculated, we have to tell Internet Explorer 4 and 5 that the content should be 100% wide. (or else it will assume about 108%!)

@@ -974,6 +974,8 @@ function template_statPanel()
 						<dd>', $context['time_logged_in'], '</dd>
 						<dt>', $txt['statPanel_total_posts'], ':</dt>
 						<dd>', $context['num_posts'], ' ', $txt['statPanel_posts'], '</dd>
+						<dt>', "Lurk ratio", ':</dt>
+						<dd>', $context['lurk_ratio'], '</dd>
 						<dt>', $txt['statPanel_total_topics'], ':</dt>
 						<dd>', $context['num_topics'], ' ', $txt['statPanel_topics'], '</dd>
 						<dt>', $txt['statPanel_users_polls'], ':</dt>

@@ -120,6 +120,7 @@ $txt['who_index'] = 'Viewing the board index of <a href="' . $scripturl . '">' .
 $txt['who_viewprofile'] = 'Viewing <a href="' . $scripturl . '?action=profile;u=%1$d">%2$s</a>\'s profile.';
 $txt['who_profile'] = 'Editing the profile of <a href="' . $scripturl . '?action=profile;u=%1$d">%2$s</a>.';
 $txt['who_post'] = 'Posting a new topic in <a href="' . $scripturl . '?board=%1$d.0">%2$s</a>.';
+$txt['who_post_tapatalk'] = 'Posting';
 $txt['who_poll'] = 'Posting a new poll in <a href="' . $scripturl . '?board=%1$d.0">%2$s</a>.';
 
 // Credits text

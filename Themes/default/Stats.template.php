@@ -327,6 +327,45 @@ function template_main()
 					<span class="botslice"><span></span></span>
 				</div>
 			</div>
+			<div id="top_topics_starter">
+				<div class="title_bar">
+					<h4 class="titlebg">
+						<span class="ie6_header floatleft">
+							<img src="', $settings['images_url'], '/stats_views.gif" class="icon" alt="" /> ', "Top Lurkers", '
+						</span>
+					</h4>
+				</div>
+				<div class="windowbg2">
+					<span class="topslice"><span></span></span>
+					<div class="content">
+						<dl class="stats">'; //I left the div id as "top_topics_starter". There's no good reason to give it a separate id, this should have been one class in the first place.
+
+	foreach ($context['top_lurk'] as $poster)
+	{
+		echo '
+							<dt>
+								', $poster['link'], '
+							</dt>
+							<dd class="statsbar">';
+
+		if (!empty($poster['lurk_percent']))
+			echo '
+								<div class="bar" style="width: ', $poster['lurk_percent'] + 4, 'px;">
+									<div style="width: ', $poster['lurk_percent'], 'px;"></div>
+								</div>';
+
+		echo '
+								<span>', $poster['lurk_ratio_txt'], '</span>
+							</dd>';
+	}	
+
+	echo '
+						</dl>
+						<div class="clear"></div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+			</div>
 		</div>
 		<br class="clear" />
 		<div class="flow_hidden">

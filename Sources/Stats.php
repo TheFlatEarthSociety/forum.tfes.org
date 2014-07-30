@@ -541,6 +541,63 @@ function DisplayStats()
 	if ($temp !== $temp2)
 		cache_put_data('stats_total_time_members', $temp2, 480);
 
+	// Lurk ratio top 10.
+	$temp_lurk = cache_get_data('stats_lurk_ratio_members', 600);
+	$members_result = $smcFunc['db_query']('', '
+		SELECT id_member, real_name, posts, total_time_logged_in
+		FROM {db_prefix}members ' . (!empty($temp_lurk) ? '
+		WHERE id_member IN ({array_int:member_list_cached})' : 'WHERE posts > {int:no_posts}') . '
+		ORDER BY total_time_logged_in/posts DESC
+		LIMIT 10',
+		array(
+			'member_list_cached' => $temp_lurk,
+			'no_posts' => 0,
+		)
+	);
+	$context['top_lurk'] = array();
+	$temp_lurk2 = array();
+	while ($row_members = $smcFunc['db_fetch_assoc']($members_result))
+	{
+		$temp_lurk2[] = (int) $row_members['id_member'];
+		// Determine lurk ratio.
+		$lurk_ratio = $row_members['total_time_logged_in'] / $row_members['posts'];
+	
+		// Figure out the days, hours and minutes. Also seconds because we're better than SMF.
+		$timeDays = floor($lurk_ratio / 86400);
+		$timeHours = floor(($lurk_ratio % 86400) / 3600);
+		$timeMinutes = floor(($lurk_ratio % 3600) / 60);
+		$timeSeconds = $lurk_ratio % 60;
+
+		// Figure out which things to show... (days, hours, minutes, etc.)
+		$lurk_ratio_txt = '';
+		if ($timeDays > 0)
+			$lurk_ratio_txt .= $timeDays . $txt['totalTimeLogged5'];
+		if ($timeHours > 0)
+			$lurk_ratio_txt .= $timeHours . $txt['totalTimeLogged6'];
+		if ($timeMinutes > 0)
+			$lurk_ratio_txt .= $timeMinutes . $txt['totalTimeLogged7'] . " ";
+		$lurk_ratio_txt .= $timeSeconds . "s"; //I really don't want to add more shit to $txt, so here's an "s".
+		
+		$context['top_lurk'][] = array(
+			'name' => $row_members['real_name'],
+			'id' => $row_members['id_member'],
+			'lurk_ratio' => $lurk_ratio,
+			'lurk_ratio_txt' => $lurk_ratio_txt,
+			'href' => $scripturl . '?action=profile;u=' . $row_members['id_member'],
+			'link' => '<a href="' . $scripturl . '?action=profile;u=' . $row_members['id_member'] . '">' . $row_members['real_name'] . '</a>'
+		);
+	}
+	$smcFunc['db_free_result']($members_result);
+
+	foreach ($context['top_lurk'] as $i => $poster)
+	{
+		$context['top_lurk'][$i]['lurk_percent'] = round(($poster['lurk_ratio'] * 100) / $context['top_lurk'][0]['lurk_ratio']);
+	}
+	
+	// Cache the ones we found for a bit, just so we don't have to look again.
+	if ($temp_lurk !== $temp_lurk2)
+		cache_put_data('stats_lurk_ratio_members', $temp_lurk2, 480);
+		
 	// Activity by month.
 	$months_result = $smcFunc['db_query']('', '
 		SELECT

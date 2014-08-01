@@ -357,8 +357,47 @@ function template_main()
 		echo '
 								<span>', $poster['lurk_ratio_txt'], '</span>
 							</dd>';
-	}	
+	}
 
+	echo '
+						</dl>
+						<div class="clear"></div>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+			</div>
+			<div id="most_online">
+				<div class="title_bar">
+					<h4 class="titlebg">
+						<span class="ie6_header floatleft">
+							<img src="', $settings['images_url'], '/worst_lurkers.png" class="icon" alt="" /> ', "Worst Lurkers", '
+						</span>
+					</h4>
+				</div>
+				<div class="windowbg2">
+					<span class="topslice"><span></span></span>
+					<div class="content">
+						<dl class="stats">'; //Reusing "most_online" because I'm lazy.
+
+	foreach ($context['worst_lurk'] as $poster)
+	{
+		echo '
+							<dt>
+								', $poster['link'], '
+							</dt>
+							<dd class="statsbar">';
+
+		if (!empty($poster['lurk_percent']))
+			echo '
+								<div class="bar" style="width: ', $poster['lurk_percent'] + 4, 'px;">
+									<div style="width: ', $poster['lurk_percent'], 'px;"></div>
+								</div>';
+
+		echo '
+								<span>', $poster['lurk_ratio_txt'], '</span>
+							</dd>';
+	}
+	
 	echo '
 						</dl>
 						<div class="clear"></div>

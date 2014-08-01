@@ -576,7 +576,7 @@ function DisplayStats()
 			$lurk_ratio_txt .= $timeHours . $txt['totalTimeLogged6'];
 		if ($timeMinutes > 0)
 			$lurk_ratio_txt .= $timeMinutes . $txt['totalTimeLogged7'] . " ";
-		$lurk_ratio_txt .= $timeSeconds . "s p/p";
+		$lurk_ratio_txt .= $timeSeconds . "s";
 		
 		$context['top_lurk'][] = array(
 			'name' => $row_members['real_name'],
@@ -636,7 +636,7 @@ function DisplayStats()
 			$lurk_ratio_txt .= $timeHours . $txt['totalTimeLogged6'];
 		if ($timeMinutes > 0)
 			$lurk_ratio_txt .= $timeMinutes . $txt['totalTimeLogged7'] . " ";
-		$lurk_ratio_txt .= $timeSeconds . "s p/p";
+		$lurk_ratio_txt .= $timeSeconds . "s";
 		
 		$context['worst_lurk'][] = array(
 			'name' => $row_members['real_name'],

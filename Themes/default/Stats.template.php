@@ -331,7 +331,7 @@ function template_main()
 				<div class="title_bar">
 					<h4 class="titlebg">
 						<span class="ie6_header floatleft">
-							<img src="', $settings['images_url'], '/stats_views.gif" class="icon" alt="" /> ', "Top Lurkers", '
+							<img src="', $settings['images_url'], '/stats_views.gif" class="icon" alt="" /> ', "Top Lurkers (online time per post)", '
 						</span>
 					</h4>
 				</div>
@@ -370,7 +370,7 @@ function template_main()
 				<div class="title_bar">
 					<h4 class="titlebg">
 						<span class="ie6_header floatleft">
-							<img src="', $settings['images_url'], '/worst_lurkers.png" class="icon" alt="" /> ', "Worst Lurkers", '
+							<img src="', $settings['images_url'], '/worst_lurkers.png" class="icon" alt="" /> ', "Worst Lurkers (online time per post)", '
 						</span>
 					</h4>
 				</div>

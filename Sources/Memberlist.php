@@ -467,7 +467,7 @@ function MLSearch()
 			$fields += array(7 => 'lower(website_title)', 'lower(website_url)');
 		// Search for groups.
 		if (in_array('group', $_POST['fields']))
-			$fields += array(9 => 'IFNULL(lower(group_name), {string:blank_string})');
+			$fields += array(9 => 'lower(IFNULL(group_name, {string:blank_string}))');
 		// Search for an email address?
 		if (in_array('email', $_POST['fields']))
 		{

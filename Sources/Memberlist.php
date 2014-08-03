@@ -438,6 +438,7 @@ function MLSearch()
 	{
 		$_POST['search'] = trim(isset($_GET['search']) ? $_GET['search'] : $_POST['search']);
 		$_POST['fields'] = isset($_GET['fields']) ? explode(',', $_GET['fields']) : $_POST['fields'];
+		$_POST['search'] = strtolower($_POST['search']);
 
 		$context['old_search'] = $_REQUEST['search'];
 		$context['old_search_value'] = urlencode($_REQUEST['search']);
@@ -455,22 +456,22 @@ function MLSearch()
 
 		// Search for a name?
 		if (in_array('name', $_POST['fields']))
-			$fields = array('member_name', 'real_name');
+			$fields = array('lower(member_name)', 'lower(real_name)');
 		else
 			$fields = array();
 		// Search for messengers...
 		if (in_array('messenger', $_POST['fields']) && (!$user_info['is_guest'] || empty($modSettings['guest_hideContacts'])))
-			$fields += array(3 => 'msn', 'aim', 'icq', 'yim');
+			$fields += array(3 => 'lower(msn)', 'lower(aim)', 'lower(icq)', 'lower(yim)');
 		// Search for websites.
 		if (in_array('website', $_POST['fields']))
-			$fields += array(7 => 'website_title', 'website_url');
+			$fields += array(7 => 'lower(website_title)', 'lower(website_url)');
 		// Search for groups.
 		if (in_array('group', $_POST['fields']))
-			$fields += array(9 => 'IFNULL(group_name, {string:blank_string})');
+			$fields += array(9 => 'IFNULL(lower(group_name), {string:blank_string})');
 		// Search for an email address?
 		if (in_array('email', $_POST['fields']))
 		{
-			$fields += array(2 => allowedTo('moderate_forum') ? 'email_address' : '(hide_email = 0 AND email_address');
+			$fields += array(2 => allowedTo('moderate_forum') ? 'lower(email_address)' : '(hide_email = 0 AND lower(email_address)');
 			$condition = allowedTo('moderate_forum') ? '' : ')';
 		}
 		else

@@ -32,7 +32,7 @@ function action_get_forum()
         $query_condition = '';
     }
     // Find all the boards this user is allowed to see.
-    $request = $smcFunc['db_query']('order_by_board_order', '
+    $request = $smcFunc['db_query']('boardindex_fetch_boards', '
         SELECT b.id_cat, c.name AS cat_name, b.id_board, b.name, b.id_parent, b.description, b.redirect,
                IFNULL(mem.member_name, m.poster_name) AS poster_name, '.
                ($user_info['is_guest'] ? ' 1 AS is_read' : '(IFNULL(lb.id_msg, 0) >= b.id_msg_updated) AS is_read').'

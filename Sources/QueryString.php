@@ -254,7 +254,7 @@ function cleanRequest()
 		$_GET['action'] = (string) $_GET['action'];
 
 	// Make sure we have a valid REMOTE_ADDR.
-	$smf_is_retarted_remote_addr = preg_replace('^::ffff:', '', $_SERVER['REMOTE_ADDR']);
+	$smf_is_retarted_remote_addr = preg_replace('/^::ffff:/', '', $_SERVER['REMOTE_ADDR']);
 	if (!isset($smf_is_retarted_remote_addr))
 	{
 		$smf_is_retarted_remote_addr = '';

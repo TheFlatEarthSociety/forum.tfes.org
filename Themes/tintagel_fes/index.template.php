@@ -131,8 +131,8 @@ function template_html_above()
 	{
 		$descr = $context['description'];
 	}
-	//If it's a topic, try to describe it.
-	else if (!empty($context['current_topic']) && empty($context['current_action']))
+	//If it's a topic (which we can actually read), try to describe it.
+	else if (!empty($context['current_topic']) && empty($context['current_action']) && !empty($context['get_message']))
 	{
 		//Grab first post of current page.
 		$descr = $context['get_message']()['body'];

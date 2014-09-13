@@ -415,7 +415,7 @@ function loadUserSettings()
 			// If it was *at least* five hours ago...
 			if ($visitTime < time() - 5 * 3600)
 			{
-				updateMemberData($id_member, array('id_msg_last_visit' => (int) $modSettings['maxMsgID'], 'last_login' => time(), 'member_ip' => preg_replace('/^::ffff:/', '', $_SERVER['REMOTE_ADDR']), 'member_ip2' => $_SERVER['BAN_CHECK_IP']));
+				updateMemberData($id_member, array('id_msg_last_visit' => (int) $modSettings['maxMsgID'], 'last_login' => time(), 'member_ip' => preg_replace('/^::ffff:/', '', $_SERVER['REMOTE_ADDR']), 'member_ip2' => $_SERVER['BAN_CHECK_IP'], 'member_user_agent' => $_SERVER['HTTP_USER_AGENT']));
 				$user_settings['last_login'] = time();
 
 				if (!empty($modSettings['cache_enable']) && $modSettings['cache_enable'] >= 2)
@@ -947,7 +947,7 @@ function loadMemberData($users, $is_name = false, $set = 'normal')
 	{
 		$select_columns = '
 			IFNULL(lo.log_time, 0) AS is_online, IFNULL(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type,
-			mem.signature, mem.personal_text, mem.location, mem.gender, mem.avatar, mem.id_member, mem.member_name,
+			mem.member_user_agent, mem.signature, mem.personal_text, mem.location, mem.gender, mem.avatar, mem.id_member, mem.member_name,
 			mem.real_name, mem.email_address, mem.hide_email, mem.date_registered, mem.website_title, mem.website_url,
 			mem.birthdate, mem.member_ip, mem.member_ip2, mem.icq, mem.aim, mem.yim, mem.msn, mem.posts, mem.last_login,
 			mem.karma_good, mem.id_post_group, mem.karma_bad, mem.lngfile, mem.id_group, mem.time_offset, mem.show_online,
@@ -965,7 +965,7 @@ function loadMemberData($users, $is_name = false, $set = 'normal')
 	{
 		$select_columns = '
 			IFNULL(lo.log_time, 0) AS is_online, IFNULL(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type,
-			mem.signature, mem.personal_text, mem.location, mem.gender, mem.avatar, mem.id_member, mem.member_name,
+			mem.member_user_agent, mem.signature, mem.personal_text, mem.location, mem.gender, mem.avatar, mem.id_member, mem.member_name,
 			mem.real_name, mem.email_address, mem.hide_email, mem.date_registered, mem.website_title, mem.website_url,
 			mem.openid_uri, mem.birthdate, mem.icq, mem.aim, mem.yim, mem.msn, mem.posts, mem.last_login, mem.karma_good,
 			mem.karma_bad, mem.member_ip, mem.member_ip2, mem.lngfile, mem.id_group, mem.id_theme, mem.buddy_list,
@@ -985,7 +985,7 @@ function loadMemberData($users, $is_name = false, $set = 'normal')
 	{
 		$select_columns = '
 			mem.id_member, mem.member_name, mem.real_name, mem.email_address, mem.hide_email, mem.date_registered,
-			mem.posts, mem.last_login, mem.member_ip, mem.member_ip2, mem.lngfile, mem.id_group';
+			mem.posts, mem.last_login, mem.member_ip, mem.member_ip2, mem.lngfile, mem.id_group, mem.member_user_agent';
 		$select_tables = '';
 	}
 	else
@@ -1194,6 +1194,7 @@ function loadMemberContext($user, $display_custom_fields = false)
 		),
 		'ip' => htmlspecialchars($profile['member_ip']),
 		'ip2' => htmlspecialchars($profile['member_ip2']),
+		'user_agent' => htmlspecialchars($profile['member_user_agent']),
 		'online' => array(
 			'is_online' => $profile['is_online'],
 			'text' => $txt[$profile['is_online'] ? 'online' : 'offline'],

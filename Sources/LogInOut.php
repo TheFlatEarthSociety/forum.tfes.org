@@ -526,7 +526,7 @@ function DoLogin()
 	$smcFunc['db_free_result']($request);
 
 	// You've logged in, haven't you?
-	updateMemberData($user_info['id'], array('last_login' => time(), 'member_ip' => $user_info['ip'], 'member_ip2' => $_SERVER['BAN_CHECK_IP']));
+	updateMemberData($user_info['id'], array('last_login' => time(), 'member_ip' => $user_info['ip'], 'member_ip2' => $_SERVER['BAN_CHECK_IP'], 'member_user_agent' => $_SERVER['HTTP_USER_AGENT']));
 
 	// Get rid of the online entry for that old guest....
 	$smcFunc['db_query']('', '

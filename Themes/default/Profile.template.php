@@ -269,6 +269,9 @@ function template_summary()
 			echo '
 					<dt>', $txt['hostname'], ': </dt>
 					<dd>', $context['member']['hostname'], '</dd>';
+		echo '
+					<dt>', 'User Agent', ': </dt>
+					<dd>', $context['member']['user_agent'], '</a></dd>';
 	}
 
 	echo '

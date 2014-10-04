@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.7
+ * @version 2.0.9
  */
 
 if (!defined('SMF'))
@@ -2630,12 +2630,21 @@ function cache_put_data($key, $value, $ttl = 120)
 		else
 		{
 			$cache_data = '<' . '?' . 'php if (!defined(\'SMF\')) die; if (' . (time() + $ttl) . ' < time()) $expired = true; else{$expired = false; $value = \'' . addcslashes($value, '\\\'') . '\';}' . '?' . '>';
+			// Write the file.
+			if (function_exists('file_put_contents'))
+			{
+				$cache_bytes = @file_put_contents($cachedir . '/data_' . $key . '.php', $cache_data, LOCK_EX);
+				if ($cache_bytes != strlen($cache_data))
+					@unlink($cachedir . '/data_' . $key . '.php');
+			}
+			else
+			{
 				// Write the file.
 				if (function_exists('file_put_contents'))
 				{
 					$cache_bytes = @file_put_contents($cachedir . '/data_' . $key . '.php', $cache_data, LOCK_EX);
 					if ($cache_bytes != strlen($cache_data))
-						@unlink($cachedir . '/data_' . $key . '.php');
+					@unlink($cachedir . '/data_' . $key . '.php');
 				}
 				else
 				{
@@ -2655,11 +2664,19 @@ function cache_put_data($key, $value, $ttl = 120)
 							@unlink($cachedir . '/data_' . $key . '.php');
 					}
 				}
+			}
 		}
 	}
 
 	if (isset($db_show_debug) && $db_show_debug === true)
 		$cache_hits[$cache_count]['t'] = array_sum(explode(' ', microtime())) - array_sum(explode(' ', $st));
+
+	// Invalidate the opcode cache
+	if (function_exists('opcache_invalidate'))
+    	opcache_invalidate($cachedir . '/data_' . $key . '.php', true);
+
+	if (function_exists('apc_delete_file'))
+		@apc_delete_file($cachedir . '/data_' . $key . '.php');
 }
 
 function cache_get_data($key, $ttl = 120)

@@ -318,6 +318,10 @@ code
 {
 	border: 0;
 }
+.bbc_tex
+{
+	vertical-align: middle;
+}
 .bbc_table
 {
 	font: inherit;

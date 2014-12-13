@@ -2724,24 +2724,12 @@ function writeLog($force = false)
 
 	// Otherwise, we have to delete and insert.
 	if (empty($_SESSION['log_time']))
-	{
-		if ($do_delete || !empty($user_info['id']))
-			$smcFunc['db_query']('', '
-				DELETE FROM {db_prefix}log_online
-				WHERE ' . ($do_delete ? 'log_time < {int:log_time}' : '') . ($do_delete && !empty($user_info['id']) ? ' OR ' : '') . (empty($user_info['id']) ? '' : 'id_member = {int:current_member}'),
-				array(
-					'current_member' => $user_info['id'],
-					'log_time' => time() - $modSettings['lastActive'] * 60,
-				)
-			);
-
-		$smcFunc['db_insert']($do_delete ? 'ignore' : 'replace',
+		$smcFunc['db_insert']('replace',
 			'{db_prefix}log_online',
 			array('session' => 'string', 'id_member' => 'int', 'id_spider' => 'int', 'log_time' => 'int', 'ip' => 'raw', 'url' => 'string'),
 			array($session_id, $user_info['id'], empty($_SESSION['id_robot']) ? 0 : $_SESSION['id_robot'], time(), '\'' . $user_info['ip'] . '\'', $serialized),
 			array('session')
 		);
-	}
 
 	// Mark your session as being logged.
 	$_SESSION['log_time'] = time();

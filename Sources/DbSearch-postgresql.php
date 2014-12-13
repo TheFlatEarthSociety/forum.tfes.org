@@ -67,12 +67,6 @@ function smf_db_search_query($identifier, $db_string, $db_values = array(), $con
 			'~unsigned~i' => '',
 			'~TYPE=HEAP~i' => '',
 		),
-		'drop_tmp_log_search_topics' => array(
-			'~IF\sEXISTS~i' => '',
-		),
-		'drop_tmp_log_search_messages' => array(
-			'~IF\sEXISTS~i' => '',
-		),
 		'insert_into_log_messages_fulltext' => array(
 			'~NOT\sRLIKE~i' => '!~*',
 			'~RLIKE~i' => '~*',

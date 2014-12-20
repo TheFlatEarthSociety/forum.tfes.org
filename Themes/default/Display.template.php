@@ -182,7 +182,7 @@ function template_main()
 			<div id="forumposts">
 				<div class="cat_bar">
 					<h3 class="catbg">
-						<img src="', $settings['images_url'], '/topic/', $context['class'], '.gif" align="bottom" alt="'.$context['class'].'" />
+						<img src="', $settings['images_url'], '/topic/', $context['class'], '.gif" align="bottom" alt="'.$txt[$context['class']].'" />
 						<span id="author">', $txt['author'], '</span>
 						', $txt['topic'], ': ', $context['subject'], ' &nbsp;(', $txt['read'], ' ', $context['num_views'], ' ', $txt['times'], ')
 					</h3>
@@ -407,7 +407,7 @@ function template_main()
 							<div class="flow_hidden">
 								<div class="keyinfo">
 									<div class="messageicon">
-										<img src="', $message['icon_url'] . '" alt="Message Icon"', $message['can_modify'] ? ' id="msg_icon_' . $message['id'] . '"' : '', ' />
+										<img src="', $message['icon_url'] . '" alt="Message"', $message['can_modify'] ? ' id="msg_icon_' . $message['id'] . '"' : '', ' />
 									</div>
 									<h5 id="subject_', $message['id'], '">
 										<a href="', $message['href'], '" rel="nofollow">', $message['subject'], '</a>

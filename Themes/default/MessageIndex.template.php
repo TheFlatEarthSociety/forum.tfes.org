@@ -248,10 +248,10 @@ function template_main()
 			echo '
 				<tr>
 					<td class="icon1 ', $color_class, '">
-						<img src="', $settings['images_url'], '/topic/', $topic['class'], '.gif" alt="'.$topic['class'].'" />
+						<img src="', $settings['images_url'], '/topic/', $topic['class'], '.gif" alt="'.$txt[$topic['class']].'" />
 					</td>
 					<td class="icon2 ', $color_class, '">
-						<img src="', $topic['first_post']['icon_url'], '" alt="Flat Earth Society Thread" />
+						<img src="', $topic['first_post']['icon_url'], '" alt="" />
 					</td>
 					<td class="subject ', $alternate_class, '">
 						<div ', (!empty($topic['quick_mod']['modify']) ? 'id="topic_' . $topic['first_post']['id'] . '" onmouseout="mouse_on_div = 0;" onmouseover="mouse_on_div = 1;" ondblclick="modify_topic(\'' . $topic['id'] . '\', \'' . $topic['first_post']['id'] . '\');"' : ''), '>
@@ -387,8 +387,8 @@ function template_main()
 			<p class="floatleft smalltext">', !empty($modSettings['enableParticipation']) && $context['user']['is_logged'] ? '
 				<img src="' . $settings['images_url'] . '/topic/my_normal_post.gif" alt="'.$txt['participation_caption'].'" align="middle" /> ' . $txt['participation_caption'] . '<br />' : '', '
 				<img src="' . $settings['images_url'] . '/topic/normal_post.gif" alt="'.$txt['normal_topic'].'" align="middle" /> ' . $txt['normal_topic'] . '<br />
-				<img src="' . $settings['images_url'] . '/topic/hot_post.gif" alt="'.sprintf($txt['hot_topics'],              $modSettings['hotTopicPosts']).'" align="middle" /> ' . sprintf($txt['hot_topics'], $modSettings['hotTopicPosts']) . '<br />
-				<img src="' . $settings['images_url'] . '/topic/veryhot_post.gif" alt="'.sprintf($txt['very_hot_topics'],     $modSettings['hotTopicVeryPosts']).'" align="middle" /> ' . sprintf($txt['very_hot_topics'], $modSettings['hotTopicVeryPosts']) . '
+				<img src="' . $settings['images_url'] . '/topic/hot_post.gif" alt="'.sprintf($txt['hot_topics'], $modSettings['hotTopicPosts']).'" align="middle" /> ' . sprintf($txt['hot_topics'], $modSettings['hotTopicPosts']) . '<br />
+				<img src="' . $settings['images_url'] . '/topic/veryhot_post.gif" alt="'.sprintf($txt['very_hot_topics'], $modSettings['hotTopicVeryPosts']).'" align="middle" /> ' . sprintf($txt['very_hot_topics'], $modSettings['hotTopicVeryPosts']) . '
 			</p>
 			<p class="smalltext">
 				<img src="' . $settings['images_url'] . '/icons/quick_lock.gif" alt="'.$txt['locked_topic'].'" align="middle" /> ' . $txt['locked_topic'] . '<br />' . ($modSettings['enableStickyTopics'] == '1' ? '

@@ -545,7 +545,7 @@ function template_bcd()
 
 		foreach ($v as $i)
 			echo '
-				<img src="', $context['offimg'], '" alt="Icon" id="', $t, '_', $i, '" /><br />';
+				<img src="', $context['offimg'], '" alt="" id="', $t, '_', $i, '" /><br />';
 
 		echo '
 			</td>';
@@ -638,7 +638,7 @@ function template_hms()
 		<td align="right">';
 		foreach ($v as $i)
 			echo '
-			<img src="', $context['offimg'], '" alt="Icon" id="', $t, '_', $i, '" />';
+			<img src="', $context['offimg'], '" alt="" id="', $t, '_', $i, '" />';
 		echo '
 		</td>';
 		$alt = !$alt;
@@ -722,7 +722,7 @@ function template_omfg()
 		<td align="right">';
 		foreach ($v as $i)
 			echo '
-			<img src="', $context['offimg'], '" alt="Icon" id="', $t, '_', $i, '" />';
+			<img src="', $context['offimg'], '" alt="" id="', $t, '_', $i, '" />';
 		echo '
 		</td>';
 		$alt = !$alt;
@@ -809,7 +809,7 @@ function template_thetime()
 		<td align="right">';
 		foreach ($v as $i)
 			echo '
-			<img src="', $i ? $context['onimg'] : $context['offimg'], '" alt="Status" />';
+			<img src="', $i ? $context['onimg'] : $context['offimg'], '" alt="" />';
 		echo '
 		</td>';
 		$alt = !$alt;

@@ -312,7 +312,7 @@ function smf_db_query($identifier, $db_string, $db_values = array(), $connection
 	// PostgreSQL does not support INSTR. Use ILIKE for a case-insensitive match.
 	if (preg_match('~INSTR\((.+?),\s(.+?)\)~', $db_string, $matches) === 1)
 	{
-		$db_string = preg_replace('~INSTR\((.+?),\s(.+?)\)~', '$1 ILIKE $2', $db_string);
+		$db_string = preg_replace('~INSTR\((.+?),\s(.+?)\)(\s>\s0)?~', '$1 ILIKE $2', $db_string);
 		list(, $search) = explode(':', substr($matches[2], 1, -1));
 		$db_values[$search] = '%' . $db_values[$search] . '%';
 	}

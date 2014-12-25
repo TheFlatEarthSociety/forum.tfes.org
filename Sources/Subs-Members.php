@@ -963,7 +963,7 @@ function isReservedName($name, $current_ID_MEMBER = 0, $is_name = true, $fatal =
 		SELECT id_member
 		FROM {db_prefix}members
 		WHERE ' . (empty($current_ID_MEMBER) ? '' : 'id_member != {int:current_member}
-			AND ') . '(real_name LIKE {string:check_name} OR member_name LIKE {string:check_name})
+			AND ') . '(real_name ILIKE {string:check_name} OR member_name ILIKE {string:check_name})
 		LIMIT 1',
 		array(
 			'current_member' => $current_ID_MEMBER,

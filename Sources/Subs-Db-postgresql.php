@@ -301,6 +301,9 @@ function smf_db_query($identifier, $db_string, $db_values = array(), $connection
 		'set_smiley_order' => array(
 			'~(.+)~' => '',
 		),
+		'registration_username_check' => array(
+			'~LIKE~' => 'ILIKE',
+		),
 	);
 
 	if (isset($replacements[$identifier]))

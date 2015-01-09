@@ -13,7 +13,7 @@ $txt['message_icon'] = 'Message icon';
 $txt['subject_not_filled'] = 'The Subject field was not filled out. It is required.';
 $txt['message_body_not_filled'] = 'The Message Body was not filled out. It is required.';
 // Use numeric entities in the below string.
-$txt['regards_team'] = "Regards,\nThe " . $context['forum_name'] . ' Team.';
+$txt['regards_team'] = "Regards,\n" . $context['forum_name'] . ' Forum Team.';
 $txt['add_bbc'] = 'Add BBC tags';
 $txt['bold'] = 'Bold';
 $txt['italic'] = 'Italicized';

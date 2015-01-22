@@ -1882,8 +1882,8 @@ function Post2()
 	{
 	    switch ($request_name) {
 	        case 'reply_post':
-	            //fixed bug:"&" shows up as "&amp;" when reply post.
-	            $_POST['subject'] = str_replace('&amp;amp;', '&amp;', $_POST['subject']);
+	            //fixed bug:"&" shows up as "&amp;" when reply post. Also, other HTML special characters exist.
+                $_POST['subject'] = htmlspecialchars_decode($_POST['subject']);
 	        case 'new_topic':
 	            $attachIDs = $_POST['attachments'];
 	            break;

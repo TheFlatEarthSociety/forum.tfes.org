@@ -393,7 +393,7 @@ function theme_linktree($force_show = false, $header = false)
 	foreach ($context['linktree'] as $link_num => $tree)
 	{
 		echo '
-			<li', ($link_num == count($context['linktree']) - 1) ? ' class="last">' . ($header ? '<h1>' : '' ) : '>' . ($header ? '<h2>' : '');
+			<li', ($link_num == count($context['linktree']) - 1) ? ' class="last">' . ($header ? '<h1>' : '' ) : '>' . ($header ? '<div itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><h2>' : '');
 
 		// Don't show a separator for the last one (RTL mode)
 		if ($link_num != count($context['linktree']) - 1 && $context['right_to_left'])
@@ -405,7 +405,7 @@ function theme_linktree($force_show = false, $header = false)
 
 		// Show the link, including a URL if it should have one.
 		echo $settings['linktree_link'] && isset($tree['url']) ? '
-				<a href="' . $tree['url'] . '"><span>' . $tree['name'] . '</span></a>' : '<span>' . $tree['name'] .'</span>';
+				<a href="' . $tree['url'] . '"' . ($header ? 'itemprop="url"' : '') . '><span ' . ($header ? 'itemprop="title"' : '') . '>' . $tree['name'] . '</span></a>' : '<span ' . ($header ? 'itemprop="title"' : '') . '>' . $tree['name'] .'</span>';
 
 		// Show something after the link...?
 		if (isset($tree['extra_after']))
@@ -416,7 +416,7 @@ function theme_linktree($force_show = false, $header = false)
 			echo '&nbsp;&#187;';
 
 		echo '
-			' . ($header ? (($link_num == count($context['linktree']) - 1) ? '</h1>' : '</h2>') : '') . '</li>';
+			' . ($header ? (($link_num == count($context['linktree']) - 1) ? '</h1>' : '</h2></div>') : '') . '</li>';
 	}
 	echo '
 		</ul>

@@ -608,7 +608,7 @@ function video_bbcode_format($type, $url)
     switch (strtolower($type)) {
         case 'yt':
         case 'youtube':
-            if (preg_match('#^(http://)?((www|m)\.)?(youtube\.com/(watch\?.*?v=|v/)|youtu\.be/)([-\w]+)#', $url, $matches)) {
+            if (preg_match('#^(http://|https://)?((www|m)\.)?(youtube\.com/(watch\?.*?v=|v/)|youtu\.be/)([-\w]+)#', $url, $matches)) {
                 $message = '[url='.$url.']YouTube Video[/url]';
             } else if (preg_match('/^[-\w]+$/', $url)) {
                 $url = 'http://www.youtube.com/watch?v='.$url;

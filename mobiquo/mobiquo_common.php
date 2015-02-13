@@ -389,7 +389,7 @@ function basic_clean($str, $cut = 0, $is_shortcontent = 0)
     $str = html_entity_decode($str, ENT_QUOTES, 'UTF-8');
     if (function_exists('censorText')) censorText($str);
     if($is_shortcontent)
-        $str = preg_replace('/[\r\n]*/', '', $str);
+        $str = preg_replace('/\s+/', ' ', $str);
     if ($cut > 0)
     {
         $str = preg_replace('/\[url=.*?\].*?\[\/url\]\s*\[quote\].*?\[\/quote\]/si', '', $str);

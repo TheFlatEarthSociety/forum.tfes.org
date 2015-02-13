@@ -563,7 +563,7 @@ function mobiquo_parse_bbc($message, $smileys = true, $cache_id = '', $parse_tag
     $message = preg_replace('/\[(\/?)(php|html)\]/si', '[$1quote]', $message);
     $message = process_list_tag($message);
     //Regex copied from our YouTube embed plugin - Tapatalk does its own thing with [youtube] tags, but it doesn't automatically create said tags from URLs.
-    $message = preg_replace('~(?:http|https|)(?::\/\/|)(?:www.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[a-z0-9;:@?&%=+\/\$_.-]*~i', '[youtube]$1[/youtube]', $message);
+    $message = preg_replace('~(?:http|https|)(?::\/\/|)(?:www\.|m\.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[a-z0-9;:@?&%=+\/\$_.-]*~i', '[youtube]$1[/youtube]', $message);
     $message = preg_replace('/\[(youtube|yt)\](.*?)\[\/\1\]/sie', "video_bbcode_format('$1', '$2')", $message);
     $user_info['time_format'] = $user_info['user_time_format'];
     $modSettings['todayMod'] = $modSettings['todayMod_bak'];

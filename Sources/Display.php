@@ -70,6 +70,9 @@ function Display()
 	if (empty($topic))
 		fatal_lang_error('no_board', false);
 
+	// Required by the Display template.
+	require_once($sourcedir . "/Unsubscribe.php");
+
 	// Load the proper template and/or sub template.
 	if (WIRELESS)
 		$context['sub_template'] = WIRELESS_PROTOCOL . '_display';

@@ -407,4 +407,7 @@ $txt['error_invalid_dir'] = 'The directory you entered is invalid.';
 
 $txt['error_sqlite_optimizing'] = 'Sqlite is optimizing the database, the forum can not be accessed until it has finished.  Please try refreshing this page momentarily.';
 
+$txt['unsubscribe_notopic'] = 'No topic given to subscribe to.';
+$txt['unsubscribe_nounsubscribe'] = 'Unsubscribe flag not specified.';
+
 ?>

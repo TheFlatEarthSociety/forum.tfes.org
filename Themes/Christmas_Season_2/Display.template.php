@@ -219,14 +219,21 @@ function template_main()
 	$buttonArray = array();
 	if ($context['can_reply'])
 		$buttonArray[] = '<a href="' . $scripturl . '?action=post;topic=' . $context['current_topic'] . '.' . $context['start'] . ';num_replies=' . $context['num_replies'] . '">' . ($settings['use_image_buttons'] ? '<img src="' . $settings['lang_images_url'] . '/reply.gif" alt="' . $txt['reply'] . '" border="0" />' : $txt['reply']) . '</a>';
+
+	CheckUnsubscribe();
+	if ($context['is_subscribed'])
+		$buttonArray[] = '<a href="' . $scripturl . '?action=unsubscribe;unsubscribe=1;topic=' . $context['current_topic'] . ';return=' . $context['start'] . '">' . ($settings['use_image_buttons'] ? '<img src="' . $settings['lang_images_url'] . '/topic_unsubscribe.gif" alt="' . $txt['unsubscribe'] . '" border="0" />' : $txt['unsubscribe']) . '</a>';
+	if ($context['is_unsubscribed'])
+		$buttonArray[] = '<a href="' . $scripturl . '?action=unsubscribe;unsubscribe=0;topic=' . $context['current_topic'] . ';return=' . $context['start'] . '">' . ($settings['use_image_buttons'] ? '<img src="' . $settings['lang_images_url'] . '/topic_subscribe.gif" alt="' . $txt['subscribe'] . '" border="0" />' : $txt['subscribe']) . '</a>';
+
+	if ($context['can_add_poll'])
+		$buttonArray[] = '<a href="' . $scripturl . '?action=editpoll;add;topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '">' . ($settings['use_image_buttons'] ? '<img src="' . $settings['lang_images_url'] . '/addpoll.gif" alt="' . $txt['add_poll'] . '" border="0" />' : $txt['add_poll']) . '</a>';
+
 	if ($context['can_mark_notify'])
 		$buttonArray[] = '<a href="' . $scripturl . '?action=notify;sa=' . ($context['is_marked_notify'] ? 'off' : 'on') . ';topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '" onclick="return confirm(\'' . ($context['is_marked_notify'] ? $txt['notification_disable_topic'] : $txt['notification_enable_topic']) . '\');">' . ($settings['use_image_buttons'] ? '<img src="' . $settings['lang_images_url'] . '/'. ($context['is_marked_notify'] ? 'un' : '') . 'notify.gif" alt="' . $txt[$context['is_marked_notify'] ? 'unnotify' : 'notify'] . '" border="0" />' : $txt[$context['is_marked_notify'] ? 'unnotify' : 'notify']) . '</a>';
 
-	// This is a special case; if they can see mark unread, put it at the top... otherwise show add poll.
 	if ($context['user']['is_logged'] && $settings['show_mark_read'])
 		$buttonArray[] = '<a href="' . $scripturl . '?action=markasread;sa=topic;t=' . $context['mark_unread_time'] . ';topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '">' . ($settings['use_image_buttons'] ? '<img src="' . $settings['lang_images_url'] . '/markunread.gif" alt="' . $txt['mark_unread'] . '" border="0" />' : $txt['mark_unread']) . '</a>';
-	elseif ($context['can_add_poll'])
-		$buttonArray[] = '<a href="' . $scripturl . '?action=editpoll;add;topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '">' . ($settings['use_image_buttons'] ? '<img src="' . $settings['lang_images_url'] . '/addpoll.gif" alt="' . $txt['add_poll'] . '" border="0" />' : $txt['add_poll']) . '</a>';
 
 	if ($context['can_send_topic'])
 		$buttonArray[] = '<a href="' . $scripturl . '?action=emailuser;sa=sendtopic;topic=' . $context['current_topic'] . '.0">' . ($settings['use_image_buttons'] ? '<img src="' . $settings['lang_images_url'] . '/sendtopic.gif" alt="' . $txt['send_topic'] . '" border="0" />' : $txt['send_topic']) . '</a>';
@@ -641,13 +648,19 @@ function template_main()
 	$buttonArray = array();
 	if ($context['can_reply'])
 		$buttonArray[] = '<a href="' . $scripturl . '?action=post;topic=' . $context['current_topic'] . '.' . $context['start'] . ';num_replies=' . $context['num_replies'] . '">' . ($settings['use_image_buttons'] ? '<img src="' . $settings['lang_images_url'] . '/reply.gif" alt="' . $txt['reply'] . '" border="0" />' : $txt['reply']) . '</a>';
+
+	if ($context['is_subscribed'])
+		$buttonArray[] = '<a href="' . $scripturl . '?action=unsubscribe;unsubscribe=1;topic=' . $context['current_topic'] . ';return=' . $context['start'] . '">' . ($settings['use_image_buttons'] ? '<img src="' . $settings['lang_images_url'] . '/topic_unsubscribe.gif" alt="' . $txt['unsubscribe'] . '" border="0" />' : $txt['unsubscribe']) . '</a>';
+	if ($context['is_unsubscribed'])
+		$buttonArray[] = '<a href="' . $scripturl . '?action=unsubscribe;unsubscribe=0;topic=' . $context['current_topic'] . ';return=' . $context['start'] . '">' . ($settings['use_image_buttons'] ? '<img src="' . $settings['lang_images_url'] . '/topic_subscribe.gif" alt="' . $txt['subscribe'] . '" border="0" />' : $txt['subscribe']) . '</a>';
+
+	if ($context['can_add_poll'])
+		$buttonArray[] = '<a href="' . $scripturl . '?action=editpoll;add;topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '">' . ($settings['use_image_buttons'] ? '<img src="' . $settings['lang_images_url'] . '/addpoll.gif" alt="' . $txt['add_poll'] . '" border="0" />' : $txt['add_poll']) . '</a>';
+
 	if ($context['can_mark_notify'])
 		$buttonArray[] = '<a href="' . $scripturl . '?action=notify;sa=' . ($context['is_marked_notify'] ? 'off' : 'on') . ';topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '" onclick="return confirm(\'' . ($context['is_marked_notify'] ? $txt['notification_disable_topic'] : $txt['notification_enable_topic']) . '\');">' . ($settings['use_image_buttons'] ? '<img src="' . $settings['lang_images_url'] . '/' . ($context['is_marked_notify'] ? 'un' : '') . 'notify.gif" alt="' . $txt[$context['is_marked_notify'] ? 'unnotify' : 'notify'] . '" border="0" />' : $txt[$context['is_marked_notify'] ? 'unnotify' : 'notify']) . '</a>';
 
-	// Another special case, similar to above but reversed.  Show "add poll" unless they can't - then show unread here too.
-	if ($context['can_add_poll'])
-		$buttonArray[] = '<a href="' . $scripturl . '?action=editpoll;add;topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '">' . ($settings['use_image_buttons'] ? '<img src="' . $settings['lang_images_url'] . '/addpoll.gif" alt="' . $txt['add_poll'] . '" border="0" />' : $txt['add_poll']) . '</a>';
-	elseif ($context['user']['is_logged'] && $settings['show_mark_read'])
+	if ($context['user']['is_logged'] && $settings['show_mark_read'])
 		$buttonArray[] = '<a href="' . $scripturl . '?action=markasread;sa=topic;t=' . $context['mark_unread_time'] . ';topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '">' . ($settings['use_image_buttons'] ? '<img src="' . $settings['lang_images_url'] . '/markunread.gif" alt="' . $txt['mark_unread'] . '" border="0" />' : $txt['mark_unread']) . '</a>';
 
 	if ($context['can_send_topic'])

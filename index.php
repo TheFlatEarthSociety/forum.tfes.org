@@ -329,6 +329,7 @@ function smf_main()
 		'about:unknown' => array('Karma.php', 'BookOfUnknown'),
 		'unread' => array('Recent.php', 'UnreadTopics'),
 		'unreadreplies' => array('Recent.php', 'UnreadTopics'),
+		'unsubscribe' => array('Unsubscribe.php', 'Unsubscribe'),
 		'verificationcode' => array('Register.php', 'VerificationCode'),
 		'viewprofile' => array('Profile.php', 'ModifyProfile'),
 		'vote' => array('Poll.php', 'Vote'),

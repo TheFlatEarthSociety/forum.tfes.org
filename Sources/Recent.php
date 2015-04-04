@@ -1273,7 +1273,6 @@ function UnreadTopics()
 			),
 			'new_from' => $row['new_from'],
 			'new_href' => $scripturl . '?topic=' . $row['id_topic'] . '.msg' . $row['new_from'] . ';topicseen#new',
-			'unsubscribe_href' => $scripturl . '?action=unsubscribe;unsubscribe=1;topic=' . $row['id_topic'] . ';return=unreadreplies',
 			'href' => $scripturl . '?topic=' . $row['id_topic'] . ($row['num_replies'] == 0 ? '.0' : '.msg' . $row['new_from']) . ';topicseen' . ($row['num_replies'] == 0 ? '' : 'new'),
 			'link' => '<a href="' . $scripturl . '?topic=' . $row['id_topic'] . ($row['num_replies'] == 0 ? '.0' : '.msg' . $row['new_from']) . ';topicseen#msg' . $row['new_from'] . '" rel="nofollow">' . $row['first_subject'] . '</a>',
 			'is_sticky' => !empty($modSettings['enableStickyTopics']) && !empty($row['is_sticky']),

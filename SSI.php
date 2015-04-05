@@ -271,7 +271,7 @@ function ssi_recentPosts($num_recent = 8, $exclude_boards = null, $include_board
 
 	// Let's restrict the query boys (and girls)
 	$query_where = '
-		m.id_msg >= {int:min_message_id}
+		1=1
 		' . (empty($exclude_boards) ? '' : '
 		AND b.id_board NOT IN ({array_int:exclude_boards})') . '
 		' . ($include_boards === null ? '' : '
@@ -283,7 +283,6 @@ function ssi_recentPosts($num_recent = 8, $exclude_boards = null, $include_board
 		'is_approved' => 1,
 		'include_boards' => $include_boards === null ? '' : $include_boards,
 		'exclude_boards' => empty($exclude_boards) ? '' : $exclude_boards,
-		'min_message_id' => $modSettings['maxMsgID'] - 25 * min($num_recent, 5),
 	);
 
 	// Past to this simpleton of a function...
@@ -452,7 +451,7 @@ function ssi_recentTopics($num_recent = 8, $exclude_boards = null, $include_boar
 			LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = m.id_member)' . (!$user_info['is_guest'] ? '
 			LEFT JOIN {db_prefix}log_topics AS lt ON (lt.id_topic = t.id_topic AND lt.id_member = {int:current_member})
 			LEFT JOIN {db_prefix}log_mark_read AS lmr ON (lmr.id_board = b.id_board AND lmr.id_member = {int:current_member})' : '') . '
-		WHERE t.id_last_msg >= {int:min_message_id}
+		WHERE 1=1
 			' . (empty($exclude_boards) ? '' : '
 			AND b.id_board NOT IN ({array_int:exclude_boards})') . '
 			' . (empty($include_boards) ? '' : '
@@ -466,7 +465,6 @@ function ssi_recentTopics($num_recent = 8, $exclude_boards = null, $include_boar
 			'current_member' => $user_info['id'],
 			'include_boards' => empty($include_boards) ? '' : $include_boards,
 			'exclude_boards' => empty($exclude_boards) ? '' : $exclude_boards,
-			'min_message_id' => $modSettings['maxMsgID'] - 35 * min($num_recent, 5),
 			'is_approved' => 1,
 		)
 	);

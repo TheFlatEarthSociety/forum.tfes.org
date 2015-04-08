@@ -505,6 +505,7 @@ function ssi_recentTopics($num_recent = 8, $exclude_boards = null, $include_boar
 			'time' => timeformat($row['poster_time']),
 			'timestamp' => forum_time(true, $row['poster_time']),
 			'href' => $scripturl . '?topic=' . $row['id_topic'] . '.msg' . $row['id_msg'] . ';topicseen#new',
+			'link' => '<a href="' . $scripturl . '?topic=' . $row['id_topic'] . '.msg' . $row['id_msg'] . '#new">' . $row['subject'] . '</a>',
 			// Retained for compatibility - is technically incorrect!
 			'new' => !empty($row['is_read']),
 			'is_new' => empty($row['is_read']),

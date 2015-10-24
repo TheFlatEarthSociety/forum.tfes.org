@@ -1,11 +1,3 @@
-/* ===============================================================
-
-This theme is a modification of Redsy by Daniiel from SMFTricks.
-All modifications are by Blanko from tfes.org and are included
-in the beginning of the code and tagged as !important. 
-
-================================================================== */
-
 @import url(https://fonts.googleapis.com/css?family=Oswald:300);
 @import url(https://fonts.googleapis.com/css?family=Raleway);
 
@@ -34,6 +26,9 @@ body
 .navbar-toggle
   {
 	 background-color: #6590a5 !important;
+	 padding: 11px 11px !important;
+	 margin-top: 7px !important;
+	 margin-bottom: 7px !important;
   }
  
 .navbar-toggle:hover
@@ -41,15 +36,24 @@ body
 	 background-color: #769fb3 !important;
   }
 
+.search-input-wrapper
+  {
+	 padding-top: 7px !important;
+  }
+
 .search-input input, .search-input input:focus
   {
 	 border: none !important;
 	 background-color: #6590a5 !important;
+	 height: 36px !important;
+	 min-width: 36px !important;
   }
 
 .search-input .input-icon
   {
-	 top: 2px !important;
+	 font-size: 21px !important;
+	 top: 1px !important;
+	 padding-right: 1px !important;
   }
   
 .navbar-right li.dropdown span
@@ -282,6 +286,9 @@ table.table_list p
 .navbar-default .navbar-nav li .avatar
   {
 	 border-radius: 50% !important;
+	 width: 36px !important;
+	 height: 36px !important;
+	 margin: -8px 5px 0px 0px !important;
   }
 
 .img-thumbnail

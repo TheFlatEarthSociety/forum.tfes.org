@@ -278,8 +278,7 @@ tbody.content
   
 .table_list td.info p
   {
-	 opacity: 0 !important;
-	 margin-right: -500px !important;
+	 display: none !important;
 	 padding: 10px !important;
 	 border-radius: 7px !important;
 	 margin-top: -27px !important;
@@ -297,15 +296,20 @@ tbody.content
   
 .table_list td.info:hover p
   {
-	 opacity: 1 !important;
-	 margin-right: 0 !important;
+	 display: block !important;
   }
 
-.table_list td.stats p, .table_list td.lastpost p
+.table_list td.stats p
   {
 	 font-size: 12px !important;
   }
-  
+
+.table_list td.lastpost p
+  {
+	 font-size: 11px !important;
+	 line-height: 12px !important;
+  }
+
 table.table_list td.icon
   {
 	 height: 50px !important;

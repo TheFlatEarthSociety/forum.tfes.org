@@ -573,12 +573,23 @@ li.im_icons
 	 display: none !important;
   }
   
-li.title, li.stars, li.postcount, li.blurb, .poster ul ul
+li.title, li.postcount, li.blurb, .poster ul ul
   {
 	 background-color: #fcfcfc !important;
 	 border-bottom: 1px solid #d3d3d3 !important;
 	 border-top: none !important;
 	 padding: 5px !important;
+  }
+  
+li.stars
+  {
+	 background: none !important;
+	 height: 2px !important;
+	 padding: 0 !important;
+	 margin: 0 !important;
+	 position: absolute !important;
+	 width: 100% !important;
+	 margin-top: -10px !important;
   }
   
 .poster ul li:last-child, .poster ul li:last-child ul
@@ -602,7 +613,8 @@ li.postcount img
   
 li.title, li.blurb
   {
-	 font-family: 'Raleway', sans-serif !important;
+	 font-family: 'Open Sans', sans-serif !important;
+	 line-height: 13px !important;
   }
   
 li.membergroup
@@ -614,9 +626,6 @@ li.membergroup
   .dropdown-menu{
 	 left: auto !important;
 	 right: 0 !important;
-  }
-  .pagelinks{
-	 font-size: 24px !important;
   }
 }
   
@@ -709,15 +718,12 @@ li.membergroup
 	 height: 30px !important;
   }
   .poster h4{
-	 position: absolute !important;
-	 top: 0px !important;
-	 padding-top: 17px !important;
-	 width: 100% !important;
 	 border-radius: 4px 0 0 0 !important;
+	 border-bottom: 1px solid #d3d3d3 !important;
 	 font-size: 16px !important;
   }
   .poster img.img-circle{
-	 margin-top: 40px !important;
+	 margin-top: 0px !important;
   }
   div.smalltext.reportlinks{
 	 position: absolute !important;

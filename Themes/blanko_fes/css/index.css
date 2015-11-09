@@ -342,6 +342,11 @@ table.table_list p
 	 padding-top: 15px !important;
   }
   
+#messageindex tr.catbg
+  {
+	 border-radius: 0 !important;
+  }
+  
 .titlebg, .titlebg2, tr.titlebg th, tr.titlebg td, tr.titlebg2 td,
 .catbg, .catbg2, tr.catbg td, tr.catbg2 td, tr.catbg th, tr.catbg2 th
   {
@@ -393,6 +398,7 @@ td.subject span
 	 font-family: 'Oswald', sans-serif !important;
 	 font-weight: 300 !important;
 	 font-size: 18px !important;
+	 margin-top: -10px !important;
   }
 
 .pagelinks strong
@@ -464,19 +470,24 @@ th.hidden-xs:nth-child(3)
   {
 	 background-color: #fcfcfc !important;
 	 border: none !important;
+	 border-radius: 4px !important;
   }
   
 .nav-tabs li.active a
   {
-	 background-color: #fafafa !important;
-	 border: none !important;
+	 background-color: #f8f8f8 !important;
+	 border-left: 1px solid #ddd !important;
+	 border-right: 1px solid #ddd !important;
+	 border-top: none !important;
+	 border-bottom: none !important;
   }
   
 #IC ul.nav.nav-tabs
   {
-	 background-color: #f3f3f3 !important;
+	 background-color: #fcfcfc !important;
 	 border: none !important;
 	 border-radius: 0 0 4px 4px !important;
+	 margin-bottom: 5px !important;
   }
   
 #upshrinkHeaderIC p.last
@@ -486,6 +497,11 @@ th.hidden-xs:nth-child(3)
   
 /* Thread styling */
 
+#forumposts
+  {
+	 margin-bottom: 30px !important;
+  }
+  
 #forumposts hr
   {
 	 display: none !important;
@@ -494,11 +510,11 @@ th.hidden-xs:nth-child(3)
 div.body_message
   {
 	 background-color: #fcfcfc !important;
-	 padding: 0 0 10px 0 !important;
+	 padding: 0 !important;
 	 margin-top: 10px !important;
 	 margin-bottom: 10px !important;
 	 border-radius: 4px !important;
-	 border-bottom: 2px solid #d5d5d5 !important;
+	 border-bottom: 2px solid #d3d3d3 !important;
   }
 
 .col-md-2
@@ -531,7 +547,20 @@ div.body_message
   
 .poster h4
   {
-	 background-color: #4c798e !important;
+	 background-color: #fcfcfc !important;
+	 font-family: 'Oswald', sans-serif !important;
+	 font-weight: 300 !important;
+  }
+  
+.poster h4 a
+  {
+	 color: #666 !important;
+  }
+  
+.poster h4 a:hover
+  {
+	 color: #000 !important;
+	 text-decoration: none !important;
   }
   
 .poster h4 img
@@ -547,11 +576,15 @@ li.im_icons
 li.title, li.stars, li.postcount, li.blurb, .poster ul ul
   {
 	 background-color: #fcfcfc !important;
-	 border-bottom: 1px solid #ccc !important;
+	 border-bottom: 1px solid #d3d3d3 !important;
 	 border-top: none !important;
-	 border-left: 1px solid #ccc !important;
-	 border-right: 1px solid #ccc !important;
 	 padding: 5px !important;
+  }
+  
+.poster ul li:last-child, .poster ul li:last-child ul
+  {
+	 border-radius: 0 !important;
+	 border-bottom: none !important;
   }
   
 li.postcount
@@ -582,6 +615,9 @@ li.membergroup
 	 left: auto !important;
 	 right: 0 !important;
   }
+  .pagelinks{
+	 font-size: 24px !important;
+  }
 }
   
 @media (max-width: 991px) {
@@ -591,18 +627,9 @@ li.membergroup
 	 padding-top: 17px !important;
 	 padding-bottom: 16px !important;
 	 font-size: 20px !important;
-	 font-family: 'Oswald', sans-serif !important;
-	 font-weight: 300 !important;
 	 border-radius: 4px 4px 0 0 !important;
 	 border-bottom: 1px solid #ccc !important;
 	 background-color: #fcfcfc !important;
-  }
-  .poster h4 a{
-	 color: #666 !important;
-  }
-  .poster h4 a:hover{
-	 color: #000 !important;
-	 text-decoration: none !important;
   }
   .poster img.img-circle{
 	 width: 42px !important;
@@ -636,11 +663,9 @@ li.membergroup
   div.smalltext.reportlinks a:nth-child(1){
 	 visibility: visible !important;
 	 position: absolute !important;
-	 bottom: 0px !important;
+	 bottom: 10px !important;
 	 right: 20px !important;
 	 color: #aaa !important;
-	 font-family: 'Oswald', sans-serif !important;
-	 font-weight: 300 !important;
   }
   div.btn-group.navbar-right{
 	 position: absolute !important;
@@ -661,9 +686,16 @@ li.membergroup
   .body_content{
 	 margin-left: 0px !important;
   }
+  .col-md-2{
+	 padding-left: 0 !important;
+	 border-right: 1px solid #d3d3d3 !important;
+	 margin-right: -1px !important;
+	 margin-bottom: 0 !important;
+  }
   .col-md-10{
 	 padding-left: 10px !important;
 	 padding-right: 0px !important;
+	 border-left: 1px solid #d3d3d3 !important;
   }
   div.keyinfo h5{
 	 font-family: 'Raleway', sans-serif !important;
@@ -675,6 +707,33 @@ li.membergroup
   }
   .btn-primary{
 	 height: 30px !important;
+  }
+  .poster h4{
+	 position: absolute !important;
+	 top: 0px !important;
+	 padding-top: 17px !important;
+	 width: 100% !important;
+	 border-radius: 4px 0 0 0 !important;
+	 font-size: 16px !important;
+  }
+  .poster img.img-circle{
+	 margin-top: 40px !important;
+  }
+  div.smalltext.reportlinks{
+	 position: absolute !important;
+	 top: 22px !important;
+	 right: 60px !important;
+	 width: 35px !important;
+	 height: 26px !important;
+	 overflow: hidden !important;
+	 transition: all 0.5s ease !important;
+	 -moz-transition: all 0.5s ease !important;
+	 padding: 5px !important;
+  }
+  div.smalltext.reportlinks:hover{
+	 width: auto !important;
+	 background-color: #eee !important;
+	 border-radius: 4px !important;
   }
 }
 
@@ -731,15 +790,19 @@ div.post .inner
 	 border-top: none !important;
   }
   
-
-  
-blockquote.bbc_standard_quote, blockquote.bbc_alternate_quote
+.codeheader, .codeheader a, .quoteheader, .quoteheader a
   {
-	 font-size: 12px !important;
-	 border: 1px solid #ddd !important;
+	 color: #444 !important;
   }
   
-blockquote.bbc_standard_quote
+blockquote.bbc_standard_quote, blockquote.bbc_alternate_quote, code.bbc_code
+  {
+	 font-size: 12px !important;
+	 border: 1px solid #ccc !important;
+	 color: #444 !important;
+  }
+  
+blockquote.bbc_standard_quote, code.bbc_code
   {
 	 background-color: #f8f8f8 !important;
   }
@@ -768,9 +831,9 @@ div.smalltext.modified
   
 div.smalltext.reportlinks
   {
-	 font-family: 'Open Sans', sans-serif !important;
-	 font-size: 11px !important;
-	 margin: 20px 0 0 0 !important;
+	 font-family: 'Oswald', sans-serif !important;
+	 font-weight: 300 !important;
+	 font-size: 12px !important;
   }
   
 div.smalltext.reportlinks a
@@ -785,7 +848,12 @@ div.smalltext.reportlinks a
   }
   
 /* Other stuff */
-  
+
+#moderationbuttons
+  {
+	 margin: 30px 0 30px 0 !important;
+	 float: right !important;
+  }
 div.title_bar
   {
 	 background-color: #6590a5 !important;

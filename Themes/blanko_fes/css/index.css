@@ -1,5 +1,4 @@
 @import url(https://fonts.googleapis.com/css?family=Oswald:300);
-@import url(https://fonts.googleapis.com/css?family=Raleway);
 @import url(https://fonts.googleapis.com/css?family=Quicksand:300);
 
 /* remove this idiot */
@@ -12,6 +11,19 @@
 body
   {
 	 background-color: #eee !important;
+  }
+
+strong
+  {
+	 font-weight: 600 !important;
+  }
+
+.windowbg, .windowbg span,
+.windowbg2, .windowbg2 span,
+.windowbg3, .windowbg3 span,
+#preview_body
+  {
+	 background-color: #fcfcfc !important;
   }
   
 /* Top stuff */
@@ -64,7 +76,9 @@ body
   
 .navbar-right li.dropdown span
   {
-	 font-family: 'Raleway', sans-serif !important;
+	 font-family: 'Oswald', sans-serif !important;
+	 font-weight: 300 !important;
+	 font-size: 16px !important;
   }
 
 #menu
@@ -145,8 +159,9 @@ header .breadcrumb
   
 header .breadcrumb li a
   {
-	 color: #666 !important;
-	 font-family: 'Raleway', sans-serif !important;
+	 color: #888 !important;
+	 font-weight: 400 !important;
+	 font-size: 13px !important;
   }
   
   
@@ -161,7 +176,8 @@ div.cat_bar
 h3.catbg
   {
 	 background-color: #6590a5 !important;
-	 font-family: 'Raleway', sans-serif !important;
+	 font-weight: 600 !important;
+	 font-size: 12px !important;
   }
   
 div#IC div.cat_bar, div#IC div.cat_bar h3.catbg
@@ -408,8 +424,8 @@ td.subject span
   
 th.lefttext
   {
-	 font-family: 'Raleway', sans-serif !important;
-	 font-weight: 300 !important;
+	 font-weight: 600 !important;
+	 font-size: 12px !important;
 	 padding-left: 9px !important;
   }
   
@@ -420,9 +436,9 @@ th.last_th.lefttext
   
 th.hidden-xs:nth-child(3)
   {
-	 font-family: 'Raleway', sans-serif !important;
-	 font-weight: 300 !important;
-	 padding-left: 45px !important;
+	 font-weight: 600 !important;
+	 font-size: 12px !important;
+	 padding-left: 55px !important;
 	 width: 200px !important;
   }
   
@@ -580,6 +596,11 @@ li.title, li.postcount, li.blurb, .poster ul ul
 	 border-top: none !important;
 	 padding: 5px !important;
   }
+
+li.title
+  {
+	 font-weight: 600 !important;
+  }
   
 li.stars
   {
@@ -707,9 +728,8 @@ li.membergroup
 	 border-left: 1px solid #d3d3d3 !important;
   }
   div.keyinfo h5{
-	 font-family: 'Raleway', sans-serif !important;
-	 font-weight: 300 !important;
-	 font-size: 14px !important;
+	 font-weight: 600 !important;
+	 font-size: 12px !important;
   }
   div.keyinfo .smalltext{
 	 font-size: 11px !important;
@@ -799,6 +819,7 @@ div.post .inner
 .codeheader, .codeheader a, .quoteheader, .quoteheader a
   {
 	 color: #444 !important;
+	 font-weight: 600 !important;
   }
   
 blockquote.bbc_standard_quote, blockquote.bbc_alternate_quote, code.bbc_code

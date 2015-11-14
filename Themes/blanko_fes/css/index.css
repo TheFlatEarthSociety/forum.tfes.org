@@ -26,6 +26,19 @@ strong
 	 background-color: #fcfcfc !important;
   }
   
+span.upperframe, span.upperframe span,
+.roundframe,
+span.lowerframe, span.lowerframe span
+  {
+	 border: none !important;
+	 background-color: #fcfcfc !important;
+  }
+  
+span.upperframe
+  {
+	 margin-top: 5px !important;
+  }
+  
 /* Top stuff */
 
 .navbar
@@ -86,7 +99,7 @@ strong
 	 background-color: #fff !important;
 	 position: relative !important;
 	 z-index: 999 !important;
-	 box-shadow: 0px 5px 10px #ddd !important;
+	 box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.125) !important;
   }
 
 #menu .nav li a 
@@ -126,25 +139,33 @@ strong
   }
 
 @media (min-width: 768px){
-  #button_logout, #button_profile
-	 {
+  #button_logout, #button_profile{
 		display: none !important;
 	 }
+  header{
+	 margin-top: 30px !important;
   }
-
+  header .container{
+	 border-radius: 5px !important;
+  }
+  }
+  
+@media (max-width: 767px){
+  header .container{
+	 border-radius: 0 !important;
+  }
+}
+  
 header
   {
-	 margin-top: -5px !important;
-	 margin-bottom: 30px !important;
+	 margin-bottom: 10px !important;
 	 border: none !important;
 	 background-color: #eee !important;
   }
 
 header .container
   {
-	 background-color: #fdfdfd !important;
-	 border-radius: 5px !important;
-	 box-shadow: 0px 2px 2px #ddd !important;
+	 background-color: #769fb3 !important;
   }
 
 header h2
@@ -154,14 +175,20 @@ header h2
   
 header .breadcrumb
   {
-	 padding-top: 7px !important;
+	 
   }
   
 header .breadcrumb li a
   {
-	 color: #888 !important;
-	 font-weight: 400 !important;
-	 font-size: 13px !important;
+	 color: #FFF !important;
+	 font-weight: 600 !important;
+	 font-size: 12px !important;
+  }
+ 
+header .breadcrumb li a:hover
+  {
+	 color: #ffdd99 !important;
+	 text-decoration: none !important;
   }
   
   
@@ -185,9 +212,9 @@ div#IC div.cat_bar, div#IC div.cat_bar h3.catbg
 	 background-color: #4c798e !important;
 	 border-radius: 4px 4px 0 0 !important;
   }
-#boardindex_table .content
+#boardindex_table
   {
-	 margin-top: 10px !important;
+	 margin-top: 30px !important;
   }
 
 .windowbg4
@@ -307,6 +334,8 @@ tbody.content
 	 margin-top: -27px !important;
 	 vertical-align: middle !important;
 	 color: #fff !important;
+	 font-weight: 600 !important;
+	 font-size: 12px !important;
 	 background-color: #769fb3 !important;
 	 transition: opacity 0.4s ease !important;
   }
@@ -352,13 +381,18 @@ table.table_list p
 	 font-size: 13px !important;
 	 line-height: 14px !important;
   }
+
+.childboards
+  {
+	 margin-bottom: 20px !important;
+  }
   
 #messageindex
   {
 	 padding-top: 15px !important;
   }
   
-#messageindex tr.catbg
+tr.catbg th.first_th, tr.titlebg th.first_th, tr.catbg th.last_th, tr.titlebg th.last_th
   {
 	 border-radius: 0 !important;
   }
@@ -384,9 +418,9 @@ td.subject span
 	 font-size: 13px !important;
   }
   
-.stickybg
+td.subject.stickybg div 
   {
-	 background-color: #f7f0e9 !important;
+	 font-weight: 600 !important;
   }
   
 .table_grid td.icon1, .table_grid td, .table_list td.subject
@@ -452,8 +486,6 @@ th.hidden-xs:nth-child(3)
 	 padding: 0 3px 0 3px !important;
 	 margin-left: 5px !important;
   }
-
-
   
 .buttonlist li a
   {
@@ -873,17 +905,39 @@ div.smalltext.reportlinks a
 	 border-top: 1px dotted #aaa !important;
 	 width: 100% !important;
   }
+ 
+.list_posts
+  {
+	 border-top: 1px dotted #aaa !important;
+  }
+  
+.smalltext, tr.smalltext th
+  {
+	 font-size: 11px !important;
+	 font-family: 'Open Sans', sans-serif !important;
+  }
   
 /* Other stuff */
 
+select
+  {
+	 padding-right: 5px !important;
+  }
+  
 #moderationbuttons
   {
 	 margin: 30px 0 30px 0 !important;
 	 float: right !important;
   }
+  
 div.title_bar
   {
 	 background-color: #6590a5 !important;
+  }
+
+.dropmenu li li
+  {
+	 background-color: #769fb3 !important;
   }
   
 .btn-danger, .dropmenu li a.active, .dropmenu li li a:hover, .dropmenu li li:hover>a

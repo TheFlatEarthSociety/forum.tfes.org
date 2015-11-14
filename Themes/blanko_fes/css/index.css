@@ -184,14 +184,7 @@ header .breadcrumb li a
 	 font-weight: 600 !important;
 	 font-size: 12px !important;
   }
- 
-header .breadcrumb li a:hover
-  {
-	 color: #ffdd99 !important;
-	 text-decoration: none !important;
-  }
-  
-  
+
 /* Index & buttons */
 
 div.cat_bar
@@ -447,14 +440,32 @@ td.subject.stickybg div
   {
 	 font-family: 'Oswald', sans-serif !important;
 	 font-weight: 300 !important;
-	 font-size: 18px !important;
-	 margin-top: -10px !important;
+	 font-size: 15px !important;
   }
 
 .pagelinks strong
   {
 	 font-weight: normal !important;
   }
+
+@media (max-width: 767px){
+  .pagelinks{
+	 background-color: #6590A5 !important;
+	 color: #fff !important;
+	 border-radius: 4px !important;
+	 width: 100% !important;
+	 margin-top: 15px !important;
+	 margin-bottom: 5px !important;
+	 text-align: center !important;
+	 padding: 10px 0px 10px 0px !important;
+  }
+  .pagelinks a{
+	 color: #fff !important;
+  }
+  div.pagesection ul.nav.nav-pills{
+	 margin-top: 10px !important;
+  }
+}
   
 th.lefttext
   {

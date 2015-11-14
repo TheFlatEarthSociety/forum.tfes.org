@@ -10,7 +10,7 @@
   
 body
   {
-	 background-color: #eee !important;
+	 background-color: #ebebeb !important;
   }
 
 strong
@@ -160,7 +160,7 @@ header
   {
 	 margin-bottom: 10px !important;
 	 border: none !important;
-	 background-color: #eee !important;
+	 background-color: #ebebeb !important;
   }
 
 header .container
@@ -212,7 +212,7 @@ div#IC div.cat_bar, div#IC div.cat_bar h3.catbg
 
 .windowbg4
   {
-	 background-color: #eee !important;
+	 background-color: #ebebeb !important;
   }
   
 tbody.content
@@ -225,7 +225,7 @@ tbody.content
 	 border-right: none !important;
 	 border-left: none !important;
 	 border-bottom: none !important;
-	 border-top: 3px solid #eee !important;
+	 border-top: 3px solid #ebebeb !important;
 	 background-color: #fcfcfc !important;
 	 padding: 0 !important;
 	 color: #555 !important;
@@ -419,7 +419,7 @@ td.subject.stickybg div
 .table_grid td.icon1, .table_grid td, .table_list td.subject
   {
 	 background-color: #fcfcfc !important;
-	 border-bottom: 2px solid #eee !important;
+	 border-bottom: 2px solid #ebebeb !important;
 	 border-left: none !important;
 	 border-right: none !important;
 	 color: #555 !important;

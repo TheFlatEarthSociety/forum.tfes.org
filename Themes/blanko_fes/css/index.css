@@ -158,34 +158,67 @@ span.upperframe
   
 header
   {
-	 margin-bottom: 10px !important;
-	 border: none !important;
-	 background-color: #ebebeb !important;
+	 visibility: hidden !important;
+	 margin: 0 !important;
+	 padding: 0 !important;
   }
-
+  
 header .container
   {
-	 background-color: #769fb3 !important;
+	 padding: 0 !important;
   }
 
 header h2
   {
 	 display: none !important;
   }
-  
-header .breadcrumb
+ 
+@media (min-width: 768px){
+  .breadcrumb{
+	 margin: 20px 15px 15px 15px !important;
+	}
+  }
+
+@media (max-width: 767px){
+  .breadcrumb{
+	 float: right !important;
+	 margin: 5px 15px 0px 15px !important;
+	}
+  }
+
+.breadcrumb li
   {
-	 
+	 visibility: visible !important;
+	 margin-right: 0px !important;
+	 position: relative !important;
+	 top: 10px !important;
+	 background-color: #fcfcfc !important;
+	 padding: 10px !important;
+	 font-weight: 400 !important;
+	 font-size: 12px !important;
+	 border-radius: 4px !important;
+	 border-bottom: 2px solid #d3d3d3 !important;
   }
   
-header .breadcrumb li a
+.breadcrumb li a
   {
-	 color: #FFF !important;
-	 font-weight: 600 !important;
-	 font-size: 12px !important;
+	 color: #666 !important;
+	 
+  }
+	
+.breadcrumb li:first-child, .breadcrumb li::before
+  {
+	 display: none !important;
+  }
+  
+@media (max-width: 991px){
+  .breadcrumb li:nth-last-child(2){
+	 display: inline-block !important;
+	}
   }
 
 /* Index & buttons */
+
 
 div.cat_bar
   {
@@ -205,10 +238,7 @@ div#IC div.cat_bar, div#IC div.cat_bar h3.catbg
 	 background-color: #4c798e !important;
 	 border-radius: 4px 4px 0 0 !important;
   }
-#boardindex_table
-  {
-	 margin-top: 30px !important;
-  }
+
 
 .windowbg4
   {

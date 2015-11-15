@@ -61,10 +61,21 @@ span.upperframe
 	 margin-top: 7px !important;
 	 margin-bottom: 7px !important;
   }
+
+@media (min-width: 768px){
+  .navbar-toggle{
+	 margin-right: 0px !important;
+	}
+  }
  
 .navbar-toggle:hover
   {
 	 background-color: #769fb3 !important;
+  }
+
+nav .nav-notification
+  {
+	 margin-right: 10px !important;
   }
 
 .search-input-wrapper
@@ -103,7 +114,7 @@ span.upperframe
   {
 	 font-family: 'Oswald', sans-serif !important;
 	 font-weight: 300 !important;
-	 font-size: 16px !important;
+	 font-size: 15px !important;
   }
 
 #menu
@@ -4810,7 +4821,7 @@ footer a
 nav .nav-notification {
 	 list-style: none;
 	padding: 0;
-	margin: 0 5px 0 0 !important;
+	margin: 0 5px 0 0;
 }
 nav .nav-notification>li {
 	 position: relative;

@@ -1005,16 +1005,16 @@ div.title_bar
   {
 	 background-color: #769fb3 !important;
   }
+
+input.btn.btn-default.btn-sm
+  {
+	 margin-top: 5px !important;
+  }
   
 .btn-danger, .dropmenu li a.active, .dropmenu li li a:hover, .dropmenu li li:hover>a
   {
 	 background-color: #4c798e !important;
 	 border: none !important;
-  }
-
-input.btn.btn-danger.btn-sm
-  {
-	 margin-top: 0 !important;
   }
   
 .btn-danger:hover, .btn-danger:focus, .btn-danger.focus,
@@ -1044,6 +1044,11 @@ footer a
 .statsbar div.bar, .statsbar div.bar div
   {
 	 background-color: #ddd !important;
+  }
+
+#searchform
+  {
+	 padding: 0 !important;
   }
 
 /* ========================================================

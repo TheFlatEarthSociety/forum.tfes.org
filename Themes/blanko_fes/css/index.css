@@ -86,6 +86,18 @@ span.upperframe
 	 top: 1px !important;
 	 padding-right: 1px !important;
   }
+
+.search-input input:focus, .search-input input:hover,
+.search-input:focus input, .search-input:hover input
+  {
+	 padding-right: 40px !important;
+	 width: 200px !important;
+  }
+
+.search-input input:focus+.input-icon, .search-input input:hover+.input-icon
+  {
+	 right: 8px !important;
+  }
   
 .navbar-right li.dropdown span
   {
@@ -211,10 +223,9 @@ header h2
 	 display: none !important;
   }
   
-@media (max-width: 991px){
-  .breadcrumb li:nth-last-child(2){
+.breadcrumb li:nth-last-child(2)
+  {
 	 display: inline-block !important;
-	}
   }
 
 /* Index & buttons */
@@ -304,17 +315,17 @@ tbody.content
 	 color: #000 !important;
   }
 
-@media (max-width: 991px){
-  .table_list td.info {
-	 border-radius: 0 5px 5px 0 !important;
-  }
-}
-  
-@media (max-width: 991px){
+@media (max-width: 767px){
 	.table_list td.info a.subject{
 	  font-family: 'Oswald', sans-serif !important;
 	  font-weight: 300 !important;
 	  font-size: 16px !important;
+	}
+}
+  
+@media (max-width: 991px){
+	.table_list td.info {
+	  border-radius: 0 5px 5px 0 !important;
 	}
 	.table_list td.info p{
 	  position: fixed !important;
@@ -564,11 +575,14 @@ th.hidden-xs:nth-child(3)
   
 .nav-tabs li.active a
   {
-	 background-color: #f8f8f8 !important;
-	 border-left: 1px solid #ddd !important;
-	 border-right: 1px solid #ddd !important;
-	 border-top: none !important;
-	 border-bottom: none !important;
+	 background-color: #eee !important;
+	 border: none !important;
+	 border-radius: 4px !important;
+  }
+
+.nav-tabs li a
+  {
+	 margin: 5px !important;
   }
   
 #IC ul.nav.nav-tabs
@@ -976,6 +990,17 @@ div.title_bar
 	 background-color: #6590a5 !important;
   }
 
+#statistics div.title_bar
+  {
+	 margin-bottom: 4px !important;
+  }
+
+.titlebg
+  {
+	 font-size: 12px !important;
+	 font-weight: 600 !important;
+  }
+
 .dropmenu li li
   {
 	 background-color: #769fb3 !important;
@@ -985,6 +1010,11 @@ div.title_bar
   {
 	 background-color: #4c798e !important;
 	 border: none !important;
+  }
+
+input.btn.btn-danger.btn-sm
+  {
+	 margin-top: 0 !important;
   }
   
 .btn-danger:hover, .btn-danger:focus, .btn-danger.focus,
@@ -1009,6 +1039,11 @@ footer
 footer a
   {
 	 color: #888 !important;
+  }
+
+.statsbar div.bar, .statsbar div.bar div
+  {
+	 background-color: #ddd !important;
   }
 
 /* ========================================================

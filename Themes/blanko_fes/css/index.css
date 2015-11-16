@@ -258,6 +258,10 @@ div#IC div.cat_bar, div#IC div.cat_bar h3.catbg
 	 border-radius: 4px 4px 0 0 !important;
   }
 
+img#upshrink_ic.icon
+  {
+	 display: none !important;
+  }
 
 .windowbg4
   {
@@ -558,26 +562,36 @@ th.hidden-xs:nth-child(3)
 	 width: 100% !important;
 	 height: 30px !important;
 	 overflow-y: hidden !important;
-	 background-color: rgba(0,0,0,0.3) !important;
-	 background-image: url(http://forum.blanko.tfes.org/Themes/blanko_fes/images/expand.gif) !important;
-	 background-repeat: no-repeat !important;
-	 background-position: center 7px !important;
+	 background-color: rgba(0,0,0,0.15) !important;
 	 transition: all 0.3s ease !important;
 	 -webkit-transition: all 0.3s ease !important;
 	 -o-transition: all 0.3s ease !important;
 	 -moz-transition: all 0.3s ease !important;
   }
+  div.buttonlist:nth-child(2)::after{
+	 content: '+' !important;
+	 position: relative !important;
+	 left: calc(50% - 5px) !important;
+	 bottom: 47px !important;
+	 color: #fff !important;
+	 font-size: 16px !important;
+	 font-weight: 800 !important;
+	 opacity: 1 !important;
+	 transition: all .5s ease !important;
+  }
+  div.buttonlist:nth-child(2):hover::after{
+	 opacity: 0 !important;
+  }
   div.buttonlist:nth-child(2):hover, div.buttonlist:nth-child(2):focus{
 	 height: 90px !important;
-	 background-color: rgba(0,0,0,0.1) !important;
-	 background-image: none !important;
+	 background-color: rgba(0,0,0,0.075) !important;
   }
   div.buttonlist:nth-child(2) .nav-pills{
 	 margin: 0 auto !important;
 	 max-width: 320px !important;
 	 height: 40px !important;
 	 position: relative !important;
-	 top: 30px !important;
+	 top: 35px !important;
 	 overflow: hidden !important;
 	 display: flex !important;
 	 justify-content: center !important;
@@ -609,7 +623,7 @@ th.hidden-xs:nth-child(3)
   }
   .scroll-to-top .fa-chevron-up{
 	 font-size: 12px !important;
-	 background-color: rgba(0,0,0,0.2) !important;
+	 background-color: rgba(0,0,0,0.1) !important;
 	 padding: 4px 3px 2px 3px !important;
 	 width: 20px !important;
 	 height: 20px !important;

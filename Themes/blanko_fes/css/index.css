@@ -598,15 +598,27 @@ th.hidden-xs:nth-child(3)
   }
   .scroll-to-top{
 	 display: block !important;
-	 bottom: 5px !important;
-	 height: 20px !important;
-	 width: 20px !important;
-	 line-height: 15px !important;
+	 bottom: 0px !important;
+	 right: 0px !important;
+	 height: 50px !important;
+	 width: 50px !important;
+	 line-height: 68px !important;
 	 z-index: 1001 !important;
-	 background-color: rgba(0,0,0,0.2) !important;
+	 background-color: rgba(0,0,0,0) !important;
+	 box-shadow: none !important;
   }
-  .fa-chevron-up{
+  .scroll-to-top .fa-chevron-up{
 	 font-size: 12px !important;
+	 background-color: rgba(0,0,0,0.2) !important;
+	 padding: 4px 3px 2px 3px !important;
+	 width: 20px !important;
+	 height: 20px !important;
+	 border-radius: 50% !important;
+	 opacity: 0 !important;
+	 transition: all 0.3s !important;
+  }
+  .scroll-to-top.active .fa-chevron-up{
+	 opacity: 1 !important;
   }
 }
   

@@ -165,19 +165,7 @@ nav .nav-notification
   #button_logout, #button_profile{
 		display: none !important;
 	 }
-  header{
-	 margin-top: 30px !important;
   }
-  header .container{
-	 border-radius: 5px !important;
-  }
-  }
-  
-@media (max-width: 767px){
-  header .container{
-	 border-radius: 0 !important;
-  }
-}
   
 header
   {
@@ -204,7 +192,6 @@ header h2
 
 @media (max-width: 767px){
   .breadcrumb{
-	 float: right !important;
 	 margin: 5px 15px 0px 15px !important;
 	}
   }
@@ -363,7 +350,6 @@ tbody.content
 	 font-weight: 600 !important;
 	 font-size: 12px !important;
 	 background-color: #769fb3 !important;
-	 transition: opacity 0.4s ease !important;
   }
   
 .table_list td.info p.moderators, .table_list td.info p.children,
@@ -477,13 +463,15 @@ td.subject.stickybg div
   }
 
 @media (max-width: 767px){
+  div#forumposts{
+	 margin-bottom: 0px !important;
+  }
   .pagelinks{
 	 background-color: #6590A5 !important;
 	 color: #fff !important;
 	 border-radius: 4px !important;
 	 width: 100% !important;
-	 margin-top: 15px !important;
-	 margin-bottom: 5px !important;
+	 margin-top: 5px !important;
 	 text-align: center !important;
 	 padding: 10px 0px 10px 0px !important;
   }
@@ -547,6 +535,53 @@ th.hidden-xs:nth-child(3)
   {
 	 background-color: #6590a5 !important;
   }
+  
+@media (max-width: 767px){
+  div.floatright:nth-child(1){
+	 display: none !important;
+  }
+  div.buttonlist:nth-child(2){
+	 position: fixed !important;
+	 z-index: 1000 !important;
+	 bottom: 0px !important;
+	 left: 0px !important;
+	 width: 100% !important;
+	 height: 30px !important;
+	 overflow-y: hidden !important;
+	 background-color: rgba(0,0,0,0.3) !important;
+	 background-image: url(http://forum.blanko.tfes.org/Themes/blanko_fes/images/expand.gif) !important;
+	 background-repeat: no-repeat !important;
+	 background-position: center 7px !important;
+	 transition: all 0.3s ease !important;
+	 -webkit-transition: all 0.3s ease !important;
+	 -o-transition: all 0.3s ease !important;
+	 -moz-transition: all 0.3s ease !important;
+  }
+  div.buttonlist:nth-child(2):hover, div.buttonlist:nth-child(2):focus{
+	 height: 90px !important;
+	 background-color: rgba(0,0,0,0.1) !important;
+	 background-image: none !important;
+  }
+  div.buttonlist:nth-child(2) .nav-pills{
+	 margin: 0 auto !important;
+	 max-width: 320px !important;
+	 height: 40px !important;
+	 position: relative !important;
+	 top: 30px !important;
+	 overflow: hidden !important;
+	 display: flex !important;
+	 justify-content: center !important;
+  }
+  div.buttonlist:nth-child(2) .nav-pills li a{
+	 padding: 10px 5px 10px 8px !important;
+  }
+  div.buttonlist:nth-child(2) .nav-pills li a.active{
+	 padding: 10px 15px 10px 18px !important;
+  }
+  footer{
+	 margin-bottom: 30px !important;
+  }
+}
   
 .fa-lg
   {
@@ -827,6 +862,8 @@ li.membergroup
 	 height: 26px !important;
 	 overflow: hidden !important;
 	 transition: all 0.5s ease !important;
+	 -webkit-transition: all 0.5s ease !important;
+	 -o-transition: all 0.5s ease !important;
 	 -moz-transition: all 0.5s ease !important;
 	 padding: 5px !important;
   }

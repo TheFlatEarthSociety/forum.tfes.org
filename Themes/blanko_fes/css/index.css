@@ -337,32 +337,13 @@ tbody.content
 @media (max-width: 991px){
 	.table_list td.info {
 	  border-radius: 0 5px 5px 0 !important;
-	}
-	.table_list td.info p{
-	  position: fixed !important;
-	  z-index: 1000 !important;
-	  width: calc(100% - 20px) !important;
-	  right: 10px !important;
-	  left: 10px !important;
-	  bottom: 10px !important;
-	}
-	.scroll-to-top{
-	  bottom: 50px !important;
-	}
-	.table_list td.info{
-	  background-image: url(http://forum.blanko.tfes.org/Themes/blanko_fes/images/description_q.png) !important;
-	  background-repeat: no-repeat !important;
-	  background-position: right top !important;
 	} 
-  .table_list td.info:hover{
-	  background-image: url(http://forum.blanko.tfes.org/Themes/blanko_fes/images/description_q_active.png) !important;
-	  background-repeat: no-repeat !important;
-	  background-position: right top !important;
-	}
-	 
   }
   
 @media (min-width: 992px){
+	.table_list td.info:hover p{
+	  display: block !important;
+	}
 	.table_list td.info p{
 	  position: absolute !important;
 	  z-index: 1000 !important;
@@ -389,11 +370,6 @@ tbody.content
 .table_list:hover td.info p.moderators, .table_list:hover td.info p.children
   {
 	 display: none !important;
-  }
-  
-.table_list td.info:hover p
-  {
-	 display: block !important;
   }
 
 .table_list td.stats p

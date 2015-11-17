@@ -20,9 +20,11 @@
 			
 			 if(position >= 200)	{
 				$(".scroll-to-top").addClass("active")
+				$(".link-to-home").addClass("active")
 			 }
 			 else	{
 				$(".scroll-to-top").removeClass("active")
+				$(".link-to-home").removeClass("active")
 			 }
 		});
 		$( ".navbar-toggle").click(function(){

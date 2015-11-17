@@ -356,6 +356,7 @@ function template_body_below()
 	echo '
 	</div></footer>
 	<a href="#" class="scroll-to-top hidden-print"><i class="fa fa-chevron-up fa-lg"></i></a>
+	<a href="' , $scripturl , '" class="link-to-home"><i class="fa fa-home"></i></a>
 </div>';
 }
 

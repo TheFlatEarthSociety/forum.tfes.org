@@ -576,6 +576,7 @@ th.hidden-xs:nth-child(3)
 	 color: #fff !important;
 	 font-size: 16px !important;
 	 font-weight: 800 !important;
+	 text-shadow: 0px 0px 3px rgba(0,0,0,0.3) !important;
 	 opacity: 1 !important;
 	 transition: all .5s ease !important;
   }
@@ -907,23 +908,31 @@ li.membergroup
   .poster img.img-circle{
 	 margin-top: 0px !important;
   }
+  div.smalltext.reportlinks::after{
+	 content: '' !important;
+	 font-family: 'FontAwesome' !important;
+	 color: #ccc !important;
+	 font-weight: normal !important;
+	 font-size: 18px !important;
+	 visibility: visible !important;
+	 position: absolute !important;
+	 padding-left: 15px !important;
+	 bottom: 1px !important;
+  }
+  div.smalltext.reportlinks:hover::after{
+	 color: #888 !important;
+  }
   div.smalltext.reportlinks{
 	 position: absolute !important;
 	 top: 22px !important;
-	 right: 60px !important;
-	 width: 35px !important;
-	 height: 26px !important;
-	 overflow: hidden !important;
-	 transition: all 0.5s ease !important;
-	 -webkit-transition: all 0.5s ease !important;
-	 -o-transition: all 0.5s ease !important;
-	 -moz-transition: all 0.5s ease !important;
-	 padding: 5px !important;
-  }
-  div.smalltext.reportlinks:hover{
-	 width: auto !important;
-	 background-color: #eee !important;
+	 right: 90px !important;
+	 background-color: #fcfcfc !important;
 	 border-radius: 4px !important;
+	 visibility: hidden !important;
+	 padding: 5px !important;
+  } 
+  div.smalltext.reportlinks:hover{
+	 visibility: visible !important;
   }
 }
 
@@ -1045,7 +1054,7 @@ div.smalltext.reportlinks a
   
 .smalltext, tr.smalltext th
   {
-	 font-size: 11px !important;
+	 font-size: 12px !important;
 	 font-family: 'Open Sans', sans-serif !important;
   }
   

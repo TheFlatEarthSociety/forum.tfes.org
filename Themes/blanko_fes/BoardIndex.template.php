@@ -13,7 +13,21 @@
 function template_main()
 {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings;
-
+	
+	// Add "New Posts" and "New Replies" buttons
+	if ($context['user']['is_logged'])
+		echo '
+	<div id="unread-buttons-mobile">
+		<a href="', $scripturl, '?action=unread;" class="new-posts-mobile">
+			<i class="fa fa-comment"></i>
+			<span>New Posts</span>
+		</a>
+		<a href="', $scripturl, '?action=unreadreplies;" class="new-replies-mobile">
+			<i class="fa fa-comments"></i>
+			<span>New Replies</span>
+		</a>
+	</div>';
+		
 	// Show some statistics if stat info is off.
 	if (!$settings['show_stats_index'])
 		echo '

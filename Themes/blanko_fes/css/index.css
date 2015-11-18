@@ -233,6 +233,50 @@ header h2
 
 /* Index & buttons */
 
+@media (max-width: 767px){
+  #unread-buttons-mobile{
+	 width: 100%;
+	 display: flex;
+	 justify-content: center;
+	 margin-bottom: 16px;
+	 margin-top: -8px;
+  }
+  a.new-posts-mobile, a.new-replies-mobile{
+	 background-color: #fff;
+	 border-bottom: 2px solid #D3D3D3;
+	 padding: 8px;
+	 border-radius: 4px;
+	 width: 50%;
+	 display: flex;
+	 justify-content: center;
+  }
+  a.new-posts-mobile:hover, a.new-replies-mobile:hover{
+	 background-color: #fafafa;
+	 text-decoration: none;
+  }
+  a.new-posts-mobile{
+	 margin-right: 8px;
+  }
+  a.new-replies-mobile{
+	 margin-left: 8px;
+  }
+  #unread-buttons-mobile i{
+	 margin-right: 8px;
+	 margin-top: 3px;
+	 color: #888;
+  }
+  #unread-buttons-mobile span{
+	 font-family: 'Oswald', sans-serif;
+	 font-weight: 300;
+	 color: #666;
+  }
+}
+  
+@media (min-width: 768px){
+  #unread-buttons-mobile{
+	 display: none;
+  }
+}
 
 div.cat_bar
   {
@@ -477,7 +521,7 @@ td.icon1.windowbg4:before
 td.icon1.lockedbg:before
   {
 	 content: '' !important;
-	 font-family: FontAwesome !important;
+	 font-family: 'FontAwesome' !important;
 	 font-weight: normal !important;
 	 font-style: normal !important;
 	 position: absolute !important;

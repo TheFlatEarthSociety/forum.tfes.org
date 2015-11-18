@@ -149,6 +149,18 @@ nav .nav-notification
 	 color: #222 !important;
   }
 
+@media (max-width: 767px){
+  #menu li{
+	 border-bottom: 1px solid #eee !important;
+  }
+  #menu li:last-child{
+	 border-bottom: none !important;
+  }
+  #menu li li, #menu .dropdown-menu, #menu span.caret{
+	 display: none !important;
+  }
+}
+
 .dropdown-menu
   {
 	 border: none !important;

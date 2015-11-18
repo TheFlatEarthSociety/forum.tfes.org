@@ -452,6 +452,48 @@ td.subject.stickybg div
 	 border-right: none !important;
 	 color: #555 !important;
   }
+
+td.icon1.stickybg:before
+  {
+	 content: '' !important;
+	 font-family: 'FontAwesome' !important;
+	 font-weight: normal !important;
+	 position: absolute !important;
+	 margin-top: 8px !important;
+	 margin-left: 5px !important;
+  }
+  
+td.icon1.windowbg4:before
+  {
+	 content: '' !important;
+	 font-family: 'FontAwesome' !important;
+	 font-weight: normal !important;
+	 font-size: 12px !important;
+	 position: absolute !important;
+	 margin-top: 8px !important;
+	 margin-left: 5px !important;
+  }
+  
+td.icon1.lockedbg:before
+  {
+	 content: '' !important;
+	 font-family: FontAwesome !important;
+	 font-weight: normal !important;
+	 font-style: normal !important;
+	 position: absolute !important;
+	 margin-top: 8px !important;
+	 margin-left: 5px !important;
+  }
+  
+td.icon1 img, td.icon2 img
+  {
+	 display: none !important;
+  }
+  
+#topic_icons p.floatleft.smalltext, #topic_icons p.smalltext
+  {
+	 display: none !important;
+  }
   
 .description, .description_board, .plainbox
   {
@@ -477,9 +519,6 @@ td.subject.stickybg div
   }
 
 @media (max-width: 767px){
-  div#forumposts{
-	 margin-bottom: 0px !important;
-  }
   .pagelinks{
 	 background-color: #6590A5 !important;
 	 color: #fff !important;
@@ -575,7 +614,7 @@ th.hidden-xs:nth-child(3)
 	 font-family: 'FontAwesome' !important;
 	 position: relative !important;
 	 left: calc(50% - 6px) !important;
-	 bottom: 46px !important;
+	 bottom: 45px !important;
 	 color: #fff !important;
 	 font-size: 16px !important;
 	 font-weight: normal !important;
@@ -682,7 +721,7 @@ th.hidden-xs:nth-child(3)
 
 #forumposts
   {
-	 margin-bottom: 30px !important;
+	 margin: 20px 0 !important;
   }
   
 #forumposts hr

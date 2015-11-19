@@ -858,6 +858,7 @@ div.body_message
 	 background-color: #fcfcfc !important;
 	 font-family: 'Oswald', sans-serif !important;
 	 font-weight: 300 !important;
+	 color: #aaa !important;
 }
 
 .poster h4 a
@@ -1197,6 +1198,11 @@ div.smalltext.reportlinks a
 }
 
 /* Other stuff */
+
+iframe
+{
+	 max-width: 100% !important;
+}
 
 #postmodify .roundframe
 {

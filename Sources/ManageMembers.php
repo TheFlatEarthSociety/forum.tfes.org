@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0
+ * @version 2.0.11
  */
 
 if (!defined('SMF'))
@@ -227,7 +227,7 @@ function ViewMemberlist()
 	}
 
 	if ($context['sub_action'] == 'query' && !empty($_REQUEST['params']) && (empty($_POST) || ((isset($_POST['spammers_checks']) || isset($_POST['spammers_report'])) && !empty($_POST['delete']))))
-		$_POST += @unserialize(base64_decode($_REQUEST['params']));
+		$_POST += safe_unserialize(base64_decode($_REQUEST['params']));
 
 	// Check input after a member search has been submitted.
 	if ($context['sub_action'] == 'query')

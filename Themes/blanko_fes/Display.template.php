@@ -244,13 +244,6 @@ function template_main()
 								<img src="', $message['member']['avatar']['href'], '" class="img-thumbnail img-circle" alt="*" />
 							</a>';
 				}
-				else
-				{
-					echo'
-							<a href="', $scripturl, '?action=profile;u=', $message['member']['id'], '">
-								<img src="',$settings['images_url'] ,'/noavatar.png" class="img-thumbnail img-circle" alt="*" /> 
-							</a>';
-				}
 				
 		echo'
 							<h4>';

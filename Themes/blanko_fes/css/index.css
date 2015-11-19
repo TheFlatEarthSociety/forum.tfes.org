@@ -1151,6 +1151,10 @@ div.keyinfo .smalltext
 	 font-family: 'Open Sans', sans serif !important;
 }
 
+img.bbc_img
+{
+	  vertical-align: baseline !important;
+}
 .modifybutton
 {
 	 display: none !important;
@@ -1211,12 +1215,13 @@ div.smalltext.reportlinks a
 
 #basicinfo h4, #basicinfo h4 span.position
 {
-	 font-weight: 400 !important;
+	 font-weight: 300 !important;
 	 color: #333 !important;
 }
 
 @media (max-width: 991px) {
 	 #profileview #basicinfo .windowbg {
+		  padding-top: 10px !important;
 		  display: flex !important;
 		  justify-content: center !important;
 	 }
@@ -1292,6 +1297,44 @@ input.input_check
 {
 	 position: relative !important;
 	 top: 0px !important;
+}
+
+#poll
+{
+	 margin-bottom: 20px !important;
+}
+  
+#pollmoderation
+{
+	 margin: 15px 0 !important;
+}
+  
+@media (max-width: 767px) {
+	 #pollmoderation .buttonlist {
+			position: relative !important;
+			padding-top: 10px !important;
+	 }
+	 #poll .statsbar div.bar {
+			display: none !important;
+	 }
+}
+  
+a.button_strip_remove_poll::before
+{
+	 content: '' !important;
+	 font-family: 'FontAwesome' !important;
+	 position: absolute !important;
+	 margin-left: 5px !important;
+}
+
+#poll dl.options
+{
+	 padding: 10px 0 !important;
+}
+  
+#poll .statsbar div.bar
+{
+	 width: 60% !important;
 }
 
 #poll_options ul.options, #poll_options div.submitbutton
@@ -1428,6 +1471,39 @@ div#personal_messages hr, div#personal_messages .reportlinks
 {
 	 position: relative !important;
 	 top: 10px !important;
+}
+
+#unread, #unreadreplies
+{
+	 width: 100% !important;
+	 overflow: scroll !important;
+}
+  
+#unread table, #unreadreplies table
+{
+	 min-width: 800px !important;
+}
+  
+#unread .label.label-warning, #unreadreplies .label.label-warning
+{
+	 display: none !important;
+}
+  
+#unread th, #unreadreplies th
+{
+	 font-size: 12px !important;
+	 font-weight: 600 !important;
+	 text-align: center !important;
+}
+
+#recent .pagesection:nth-child(1)
+{
+	 display: none !important;
+}
+
+i.fa.fa-readall.fa-fw::before
+{
+	 content: '' !important;
 }
 
 .link-to-home

@@ -158,8 +158,11 @@ function template_main()
 	}
 
 	// Build the normal button array.
+	CheckUnsubscribe();
 	$normal_buttons = array(
 		'reply' => array('test' => 'can_reply', 'text' => 'reply', 'image' => 'reply.gif', 'lang' => true, 'url' => $scripturl . '?action=post;topic=' . $context['current_topic'] . '.' . $context['start'] . ';last_msg=' . $context['topic_last_message'], 'active' => true),
+		'unsubscribe' => array('test' => 'is_subscribed', 'text' => 'unsubscribe', 'image' => 'unsubscribe.gif', 'lang' => true, 'url' => $scripturl . '?action=unsubscribe;topic=' . $context['current_topic'] . ';unsubscribe=1;return=' . $context['start']),
+		'subscribe' => array('test' => 'is_unsubscribed', 'text' => 'subscribe', 'image' => 'subscribe.gif', 'lang' => true, 'url' => $scripturl . '?action=unsubscribe;topic=' . $context['current_topic'] . ';unsubscribe=0;return=' . $context['start']),
 		'add_poll' => array('test' => 'can_add_poll', 'text' => 'add_poll', 'image' => 'add_poll.gif', 'lang' => true, 'url' => $scripturl . '?action=editpoll;add;topic=' . $context['current_topic'] . '.' . $context['start']),
 		'notify' => array('test' => 'can_mark_notify', 'text' => $context['is_marked_notify'] ? 'unnotify' : 'notify', 'image' => ($context['is_marked_notify'] ? 'un' : '') . 'notify.gif', 'lang' => true, 'custom' => 'onclick="return confirm(\'' . ($context['is_marked_notify'] ? $txt['notification_disable_topic'] : $txt['notification_enable_topic']) . '\');"', 'url' => $scripturl . '?action=notify;sa=' . ($context['is_marked_notify'] ? 'off' : 'on') . ';topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id']),
 		'mark_unread' => array('test' => 'can_mark_unread', 'text' => 'mark_unread', 'image' => 'markunread.gif', 'lang' => true, 'url' => $scripturl . '?action=markasread;sa=topic;t=' . $context['mark_unread_time'] . ';topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id']),

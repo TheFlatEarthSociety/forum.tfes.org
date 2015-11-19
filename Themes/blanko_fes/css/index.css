@@ -514,9 +514,11 @@ td.icon1.stickybg:before
 	 content: '' !important;
 	 font-family: 'FontAwesome' !important;
 	 font-weight: normal !important;
+	 font-size: 18px !important;
+	 color: #6590A5 !important;
 	 position: absolute !important;
-	 margin-top: 8px !important;
-	 margin-left: 5px !important;
+	 margin-top: 6px !important;
+	 margin-left: 1.5% !important;
 }
 
 td.icon1.windowbg4:before
@@ -524,10 +526,11 @@ td.icon1.windowbg4:before
 	 content: '' !important;
 	 font-family: 'FontAwesome' !important;
 	 font-weight: normal !important;
-	 font-size: 12px !important;
+	 color: #aaa !important;
+	 font-size: 14px !important;
 	 position: absolute !important;
 	 margin-top: 8px !important;
-	 margin-left: 5px !important;
+	 margin-left: 1.5% !important;
 }
 
 td.icon1.lockedbg:before
@@ -536,9 +539,10 @@ td.icon1.lockedbg:before
 	 font-family: 'FontAwesome' !important;
 	 font-weight: normal !important;
 	 font-style: normal !important;
+	 font-size: 18px !important;
 	 position: absolute !important;
-	 margin-top: 8px !important;
-	 margin-left: 5px !important;
+	 margin-top: 6px !important;
+	 margin-left: 1.5% !important;
 }
 
 td.icon1 img, td.icon2 img
@@ -704,7 +708,7 @@ th.hidden-xs:nth-child(3)
 	 div.mark_read .buttonlist {
 		  padding-top: 10px !important;
 	 }
-	 a.button_strip_markread span {
+	 div.mark_read a.button_strip_markread span {
 		  display: inline !important;
 	 }
 	 #moderationbuttons_strip {
@@ -1175,14 +1179,124 @@ div.smalltext.reportlinks a
 
 /* Other stuff */
 
+#postmodify .roundframe
+{
+	 padding: 0 20px !important;
+}
+  
+#post_header
+{
+	 overflow: scroll !important;
+}
+  
+#post_header dt
+{
+	 min-width: 110px !important;
+}
+  
+#basicinfo h4, #basicinfo h4 span.position
+{
+	 font-weight: 400 !important;
+	 color: #333 !important;
+}
+
+@media (max-width: 991px) {
+	 #profileview #basicinfo .windowbg {
+		 display: flex !important;
+		 justify-content: center !important;
+	 } 
+}
+  
+ul.smalltext.left_admmenu li
+{
+	 padding: 3px !important;
+}
+  
+div#display_jump_to.plainbox
+{
+	 background-color: #fcfcfc !important;
+	 border-radius: 4px !important;
+	 padding-bottom: 7px !important;
+	 padding-right: 7px !important;
+	 margin: 10px 0 !important;
+}
+  
+div#display_jump_to.plainbox select
+{
+	 padding: 4px 8px 4px 3px !important;
+	 position: relative !important;
+	 top: 2px !important;
+	 border-radius: 3px !important;
+}
+
+#topic_icons div.description
+{
+	 padding: 0 !important;
+}
+  
+p#message_index_jump_to.floatright
+{
+	 background-color: #fcfcfc !important;
+	 padding: 7px !important;
+	 border-radius: 4px !important;
+}
+  
+p#message_index_jump_to.floatright select
+{
+	 padding: 4px 8px 4px 3px !important;
+	 position: relative !important;
+	 top: 1px !important;
+	 border-radius: 3px !important;
+}
+  
+p#message_index_jump_to.floatright label.smalltext
+{
+	 padding: 0 5px !important;
+}
+  
+div#display_jump_to.plainbox label.smalltext
+{
+	 position: relative !important;
+	 top: 1px !important;
+	 right: 5px !important;
+}
+  
 select
 {
 	 padding-right: 5px !important;
 }
+  
+input.input_check
+{
+	 position: relative !important;
+	 top: 2px !important;
+	 margin-right: 5px !important;
+}
+  
+#check_all
+{
+	 position: relative !important;
+	 top: 0px !important;
+}
+  
+#poll_options ul.options, #poll_options div.submitbutton
+{
+	 border: none !important;
+}
+  
+#poll_options label, #poll_options .middletext
+{
+	 font-family: 'Open Sans', sans-serif !important;
+	 font-weight: 400 !important;
+}
+  
+#poll_options .middletext.voted
+{
+	 font-weight: 600 !important;
+}
 
 @media (min-width: 768px) {
-	 #moderationbuttons
-	 {
+	 #moderationbuttons {
 		  margin: 30px 0 30px 0 !important;
 		  float: right !important;
 	 }
@@ -1255,11 +1369,11 @@ div#personal_messages .body_message
 	 margin-right: 0 !important;
 }
 
-div#personal_messages hr
+div#personal_messages hr, div#personal_messages .reportlinks
 {
 	 display: none !important;
 }
-
+  
 .button_strip_view_all_members::before
 {
 	 content: '' !important;
@@ -1283,21 +1397,26 @@ div#personal_messages hr
 }
 
 @media (max-width: 991px) {
-	 #mlist.tborder.topic_table
-	 {
+	 #mlist.tborder.topic_table {
 		  width: 100% !important;
 		  overflow-x: scroll !important;
 	 }
 }
 
 @media (max-width: 767px) {
-	 #mlist.tborder.topic_table
-	 {
+	 #mlist.tborder.topic_table {
 		  margin-top: 20px !important;
 	 }
 }
 
-.link-to-home {
+#whos_online .selectbox
+{
+	 position: relative !important;
+	 top: 10px !important;
+}
+  
+.link-to-home 
+{
 	 position: fixed !important;
 	 right: -100px !important;
 	 bottom: 55px !important;
@@ -1311,7 +1430,9 @@ div#personal_messages hr
 	 border-radius: 10px 10px 0 0 !important;
 	 transition: all 0.5s ease !important;
 }
-.link-to-home.active {
+  
+.link-to-home.active
+{
 	 right: 10px !important;
 }
 

@@ -52,6 +52,7 @@ span.upperframe
 {
 	 height: 60px !important;
 	 margin-top: -20px !important;
+	 image-rendering: -webkit-optimize-contrast !important;
 }
 
 .navbar-toggle
@@ -451,6 +452,7 @@ table.table_list td.icon img
 	 width: 32px !important;
 	 height: 32px !important;
 	 border-radius: 50% !important;
+	 image-rendering: -webkit-optimize-contrast !important;
 }
 
 table.table_list p

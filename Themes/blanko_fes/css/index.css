@@ -1544,12 +1544,19 @@ i.fa.fa-subscribe.fa-fw::after
         z-index: 1;
         top: 0px;
         bottom: 0px;
-        height: 90px;
+        height: 110px;
         background: none;
-        margin-top: -30px;
+        margin-top: -25px;
     }
     #moderationbuttons_strip::after {
-        display: none;
+        content: '';
+        font-family: 'FontAwesome';
+        color: #6590a5;
+        font-size: 20px;
+        margin-left: 2px;
+        box-shadow: none;
+        left: 0;
+        opacity: 1;
     }
     footer {
         margin-bottom: 30px;

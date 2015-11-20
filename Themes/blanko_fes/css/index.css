@@ -2268,7 +2268,7 @@ a.button_strip_remove_poll::before
 
 .post hr
 {
-    display: block;
+    display: block !important;
 }
 
 #forumposts .cat_bar

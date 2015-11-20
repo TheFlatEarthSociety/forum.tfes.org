@@ -621,6 +621,7 @@ div.pagesection div.floatright input
     border-top: 1px dotted #aaa;
     line-height: 1.4em;
     font-size: 0.85em;
+    word-wrap: break-word;
 }
 .custom_fields_above_signature
 {
@@ -2365,6 +2366,7 @@ span.arrow-left
     font-family: 'Oswald', sans-serif;
     font-weight: 300;
     color: #aaa;
+    word-wrap: break-word;
 }
 
 .poster h4 a
@@ -2464,6 +2466,7 @@ span.arrow-left
 {
     font-family: 'Open Sans', sans-serif !important;
     line-height: 13px !important;
+    word-wrap: break-word;
 }
 
 li.title, li.postcount, li.blurb, li.warning, .poster ul ul
@@ -2818,6 +2821,7 @@ ul.quickbuttons li.inline_mod_check
     margin-top: 0.5em;
     clear: right;
     font-size: 13px;
+    word-wrap: break-word;
 }
 
 .post .inner

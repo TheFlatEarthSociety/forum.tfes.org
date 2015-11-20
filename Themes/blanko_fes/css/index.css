@@ -207,7 +207,7 @@ em
 }
 
 /* iframes should not overflow from the post area */
-iframe
+iframe, video, audio
 {
     max-width: 100%;
 }

@@ -2114,7 +2114,7 @@ div.table_frame .table_list
     transition: all 0.5s ease;
 }
 
-#moderationbuttons::before
+#moderationbuttons .buttonlist::before
 {
     content: '';
     font-family: 'FontAwesome';

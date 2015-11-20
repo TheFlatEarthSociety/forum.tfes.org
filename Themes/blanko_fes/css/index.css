@@ -2973,7 +2973,6 @@ form#postmodify .roundframe
 #post_header, .postbox
 {
     padding: 0.5em;
-    overflow: scroll;
 }
 
 #post_header dt, .postbox dt
@@ -4728,6 +4727,11 @@ span.hidelink
     padding: 0.2em;
     margin: 0 0 0 0.5em;
     text-align: left;
+}
+
+#advanced_search select, #advanced_search input
+{
+    margin-top: 10px;
 }
 
 #searchform p.clear

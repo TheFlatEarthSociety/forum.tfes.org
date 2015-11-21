@@ -1546,7 +1546,7 @@ i.fa.fa-subscribe.fa-fw::after
         bottom: 0px;
         height: 110px;
         background: none;
-        margin-top: -25px;
+        margin-top: -23px;
     }
     #moderationbuttons_strip::after {
         content: '';
@@ -1554,7 +1554,7 @@ i.fa.fa-subscribe.fa-fw::after
         color: #6590a5;
         font-size: 20px;
         margin-left: 2px;
-        box-shadow: none;
+        text-shadow: none;
         left: 0;
         opacity: 1;
     }

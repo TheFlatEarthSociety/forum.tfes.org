@@ -1410,13 +1410,24 @@ span.lowerframe span
 {
     float: right;
     margin-right: 10px;
-    padding-top: 3px;
+    margin-top: 3px;
+    width: 16px;
+    height: 16px;
+    image-rendering: -webkit-optimize-contrast;
 }
 
 #menu_toggle span
 {
     position: relative;
     right: 5000px;
+}
+
+#left_admsection img
+{
+    margin-bottom: 2px !important;
+    width: 16px;
+    height: 16px;
+    image-rendering: -webkit-optimize-contrast;
 }
 
 /* Styles for the standard button lists.
@@ -3660,7 +3671,17 @@ tr.windowbg td, tr.windowbg2 td, tr.approvebg td, tr.highlight2 td
 {
     font-size: 0.85em;
     line-height: 1.3em;
-    padding: 4px;
+    padding: 7px 35px 4px 4px;
+}
+
+.topic_table td.lastpost i
+{
+    float: right;
+    font-size: 18px;
+    position: relative;
+    bottom: 8px;
+    left: 20px;
+    color: #888;
 }
 
 .topic_table td.stats, .table_grid td.lastpost
@@ -5069,7 +5090,7 @@ footer a
 
 .table_list td.icon
 {
-    height: 50px !important;
+    height: 50px;
     padding-left: 15px;
     padding-right: 10px;
     border-radius: 5px 0 0 5px;

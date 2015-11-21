@@ -121,7 +121,7 @@ function template_main()
 		// If this category even can collapse, show a link to collapse it.
 		if ($category['can_collapse'])
 			echo '
-								<a class="collapse" href="', $category['collapse_href'], '">', $category['collapse_image'], '</a>';
+								<a class="collapse" href="', $category['collapse_href'], '"><i class="fa fa-angle-down"></i></a>';
 
 		if (!$context['user']['is_guest'] && !empty($category['show_unread']))
 			echo '
@@ -149,7 +149,7 @@ function template_main()
 			{
 				echo '
 				<tr id="board_', $board['id'], '" class="windowbg4">
-					<td class="icon" style="height:80px;"> 
+					<td class="icon"> 
 						<a href="', ($board['is_redirect'] || $context['user']['is_guest'] ? $board['href'] : $scripturl . '?action=unread;board=' . $board['id'] . '.0;children'), '">';
 
 				// If the board or children is new, show an indicator.

@@ -672,7 +672,7 @@ function template_main()
 				<div class="cat_bar">
 					<h3 class="catbg">
 						<span class="ie6_header floatleft"><a href="javascript:oQuickReply.swap();">
-							<img src="', $settings['images_url'], '/', $options['display_quick_reply'] == 2 ? 'collapse' : 'expand', '.gif" alt="+" id="quickReplyExpand" class="icon" />
+							<i class="fa fa-angle-down" alt="+" id="quickReplyExpand" class="icon" style="padding: 0 5px;"/></i>
 						</a>
 						<a href="javascript:oQuickReply.swap();">', $txt['quick_reply'], '</a>
 						</span>

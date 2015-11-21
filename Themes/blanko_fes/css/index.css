@@ -4845,6 +4845,14 @@ span.hidelink
     padding-top: 5px;
     padding-bottom: 5px;
     background-color: #4c798e;
+    background-image: url("../images/headerbg.png");
+    background-repeat: no-repeat;
+}
+
+@media (max-width: 767px) {
+    .navbar {
+        background-position: -100px 0px;
+    }
 }
 
 .navbar-default .navbar-nav li .avatar

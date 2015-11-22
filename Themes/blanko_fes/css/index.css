@@ -1488,46 +1488,46 @@ i.fa.fa-subscribe.fa-fw::after
     div.floatright:nth-child(2) {
         display: none;
     }
-    div.buttonlist:nth-child(1) {
+    div.buttonlist.floatright:nth-child(1) {
+        display: block;
         position: fixed;
-        z-index: 1000;
-        bottom: 0px;
+        z-index: 1010;
+        bottom: -50px;
         left: 0px;
         width: 100%;
-        height: 30px;
-        overflow-y: hidden;
-        background-color: rgba(0,0,0,0.15);
+        height: 50px;
+        background-color: #fff;
         transition: all 0.3s ease;
-        -webkit-transition: all 0.3s ease;
-        -o-transition: all 0.3s ease;
-        -moz-transition: all 0.3s ease;
     }
-    div.buttonlist:nth-child(1)::after {
-        content: '';
+    div.buttonlist.floatright:nth-child(1)::after {
+        display: block;
+        content: '';
         font-family: 'FontAwesome';
         position: relative;
-        left: calc(50% - 6px);
-        bottom: 45px;
-        color: #fff;
-        font-size: 16px;
+        left: 98px;
+        bottom: 79px;
+        color: #666;
+        font-size: 14px;
         font-weight: normal;
-        text-shadow: 0px 1px 0px rgba(0,0,0,0.15);
+        width: 30px;
+        height: 50px;
+        margin-bottom: 5px;
+        text-align: center;
         opacity: 1;
-        transition: all .5s ease;
+        transition: all 0.3s ease;
     }
-    div.buttonlist:nth-child(1):hover::after {
+    div.buttonlist.floatright:nth-child(1):hover::after {
         opacity: 0;
     }
-    div.buttonlist:nth-child(1):hover, div.buttonlist:nth-child(1):focus {
-        height: 90px;
-        background-color: rgba(0,0,0,0.075);
+    div.buttonlist.floatright:nth-child(1):hover, div.buttonlist.floatright:nth-child(1):focus {
+        bottom: 5px;
     }
-    div.buttonlist:nth-child(1) .nav-pills {
+    div.buttonlist.floatright:nth-child(1) .nav-pills {
         margin: 0 auto;
         max-width: 320px;
-        height: 40px;
+        height: 50px;
         position: relative;
-        top: 35px;
+        top: 5px;
         overflow: hidden;
         display: -webkit-box;
         display: -moz-box;
@@ -1538,28 +1538,23 @@ i.fa.fa-subscribe.fa-fw::after
         -moz-justify-content: center;
         justify-content: center;
     }
-    div.buttonlist:nth-child(1) .nav-pills li a {
+    div.buttonlist.floatright:nth-child(1) .nav-pills li a {
         padding: 10px 3px 10px 5px;
     }
-    div.buttonlist:nth-child(1) .nav-pills li a.active {
+    div.buttonlist.floatright:nth-child(1) .nav-pills li a.active {
         padding: 10px 10px 10px 13px;
-    }
-    div.mark_read .buttonlist {
-        padding-top: 10px;
     }
     div.mark_read a.button_strip_markread span {
         display: inline;
+        padding-right: 5px;
     }
     #moderationbuttons_strip {
         position: relative;
-        z-index: 1;
-        top: 0px;
         bottom: 0px;
         height: 110px;
         background: none;
-        margin-top: -23px;
     }
-    #moderationbuttons_strip::after {
+    #moderationbuttons_strip::before {
         content: '';
         font-family: 'FontAwesome';
         color: #6590a5;
@@ -1570,7 +1565,7 @@ i.fa.fa-subscribe.fa-fw::after
         opacity: 1;
     }
     footer {
-        margin-bottom: 30px;
+        margin-bottom: 60px;
     }
 }
 
@@ -2125,7 +2120,7 @@ div.table_frame .table_list
 {
     overflow: hidden;
     position: absolute;
-    z-index: 1000;
+    z-index: 10;
     margin-top: 15px;
     margin-left: 0px;
     width: 28px;
@@ -2272,6 +2267,11 @@ a.button_strip_remove_poll::before
     font-family: 'FontAwesome';
     position: absolute;
     margin-left: 5px;
+}
+
+#pollmoderation i.fa.fa-results::before
+{
+    content: '';
 }
 
 /* onto the posts */
@@ -4851,7 +4851,7 @@ span.hidelink
 
 @media (max-width: 767px) {
     .navbar {
-        background-position: -100px 0px;
+        background-position: -100px, 0px;
     }
 }
 
@@ -5204,6 +5204,64 @@ nav .nav-notification>li .search-input-wrapper {
     padding: 7px 0 0;
 }
 
+@media (min-width: 768px) {
+    #wrapper > nav > div > div.navbar-header > ul {
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+    nav.nav-notification {
+        display: none;
+    }
+    .search-input-wrapper {
+        display: block;
+        position: fixed;
+        z-index: 1005;
+        bottom: 0px;
+        width: 100%;
+        min-width: 300px;
+        overflow-x: hidden;
+        height: 32px;
+        padding-top: 0px;
+        background-color: #fff;
+        background-image: url(../images/headerborder.png);
+        background-repeat: no-repeat;
+        background-position: bottom left;
+        box-shadow: 0px -6px 12px rgba(0, 0, 0, 0.125);
+    }
+    .search-input-wrapper .search-input {
+        position: absolute;
+        right: 10px;
+        margin-top: 0px;
+        bottom: 8px;
+    }
+    .search-input-wrapper .search-input input {
+        background-color: #fff;
+    }
+    .search-input-wrapper .search-input input, .search-input-wrapper .search-input input:focus {
+        height: 21px;
+        min-width: 21px;
+    }
+    .search-input-wrapper .search-input:hover input,
+    .search-input-wrapper .search-input input:focus {
+        background-color: #e5e5e5;
+        color: #666;
+    }
+    .search-input-wrapper .search-input, .search-input-wrapper .search-input:focus,
+    .search-input-wrapper .search-input i {
+        color: #666;
+    }
+    .search-input input:focus, .search-input input:hover,
+    .search-input:focus input, .search-input:hover input {
+        width: 150px !important;
+    }
+    .search-input .input-icon {
+        font-size: 17px !important;
+        margin-top: -3px;
+    }
+}
+
 .search-input {
     position: relative;
     display: inline-block;
@@ -5364,31 +5422,18 @@ ul.social li .fa-rss:hover
 
 @media (max-width: 767px) {
     .scroll-to-top {
+        margin-bottom: -4px;
+        width: 30px;
         bottom: 0px;
-        right: 0px;
-        height: 50px;
-        width: 50px;
-        line-height: 66px;
-        z-index: 1001;
+        left: 10px;
+        z-index: 1006;
         background-color: rgba(0,0,0,0);
         box-shadow: none;
-    }
-    .scroll-to-top.active {
-        right: 0px;
+        transition: none;
     }
     .scroll-to-top .fa-chevron-up {
-        margin-left: 20px;
-        font-size: 12px;
-        background-color: rgba(0,0,0,0.1);
-        padding: 4px 3px 2px 3px;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        opacity: 0;
-        transition: all 0.3s;
-    }
-    .scroll-to-top.active .fa-chevron-up {
-        opacity: 1;
+        font-size: 17px;
+        color: #666;
     }
 }
 
@@ -5401,7 +5446,7 @@ ul.social li .fa-rss:hover
     font-size: 20px;
     width: 45px;
     height: 45px;
-    line-height: 40px;
+    line-height: 45px;
     text-align: center;
     border-radius: 10px 10px 0 0;
     transition: all 0.5s ease;
@@ -5419,27 +5464,17 @@ a.link-to-home
 
 @media (max-width: 767px) {
     .link-to-home {
+        margin-bottom: -2px;
+        width: 30px;
         bottom: 0px;
-        left: 0px;
-        height: 50px;
-        width: 50px;
-        line-height: 61px;
-        z-index: 1001;
+        left: 55px;
+        z-index: 1006;
         background-color: rgba(0,0,0,0);
+        transition: none;
     }
     .link-to-home .fa.fa-home {
-        margin-right: 20px;
-        font-size: 12px;
-        background-color: rgba(0,0,0,0.1);
-        padding: 3px 3px 3px 3px;
-        width: 20px ;
-        height: 20px;
-        border-radius: 50%;
-        opacity: 0;
-        transition: all 0.3s;
-    }
-    .link-to-home.active .fa.fa-home {
-        opacity: 1;
+        font-size: 17px;
+        color: #666;
     }
 }
 

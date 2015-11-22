@@ -200,6 +200,29 @@ function template_body_above()
 	<nav class="navbar navbar-default ', !empty($settings['redsy_navbar']) ? 'navbar-fixed-top' :  'navbar-static-top' ,'">
 		<div class="container">
 			<div class="navbar-header">
+				<ul class="nav-notification navbar-right">	
+					<li class="search-list">
+						<div class="search-input-wrapper">
+							<div class="search-input">
+								<form action="', $scripturl, '?action=search2" method="post" accept-charset="', $context['character_set'], '">
+									<input name="search" type="text" class="form-control input-sm inline-block">
+									<div class="input-icon text-normal">
+										<i class="fa fa-search"></i>
+									</div>';
+									// Search within current topic?
+									if (!empty($context['current_topic']))
+										echo '
+											<input type="hidden" name="topic" value="', $context['current_topic'], '" />';
+									// If we're on a certain board, limit it to this board ;).
+									elseif (!empty($context['current_board']))
+										echo '
+											<input type="hidden" name="brd[', $context['current_board'], ']" value="', $context['current_board'], '" />';
+									echo '
+								</form>
+							</div>
+						</div>
+					</li>
+				</ul>
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>

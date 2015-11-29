@@ -1014,6 +1014,11 @@ th.hidden-xs:nth-child(3)
     width: 200px;
 }
 
+.table > thead > tr > th
+{
+	border-bottom: 2px solid #ebebeb !important;
+}
+
 /* GenericList */
 .additional_row
 {
@@ -1505,9 +1510,10 @@ i.fa.fa-subscribe.fa-fw::after
         font-family: 'FontAwesome';
         position: relative;
         left: 98px;
-        bottom: 79px;
+        bottom: 69px;
         color: #666;
         font-size: 14px;
+        line-height: 1px;
         font-weight: normal;
         width: 30px;
         height: 50px;
@@ -4851,7 +4857,7 @@ span.hidelink
 
 @media (max-width: 767px) {
     .navbar {
-        background-position: -100px, 0px;
+        background-image: none;
     }
 }
 
@@ -5258,7 +5264,7 @@ nav .nav-notification>li .search-input-wrapper {
     }
     .search-input .input-icon {
         font-size: 17px !important;
-        margin-top: -3px;
+        line-height: 1px;
     }
 }
 
@@ -5593,12 +5599,14 @@ a.link-to-home
 #unread, #unreadreplies
 {
     width: 100%;
-    overflow: scroll;
+    overflow-x: scroll;
+    margin-bottom: 20px;
 }
 
 #unread table, #unreadreplies table
 {
     min-width: 800px;
+    margin-bottom: 0;
 }
 
 #unread .label.label-warning, #unreadreplies .label.label-warning

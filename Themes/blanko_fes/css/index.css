@@ -1016,7 +1016,7 @@ th.hidden-xs:nth-child(3)
 
 .table > thead > tr > th
 {
-	border-bottom: 2px solid #ebebeb !important;
+    border-bottom: 2px solid #ebebeb !important;
 }
 
 /* GenericList */
@@ -1524,6 +1524,7 @@ i.fa.fa-subscribe.fa-fw::after
     }
     div.buttonlist.floatright:nth-child(1):hover::after {
         opacity: 0;
+        height: 0;
     }
     div.buttonlist.floatright:nth-child(1):hover, div.buttonlist.floatright:nth-child(1):focus {
         bottom: 5px;
@@ -5619,4 +5620,10 @@ a.link-to-home
     font-size: 12px;
     font-weight: 600;
     text-align: center;
+}
+
+@media (max-width: 767px) {
+    #recent li.quote_button a span {
+        display: none;
+    }
 }

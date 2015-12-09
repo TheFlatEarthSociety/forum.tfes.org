@@ -177,8 +177,10 @@ function template_main()
 						<a href="', $scripturl, '?action=moderate;area=postmod;sa=', ($board['unapproved_topics'] > 0 ? 'topics' : 'posts'), ';brd=', $board['id'], ';', $context['session_var'], '=', $context['session_id'], '" title="', sprintf($txt['unapproved_posts'], $board['unapproved_topics'], $board['unapproved_posts']), '" class="moderation_link">(!)</a>';
 
 				echo '
-
-						<p>', $board['description'] , '</p>';
+						<div class="board_description">
+							<i class="fa fa-question-circle"></i>
+							<p>', $board['description'] , '</p>
+						</div>';
 						
 				// Show the "Child Boards: ". (there's a link_children but we're going to bold the new ones...)
 				if (!empty($board['children']))
@@ -230,6 +232,17 @@ function template_main()
 						<p><strong>', $txt['last_post'], '</strong>  ', $txt['by'], ' ', $board['last_post']['member']['link'] , '<br />
 						', $txt['in'], ' ', $board['last_post']['link'], '<br />
 						', $txt['on'], ' ', $board['last_post']['time'],'
+						</p>';
+				echo '
+					</td>
+					<td class="lastpost_mobile">';
+
+				// A separate lastpost tab for mobile.
+				if (!empty($board['last_post']['id']))
+					echo '
+						<i class="fa fa-ellipsis-v"></i>
+						<p><strong>', $txt['last_post'], '</strong>  ', $txt['by'], ' ', $board['last_post']['member']['link'] , '<br />
+						', $txt['in'], ' ', $board['last_post']['link'],'
 						</p>';
 				echo '
 					</td>

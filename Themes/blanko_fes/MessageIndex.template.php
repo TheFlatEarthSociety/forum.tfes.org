@@ -276,6 +276,8 @@ function template_main()
 					<td class="lastpost ', $alternate_class, '  hidden-xs hidden-sm">
 						', $topic['last_post']['time'], '<br />
 						', $txt['by'], ' ', $topic['last_post']['member']['link'], '
+					</td>
+					<td class="lastpost_link">
 						<a href="', $topic['last_post']['href'], '"><i class="fa fa-sign-in"></i></a>
 					</td>';
 

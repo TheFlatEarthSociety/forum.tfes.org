@@ -1815,6 +1815,8 @@ table.table_list tbody.content td.lastpost
     line-height: 1.3em;
     font-size: 85%;
     width: 24%;
+    white-space: nowrap;
+    padding-right: 10px;
 }
 
 table.table_list tbody.content td.icon
@@ -1962,6 +1964,80 @@ p.moderators
     margin: 1em 0;
     color: #575757;
     /* shouldn't be shorthand style due to a JS bug in IE! */
+}
+/* last post for mobile */
+td.lastpost_mobile
+{
+    position: absolute;
+    width: 35px;
+    height: 50px;
+    right: 15px;
+}
+
+td.lastpost_mobile i
+{
+    position: absolute;
+    right: 10px;
+    top: 26px;
+    font-size: 22px;
+    line-height: 1px;
+    color: #aaa;
+    margin-left: 15px;
+    text-align: center;
+}
+
+td.lastpost_mobile:hover i
+{
+    position: absolute;
+    z-index: 51;
+    color: #769FB3;
+}
+
+td.lastpost_mobile p
+{
+    position: absolute;
+    z-index: 50;
+    width: 150px;
+    right: 10px;
+    top: 7px;
+    background-color: #fcfcfc;
+    font-family: 'Oswald', sans-serif;
+    color: #888;
+    font-weight: 300;
+    line-height: 18px;
+    padding: 0 10px;
+    margin-right: 20px;
+    border-left: 2px solid #769FB3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: none;
+}
+
+td.lastpost_mobile p strong
+{
+    font-weight: 300;
+}
+
+td.lastpost_mobile:hover p
+{
+    display: block;
+}
+
+td.lastpost_mobile a
+{
+    color: #000;
+}
+
+td.lastpost_mobile a:nth-child(1)
+{
+    max-width: 80px;
+}
+
+@media (min-width: 768px) {
+    td.lastpost_mobile {
+        display: none;
+    }
 }
 
 /* Styles for the info center on the board index.
@@ -2467,7 +2543,6 @@ span.arrow-left
 
 .poster li.postcount
 {
-    font-family: 'Quicksand', sans-serif;
     font-weight: 300;
     font-size: 20px;
     padding-top: 6px;
@@ -2606,13 +2681,14 @@ div.postarea .btn-group, div.postarea .btn-group-vertical
 @media (max-width: 991px) {
     .poster h4 {
         display: block;
-        border-radius: 4px;
-        padding-top: 17px;
-        padding-bottom: 16px;
         font-size: 20px;
         border-radius: 4px 4px 0 0;
         border-bottom: 1px solid #ccc;
         background-color: #fcfcfc;
+        padding: 17px 70px 16px 70px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     .poster img.img-circle {
         width: 42px;
@@ -3678,22 +3754,44 @@ tr.windowbg td, tr.windowbg2 td, tr.approvebg td, tr.highlight2 td
 {
     font-size: 0.85em;
     line-height: 1.3em;
-    padding: 7px 35px 4px 4px;
+    padding: 7px 50px 4px 4px;
 }
 
-.topic_table td.lastpost i
+.topic_table td.lastpost_link
 {
-    float: right;
     font-size: 18px;
-    position: relative;
-    bottom: 8px;
-    left: 20px;
+    position: absolute;
+    background: none;
+    border: none;
+    margin-left: -35px;
+    margin-top: 10px;
+    line-height: 1px;
+}
+
+.topic_table td.lastpost_link i
+{
     color: #888;
 }
 
 .topic_table td.stats, .table_grid td.lastpost
 {
     vertical-align: middle !important;
+}
+
+.table_grid td.lastpost
+{
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table_grid td.subject p
+{
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 td.subject p, td.subject small
@@ -3819,19 +3917,6 @@ dl
     padding-left: 20px;
 }
 
-@media (max-width: 991px) {
-    #profileview #basicinfo .windowbg {
-        padding-top: 10px;
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-justify-content: center;
-        -moz-justify-content: center;
-        justify-content: center;
-    }
-}
 
 #detailedinfo
 {
@@ -3842,9 +3927,10 @@ dl
 #basicinfo h4
 {
     font-size: 135%;
+    font-family: 'Oswald', sans-serif;
     font-weight: 300;
     line-height: 105%;
-    white-space: pre-wrap;
+    white-space: nowrap;
     overflow: hidden;
     color: #333;
 }
@@ -3859,14 +3945,14 @@ dl
 
 #basicinfo img.avatar
 {
-    display: block;
+    display: inline;
     margin: 10px 0 0 0;
 }
 
 #basicinfo ul
 {
     list-style-type: none;
-    margin: 10px 0 0 0;
+
 }
 
 #basicinfo ul li
@@ -4888,6 +4974,14 @@ span.hidelink
     background-color: #769fb3;
 }
 
+.navbar-right a.dropdown-toggle
+{
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .navbar-right li.dropdown span
 {
     font-family: 'Oswald', sans-serif;
@@ -4935,7 +5029,7 @@ header h2
 .breadcrumb li
 {
     visibility: visible;
-    margin-right: 0px;
+    margin: 0 0 5px 0;
     position: relative;
     top: 10px;
     background-color: #fcfcfc;
@@ -4949,6 +5043,7 @@ header h2
 .breadcrumb li a
 {
     color: #666;
+    max-width: 300px;
 }
 
 @media (max-width: 767px) {
@@ -5009,6 +5104,12 @@ footer a
     color: #555;
 }
 
+@media (max-width: 991px) {
+    #boardindex_table td.info {
+        border-radius: 0 5px 5px 0;
+    }
+}
+
 .table_list td.lastpost
 {
     border-radius: 0 5px 5px 0;
@@ -5016,15 +5117,13 @@ footer a
     min-width: 225px;
 }
 
-@media (max-width: 991px) {
-    .table_list td.info {
-        border-radius: 0 5px 5px 0;
-    }
-}
-
-.table_list td.lastpost a
+.table_list td.lastpost p
 {
     color: #555;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .table_list td.stats p
@@ -5036,15 +5135,14 @@ footer a
 
 .table_list td.info a.subject
 {
-    font-family: 'Quicksand', sans-serif;
-    font-size: 24px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
     line-height: 20px;
     font-weight: 300;
     color: #666;
-    border-left: 1px dotted #ccc;
-    padding-left: 15px;
+    padding-left: 60px;
     position: relative;
-    top: 2px;
+    border-left: 1px dotted #ccc;
 }
 
 .table_list td.info a.subject:hover
@@ -5055,35 +5153,57 @@ footer a
 
 @media (max-width: 767px) {
     .table_list td.info a.subject {
-        font-family: 'Oswald', sans-serif;
-        font-weight: 300;
         font-size: 16px;
+        padding-left: 10px;
+    }
+    .board_description {
+        display: none;
     }
 }
 
-@media (min-width: 992px) {
-    .table_list td.info:hover p {
-        display: block;
-    }
-    .table_list td.info p {
-        position: absolute;
-        z-index: 1000;
-        width: 250px;
-        right: calc(5% + 25px);
-    }
+.board_description
+{
+    position: absolute;
+    margin-top: -23px;
+    margin-left: 23px;
+    font-size: 22px;
+    line-height: 1px;
+    color: #aaa;
 }
 
-.table_list td.info p
+.board_description p
 {
     display: none;
-    padding: 10px;
-    border-radius: 7px;
-    margin-top: -27px;
+    position: absolute;
+    z-index: 1000;
+    padding: 5px 9px !important;
     vertical-align: middle;
-    color: #fff;
+    color: #888;
     font-weight: 600;
-    font-size: 12px;
-    background-color: #769fb3;
+    font-size: 12px !important;
+    background-color: #eee;
+    border-bottom: 2px solid #769fb3;
+    border-radius: 7px;
+    width: 500px;
+    min-height: 40px;
+    left: 30px;
+    top: -9px;
+}
+
+.board_description:hover p
+{
+    display: block;
+}
+
+.board_description:hover i
+{
+    color: #769fb3;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .board_description {
+        margin-left: 22px;
+    }
 }
 
 .table_list td.info p.moderators, .table_list td.info p.children,
@@ -5124,13 +5244,19 @@ footer a
     line-height: 14px;
 }
 
-.table_grid td.icon1, .table_grid td, .table_list td.subject
+.table_grid td.icon1, .table_grid td, .table_grid td.subject
 {
     background-color: #fcfcfc;
     border-bottom: 2px solid #ebebeb;
     border-left: none;
     border-right: none;
     color: #555;
+}
+
+@media (max-width: 767px) {
+    .table_grid td.subject {
+        padding-right: 50px !important;
+    }
 }
 
 #menu

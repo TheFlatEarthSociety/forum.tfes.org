@@ -3732,7 +3732,6 @@ tr.windowbg td, tr.windowbg2 td, tr.approvebg td, tr.highlight2 td
     border-bottom: 1px solid #fff;
 }
 
-/* the subject column */
 .topic_table td
 {
     font-size: 1em;
@@ -3743,6 +3742,11 @@ tr.windowbg td, tr.windowbg2 td, tr.approvebg td, tr.highlight2 td
     font-size: 0.85em;
     padding: 0;
     margin: 0;
+}
+
+.topic_table td.subject p
+{
+    word-break: break-all;
 }
 
 .topic_table td.lastpost
@@ -3853,7 +3857,7 @@ td.icon1, td.icon2
     .table_grid td.lastpost {
         max-width: 150px;
         white-space: normal;
-        font-size: 10px; 
+        font-size: 10px;
     }
 }
 

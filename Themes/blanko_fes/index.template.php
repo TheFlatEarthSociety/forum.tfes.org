@@ -241,11 +241,13 @@ function template_body_above()
 				echo'
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
-							<a href="' , $scripturl , '?action=profile" class="dropdown-toggle">
+							<a href="#" class="dropdown-toggle">
 								<img class="avatar img-circle" src="', !empty($context['user']['avatar']['href']) ? $context['user']['avatar']['href'] : $settings['images_url']. '/noavatar.png' ,'" alt="*" />
-								<span>', $context['user']['name'], '</span> <span class="caret"></span>
+								<span>', $context['user']['name'], '</span>
 							</a>
 							<ul class="dropdown-menu" role="menu">
+								<li><a href="' , $scripturl , '?action=profile"><i class="fa fa-user fa-fw"></i>' , $txt['profile'] , '</a></i>
+								<li class="divider"></li>
 								<li><a href="' , $scripturl , '?action=profile;area=forumprofile;"><i class="fa fa-gear fa-fw"></i>' , $txt['edit_profile'] , '</a></li>
 								<li><a href="' , $scripturl , '?action=profile;area=account;"><i class="fa fa-wrench fa-fw"></i>' , $txt['profile_account'] , '</a></li>
 								<li><a href="' , $scripturl , '?action=unread;"><i class="fa fa-comment fa-fw"></i>' , $txt['new_posts'] , '</a></li>

@@ -2937,11 +2937,6 @@ img.smiley
     vertical-align: bottom;
 }
 
-#forumposts .modified
-{
-    float: left;
-}
-
 #forumposts .reportlinks
 {
     margin-right: 1.5em;
@@ -3786,14 +3781,6 @@ tr.windowbg td, tr.windowbg2 td, tr.approvebg td, tr.highlight2 td
     text-overflow: ellipsis;
 }
 
-.table_grid td.subject p
-{
-    max-width: 200px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 td.subject p, td.subject small
 {
     font-size: 12px;
@@ -3853,6 +3840,21 @@ td.icon1 img, td.icon2 img
 td.icon1, td.icon2
 {
     width: 2%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    th.hidden-xs:nth-child(3) {
+        width: 110px;
+        padding-left: 10px;
+    }
+    .table_grid td.stats {
+        font-size: 11px;
+    }
+    .table_grid td.lastpost {
+        max-width: 150px;
+        white-space: normal;
+        font-size: 10px; 
+    }
 }
 
 /* Styles for (fatal) errors.
@@ -4976,7 +4978,7 @@ span.hidelink
 
 .navbar-right a.dropdown-toggle
 {
-    max-width: 250px;
+    max-width: 220px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -5104,7 +5106,7 @@ footer a
     color: #555;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 767px) {
     #boardindex_table td.info {
         border-radius: 0 5px 5px 0;
     }
@@ -5128,8 +5130,6 @@ footer a
 
 .table_list td.stats p
 {
-    border-right: 1px dotted #ccc;
-    border-left: 1px dotted #ccc;
     padding-right: 0px;
 }
 
@@ -5140,9 +5140,14 @@ footer a
     line-height: 20px;
     font-weight: 300;
     color: #666;
-    padding-left: 60px;
+    margin-left: 60px;
     position: relative;
-    border-left: 1px dotted #ccc;
+    vertical-align: middle;
+}
+
+#board_22 td.info a.subject
+{
+    padding-left: 10px;
 }
 
 .table_list td.info a.subject:hover
@@ -5154,7 +5159,7 @@ footer a
 @media (max-width: 767px) {
     .table_list td.info a.subject {
         font-size: 16px;
-        padding-left: 10px;
+        margin-left: 10px;
     }
     .board_description {
         display: none;
@@ -5164,11 +5169,11 @@ footer a
 .board_description
 {
     position: absolute;
-    margin-top: -23px;
+    margin-top: -22px;
     margin-left: 23px;
     font-size: 22px;
     line-height: 1px;
-    color: #aaa;
+    color: #ccc;
 }
 
 .board_description p
@@ -5178,16 +5183,15 @@ footer a
     z-index: 1000;
     padding: 5px 9px !important;
     vertical-align: middle;
-    color: #888;
+    color: #fff;
     font-weight: 600;
     font-size: 12px !important;
-    background-color: #eee;
-    border-bottom: 2px solid #769fb3;
+    background-color: #769fb3;
     border-radius: 7px;
     width: 500px;
     min-height: 40px;
     left: 30px;
-    top: -9px;
+    top: -8px;
 }
 
 .board_description:hover p
@@ -5206,8 +5210,7 @@ footer a
     }
 }
 
-.table_list td.info p.moderators, .table_list td.info p.children,
-.table_list:hover td.info p.moderators, .table_list:hover td.info p.children
+.table_list td.info p.children, .table_list td.info p.moderators, #board_22 td.info p
 {
     display: none;
 }
@@ -5310,7 +5313,7 @@ footer a
 
 .navbar-nav li .dropdown-menu
 {
-    margin-top: -4px !important;
+    margin-top: -7px !important;
     border-radius: 4px !important;
 }
 

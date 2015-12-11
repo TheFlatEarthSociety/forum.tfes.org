@@ -166,7 +166,7 @@ function template_main()
 		if (!empty($context['topics']))
 		{
 			echo '
-					<th scope="col" class="first_th" width="8%" colspan="2">&nbsp;</th>
+					<th scope="col" class="first_th" colspan="2">&nbsp;</th>
 					<th scope="col" class="lefttext"><a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=subject', $context['sort_by'] == 'subject' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['subject'], $context['sort_by'] == 'subject' ? ' <i class="fa fa-angle-' . $context['sort_direction'] . '" style="padding-left: 3px"></i>' : '', '</a> / <a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=starter', $context['sort_by'] == 'starter' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['started_by'], $context['sort_by'] == 'starter' ? ' <i class="fa fa-angle-' . $context['sort_direction'] . '" style="padding-left: 3px"></i>' : '', '</a></th>
 					<th scope="col" width="14%" class="hidden-xs hidden-sm"><a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=replies', $context['sort_by'] == 'replies' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['replies'], $context['sort_by'] == 'replies' ? ' <i class="fa fa-angle-' . $context['sort_direction'] . '" style="padding-left: 3px"></i>' : '', '</a> / <a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=views', $context['sort_by'] == 'views' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['views'], $context['sort_by'] == 'views' ? ' <i class="fa fa-angle-' . $context['sort_direction'] . '" style="padding-left: 3px"></i>' : '', '</a></th>';
 			// Show a "select all" box for quick moderation?
@@ -244,11 +244,19 @@ function template_main()
 
 			// Some columns require a different shade of the color class.
 			$alternate_class = $color_class;
+			
+			// Classes for thread icons.
+			if	($topic['is_sticky'])
+				$icon_class = 'thumb-tack';
+			elseif ($topic['is_locked'])
+				$icon_class = 'lock';
+			else
+				$icon_class = 'file';
 
 			echo '
 				<tr>
 					<td class="icon1 ', $color_class, '">
-						<img src="', $settings['images_url'], '/topic/', $topic['class'], '.gif" alt="" />
+						<i class="fa fa-', $icon_class, ' fa-fw fa-lg"></i>
 					</td>
 					<td class="icon2 ', $color_class, '">
 						<img src="', $topic['first_post']['icon_url'], '" alt="" />
@@ -265,6 +273,7 @@ function template_main()
 			echo '
 							<p>', $txt['started_by'], ' ', $topic['first_post']['member']['link'], '
 								<small id="pages' . $topic['first_post']['id'] . '">', $topic['pages'], '</small>
+								<a id="lastpost_link" href="', $topic['last_post']['href'], '"><i class="fa fa-sign-in fa-fw"></i></a>
 							</p>
 						</div>
 					</td>
@@ -274,11 +283,9 @@ function template_main()
 						', $topic['views'], ' ', $txt['views'], '
 					</td>
 					<td class="lastpost ', $alternate_class, '  hidden-xs hidden-sm">
+						<a href="', $topic['last_post']['href'], '"><i class="fa fa-sign-in fa-fw fa-lg"></i></a>
 						', $topic['last_post']['time'], '<br />
 						', $txt['by'], ' ', $topic['last_post']['member']['link'], '
-					</td>
-					<td class="lastpost_link">
-						<a href="', $topic['last_post']['href'], '"><i class="fa fa-sign-in"></i></a>
 					</td>';
 
 			// Show the quick moderation options?

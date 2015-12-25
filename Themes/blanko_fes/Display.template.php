@@ -672,7 +672,7 @@ function template_main()
 				<div class="cat_bar">
 					<h3 class="catbg">
 						<span class="ie6_header floatleft"><a href="javascript:oQuickReply.swap();">
-							<i class="fa fa-angle-down" alt="+" id="quickReplyExpand" class="icon" style="padding: 0 5px;"/></i>
+							<i class="fa fa-angle-down" id="quickReplyExpand" class="icon" style="padding: 0 5px;"/></i>
 						</a>
 						<a href="javascript:oQuickReply.swap();">', $txt['quick_reply'], '</a>
 						</span>

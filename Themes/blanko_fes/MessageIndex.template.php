@@ -388,7 +388,7 @@ function template_main()
 		<div class="description">
 			<p class="floatright" id="message_index_jump_to">&nbsp;</p>';
 
-	if (!$context['no_topic_listing'])
+	/*if (!$context['no_topic_listing'])
 		echo '
 			<p class="floatleft smalltext">', !empty($modSettings['enableParticipation']) && $context['user']['is_logged'] ? '
 				<img src="' . $settings['images_url'] . '/topic/my_normal_post.gif" alt="" align="middle" /> ' . $txt['participation_caption'] . '<br />' : '', '
@@ -400,7 +400,7 @@ function template_main()
 				<img src="' . $settings['images_url'] . '/icons/quick_lock.gif" alt="" align="middle" /> ' . $txt['locked_topic'] . '<br />' . ($modSettings['enableStickyTopics'] == '1' ? '
 				<img src="' . $settings['images_url'] . '/icons/quick_sticky.gif" alt="" align="middle" /> ' . $txt['sticky_topic'] . '<br />' : '') . ($modSettings['pollMode'] == '1' ? '
 				<img src="' . $settings['images_url'] . '/topic/normal_poll.gif" alt="" align="middle" /> ' . $txt['poll'] : '') . '
-			</p>';
+			</p>';*/
 
 	echo '
 			<script type="text/javascript"><!-- // --><![CDATA[

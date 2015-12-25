@@ -279,7 +279,7 @@ function template_body_above()
 						<div class="search-input-wrapper">
 							<div class="search-input">
 								<form action="', $scripturl, '?action=search2" method="post" accept-charset="', $context['character_set'], '">
-									<input name="search" type="text" class="form-control input-sm inline-block">
+									<input name="search" type="search" class="form-control input-sm inline-block">
 									<div class="input-icon text-normal">
 										<i class="fa fa-search"></i>
 									</div>';
@@ -338,7 +338,7 @@ function template_body_above()
 						<div class="search-input-wrapper">
 							<div class="search-input">
 								<form action="', $scripturl, '?action=search2" method="post" accept-charset="', $context['character_set'], '">
-									<input name="search" type="text" class="form-control input-sm inline-block">
+									<input name="search" type="search" class="form-control input-sm inline-block">
 									<a href="#" class="input-icon text-normal">
 										<i class="fa fa-search"></i>
 									</a>';

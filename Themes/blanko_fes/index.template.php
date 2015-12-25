@@ -152,8 +152,51 @@ function template_html_above()
 	</style>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=', $context['character_set'], '" />
-	<meta name="description" content="', $context['page_title_html_safe'], '" />', !empty($context['meta_keywords']) ? '
+	<meta http-equiv="Content-Language" content="en-us" />';
+	//Here comes SexWarrior's meta description bloat!
+	//If it has a defined description, use that.
+	if (!empty($context['description']))
+	{
+		$descr = $context['description'];
+	}
+	//If it's a topic (which we can actually read), try to describe it.
+	else if (!empty($context['current_topic']) && empty($context['current_action']) && !empty($context['get_message']))
+	{
+		//Grab first post of current page.
+		$descr = $context['get_message']()['body'];
+		//Strip "Quote from: [...]" lines
+		$descr = preg_replace('/<div class=\"topslice_quote\">.*?<\/div>/', '', $descr);
+		//Strip <a> tags whose text isn't meaningful for a descritpion
+		$descr = preg_replace('/<a[^>]*>http:\/\/[^<]*<\/a>/', '', $descr);
+		//Strip all other HTML tags.
+		$descr = preg_replace('/(<\/?(strong|em|span|del)[^>]*>)+/', '', $descr);
+		$descr = preg_replace('/((<[^>]*>|&nbsp;))+/', ' ', $descr);
+		//Clean up whitespace
+		$descr = trim(preg_replace('/\s+/', ' ', $descr));
+		//Truncate it to <160 characters (reasonable length for meta description)
+		if(strlen($descr) > 160)
+		{
+			$descr = substr($descr, 0, 156);
+			$descr = substr($descr, 0, strrpos($descr, " "));
+			$descr .= '...';
+		}
+		//Reset counter so that the first post doesn't get omitted in the actual display.
+		$context['get_message'](true);
+	}
+	//Default description
+	else
+	{
+		$descr = 'This is the forum of the world-famous Flat Earth Society, a place for free thinkers and the intellectual exchange of ideas.';
+	}
+	echo '
+	<meta name="description" content="'. $descr  .'" />
+	<meta property="og:description" content="'. $descr  .'" />';
+	echo !empty($context['meta_keywords']) ? '
 	<meta name="keywords" content="' . $context['meta_keywords'] . '" />' : '', '
+	<meta property="og:site_name" content="The Flat Earth Society" />
+	<meta property="og:title" content="', $context['page_title_html_safe'], '" />
+	<meta property="og:image" content="http://forum.tfes.org/logo.png" />
+	<meta property="og:locale" content="en_US" />
 	<title>', $context['page_title_html_safe'], '</title>';
 
 	// Please don't index these Mr Robot.

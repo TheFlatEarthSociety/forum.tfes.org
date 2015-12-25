@@ -283,15 +283,15 @@ function template_body_above()
 									<div class="input-icon text-normal">
 										<i class="fa fa-search"></i>
 									</div>';
-									// Search within current topic?
-									if (!empty($context['current_topic']))
-										echo '
-											<input type="hidden" name="topic" value="', $context['current_topic'], '" />';
-									// If we're on a certain board, limit it to this board ;).
-									elseif (!empty($context['current_board']))
-										echo '
-											<input type="hidden" name="brd[', $context['current_board'], ']" value="', $context['current_board'], '" />';
+								// Search within current topic?
+								if (!empty($context['current_topic']))
 									echo '
+									<br /><input type="checkbox" name="topic" value="', $context['current_topic'], '" />in current thread';
+								// If we're on a certain board, limit it to this board ;).
+								elseif (!empty($context['current_board']))
+									echo '
+									<br /><input type="checkbox" name="brd[', $context['current_board'], ']" value="', $context['current_board'], '" />in current board';
+								echo '
 								</form>
 							</div>
 						</div>

@@ -298,7 +298,7 @@ function template_body_above()
 									echo '
 									<input name="search" type="search" class="form-control input-sm inline-block" placeholder="' . $placeholder . '">
 									<div class="input-icon text-normal">
-										<i class="fa fa-search"></i>
+										<i class="fa fa-search mobile"></i>
 									</div>';
 									echo '
 								</form>
@@ -366,7 +366,7 @@ function template_body_above()
 									echo '
 									<input name="search" type="search" id="desktop_quicksearch" class="form-control input-sm inline-block" placeholder="' . $placeholder . '">
 									<a href="#" class="input-icon text-normal">
-										<i class="fa fa-search mobile"></i>
+										<i class="fa fa-search"></i>
 									</a>';
 									echo '
 								</form>

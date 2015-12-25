@@ -81,7 +81,7 @@ function template_html_above()
 
 	// Show right to left and the character set for ease of translating.
 	echo '<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"', $context['right_to_left'] ? ' dir="rtl"' : '', '>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"', $context['right_to_left'] ? ' dir="rtl"' : '', '>
 <head>';
  
 	// The ?fin20 part of this link is just here to make sure browsers don't cache it wrongly.
@@ -152,7 +152,6 @@ function template_html_above()
 	</style>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=', $context['character_set'], '" />
-	<meta http-equiv="Content-Language" content="en-us" />';
 	//Here comes SexWarrior's meta description bloat!
 	//If it has a defined description, use that.
 	if (!empty($context['description']))

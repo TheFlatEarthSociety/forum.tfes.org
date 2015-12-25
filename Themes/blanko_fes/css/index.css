@@ -4863,7 +4863,7 @@ span.hidelink
 
 #advanced_search select, #advanced_search input
 {
-    margin-top: 10px;
+    /* margin-top: 10px; */
 }
 
 #searchform p.clear

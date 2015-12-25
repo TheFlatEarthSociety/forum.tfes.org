@@ -278,19 +278,28 @@ function template_body_above()
 					<li class="search-list">
 						<div class="search-input-wrapper">
 							<div class="search-input">
-								<form action="', $scripturl, '?action=search2" method="post" accept-charset="', $context['character_set'], '">
-									<input name="search" type="search" class="form-control input-sm inline-block">
+								<form action="', $scripturl, '?action=search2" method="post" accept-charset="', $context['character_set'], '">';
+									// Search within current topic?
+									if (!empty($context['current_topic']))
+									{
+										echo '
+											<input type="hidden" name="topic" value="', $context['current_topic'], '" />';
+										$placeholder = "Search in thread...";
+									}
+									// If we're on a certain board, limit it to this board ;).
+									elseif (!empty($context['current_board']))
+									{
+										echo '
+											<input type="hidden" name="brd[', $context['current_board'], ']" value="', $context['current_board'], '" />';
+										$placeholder = "Search in board...";
+									}
+									else
+										$placeholder = "Search...";
+									echo '
+									<input name="search" type="search" class="form-control input-sm inline-block" placeholder="' . $placeholder . '">
 									<div class="input-icon text-normal">
 										<i class="fa fa-search"></i>
 									</div>';
-									// Search within current topic?
-									if (!empty($context['current_topic']))
-										echo '
-											<input type="hidden" name="topic" value="', $context['current_topic'], '" />';
-									// If we're on a certain board, limit it to this board ;).
-									elseif (!empty($context['current_board']))
-										echo '
-											<input type="hidden" name="brd[', $context['current_board'], ']" value="', $context['current_board'], '" />';
 									echo '
 								</form>
 							</div>
@@ -337,19 +346,28 @@ function template_body_above()
 					<li class="search-list">
 						<div class="search-input-wrapper">
 							<div class="search-input">
-								<form action="', $scripturl, '?action=search2" method="post" accept-charset="', $context['character_set'], '">
-									<input name="search" type="search" class="form-control input-sm inline-block">
-									<a href="#" class="input-icon text-normal">
-										<i class="fa fa-search"></i>
-									</a>';
+								<form action="', $scripturl, '?action=search2" method="post" accept-charset="', $context['character_set'], '">';
 									// Search within current topic?
 									if (!empty($context['current_topic']))
+									{
 										echo '
 											<input type="hidden" name="topic" value="', $context['current_topic'], '" />';
+										$placeholder = "Search in this thread...";
+									}
 									// If we're on a certain board, limit it to this board ;).
 									elseif (!empty($context['current_board']))
+									{
 										echo '
 											<input type="hidden" name="brd[', $context['current_board'], ']" value="', $context['current_board'], '" />';
+										$placeholder = "Search in this board...";
+									}
+									else
+										$placeholder = "Search...";
+									echo '
+									<input name="search" type="search" id="desktop_quicksearch" class="form-control input-sm inline-block" placeholder="' . $placeholder . '">
+									<a href="#" class="input-icon text-normal">
+										<i class="fa fa-search mobile"></i>
+									</a>';
 									echo '
 								</form>
 							</div>

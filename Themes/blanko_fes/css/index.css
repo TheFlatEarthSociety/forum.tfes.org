@@ -4821,6 +4821,32 @@ span.hidelink
     margin: 0 0 1em;
 }
 
+/* quicksearch */
+#desktop_quicksearch::-webkit-input-placeholder {
+    color: #FFF;
+}
+ 
+#desktop_quicksearch:-moz-placeholder { /* Firefox 18- */
+    color: #FFF;  
+}
+ 
+#desktop_quicksearch::-moz-placeholder {  /* Firefox 19+ */
+    color: #FFF;  
+}
+ 
+#desktop_quicksearch:-ms-input-placeholder {  
+    color: #FFF;  
+}
+
+i.fa.fa-search {
+    background: #6590A5;
+}
+
+i.fa.fa-search.mobile {
+	border-radius: 100px;
+    background: #E5E5E5;
+}
+
 /* Styles for the advanced search section.
 ------------------------------------------------- */
 #searchform fieldset

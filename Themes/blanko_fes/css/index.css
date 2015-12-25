@@ -3083,7 +3083,6 @@ form#postmodify .roundframe
     width: 15%;
     margin: .5em 0 0 0;
     font-weight: bold;
-    min-width: 110px;
 }
 
 #post_header dd, .postbox dd

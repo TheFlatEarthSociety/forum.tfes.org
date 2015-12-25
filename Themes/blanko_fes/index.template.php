@@ -345,11 +345,11 @@ function template_body_above()
 									// Search within current topic?
 									if (!empty($context['current_topic']))
 										echo '
-											<input type="hidden" name="topic" value="', $context['current_topic'], '" />';
+										<br /><input type="checkbox" name="topic" value="', $context['current_topic'], '" />in current thread';
 									// If we're on a certain board, limit it to this board ;).
 									elseif (!empty($context['current_board']))
 										echo '
-											<input type="hidden" name="brd[', $context['current_board'], ']" value="', $context['current_board'], '" />';
+										<br /><input type="checkbox" name="brd[', $context['current_board'], ']" value="', $context['current_board'], '" />in current board';
 									echo '
 								</form>
 							</div>

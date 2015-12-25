@@ -82,7 +82,8 @@ function template_html_above()
 	// Show right to left and the character set for ease of translating.
 	echo '<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"', $context['right_to_left'] ? ' dir="rtl"' : '', '>
-<head>';
+<head>
+<meta charset="' . $context['character_set'] . '"/>';
  
 	// The ?fin20 part of this link is just here to make sure browsers don't cache it wrongly.
 	echo '

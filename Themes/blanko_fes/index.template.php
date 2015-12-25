@@ -314,7 +314,7 @@ function template_body_above()
 				<h1><a class="navbar-brand" href="' , $scripturl , '">', empty($context['header_logo_url_html_safe']) ? $context['forum_name'] : '<img class="logo" src="' . $context['header_logo_url_html_safe'] . '" alt="' . $context['forum_name'] . '" />', '</a></h1>
 			</div>		
 			<div class="collapse navbar-collapse">
-				<button type="button" class="navbar-toggle collapsed collapsemenu" id="upshrink" style="display: none;">
+				<button type="button" class="navbar-toggle collapsed collapsemenu" id="upshrink">
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
@@ -389,7 +389,7 @@ function template_body_above()
 				aSwappableContainers: [
 					\'menu\', \'header\'
 				],
-				aSwapImages: [
+				aSwapTriggers: [
 					{
 						sId: \'upshrink\',
 					}

@@ -296,7 +296,7 @@ function template_body_above()
 									else
 										$placeholder = "Search...";
 									echo '
-									<input name="search" type="search" class="form-control input-sm inline-block" placeholder="' . $placeholder . '">
+									<input name="search" type="search" id="mobile_quicksearch" class="form-control input-sm inline-block" placeholder="' . $placeholder . '">
 									<div class="input-icon text-normal">
 										<i class="fa fa-search mobile"></i>
 									</div>';

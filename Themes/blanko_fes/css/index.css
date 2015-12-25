@@ -4838,11 +4838,20 @@ span.hidelink
     color: #FFF;  
 }
 
+#mobile_quicksearch {
+    font-size: 70%;
+}
+
 i.fa.fa-search {
     background: #6590A5;
 }
 
 i.fa.fa-search.mobile {
+	border-radius: 100px;
+    background: #FFF;
+}
+
+i.fa.fa-search.mobile:hover, i.fa.fa-search.mobile:focus {
 	border-radius: 100px;
     background: #E5E5E5;
 }

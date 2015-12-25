@@ -461,8 +461,8 @@ function template_body_below()
 		</ul>
 		<ul class="reset">
 			<li>', theme_copyright(), '</li>
-			<li>Theme by <a href="http://smftricks.com/">SMFTricks</a></li>
-			<li>', !empty($settings['redsy_copyright']) ? $settings['redsy_copyright'] : $context['forum_name'] .' &copy;' ,'</li>
+			<li>Theme by Blanko, based on Redsy by <a href="http://smftricks.com/" rel="nofollow">SMFTricks</a></li>
+			<li>&copy; ', !empty($settings['redsy_copyright']) ? $settings['redsy_copyright'] : $context['forum_name'] ,'</li>
 		</ul>';
 
 	// Show the load time?

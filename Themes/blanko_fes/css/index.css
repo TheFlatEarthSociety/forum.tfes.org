@@ -3080,7 +3080,7 @@ form#postmodify .roundframe
 {
     float: left;
     padding: 0;
-    width: 15%;
+    width: 25%;
     margin: .5em 0 0 0;
     font-weight: bold;
     font-size: 12px;
@@ -3090,7 +3090,7 @@ form#postmodify .roundframe
 {
     float: left;
     padding: 0;
-    width: 83%;
+    width: 72%;
     margin: .3em 0;
 }
 

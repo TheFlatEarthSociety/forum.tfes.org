@@ -405,7 +405,7 @@ function template_main()
 					echo '				
 										<div class="btn-group navbar-right">
 											<button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown">Actions <span class="caret"></span></button>
-											<ul class="dropdown-menu" role="menu"">'; 
+											<ul class="dropdown-menu" role="menu">'; 
 
 					// Maybe we can approve it, maybe we should?
 					if ($message['can_approve'])

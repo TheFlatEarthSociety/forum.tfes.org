@@ -347,7 +347,7 @@ function template_folder()
 		<div class="postarea">
 				<div class="btn-group navbar-right">
 					<button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown">Actions <span class="caret"></span></button>
-				<ul class="dropdown-menu" role="menu"">';
+				<ul class="dropdown-menu" role="menu">';
 
 			// Show reply buttons if you have the permission to send PMs.
 			if ($context['can_send_pm'])

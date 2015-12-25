@@ -664,7 +664,7 @@ function constructPageIndex($base_url, &$start, $max_value, $num_per_page, $flex
 		// Show all the pages.
 		$display_page = 1;
 		for ($counter = 0; $counter < $max_value; $counter += $num_per_page)
-			$pageindex .= $start == $counter && !$start_invalid ? '[<strong id="currentPage">' . $display_page++ . '</strong>] ' : sprintf($base_link, $counter, $display_page++);
+			$pageindex .= $start == $counter && !$start_invalid ? '[<strong class="currentPage">' . $display_page++ . '</strong>] ' : sprintf($base_link, $counter, $display_page++);
 	}
 	else
 	{
@@ -691,7 +691,7 @@ function constructPageIndex($base_url, &$start, $max_value, $num_per_page, $flex
 
 		// Show the current page. (1 ... 6 7 >[8]< 9 10 ... 15)
 		if (!$start_invalid)
-			$pageindex .= '[<strong id="currentPage">' . ($start / $num_per_page + 1) . '</strong>] ';
+			$pageindex .= '[<strong class="currentPage">' . ($start / $num_per_page + 1) . '</strong>] ';
 		else
 			$pageindex .= sprintf($base_link, $start, $start / $num_per_page + 1);
 

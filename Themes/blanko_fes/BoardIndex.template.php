@@ -114,7 +114,7 @@ function template_main()
 		echo '
 			<tbody class="header" id="category_', $category['id'], '">
 				<tr>
-					<td colspan="4">
+					<td colspan="5">
 						<div class="cat_bar">
 							<h3 class="catbg">';
 
@@ -254,7 +254,7 @@ function template_main()
 		echo '
 			<tbody class="divider">
 				<tr>
-					<td colspan="4"></td>
+					<td colspan="5"></td>
 				</tr>
 			</tbody>';
 	}

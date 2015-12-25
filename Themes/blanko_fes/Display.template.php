@@ -277,7 +277,7 @@ function template_main()
 			// Show how many posts they have made.
 			if (!isset($context['disabled_fields']['posts']))
 				echo '
-								<li class="postcount"><img src="',$settings['images_url'] ,'/postcount.png" /> ', $message['member']['posts'], '</li>';
+								<li class="postcount"><img src="',$settings['images_url'] ,'/postcount.png" alt="Posts: "/> ', $message['member']['posts'], '</li>';
 
 			// Is karma display enabled?  Total or +/-?
 			if ($modSettings['karmaMode'] == '1')

@@ -320,7 +320,7 @@ function template_body_above()
 								<span>', $context['user']['name'], '</span>
 							</a>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="' , $scripturl , '?action=profile"><i class="fa fa-user fa-fw"></i>' , $txt['profile'] , '</a></i>
+								<li><a href="' , $scripturl , '?action=profile"><i class="fa fa-user fa-fw"></i>' , $txt['profile'] , '</a></li>
 								<li class="divider"></li>
 								<li><a href="' , $scripturl , '?action=profile;area=forumprofile;"><i class="fa fa-gear fa-fw"></i>' , $txt['edit_profile'] , '</a></li>
 								<li><a href="' , $scripturl , '?action=profile;area=account;"><i class="fa fa-wrench fa-fw"></i>' , $txt['profile_account'] , '</a></li>

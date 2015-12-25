@@ -3080,17 +3080,18 @@ form#postmodify .roundframe
 {
     float: left;
     padding: 0;
-    width: 25%;
+    width: 15%;
     margin: .5em 0 0 0;
     font-weight: bold;
     font-size: 12px;
+    height: 30px;
 }
 
 #post_header dd, .postbox dd
 {
-    float: left;
+    float: right;
     padding: 0;
-    width: 72%;
+    width: 80%;
     margin: .3em 0;
 }
 

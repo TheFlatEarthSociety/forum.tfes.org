@@ -68,7 +68,6 @@ function template_main()
 			<div class="roundframe">
 				<input type="hidden" name="advanced" value="1" />
 				<dl id="search_options">
-				<span class="enhanced">
 					<dt><strong>', $txt['search_for'], ':</strong></dt>
 					<dd><input type="text" name="search"', !empty($context['search_params']['search']) ? ' value="' . $context['search_params']['search'] . '"' : '', ' maxlength="', $context['search_string_limit'], '" size="40" class="input_text" />
 					<script type="text/javascript"><!-- // --><![CDATA[
@@ -83,8 +82,7 @@ function template_main()
 					<select name="searchtype">
 						<option value="1"', empty($context['search_params']['searchtype']) ? ' selected="selected"' : '', '>', $txt['all_words'], '</option>
 						<option value="2"', !empty($context['search_params']['searchtype']) ? ' selected="selected"' : '', '>', $txt['any_words'], '</option>
-					</select>
-				</span>';
+					</select>';
 
 		if (empty($modSettings['search_simple_fulltext']))
 			echo '

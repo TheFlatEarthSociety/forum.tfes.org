@@ -4839,7 +4839,7 @@ span.hidelink
 }
 
 #mobile_quicksearch {
-    font-size: 70%;
+    font-size: 65%;
 }
 
 i.fa.fa-search {
@@ -4849,11 +4849,6 @@ i.fa.fa-search {
 i.fa.fa-search.mobile {
 	border-radius: 100px;
     background: #FFF;
-}
-
-i.fa.fa-search.mobile:hover, i.fa.fa-search.mobile:focus {
-	border-radius: 100px;
-    background: #E5E5E5;
 }
 
 /* Styles for the advanced search section.
@@ -5422,7 +5417,10 @@ nav .nav-notification>li .search-input-wrapper {
     }
     .search-input-wrapper .search-input:hover input,
     .search-input-wrapper .search-input input:focus {
-        background-color: #e5e5e5;
+        background-color: #FFF;
+	border-style: solid;
+        border-color: #e5e5e5;
+	border-width: 1px;
         color: #666;
     }
     .search-input-wrapper .search-input, .search-input-wrapper .search-input:focus,

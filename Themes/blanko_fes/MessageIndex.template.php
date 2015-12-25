@@ -273,7 +273,7 @@ function template_main()
 			echo '
 							<p>', $txt['started_by'], ' ', $topic['first_post']['member']['link'], '
 								<small id="pages' . $topic['first_post']['id'] . '">', $topic['pages'], '</small>
-								<a id="lastpost_link" href="', $topic['last_post']['href'], '"><i class="fa fa-sign-in fa-fw"></i></a>
+								<a class="lastpost_link" href="', $topic['last_post']['href'], '"><i class="fa fa-sign-in fa-fw"></i></a>
 							</p>
 						</div>
 					</td>

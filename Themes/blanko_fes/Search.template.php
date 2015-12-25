@@ -37,7 +37,7 @@ function template_main()
 					', $context['require_verification'] ? '' : '<input type="submit" name="submit" value="' . $txt['search'] . '" class="button_submit" style="float: right; vertical-align: middle;" />';
 					echo '
 					<div style="overflow: hidden; padding-right: .5em;">
-						<input type="search" style="width: 100%;" name="search"', !empty($context['search_params']['search']) ? ' value="' . $context['search_params']['search'] . '"' : '', ' maxlength="', $context['search_string_limit'], '" size="40" class="input_text" placeholder="Search..."/>
+						<input type="search" style="width: 100%; vertical-align: middle;" name="search"', !empty($context['search_params']['search']) ? ' value="' . $context['search_params']['search'] . '"' : '', ' maxlength="', $context['search_string_limit'], '" size="40" class="input_text" placeholder="Search..."/>
 					</div>
 				</div>';
 

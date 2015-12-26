@@ -1495,47 +1495,41 @@ i.fa.fa-subscribe.fa-fw::after
         display: none;
     }
     div.buttonlist.floatright:nth-child(1) {
-        display: block;
-        position: fixed;
+        position: absolute;
         z-index: 1010;
-        bottom: -50px;
-        left: 0px;
-        width: 100%;
-        height: 50px;
-        background-color: #fff;
-        transition: all 0.3s ease;
+        top: 67px;
+        left: 15px;
+        height: 55px;
     }
-    div.buttonlist.floatright:nth-child(1)::after {
-        display: block;
-        content: '';
-        font-family: 'FontAwesome';
+    div.buttonlist.floatright:nth-child(1) div.action-button-mobile {
+        font-family: 'Oswald', sans-serif;
         position: relative;
-        left: 98px;
-        bottom: 69px;
-        color: #666;
-        font-size: 14px;
-        line-height: 1px;
-        font-weight: normal;
-        width: 30px;
-        height: 50px;
-        margin-bottom: 5px;
+        width: 60px;
+        padding-top: 8px;
+        border-radius: 4px;
         text-align: center;
         opacity: 1;
         transition: all 0.3s ease;
     }
-    div.buttonlist.floatright:nth-child(1):hover::after {
-        opacity: 0;
-        height: 0;
+    div.buttonlist.floatright:nth-child(1) div.action-button-mobile span {
+        font-size: 13px;
+        vertical-align: middle;
+        font-weight: normal;
+        color: #666;
     }
-    div.buttonlist.floatright:nth-child(1):hover, div.buttonlist.floatright:nth-child(1):focus {
-        bottom: 5px;
+    div.buttonlist.floatright:nth-child(1) div.action-button-mobile:hover {
+        opacity: 0.5;
     }
     div.buttonlist.floatright:nth-child(1) .nav-pills {
-        margin: 0 auto;
-        max-width: 320px;
-        height: 50px;
-        position: relative;
-        top: 5px;
+        left: -500px;
+        width: 200px;
+        z-index: 1020;
+        margin: 30px auto;
+        background-color: #fff;
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.125);
+        padding: 3px 5px;
+        border-radius: 4px;
+        position: absolute;
         overflow: hidden;
         display: -webkit-box;
         display: -moz-box;
@@ -1545,16 +1539,18 @@ i.fa.fa-subscribe.fa-fw::after
         -webkit-justify-content: center;
         -moz-justify-content: center;
         justify-content: center;
+        flex-direction: column;
+        transition: all 0.5s ease;
+    }
+    div.buttonlist.floatright:nth-child(1):hover .nav-pills, div.buttonlist.floatright:nth-child(1):focus .nav-pills {
+        left: 0px;
     }
     div.buttonlist.floatright:nth-child(1) .nav-pills li a {
-        padding: 10px 3px 10px 5px;
+        border-radius: 5px !important;
+        margin: 2px 0;
     }
-    div.buttonlist.floatright:nth-child(1) .nav-pills li a.active {
-        padding: 10px 10px 10px 13px;
-    }
-    div.mark_read a.button_strip_markread span {
+    div.buttonlist.floatright:nth-child(1) .nav-pills li a span {
         display: inline;
-        padding-right: 5px;
     }
     #moderationbuttons_strip {
         position: relative;
@@ -1574,6 +1570,12 @@ i.fa.fa-subscribe.fa-fw::after
     }
     footer {
         margin-bottom: 60px;
+    }
+}
+
+@media (min-width: 768px) {
+    div.action-button-mobile {
+        display: none;
     }
 }
 
@@ -4841,7 +4843,7 @@ span.hidelink
 }
 
 #mobile_quicksearch {
-    font-size: 65%;
+    font-size: 85%;
 }
 
 i.fa.fa-search {
@@ -5336,9 +5338,6 @@ footer a
     #menu li {
         border-bottom: 1px solid #eee;
     }
-    #menu li:last-child {
-        border-bottom: none;
-    }
     #menu li li, #menu .dropdown-menu, #menu span.caret {
         display: none !important;
     }
@@ -5379,51 +5378,46 @@ nav .nav-notification>li .search-input-wrapper {
 }
 
 @media (min-width: 768px) {
-    #wrapper > nav > div > div.navbar-header > ul {
+    div.action-bar-mobile {
         display: none;
     }
 }
 
 @media (max-width: 767px) {
-    nav.nav-notification {
-        display: none;
-    }
     .search-input-wrapper {
         display: block;
-        position: fixed;
+        position: relative;
         z-index: 1005;
         bottom: 0px;
         width: 100%;
         min-width: 300px;
         overflow-x: hidden;
-        height: 32px;
-        padding-top: 0px;
+        height: 50px;
+        margin-bottom: 10px;
         background-color: #fff;
-        background-image: url(../images/headerborder.png);
-        background-repeat: no-repeat;
-        background-position: bottom left;
-        box-shadow: 0px -6px 12px rgba(0, 0, 0, 0.125);
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.125);
     }
     .search-input-wrapper .search-input {
         position: absolute;
-        right: 10px;
+        right: 20px;
         margin-top: 0px;
-        bottom: 8px;
+        bottom: 15px;
     }
     .search-input-wrapper .search-input input {
         background-color: #fff;
     }
     .search-input-wrapper .search-input input, .search-input-wrapper .search-input input:focus {
         height: 21px;
-        min-width: 21px;
+        min-width: 25px;
+        border-left: 2px solid #fff;
+        border-radius: 0 !important;
+        transition: all 0.3s ease;
     }
     .search-input-wrapper .search-input:hover input,
     .search-input-wrapper .search-input input:focus {
         background-color: #FFF;
-	border-style: solid;
-        border-color: #e5e5e5;
-	border-width: 1px;
         color: #666;
+        border-left: 2px solid #6590a5;
     }
     .search-input-wrapper .search-input, .search-input-wrapper .search-input:focus,
     .search-input-wrapper .search-input i {
@@ -5431,11 +5425,12 @@ nav .nav-notification>li .search-input-wrapper {
     }
     .search-input input:focus, .search-input input:hover,
     .search-input:focus input, .search-input:hover input {
-        width: 150px !important;
+        width: 180px !important;
     }
     .search-input .input-icon {
-        font-size: 17px !important;
+        font-size: 21px !important;
         line-height: 1px;
+        margin-right: -3px;
     }
 }
 
@@ -5599,20 +5594,23 @@ ul.social li .fa-rss:hover
 
 @media (max-width: 767px) {
     .scroll-to-top {
-        margin-bottom: -4px;
-        width: 30px;
-        bottom: 0px;
-        left: 10px;
+        width: 36px;
+        height: 36px;
+        line-height: 1px;
+        bottom: 9px;
+        left: 5px;
         z-index: 1006;
-        background-color: rgba(0,0,0,0);
+        background-color: #e5e5e5;
+        border-radius: 4px;
         box-shadow: none;
         transition: none;
     }
     .scroll-to-top .fa-chevron-up {
+        margin-top: 11px;
         font-size: 17px;
         color: #666;
     }
-}
+}*/
 
 .link-to-home
 {
@@ -5639,21 +5637,24 @@ a.link-to-home
     color: #fff;
 }
 
-@media (max-width: 767px) {
+/*@media (max-width: 767px) {
     .link-to-home {
-        margin-bottom: -2px;
-        width: 30px;
-        bottom: 0px;
-        left: 55px;
+        width: 36px;
+        height: 36px;
+        bottom: 9px;
+        left: 46px;
+        line-height: 1px;
         z-index: 1006;
-        background-color: rgba(0,0,0,0);
+        background-color: #e5e5e5;
+        border-radius: 4px;
         transition: none;
     }
     .link-to-home .fa.fa-home {
+        margin-top: 9px;
         font-size: 17px;
         color: #666;
     }
-}
+}*/
 
 @media (max-width: 767px) {
     .show-menu {

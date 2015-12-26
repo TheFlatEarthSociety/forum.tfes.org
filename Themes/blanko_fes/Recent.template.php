@@ -166,7 +166,7 @@ function template_unread()
 
 			// Some columns require a different shade of the color class.
 			$alternate_class = $color_class;
-			
+
 			// Classes for thread icons.
 			if	($topic['is_sticky'])
 				$icon_class = 'thumb-tack';
@@ -377,7 +377,7 @@ function template_replies()
 
 			// Some columns require a different shade of the color class.
 			$alternate_class = $color_class;
-			
+
 			// Classes for thread icons.
 			if	($topic['is_sticky'])
 				$icon_class = 'thumb-tack';

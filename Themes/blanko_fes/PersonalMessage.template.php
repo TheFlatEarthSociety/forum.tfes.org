@@ -179,12 +179,12 @@ function template_folder()
 			$window_class = $message['alternate'] == 0 ? 'windowbg' : 'windowbg2';
 
 			echo '
-			
+
 <div class="body_message row">
 	<div class="post_wrapper">
 		<div class="poster col-md-2">
 			<a id="msg', $message['id'], '"></a>';
-			
+
 				// Show avatars, images, etc.?
 				if (!empty($settings['show_user_images']) && empty($options['show_no_avatars']) && !empty($message['member']['avatar']['image']))
 				{
@@ -197,9 +197,9 @@ function template_folder()
 				{
 					echo'
 							<a href="', $scripturl, '?action=profile;u=', $message['member']['id'], '">
-								<img src="',$settings['images_url'] ,'/noavatar.png" class="img-thumbnail img-circle" alt="*" /> 						
+								<img src="',$settings['images_url'] ,'/noavatar.png" class="img-thumbnail img-circle" alt="*" />
 						</a>';
-				}	
+				}
 				echo'
 			<h4>';
 
@@ -216,15 +216,15 @@ function template_folder()
 			// Don't show these things for guests.
 			if (!$message['member']['is_guest'])
 			{
-			
+
 				echo '
-				<li class="stars">', $message['member']['group_stars'], '</li>';		
-				
+				<li class="stars">', $message['member']['group_stars'], '</li>';
+
 				// Show the member's custom title, if they have one.
 				if (isset($message['member']['title']) && $message['member']['title'] != '')
 					echo '
 				<li class="title">', $message['member']['title'], '</li>';
-				
+
 				// Show how many posts they have made.
 				if (!isset($context['disabled_fields']['posts']))
 					echo '
@@ -342,7 +342,7 @@ function template_folder()
 			</ul>
 		</div>
 		<div class="col-md-10">
-	<div class="body_content"> 
+	<div class="body_content">
 		<span class="arrow-left"></span>
 		<div class="postarea">
 				<div class="btn-group navbar-right">

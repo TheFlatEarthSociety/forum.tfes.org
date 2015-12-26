@@ -84,7 +84,7 @@ function template_html_above()
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"', $context['right_to_left'] ? ' dir="rtl"' : '', '>
 <head>
 <meta charset="' . $context['character_set'] . '"/>';
- 
+
 	// The ?fin20 part of this link is just here to make sure browsers don't cache it wrongly.
 	echo '
 	<link rel="stylesheet" type="text/css" href="', $settings['theme_url'], '/css/bootstrap.css?fin20" />
@@ -92,7 +92,7 @@ function template_html_above()
 	<link rel="stylesheet" type="text/css" href="', $settings['theme_url'], '/css/index', $context['theme_variant'], '.css?fin20" />';
 
 	// Favicon
-	echo 
+	echo
 	'
 	<link rel="shortcut icon" href="/favicon.ico" />';
 
@@ -116,13 +116,13 @@ function template_html_above()
 	$(document).ready(function(){
 		$("input[type=button]").attr("class", "btn btn-default btn-sm");
 		$(".button_submit").attr("class", "btn btn-danger btn-sm");
-		$("#advanced_search input[type=\'text\'], #search_term_input input[type=\'text\']").removeAttr("size"); 
+		$("#advanced_search input[type=\'text\'], #search_term_input input[type=\'text\']").removeAttr("size");
 		$(".table_grid").addClass("table table-striped");
 		$("img[alt=\'', $txt['new'], '\'], img.new_posts").replaceWith("<span class=\'label label-warning\'>', $txt['new'], '</span>");
-		$("#profile_success").removeAttr("id").removeClass("windowbg").addClass("alert alert-success"); 
-		$("#profile_error").removeAttr("id").removeClass("windowbg").addClass("alert alert-danger"); 
+		$("#profile_success").removeAttr("id").removeClass("windowbg").addClass("alert alert-success");
+		$("#profile_error").removeAttr("id").removeClass("windowbg").addClass("alert alert-danger");
 	});
-	</script>	
+	</script>
 	<script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/script.js?fin20"></script>
 	<script type="text/javascript" src="', $settings['theme_url'], '/scripts/theme.js?fin20"></script>
 	<script type="text/javascript"><!-- // --><![CDATA[
@@ -144,7 +144,7 @@ function template_html_above()
 
 	echo '
 	<style type="text/css">
-	@media (min-width: 768px) 
+	@media (min-width: 768px)
 	{
 		.container {
 			width: ' . $settings['forum_width'] . ';
@@ -230,15 +230,9 @@ function template_html_above()
 		if($prev_page >= 0)
 			echo '
 	<link rel="prev" href="', $scripturl, '?topic=', $context['current_topic'], '.', $prev_page,'" />';
-/*		else
-      echo '
-	<link rel="first" />';*/ //link rel="first" and link rel="last" have apparently been dropped from HTML5 now
 		if($next_page < $context['total_visible_posts'])
 			echo '
 	<link rel="next" href="', $scripturl, '?topic=', $context['current_topic'], '.', $next_page,'" />';
-/*		else
-      echo '
-	<link rel="last" />';*/
 	}
 
 	// If we're in a board, or a topic for that matter, the index will be the board's index.
@@ -254,14 +248,13 @@ function template_html_above()
 <body', !empty($settings['redsy_navbar']) ? ' style="padding-top: 50px;"' :  '' ,'>
 
 <script type="text/javascript">
-  (function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');
+	(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');
 
-  ga(\'create\', \'UA-48900853-2\', \'tfes.org\');
-  ga(\'send\', \'pageview\');
-
+	ga(\'create\', \'UA-48900853-2\', \'tfes.org\');
+	ga(\'send\', \'pageview\');
 </script>';
 }
 
@@ -280,7 +273,7 @@ function template_body_above()
 					<span class="icon-bar"></span>
 				</button>
 				<h1><a class="navbar-brand" href="' , $scripturl , '">', empty($context['header_logo_url_html_safe']) ? $context['forum_name'] : '<img class="logo" src="' . $context['header_logo_url_html_safe'] . '" alt="' . $context['forum_name'] . '" />', '</a></h1>
-			</div>		
+			</div>
 			<div class="collapse navbar-collapse">
 				<button type="button" class="navbar-toggle collapsed collapsemenu" id="upshrink">
 					<span class="icon-bar"></span>
@@ -330,7 +323,7 @@ function template_body_above()
 					</ul>';
 				}
 				echo'
-				<ul class="nav-notification navbar-right">	
+				<ul class="nav-notification navbar-right">
 					<li class="search-list">
 						<div class="search-input-wrapper">
 							<div class="search-input">
@@ -365,9 +358,9 @@ function template_body_above()
 			</div>
 		</div>
 	</nav>';
-	
+
 	template_menu();
-	
+
 	// Define the upper_section toggle in JavaScript.
 	echo '
 		<script type="text/javascript"><!-- // --><![CDATA[
@@ -394,9 +387,9 @@ function template_body_above()
 				}
 			});
 		// ]]></script>';
-		
+
 	// Add second navbar for mobile.
-	
+
 		echo'
 	<div class="action-bar-mobile">
 					<div class="search-list">
@@ -430,10 +423,10 @@ function template_body_above()
 						</div>
 					</div>
 	</div>';
-		
+
 		echo'
 	<header id="header">
-		<div class="container">'; 
+		<div class="container">';
 			pages_titlesdesc();
 			theme_linktree();
 		echo'
@@ -467,7 +460,7 @@ function template_body_below()
 				<a href="', !empty($settings['facebook_text']) ? $settings['facebook_text'] : 'http://www.facebook.com ' ,'" title="', $txt['rs_facebook'], '"><i class="fa fa-twitter fa-2x"></i></a>
 			</li>';
 			if(!empty($settings['twitter_check']))
-			echo'			
+			echo'
 			<li>
 				<a href="', !empty($settings['twitter_text']) ? $settings['twitter_text'] : 'http://www.twitter.com' ,'"><i class="fa fa-facebook fa-2x"></i></a>
 			</li>';
@@ -547,7 +540,7 @@ function template_menu()
 
 	echo '
 	<div id="menu">
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">	
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<div class="container">
 				<div class="row">
 					<ul class="nav navbar-nav">';

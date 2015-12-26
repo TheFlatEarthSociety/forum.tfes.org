@@ -13,7 +13,7 @@
 function template_main()
 {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings;
-	
+
 	// Add "New Posts" and "New Replies" buttons
 	if ($context['user']['is_logged'])
 		echo '
@@ -27,7 +27,7 @@ function template_main()
 			<span>New Replies</span>
 		</a>
 	</div>';
-		
+
 	// Show some statistics if stat info is off.
 	if (!$settings['show_stats_index'])
 		echo '
@@ -149,7 +149,7 @@ function template_main()
 			{
 				echo '
 				<tr id="board_', $board['id'], '" class="windowbg4">
-					<td class="icon"> 
+					<td class="icon">
 						<a href="', ($board['is_redirect'] || $context['user']['is_guest'] ? $board['href'] : $scripturl . '?action=unread;board=' . $board['id'] . '.0;children'), '">';
 
 				// If the board or children is new, show an indicator.
@@ -181,7 +181,7 @@ function template_main()
 							<i class="fa fa-question-circle"></i>
 							<p>', $board['description'] , '</p>
 						</div>';
-						
+
 				// Show the "Child Boards: ". (there's a link_children but we're going to bold the new ones...)
 				if (!empty($board['children']))
 				{
@@ -207,7 +207,7 @@ function template_main()
 								<strong>', $txt['parent_boards'], '</strong>: ', implode(', ', $children), '
 							</p>';
 				}
-				
+
 				// Show the "Moderators: ". Each has name, href, link, and id. (but we're gonna use link_moderators.)
 				if (!empty($board['moderators']))
 					echo '
@@ -319,7 +319,7 @@ function template_info_center()
 					</a>
 				</li>';
 
-			} 
+			}
 			if ($settings['show_stats_index'])
 			{
 			echo'
@@ -328,7 +328,7 @@ function template_info_center()
 						<i class="fa fa-comments"></i>
 						<span>&nbsp;', $txt['forum_stats'], '</span>
 					</a>
-				</li>'; 
+				</li>';
 			}
 			echo'
 				<li role="presentation" class="active">
@@ -336,7 +336,7 @@ function template_info_center()
 						<i class="fa fa-users"></i>
 						<span>&nbsp;', $txt['online_users'], '</span>
 					</a>
-				</li>			
+				</li>
 			</ul>
 			<div class="tab-content">';
 

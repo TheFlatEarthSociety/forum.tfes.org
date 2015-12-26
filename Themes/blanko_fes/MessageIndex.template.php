@@ -91,7 +91,7 @@ function template_main()
 				echo '
 				<p id="board_', $board['id'], '_children" class="moderators"><strong>', $txt['parent_boards'], '</strong>: ', implode(', ', $children), '</p>';
 			}
-			
+
 			// Show some basic information about the number of posts, etc.
 			echo '
 					</td>
@@ -244,7 +244,7 @@ function template_main()
 
 			// Some columns require a different shade of the color class.
 			$alternate_class = $color_class;
-			
+
 			// Classes for thread icons.
 			if	($topic['is_sticky'])
 				$icon_class = 'thumb-tack';

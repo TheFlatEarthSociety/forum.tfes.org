@@ -5592,7 +5592,7 @@ ul.social li .fa-rss:hover
     right: 10px;
 }
 
-@media (max-width: 767px) {
+/*@media (max-width: 767px) {
     .scroll-to-top {
         width: 36px;
         height: 36px;

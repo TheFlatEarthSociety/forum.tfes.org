@@ -5804,3 +5804,29 @@ a.link-to-home
         display: none;
     }
 }
+
+/* Quick login */
+input.userpass {
+    padding: 3px 2px 3px 2px;
+    margin: 0px 5px 3px 5px;
+    height: 21px;
+    min-width: 25px;
+    border-style: none;
+    border-left: 2px solid #6590A5;
+    font-size: 85%;
+}
+
+#always_logged_in {
+    margin-left: 5px;
+    vertical-align: middle;
+    font-size: 11px;
+}
+
+input#stayloggedin {
+    height: 12px;
+}
+
+li#quick_login_button {
+    margin-top: 5px;
+    text-align: center;
+}

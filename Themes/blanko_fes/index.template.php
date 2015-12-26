@@ -290,11 +290,11 @@ function template_body_above()
 				if(!empty($context['user']['is_logged']))
 				{
 				echo'
-					<ul class="nav navbar-nav navbar-right">
+					<ul class="nav navbar-nav navbar-right" id="profile_button">
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle">
 								<img class="avatar img-circle" src="', !empty($context['user']['avatar']['href']) ? $context['user']['avatar']['href'] : $settings['images_url']. '/noavatar.png' ,'" alt="*" />
-								<span>', $context['user']['name'], '</span>
+								<span id="profile_username">', $context['user']['name'], '</span>
 							</a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="' , $scripturl , '?action=profile"><i class="fa fa-user fa-fw"></i>' , $txt['profile'] , '</a></li>
@@ -305,6 +305,26 @@ function template_body_above()
 								<li><a href="' , $scripturl , '?action=unreadreplies;"><i class="fa fa-comments fa-fw"></i>' , $txt['new_replies'] , '</a></li>
 								<li class="divider"></li>
 								<li><a href="' , $scripturl , '?action=logout;sesc=', $context['session_id'], '"><i class="fa fa-sign-out fa-fw"></i>' , $txt['logout'] , '</a></li>
+							</ul>
+						</li>
+					</ul>';
+				} else { //If we're not logged in, let the user do so easily
+				echo '
+					<ul class="nav navbar-nav navbar-right" id="profile_button">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle">
+								<img class="avatar img-circle" src="' . $settings['images_url']. '/noavatar.png' ,'" alt="*" />
+								<span id="profile_username">', $txt['guest_title'] , '</span>
+							</a>
+							<ul class="dropdown-menu" role="menu">
+		<script language="JavaScript" type="text/javascript" src="', $settings['default_theme_url'], '/scripts/sha1.js"></script>
+			<form action="', $scripturl, '?action=login2" method="post" accept-charset="', $context['character_set'], empty($context['disable_login_hashing']) ? ' onsubmit="hashLoginPassword(this, \'' . $context['session_id'] . '\');"' : '', '>
+				<li><input type="text" class="userpass" name="user" placeholder="' , $txt['username'] , '"/></li>
+				<li><input type="password" class="userpass" name="passwrd" placeholder="', $txt['password'], '"/></li>
+				<li id="always_logged_in"><input type="checkbox" id="stayloggedin" name="cookieneverexp"/>', $txt['always_logged_in'], '</li>
+				<li id="quick_login_button"><input type="submit" value="', $txt['login'], '" class="button_submit" /></li>
+				<input type="hidden" name="hash_passwrd" value="" />
+				  </form>
 							</ul>
 						</li>
 					</ul>';
@@ -378,7 +398,7 @@ function template_body_above()
 	// Add second navbar for mobile.
 	
 		echo'
-	<div class="action-bar-mobile">	
+	<div class="action-bar-mobile">
 					<div class="search-list">
 						<div class="search-input-wrapper">
 							<div class="search-input">

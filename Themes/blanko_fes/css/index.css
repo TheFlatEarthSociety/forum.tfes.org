@@ -5830,3 +5830,17 @@ li#quick_login_button {
     margin-top: 5px;
     text-align: center;
 }
+
+i#usericon {
+    position: absolute;
+    top: 8px;
+    right: 2px;
+    display: inline-block;
+}
+
+i#passicon {
+    position: absolute;
+    top: 32px;
+    right: 2px;
+    display: inline-block;
+}

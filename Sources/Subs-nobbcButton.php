@@ -19,7 +19,8 @@ function addnobbcButton(&$bbc_tags)
 				'code' => 'nobbc',
 				'before' => '[nobbc]',
 				'after' => '[/nobbc]',
-				'description' => $txt['nobbc']
+				'description' => $txt['nobbc'],
+				'fa-icon' => 'fa-code',
 			);
 
 			$temp[] = array();

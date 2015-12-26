@@ -5844,3 +5844,39 @@ i#passicon {
     right: 2px;
     display: inline-block;
 }
+
+/* BBC buttons */
+.bbc_button {
+    width: 22px;
+	height: 22px;
+    background-color: #6590a5;
+    padding: 0;
+	margin-bottom: 2px;
+}
+
+.bbc_glyph {
+    vertical-align: bottom;
+}
+
+#sel_face, #sel_size, #sel_color {
+    width: 120px;
+}
+
+.mobile_only {
+	display: none;
+}
+
+@media (max-width: 767px) {
+    .bbc_divider
+        {
+        display: none;
+    }
+	
+	.sel_face, .sel_size, .sel_color {
+		max-width: 30%;
+	}
+	
+	.sel_face_br {
+		display: initial;
+	}
+}

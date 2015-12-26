@@ -2588,7 +2588,7 @@ function cache_quick_get($key, $file, $function, $params, $level = 1)
 
 function cache_put_data($key, $value, $ttl = 120)
 {
-	global $boardurl, $sourcedir, $modSettings, $memcached;
+	global $canonical_boardurl, $sourcedir, $modSettings, $memcached;
 	global $cache_hits, $cache_count, $db_show_debug, $cachedir;
 
 	if (empty($modSettings['cache_enable']) && !empty($modSettings))
@@ -2601,7 +2601,7 @@ function cache_put_data($key, $value, $ttl = 120)
 		$st = microtime();
 	}
 
-	$key = md5($boardurl . filemtime($sourcedir . '/Load.php')) . '-SMF-' . strtr($key, ':', '-');
+	$key = md5($canonical_boardurl . filemtime($sourcedir . '/Load.php')) . '-SMF-' . strtr($key, ':', '-');
 	$value = $value === null ? null : serialize($value);
 
 	// The simple yet efficient memcached.
@@ -2715,7 +2715,7 @@ function cache_put_data($key, $value, $ttl = 120)
 
 function cache_get_data($key, $ttl = 120)
 {
-	global $boardurl, $sourcedir, $modSettings, $memcached;
+	global $canonical_boardurl, $sourcedir, $modSettings, $memcached;
 	global $cache_hits, $cache_count, $db_show_debug, $cachedir;
 
 	if (empty($modSettings['cache_enable']) && !empty($modSettings))
@@ -2728,7 +2728,7 @@ function cache_get_data($key, $ttl = 120)
 		$st = microtime();
 	}
 
-	$key = md5($boardurl . filemtime($sourcedir . '/Load.php')) . '-SMF-' . strtr($key, ':', '-');
+	$key = md5($canonical_boardurl . filemtime($sourcedir . '/Load.php')) . '-SMF-' . strtr($key, ':', '-');
 
 	// Okay, let's go for it memcached!
 	if (function_exists('memcache_get') && isset($modSettings['cache_memcached']) && trim($modSettings['cache_memcached']) != '')

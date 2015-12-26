@@ -502,7 +502,7 @@ tr.catbg th a:link, tr.catbg th a:visited, tr.catbg2 td a:link, tr.catbg2 td a:v
 
 .catbg select
 {
-    height: 1.5em;
+    /*height: 1.5em;*/
     font-size: 0.85em;
 }
 

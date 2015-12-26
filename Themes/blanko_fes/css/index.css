@@ -5816,6 +5816,11 @@ input.userpass {
     font-size: 85%;
 }
 
+label {
+    margin-bottom: 0px;
+    font-weight: initial;
+}
+
 #always_logged_in {
     margin-left: 5px;
     vertical-align: middle;

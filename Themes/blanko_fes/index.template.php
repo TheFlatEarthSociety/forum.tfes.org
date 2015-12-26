@@ -314,7 +314,7 @@ function template_body_above()
 								<form action="', $scripturl, '?action=login2" method="post" accept-charset="', $context['character_set'], empty($context['disable_login_hashing']) ? ' onsubmit="hashLoginPassword(this, \'' . $context['session_id'] . '\');"' : '', '>
 									<li><i id="usericon" class="fa fa-user fa-fw"></i><input type="text" class="userpass" name="user" placeholder="' , $txt['username'] , '"/></li>
 									<li><i id="passicon" class="fa fa-lock fa-fw"></i><input type="password" class="userpass" name="passwrd" placeholder="', $txt['password'], '"/></li>
-									<li id="always_logged_in"><input type="checkbox" id="stayloggedin" name="cookieneverexp"/>', $txt['always_logged_in'], '</li>
+									<li id="always_logged_in"><label><input type="checkbox" id="stayloggedin" name="cookieneverexp"/>', $txt['always_logged_in'], '</label></li>
 									<li id="quick_login_button"><input type="submit" value="', $txt['login'], '" class="button_submit" /></li>
 									<input type="hidden" name="hash_passwrd" value="" />
 								</form>

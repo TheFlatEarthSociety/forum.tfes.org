@@ -201,7 +201,8 @@
 .fa-star-o:before {
   content: "\f006";
 }
-.fa-user:before {
+.fa-user:before,
+.fa-profile:before {
   content: "\f007";
 }
 .fa-film:before {
@@ -216,12 +217,14 @@
 .fa-th-list:before {
   content: "\f00b";
 }
-.fa-check:before {
+.fa-check:before,
+.fa-markread:before {
   content: "\f00c";
 }
 .fa-remove:before,
 .fa-close:before,
-.fa-times:before {
+.fa-times:before,
+.fa-mark_unread:before {
   content: "\f00d";
 }
 .fa-search-plus:before {
@@ -233,10 +236,13 @@
 .fa-power-off:before {
   content: "\f011";
 }
-.fa-signal:before {
+.fa-signal:before,
+.fa-add_poll:before,
+.fa-post_poll:before {
   content: "\f012";
 }
 .fa-gear:before,
+.fa-admin:before,
 .fa-cog:before {
   content: "\f013";
 }
@@ -461,7 +467,8 @@
 .fa-arrow-left:before {
   content: "\f060";
 }
-.fa-arrow-right:before {
+.fa-arrow-right:before,
+.fa-move:before {
   content: "\f061";
 }
 .fa-arrow-up:before {
@@ -563,7 +570,8 @@
 .fa-camera-retro:before {
   content: "\f083";
 }
-.fa-key:before {
+.fa-key:before,
+.fa-register:before {
   content: "\f084";
 }
 .fa-gears:before,
@@ -585,19 +593,22 @@
 .fa-heart-o:before {
   content: "\f08a";
 }
-.fa-sign-out:before {
+.fa-sign-out:before,
+.fa-logout:before {
   content: "\f08b";
 }
 .fa-linkedin-square:before {
   content: "\f08c";
 }
-.fa-thumb-tack:before {
+.fa-thumb-tack:before,
+.fa-sticky:before {
   content: "\f08d";
 }
 .fa-external-link:before {
   content: "\f08e";
 }
-.fa-sign-in:before {
+.fa-sign-in:before,
+.fa-login:before {
   content: "\f090";
 }
 .fa-trophy:before {
@@ -647,7 +658,8 @@
 .fa-hdd-o:before {
   content: "\f0a0";
 }
-.fa-bullhorn:before {
+.fa-bullhorn:before,
+.fa-notify:before {
   content: "\f0a1";
 }
 .fa-bell:before {
@@ -683,7 +695,8 @@
 .fa-globe:before {
   content: "\f0ac";
 }
-.fa-wrench:before {
+.fa-wrench:before,
+.fa-moderate:before {
   content: "\f0ad";
 }
 .fa-tasks:before {
@@ -699,7 +712,8 @@
   content: "\f0b2";
 }
 .fa-group:before,
-.fa-users:before {
+.fa-users:before,
+.fa-mlist:before {
   content: "\f0c0";
 }
 .fa-chain:before,
@@ -717,7 +731,8 @@
   content: "\f0c4";
 }
 .fa-copy:before,
-.fa-files-o:before {
+.fa-files-o:before,
+.fa-merge:before {
   content: "\f0c5";
 }
 .fa-paperclip:before {
@@ -798,7 +813,8 @@
 .fa-sort-asc:before {
   content: "\f0de";
 }
-.fa-envelope:before {
+.fa-envelope:before,
+.fa-pm:before {
   content: "\f0e0";
 }
 .fa-linkedin:before {
@@ -1007,7 +1023,8 @@
 .fa-chain-broken:before {
   content: "\f127";
 }
-.fa-question:before {
+.fa-question:before,
+.fa-help:before {
   content: "\f128";
 }
 .fa-info:before {
@@ -1164,7 +1181,8 @@
 .fa-btc:before {
   content: "\f15a";
 }
-.fa-file:before {
+.fa-file:before,
+.fa-new_topic:before {
   content: "\f15b";
 }
 .fa-file-text:before {
@@ -1630,7 +1648,8 @@
 .fa-bell-slash-o:before {
   content: "\f1f7";
 }
-.fa-trash:before {
+.fa-trash:before,
+.fa-delete:before {
   content: "\f1f8";
 }
 .fa-copyright:before {

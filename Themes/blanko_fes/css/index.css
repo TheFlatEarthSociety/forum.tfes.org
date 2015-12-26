@@ -1010,7 +1010,8 @@ th.hidden-xs:nth-child(3)
 {
     font-weight: 600;
     font-size: 12px;
-    padding-left: 55px;
+    /*padding-left: 55px;*/
+    text-align: center;
     width: 200px;
 }
 
@@ -3334,10 +3335,10 @@ ul.post_options li
     clear: both;
 }
 
-#recent .pagesection:nth-child(1)
+/*#recent .pagesection:nth-child(1)
 {
     display: none;
-}
+}*/
 
 i.fa.fa-readall.fa-fw::before
 {
@@ -5775,21 +5776,21 @@ a.link-to-home
 
 #unread table, #unreadreplies table
 {
-    min-width: 800px;
+    max-width: 100%;
     margin-bottom: 0;
 }
 
-#unread .label.label-warning, #unreadreplies .label.label-warning
+/*#unread .label.label-warning, #unreadreplies .label.label-warning
 {
     display: none;
-}
+}*/
 
-#unread th, #unreadreplies th
+/*#unread th, #unreadreplies th
 {
     font-size: 12px;
     font-weight: 600;
     text-align: center;
-}
+}*/
 
 #post_subject
 {

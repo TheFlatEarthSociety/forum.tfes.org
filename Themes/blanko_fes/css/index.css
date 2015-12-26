@@ -5858,7 +5858,7 @@ i#passicon {
     vertical-align: bottom;
 }
 
-#sel_face, #sel_size, #sel_color {
+.sel_face, .sel_size, .sel_color {
     width: 120px;
 }
 

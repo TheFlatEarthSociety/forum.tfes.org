@@ -235,7 +235,7 @@ function template_main()
 		// Show information about the poster of this message.
 		echo '
 						<div class="poster col-md-2">';
-							
+
 				// Show avatars, images, etc.?
 				if (!empty($settings['show_user_images']) && empty($options['show_no_avatars']) && !empty($message['member']['avatar']['image']))
 				{
@@ -244,7 +244,7 @@ function template_main()
 								<img src="', $message['member']['avatar']['href'], '" class="img-thumbnail img-circle" alt="*" />
 							</a>';
 				}
-				
+
 		echo'
 							<h4>';
 
@@ -260,7 +260,7 @@ function template_main()
 							<ul class="reset smalltext" id="msg_', $message['id'], '_extra_info">';
 
 
-					
+
 		// Show the member's custom title, if they have one.
 		if (!empty($message['member']['title']))
 			echo '
@@ -269,7 +269,7 @@ function template_main()
 		// Don't show these things for guests.
 		if (!$message['member']['is_guest'])
 		{
-			
+
 			// Show the stars if they are not in a group.
 				echo '
 								<li class="stars">', $message['member']['group_stars'], '</li>';
@@ -396,16 +396,16 @@ function template_main()
 							</ul>
 						</div>
 						<div class="col-md-10">
-							<div class="body_content"> 
+							<div class="body_content">
 								<span class="arrow-left"></span>
 								<div class="postarea">';
 
 				// If this is the first post, (#0) just say when it was posted - otherwise give the reply #.
 				if ($message['can_approve'] || $context['can_reply'] || $message['can_modify'] || $message['can_remove'] || $context['can_split'] || $context['can_restore_msg'])
-					echo '				
+					echo '
 										<div class="btn-group navbar-right">
 											<button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown">Actions <span class="caret"></span></button>
-											<ul class="dropdown-menu" role="menu">'; 
+											<ul class="dropdown-menu" role="menu">';
 
 					// Maybe we can approve it, maybe we should?
 					if ($message['can_approve'])
@@ -452,7 +452,7 @@ function template_main()
 					if (!empty($options['display_quick_mod']) && $options['display_quick_mod'] == 1 && $message['can_remove'])
 						echo '
 											<li class="inline_mod_check" style="display: none;" id="in_topic_mod_check_', $message['id'], '"></li>';
-					if ($message['can_approve'] || $context['can_reply'] || $message['can_modify'] || $message['can_remove'] || $context['can_split'] || $context['can_restore_msg'])							
+					if ($message['can_approve'] || $context['can_reply'] || $message['can_modify'] || $message['can_remove'] || $context['can_split'] || $context['can_restore_msg'])
 										echo'
 										</ul>';
 										echo'

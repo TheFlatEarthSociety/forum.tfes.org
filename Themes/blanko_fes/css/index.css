@@ -4829,17 +4829,17 @@ span.hidelink
 #desktop_quicksearch::-webkit-input-placeholder {
     color: #FFF;
 }
- 
+
 #desktop_quicksearch:-moz-placeholder { /* Firefox 18- */
-    color: #FFF;  
+    color: #FFF;
 }
- 
+
 #desktop_quicksearch::-moz-placeholder {  /* Firefox 19+ */
-    color: #FFF;  
+    color: #FFF;
 }
- 
-#desktop_quicksearch:-ms-input-placeholder {  
-    color: #FFF;  
+
+#desktop_quicksearch:-ms-input-placeholder {
+    color: #FFF;
 }
 
 #mobile_quicksearch {
@@ -4851,7 +4851,7 @@ i.fa.fa-search {
 }
 
 i.fa.fa-search.mobile {
-	border-radius: 100px;
+    border-radius: 100px;
     background: #FFF;
 }
 
@@ -4964,7 +4964,7 @@ i.fa.fa-search.mobile {
     {
         display: none;
     }
-    
+
     .tborder
     {
         border: none;

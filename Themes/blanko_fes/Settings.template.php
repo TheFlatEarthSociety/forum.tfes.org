@@ -178,13 +178,13 @@ function template_settings()
 			'description' => $txt['forum_width_desc'],
 			'type' => 'text',
 			'size' => 8,
-		),		
+		),
 		array(
 			'id' => 'smiley_sets_default',
 			'label' => $txt['smileys_default_set_for_theme'],
 			'options' => $context['smiley_sets'],
 			'type' => 'text',
-		),		
+		),
 	'',
 		array(
 			'id' => 'facebook_check',

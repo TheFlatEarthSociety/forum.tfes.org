@@ -1606,6 +1606,14 @@ function create_control_richedit($editorOptions)
 				'fa-icon' => 'fa-film',
 			),
 			array(
+				'image' => 'youtube',
+				'code' => 'youtube',
+				'before' => '[youtube]',
+				'after' => '[/youtube]',
+				'description' => 'Insert YouTube video',
+				'fa-icon' => 'fa-youtube-play',
+			),
+			array(
 				'image' => 'url',
 				'code' => 'url',
 				'before' => '[url]',

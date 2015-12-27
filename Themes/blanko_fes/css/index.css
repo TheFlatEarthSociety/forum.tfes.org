@@ -5327,9 +5327,10 @@ footer a
 .table_grid td.icon1, .table_grid td.icon2, .table_grid td, .table_grid td.subject
 {
     background-color: #fcfcfc;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #d3d3d3;
     border-left: none;
     border-right: none;
+    border-top: none;
     color: #555;
 }
 

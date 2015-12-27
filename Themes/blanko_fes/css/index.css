@@ -1527,7 +1527,7 @@ i.fa.fa-subscribe.fa-fw::after
         width: 100%;
         z-index: 1020;
         margin: 0 auto;
-        padding: 3px 0;
+        padding: 5px;
         position: fixed;
         overflow: hidden;
         background-color: #fff;
@@ -1546,10 +1546,12 @@ i.fa.fa-subscribe.fa-fw::after
     div.buttonlist.floatright:nth-child(1):hover .nav-pills, div.buttonlist.floatright:nth-child(1):focus .nav-pills {
         bottom: 5px;
     }
+    div.buttonlist.floatright:nth-child(1) .nav-pills li {
+        width: 50%;
+    }
     div.buttonlist.floatright:nth-child(1) .nav-pills li a {
         border-radius: 5px !important;
-        margin: 3px;
-        min-width: 100px;
+        margin: 2px;
         padding: 10px 5px;
     }
     div.buttonlist.floatright:nth-child(1) .nav-pills li a span {

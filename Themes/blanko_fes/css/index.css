@@ -985,9 +985,30 @@ table.table_list a.collapse
 }
 
 /* The half-round header bars for some tables. */
-tr.catbg th.first_th,tr.titlebg th.first_th, tr.catbg th.last_th, tr.titlebg th.last_th
+.table_grid tr.catbg
+{
+    background: none;
+}
+
+.table_grid tr.catbg th
 {
     background: #6590a5;
+}
+
+.table_grid tr.catbg th.first_th
+{
+    border-radius: 4px 0 0 4px
+}
+
+.table_grid tr.catbg th.last_th
+{
+    border-radius: 0 4px 4px 0;
+}
+
+@media (max-width: 767px) {
+    .table_grid tr.catbg th.lefttext {
+        border-radius: 0 4px 4px 0;
+    }
 }
 
 .table_grid th.last_th input
@@ -1018,7 +1039,7 @@ th.hidden-xs:nth-child(3)
 
 .table > thead > tr > th
 {
-    border-bottom: 2px solid #ebebeb !important;
+    border-bottom: 3px solid #ebebeb !important;
 }
 
 /* GenericList */
@@ -3342,10 +3363,10 @@ ul.post_options li
     clear: both;
 }
 
-/*#recent .pagesection:nth-child(1)
+#recent .pagesection
 {
-    display: none;
-}*/
+    margin-bottom: 15px;
+}
 
 i.fa.fa-readall.fa-fw::before
 {
@@ -3779,6 +3800,7 @@ tr.windowbg td, tr.windowbg2 td, tr.approvebg td, tr.highlight2 td
 {
     float: right;
     padding: 1px 5px;
+    margin-right: -40px;
     color: #888;
 }
 
@@ -3801,6 +3823,7 @@ tr.windowbg td, tr.windowbg2 td, tr.approvebg td, tr.highlight2 td
 .table_grid td.lastpost
 {
     max-width: 250px;
+    padding-right: 40px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -5301,10 +5324,10 @@ footer a
     line-height: 14px;
 }
 
-.table_grid td.icon1, .table_grid td, .table_grid td.subject
+.table_grid td.icon1, .table_grid td.icon2, .table_grid td, .table_grid td.subject
 {
     background-color: #fcfcfc;
-    border-bottom: 2px solid #ebebeb;
+    border-bottom: 1px solid #ccc;
     border-left: none;
     border-right: none;
     color: #555;

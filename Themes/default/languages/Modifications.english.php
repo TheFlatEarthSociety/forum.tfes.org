@@ -65,4 +65,34 @@ $txt['permissionname_view_banlist'] = 'View the Ban List';
 $txt['permissionhelp_view_banlist'] = 'The banlist shows all members that have are banned on your forum. The list can be sorted.'; 
 $txt['cannot_view_banlist'] = 'You can\'t view the banlist because you don\'t have permission to.';
 $txt['whoallow_banlist'] = 'Viewing <a href="' . $scripturl . '?action=banlist">Banlist</a>.';
+// SMF Sitemap Strings
+$txt['sitemap'] = 'Sitemap';
+$txt['sitemap_boards'] = 'Boards';
+$txt['sitemap_topics'] = 'Topics';
+$txt['sitemap_xml'] = 'Show Sitemap XML <em>link</em>';
+$txt['sitemap_topic_count'] = 'Maximum number of topics to display in XML sitemap<br /><span class="smalltext">0 to show all (<strong class="error">NOT RECOMMENDED ON LARGE BOARDS</strong>)</span>';
+$txt['sitemap_cache_ttl'] = 'Time that XML data should be cached (seconds)';
+$txt['sitemap_board_none'] = 'No boards to display';
+$txt['sitemap_topic_none'] = 'No topics to display';
+$txt['sitemap_30day_priority'] = 'Priority for topics active in the last 30 days';
+$txt['sitemap_60day_priority'] = 'Priority for topics active in the last 60 days';
+$txt['sitemap_90day_priority'] = 'Priority for topics active in the last 90 days';
+$txt['sitemap_91day_priority'] = 'Priority for topics older than 90 days';
+$txt['invalid_sitemap_subaction'] = 'Invalid selection';
+
+// SMF Sitemap Strings
+$txt['sitemap'] = 'Sitemap';
+$txt['sitemap_boards'] = 'Boards';
+$txt['sitemap_topics'] = 'Topics';
+$txt['sitemap_xml'] = 'Show Sitemap XML <em>link</em>';
+$txt['sitemap_topic_count'] = 'Maximum number of topics to display in XML sitemap<br /><span class="smalltext">0 to show all (<strong class="error">NOT RECOMMENDED ON LARGE BOARDS</strong>)</span>';
+$txt['sitemap_cache_ttl'] = 'Time that XML data should be cached (seconds)';
+$txt['sitemap_board_none'] = 'No boards to display';
+$txt['sitemap_topic_none'] = 'No topics to display';
+$txt['sitemap_30day_priority'] = 'Priority for topics active in the last 30 days';
+$txt['sitemap_60day_priority'] = 'Priority for topics active in the last 60 days';
+$txt['sitemap_90day_priority'] = 'Priority for topics active in the last 90 days';
+$txt['sitemap_91day_priority'] = 'Priority for topics older than 90 days';
+$txt['invalid_sitemap_subaction'] = 'Invalid selection';
+
 ?>

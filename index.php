@@ -322,6 +322,7 @@ function smf_main()
 		'search' => array('Search.php', 'PlushSearch1'),
 		'search2' => array('Search.php', 'PlushSearch2'),
 		'sendtopic' => array('SendTopic.php', 'EmailUser'),
+		'sitemap' => array('Sitemap.php', 'ShowSiteMap'),
 		'smstats' => array('Stats.php', 'SMStats'),
 		'suggest' => array('Subs-Editor.php', 'AutoSuggestHandler'),
 		'spellcheck' => array('Subs-Post.php', 'SpellCheck'),

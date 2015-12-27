@@ -38,6 +38,11 @@ foreach (array('db_character_set', 'cachedir') as $variable)
 // Get the forum's settings for database and file paths.
 require_once(dirname(__FILE__) . '/Settings.php');
 
+// We may modify $boardurl later in Load.php for various reasons. Keep
+// a copy around for subroutines (such as caching) which rely on a
+// consistent $boardurl.
+$canonical_boardurl = $boardurl;
+
 // Make absolutely sure the cache directory is defined.
 if ((empty($cachedir) || !file_exists($cachedir)) && file_exists($boarddir . '/cache'))
 	$cachedir = $boarddir . '/cache';

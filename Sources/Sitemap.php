@@ -91,7 +91,7 @@ function XMLDisplay()
 
 	// Fixup the query_see_board so it only displays what guests would see
 	$old_see_board = $user_info['query_see_board'];
-	$user_info['query_see_board'] = '(FIND_IN_SET(-1, b.member_groups))';
+	$user_info['query_see_board'] = '(FIND_IN_SET(-1, b.member_groups) != 0)';
 
 	$context['sitemap']['items'] = array();
 

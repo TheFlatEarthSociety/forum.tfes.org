@@ -1497,17 +1497,17 @@ i.fa.fa-subscribe.fa-fw::after
     div.buttonlist.floatright:nth-child(1) {
         position: fixed;
         z-index: 1010;
-        bottom: 10px;
-        left: 90px;
+        bottom: 15px;
+        right: 10px;
     }
     div.buttonlist.floatright:nth-child(1) div.action-button-mobile {
         display: block;
         font-family: 'Oswald', sans-serif;
         background-color: #6590a5;
         position: relative;
-        width: 60px;
-        height: 35px;
-        padding-top: 8px;
+        width: 55px;
+        height: 30px;
+        padding-top: 6px;
         border-radius: 4px;
         text-align: center;
         opacity: 1;
@@ -1523,14 +1523,15 @@ i.fa.fa-subscribe.fa-fw::after
     }
     div.buttonlist.floatright:nth-child(1) .nav-pills {
         left: -100%;
-        bottom: 40px;
+        bottom: 45px;
         width: 100%;
         z-index: 1020;
         margin: 0 auto;
-        padding: 14px 5px;
+        padding: 5px 10px 14px 10px;
         border-radius: 4px;
         position: fixed;
         overflow: hidden;
+        background-color: rgba(255,255,255,0);
         display: -webkit-box;
         display: -moz-box;
         display: -ms-flexbox;
@@ -1544,6 +1545,7 @@ i.fa.fa-subscribe.fa-fw::after
     }
     div.buttonlist.floatright:nth-child(1):hover .nav-pills, div.buttonlist.floatright:nth-child(1):focus .nav-pills {
         left: 0px;
+        background-color: rgba(255,255,255,1);
     }
     div.buttonlist.floatright:nth-child(1) .nav-pills li a {
         border-radius: 5px !important;
@@ -4843,10 +4845,10 @@ span.hidelink
 }
 
 #mobile_quicksearch {
-    margin-top: 3px;
+    margin-top: 0px;
     font-size: 13px;
     font-family: "Oswald", sans-serif;
-    height: 26px;
+    height: 30px;
 }
 
 i.fa.fa-search {
@@ -4855,7 +4857,7 @@ i.fa.fa-search {
 
 i.fa.fa-search.mobile {
     border-radius: 100px;
-    background: #FFF;
+    background: #eee;
 }
 
 /* Styles for the advanced search section.
@@ -5395,7 +5397,7 @@ nav .nav-notification>li .search-input-wrapper {
         width: 100%;
         min-width: 300px;
         overflow-x: hidden;
-        height: 50px;
+        height: 55px;
         background-color: #fff;
         background-image: url(../images/headerborder.png);
         background-repeat: repeat-x;
@@ -5404,16 +5406,15 @@ nav .nav-notification>li .search-input-wrapper {
     }
     .search-input-wrapper .search-input {
         position: absolute;
-        right: 0px;
-        margin-top: 0px;
-        bottom: 16px;
+        bottom: 15px;
+        width: calc(100% - 160px);
+        margin: 0 80px;
+        background-color: #eee;
+        border-radius: 4px;
     }
     .search-input-wrapper .search-input input {
-        background-color: #fff;
-    }
-    .search-input-wrapper .search-input input#mobile_quicksearch {
-        opacity: 0;
-        transition: all 0.3s ease;
+        background-color: rgba(0,0,0,0);
+        width: 100%;
     }
     .search-input-wrapper .search-input:hover input#mobile_quicksearch,
     .search-input-wrapper .search-input input#mobile_quicksearch:focus {
@@ -5421,30 +5422,25 @@ nav .nav-notification>li .search-input-wrapper {
     }
     .search-input-wrapper .search-input input, .search-input-wrapper .search-input input:focus {
         height: 21px;
-        min-width: 25px;
-        border-left: 2px solid #fff;
         border-radius: 0 !important;
-        transition: all 0.3s ease;
     }
     .search-input-wrapper .search-input:hover input,
     .search-input-wrapper .search-input input:focus {
-        background-color: #FFF;
+        background-color: #eee;
         color: #666;
-        border-left: 2px solid #6590a5;
     }
-
     .search-input-wrapper .search-input, .search-input-wrapper .search-input:focus,
     .search-input-wrapper .search-input i {
         color: #666;
     }
     .search-input input:focus, .search-input input:hover,
     .search-input:focus input, .search-input:hover input {
-        width: 140px !important;
+        width: 100% !important;
     }
     .search-input .input-icon {
-        font-size: 21px !important;
+        font-size: 17px !important;
         line-height: 1px;
-        margin-top: 4px;
+        margin-top: 5px;
     }
 }
 
@@ -5608,19 +5604,19 @@ ul.social li .fa-rss:hover
 
 @media (max-width: 767px) {
     .scroll-to-top {
-        width: 35px;
-        height: 35px;
+        width: 30px;
+        height: 30px;
         line-height: 1px;
-        bottom: 10px;
+        bottom: 15px;
         left: 5px;
         z-index: 1006;
-        background-color: #e5e5e5;
-        border-radius: 50%;
+        background-color: #fff;
+        border-radius: 4px;
         box-shadow: none;
         transition: none;
     }
     .scroll-to-top .fa-chevron-up {
-        margin-top: 11px;
+        margin-top: 9px;
         font-size: 17px;
         color: #666;
     }
@@ -5653,18 +5649,18 @@ a.link-to-home
 
 @media (max-width: 767px) {
     .link-to-home {
-        width: 35px;
-        height: 35px;
-        bottom: 10px;
-        left: 45px;
+        width: 30px;
+        height: 30px;
+        bottom: 15px;
+        left: 40px;
         line-height: 1px;
         z-index: 1006;
-        background-color: #e5e5e5;
-        border-radius: 50%;
+        background-color: #fff;
+        border-radius: 4px;
         transition: none;
     }
     .link-to-home .fa.fa-home {
-        margin-top: 9px;
+        margin-top: 7px;
         font-size: 17px;
         color: #666;
     }

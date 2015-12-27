@@ -1553,6 +1553,7 @@ i.fa.fa-subscribe.fa-fw::after
         position: fixed;
         overflow: hidden;
         background-color: #fff;
+        box-shadow: 0px -6px 12px rgba(0, 0, 0, 0.125);
         display: -webkit-box;
         display: -moz-box;
         display: -ms-flexbox;

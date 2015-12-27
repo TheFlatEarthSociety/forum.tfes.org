@@ -1513,6 +1513,7 @@ function create_control_richedit($editorOptions)
 				'before' => '[b]',
 				'after' => '[/b]',
 				'description' => $txt['bold'],
+				'fa-icon' => 'fa-bold',
 			),
 			array(
 				'image' => 'italicize',
@@ -1520,20 +1521,23 @@ function create_control_richedit($editorOptions)
 				'before' => '[i]',
 				'after' => '[/i]',
 				'description' => $txt['italic'],
+				'fa-icon' => 'fa-italic',
 			),
 			array(
 				'image' => 'underline',
 				'code' => 'u',
 				'before' => '[u]',
 				'after' => '[/u]',
-				'description' => $txt['underline']
+				'description' => $txt['underline'],
+				'fa-icon' => 'fa-underline',
 			),
 			array(
 				'image' => 'strike',
 				'code' => 's',
 				'before' => '[s]',
 				'after' => '[/s]',
-				'description' => $txt['strike']
+				'description' => $txt['strike'],
+				'fa-icon' => 'fa-strikethrough',
 			),
 			array(),
 			array(
@@ -1541,28 +1545,32 @@ function create_control_richedit($editorOptions)
 				'code' => 'pre',
 				'before' => '[pre]',
 				'after' => '[/pre]',
-				'description' => $txt['preformatted']
+				'description' => $txt['preformatted'],
+				'fa-icon' => 'fa-paragraph',
 			),
 			array(
 				'image' => 'left',
 				'code' => 'left',
 				'before' => '[left]',
 				'after' => '[/left]',
-				'description' => $txt['left_align']
+				'description' => $txt['left_align'],
+				'fa-icon' => 'fa-align-left',
 			),
 			array(
 				'image' => 'center',
 				'code' => 'center',
 				'before' => '[center]',
 				'after' => '[/center]',
-				'description' => $txt['center']
+				'description' => $txt['center'],
+				'fa-icon' => 'fa-align-center',
 			),
 			array(
 				'image' => 'right',
 				'code' => 'right',
 				'before' => '[right]',
 				'after' => '[/right]',
-				'description' => $txt['right_align']
+				'description' => $txt['right_align'],
+				'fa-icon' => 'fa-align-right',
 			),
 		);
 		$context['bbc_tags'][] = array(
@@ -1578,30 +1586,42 @@ function create_control_richedit($editorOptions)
 				'code' => 'img',
 				'before' => '[img]',
 				'after' => '[/img]',
-				'description' => $txt['image']
+				'description' => $txt['image'],
+				'fa-icon' => 'fa-image',
 			),
 			array(
 				'image' => 'audio',
 				'code' => 'audio',
 				'before' => '[audio]',
 				'after' => '[/audio]',
-				'description' => $txt['audio']
+				'description' => $txt['audio'],
+				'fa-icon' => 'fa-music',
 			),
 			array(
 				'image' => 'video',
 				'code' => 'video',
 				'before' => '[video]',
 				'after' => '[/video]',
-				'description' => $txt['video']
+				'description' => $txt['video'],
+				'fa-icon' => 'fa-film',
+			),
+			array(
+				'image' => 'youtube',
+				'code' => 'youtube',
+				'before' => '[youtube]',
+				'after' => '[/youtube]',
+				'description' => 'Insert YouTube video',
+				'fa-icon' => 'fa-youtube-play',
 			),
 			array(
 				'image' => 'url',
 				'code' => 'url',
 				'before' => '[url]',
 				'after' => '[/url]',
-				'description' => $txt['hyperlink']
+				'description' => $txt['hyperlink'],
+				'fa-icon' => 'fa-external-link',
 			),
-			array(
+			/*array(
 				'image' => 'email',
 				'code' => 'email',
 				'before' => '[email]',
@@ -1614,28 +1634,30 @@ function create_control_richedit($editorOptions)
 				'before' => '[ftp]',
 				'after' => '[/ftp]',
 				'description' => $txt['ftp']
-			),
+			),*/
 			array(),
 			array(
 				'image' => 'glow',
 				'code' => 'glow',
 				'before' => '[glow=red,2,300]',
 				'after' => '[/glow]',
-				'description' => $txt['glow']
+				'description' => $txt['glow'],
+				'fa-icon' => 'fa-lightbulb-o',
 			),
-			array(
+			/*array(
 				'image' => 'shadow',
 				'code' => 'shadow',
 				'before' => '[shadow=red,left]',
 				'after' => '[/shadow]',
 				'description' => $txt['shadow']
-			),
+			),*/
 			array(
 				'image' => 'move',
 				'code' => 'move',
 				'before' => '[move]',
 				'after' => '[/move]',
-				'description' => $txt['marquee']
+				'description' => $txt['marquee'],
+				'fa-icon' => 'fa-arrow-circle-left',
 			),
 			array(),
 			array(
@@ -1643,50 +1665,55 @@ function create_control_richedit($editorOptions)
 				'code' => 'sup',
 				'before' => '[sup]',
 				'after' => '[/sup]',
-				'description' => $txt['superscript']
+				'description' => $txt['superscript'],
+				'fa-icon' => 'fa-superscript',
 			),
 			array(
 				'image' => 'sub',
 				'code' => 'sub',
 				'before' => '[sub]',
 				'after' => '[/sub]',
-				'description' => $txt['subscript']
+				'description' => $txt['subscript'],
+				'fa-icon' => 'fa-subscript',
 			),
-			array(
+			/*array(
 				'image' => 'tele',
 				'code' => 'tt',
 				'before' => '[tt]',
 				'after' => '[/tt]',
 				'description' => $txt['teletype']
-			),
-			array(
+			),*/
+			/*array(
 				'image' => 'abbr',
 				'code' => 'abbr',
 				'before' => '[abbr=""]',
 				'after' => '[/abbr]',
 				'description' => $txt['abbr']
-			),
+			),*/
 			array(),
 			array(
 				'image' => 'table',
 				'code' => 'table',
 				'before' => '[table]\n[tr]\n[td]',
 				'after' => '[/td]\n[/tr]\n[/table]',
-				'description' => $txt['table']
+				'description' => $txt['table'],
+				'fa-icon' => 'fa-table',
 			),
 			array(
 				'image' => 'code',
 				'code' => 'code',
 				'before' => '[code]',
 				'after' => '[/code]',
-				'description' => $txt['bbc_code']
+				'description' => $txt['bbc_code'],
+				'fa-icon' => 'fa-hashtag',
 			),
 			array(
 				'image' => 'quote',
 				'code' => 'quote',
 				'before' => '[quote]',
 				'after' => '[/quote]',
-				'description' => $txt['bbc_quote']
+				'description' => $txt['bbc_quote'],
+				'fa-icon' => 'fa-quote-left',
 			),
 			array(),
 			array(
@@ -1694,20 +1721,23 @@ function create_control_richedit($editorOptions)
 				'code' => 'list',
 				'before' => '[list]\n[li]',
 				'after' => '[/li]\n[li][/li]\n[/list]',
-				'description' => $txt['list_unordered']
+				'description' => $txt['list_unordered'],
+				'fa-icon' => 'fa-list-ul',
 			),
 			array(
 				'image' => 'orderlist',
 				'code' => 'orderlist',
 				'before' => '[list type=decimal]\n[li]',
 				'after' => '[/li]\n[li][/li]\n[/list]',
-				'description' => $txt['list_ordered']
+				'description' => $txt['list_ordered'],
+				'fa-icon' => 'fa-list-ol',
 			),
 			array(
 				'image' => 'hr',
 				'code' => 'hr',
 				'before' => '[hr]',
-				'description' => $txt['horizontal_rule']
+				'description' => $txt['horizontal_rule'],
+				'fa-icon' => 'fa-minus',
 			),
 		);
 
@@ -1723,12 +1753,14 @@ function create_control_richedit($editorOptions)
 				'code' => 'unformat',
 				'before' => '',
 				'description' => $txt['unformat_text'],
+				'fa-icon' => 'fa-eraser',
 			);
 			$context['bbc_tags'][count($context['bbc_tags']) - 1][] = array(
 				'image' => 'toggle',
 				'code' => 'toggle',
 				'before' => '',
 				'description' => $txt['toggle_view'],
+				'fa-icon' => 'fa-eye',
 			);
 		}
 

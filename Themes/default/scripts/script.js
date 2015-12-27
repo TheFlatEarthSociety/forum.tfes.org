@@ -806,6 +806,23 @@ smc_Toggle.prototype.init = function ()
 			}
 		}
 	}
+
+	// Initialize other triggers.
+	if ('aSwapTriggers' in this.opt)
+	{
+		for (var i = 0, n = this.opt.aSwapTriggers.length; i < n; i++)
+		{
+			var oTrigger = document.getElementById(this.opt.aSwapTriggers[i].sId);
+			if (typeof(oTrigger) == 'object' && oTrigger != null)
+			{
+				oTrigger.instanceRef = this;
+				oTrigger.onclick = function () {
+					this.instanceRef.toggle();
+					this.blur();
+				}
+			}
+		}
+	}
 }
 
 // Collapse or expand the section.

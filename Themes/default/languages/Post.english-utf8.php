@@ -28,7 +28,7 @@ $txt['list'] = 'Insert List';
 $txt['list_unordered'] = 'Insert Unordered List';
 $txt['list_ordered'] = 'Insert Ordered List';
 
-$txt['change_color'] = 'Change Color';
+$txt['change_color'] = 'Color';
 $txt['black'] = 'Black';
 $txt['red'] = 'Red';
 $txt['yellow'] = 'Yellow';

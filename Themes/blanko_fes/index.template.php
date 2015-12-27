@@ -388,42 +388,6 @@ function template_body_above()
 			});
 		// ]]></script>';
 
-	// Add second navbar for mobile.
-
-		echo'
-	<div class="action-bar-mobile">
-					<div class="search-list">
-						<div class="search-input-wrapper">
-							<div class="search-input">
-								<form action="', $scripturl, '?action=search2" method="post" accept-charset="', $context['character_set'], '">';
-									// Search within current topic?
-									if (!empty($context['current_topic']))
-									{
-										echo '
-											<input type="hidden" name="topic" value="', $context['current_topic'], '" />';
-										$placeholder = "Search in thread...";
-									}
-									// If we're on a certain board, limit it to this board ;).
-									elseif (!empty($context['current_board']))
-									{
-										echo '
-											<input type="hidden" name="brd[', $context['current_board'], ']" value="', $context['current_board'], '" />';
-										$placeholder = "Search in board...";
-									}
-									else
-										$placeholder = "Search...";
-									echo '
-									<input name="search" type="search" id="mobile_quicksearch" class="form-control input-sm inline-block" placeholder="' . $placeholder . '">
-									<div class="input-icon text-normal">
-										<i class="fa fa-search mobile"></i>
-									</div>';
-									echo '
-								</form>
-							</div>
-						</div>
-					</div>
-	</div>';
-
 		echo'
 	<header id="header">
 		<div class="container">';
@@ -489,6 +453,38 @@ function template_body_below()
 
 	echo '
 	</div></footer>
+	<div class="action-bar-mobile">
+					<div class="search-list">
+						<div class="search-input-wrapper">
+							<div class="search-input">
+								<form action="', $scripturl, '?action=search2" method="post" accept-charset="', $context['character_set'], '">';
+									// Search within current topic?
+									if (!empty($context['current_topic']))
+									{
+										echo '
+											<input type="hidden" name="topic" value="', $context['current_topic'], '" />';
+										$placeholder = "Search in thread...";
+									}
+									// If we're on a certain board, limit it to this board ;).
+									elseif (!empty($context['current_board']))
+									{
+										echo '
+											<input type="hidden" name="brd[', $context['current_board'], ']" value="', $context['current_board'], '" />';
+										$placeholder = "Search in board...";
+									}
+									else
+										$placeholder = "Search...";
+									echo '
+									<input name="search" type="search" id="mobile_quicksearch" class="form-control input-sm inline-block" placeholder="' . $placeholder . '">
+									<div class="input-icon text-normal">
+										<i class="fa fa-search mobile"></i>
+									</div>';
+									echo '
+								</form>
+							</div>
+						</div>
+					</div>
+	</div>
 	<a href="#" class="scroll-to-top hidden-print"><i class="fa fa-chevron-up fa-lg"></i></a>
 	<a href="' , $scripturl , '" class="link-to-home"><i class="fa fa-home"></i></a>
 </div>';

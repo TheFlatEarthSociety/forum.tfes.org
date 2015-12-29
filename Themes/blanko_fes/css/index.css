@@ -1809,11 +1809,6 @@ select.qaction, input.qaction
     padding: 0;
 }
 
-#mlist table tbody td.windowbg2
-{
-    text-align: center;
-}
-
 /* Styles for a typical table.
 ------------------------------------------------------- */
 table.table_list
@@ -4914,6 +4909,21 @@ span.hidelink
     #mlist.tborder.topic_table {
         margin-top: 20px;
     }
+}
+
+#mlist td
+{
+    border-radius: 0;
+}
+
+#mlist table tbody td.windowbg2
+{
+    text-align: center;
+}
+
+#memberlist div.pagesection
+{
+    margin: 10px 0;
 }
 
 /* Styles for the basic search section.

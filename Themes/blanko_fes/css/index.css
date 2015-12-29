@@ -691,9 +691,19 @@ a.moderation_link, a.moderation_link:visited
 }
 
 /* a descriptive style */
-.description, .description_board, .plainbox
+.description, .plainbox
 {
     padding: 0.5em 1em;
+    font-size: 0.9em;
+    line-height: 1.4em;
+    border: none;
+    background: none;
+    margin: 0.2em 1px 1em 1px;
+}
+
+#main_admsection .description, .description_board
+{
+    padding: 10px 15px;
     font-size: 0.9em;
     line-height: 1.4em;
     border: none;
@@ -703,7 +713,9 @@ a.moderation_link, a.moderation_link:visited
 
 .description_board
 {
-    margin: 1em 1px 0 1px;
+    margin: 0 0 20px 0;
+    border-radius: 4px;
+    border-bottom: 2px solid #d3d3d3;
 }
 
 /* an informative style */

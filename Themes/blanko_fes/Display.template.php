@@ -632,6 +632,10 @@ function template_main()
 					echo '
 									<a href="', $scripturl, '?action=reporttm;topic=', $context['current_topic'], '.', $message['counter'], ';msg=', $message['id'], '" class="reportlink_mobile">', $txt['report_to_mod'], '</a>';
 
+				if ($message['can_modify'] && !empty($options['display_quick_modify']))
+					echo '
+									<a class="fa fa-edit" id="quickmodify_button_mobile" title="Quick modify" onclick="oQuickModify.modifyMsg(\'', $message['id'], '\')" /></a>';
+											
 				echo '
 								</div>
 							</div>

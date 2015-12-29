@@ -2708,7 +2708,7 @@ div.postarea .btn-group .dropdown-toggle:nth-child(3)
     background-color: #4c798e;
     color: #fff;
     height: 30px;
-    padding: 9px 5px 0 5px;
+    padding: 9px 8px 0 10px;
     border-radius: 4px 0 0 4px;
 }
 
@@ -2717,14 +2717,25 @@ div.postarea .btn-group .dropdown-toggle:nth-child(3)
     text-decoration: none;
 }
 
+@media (min-width: 992px) {
+    #quickmodify_button_mobile {
+        display: none;
+    }
+}
+
 @media (max-width: 991px) {
     #quickmodify_button {
-        padding: 0 10px 0 0;
+        display: none;
+    }
+    #quickmodify_button_mobile {
+        position: absolute;
+        left: 15px;
+        bottom: -10px;
         background: none;
         font-size: 18px;
         color: #888;
     }
-    #quickmodify_button:hover {
+    #quickmodify_button_mobile:hover {
         background: none;
         color: #000;
     }
@@ -2788,7 +2799,7 @@ div.postarea .btn-group .dropdown-toggle:nth-child(3)
     }
     a.reportlink_mobile {
         position: absolute;
-        bottom: 5px;
+        bottom: -10px;
         right: 20px;
         color: #aaa;
         font-family: 'Oswald', sans-serif;
@@ -2804,8 +2815,8 @@ div.postarea .btn-group .dropdown-toggle:nth-child(3)
         height: 42px;
         border-radius: 4px !important;
     }
-    .signature {
-        margin-bottom: 10px !important;
+    div.body_message .body_content {
+        margin-bottom: 15px !important;
     }
 }
 
@@ -2871,11 +2882,11 @@ div.postarea .btn-group .dropdown-toggle:nth-child(3)
         position: absolute;
         top: 0px;
         right: 30px;
-        width: 150px;
+        min-width: 150px;
         background-color: #fff;
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
         border-radius: 4px;
-        padding: 5px 15px 5px 5px;
+        padding: 10px;
     }
     a.reportlink_mobile {
         display: none;

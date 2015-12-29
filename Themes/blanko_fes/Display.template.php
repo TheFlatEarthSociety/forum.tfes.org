@@ -437,7 +437,7 @@ function template_main()
 										</div>';
 										
 				// Can the user modify the contents of this post?  Show the modify inline image.
-				if ($message['can_modify'])
+				if ($message['can_modify'] && !empty($options['display_quick_modify']))
 					echo '
 											<a class="fa fa-edit" id="quickmodify_button" title="Quick modify" onclick="oQuickModify.modifyMsg(\'', $message['id'], '\')" /></a>';
 
@@ -528,10 +528,10 @@ function template_main()
 										<div class="inner" id="msg_', $message['id'], '"', '>', $message['body'], '</div>
 									</div>';
 
-				// Can the user modify the contents of this post?  Show the modify inline image.
+				/* // Can the user modify the contents of this post?  Show the modify inline image.
 				if ($message['can_modify'] && !empty($options['display_quick_modify']))
 					echo '
-									<img src="', $settings['images_url'], '/icons/modify_inline.gif" alt="', $txt['modify_msg'], '" title="', $txt['modify_msg'], '" class="modifybutton" id="modify_button_', $message['id'], '" style="cursor: ', ($context['browser']['is_ie5'] || $context['browser']['is_ie5.5'] ? 'hand' : 'pointer'), '; display: none;" onclick="oQuickModify.modifyMsg(\'', $message['id'], '\')" />';
+									<img src="', $settings['images_url'], '/icons/modify_inline.gif" alt="', $txt['modify_msg'], '" title="', $txt['modify_msg'], '" class="modifybutton" id="modify_button_', $message['id'], '" style="cursor: ', ($context['browser']['is_ie5'] || $context['browser']['is_ie5.5'] ? 'hand' : 'pointer'), '; display: none;" onclick="oQuickModify.modifyMsg(\'', $message['id'], '\')" />'; */
 
 				// Assuming there are attachments...
 				if (!empty($message['attachment']))

@@ -2696,21 +2696,25 @@ div.postarea .btn-group .dropdown-toggle
     border-radius: 4px;
 }
 
+div.postarea .btn-group .dropdown-toggle:nth-child(3)
+{
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
 #quickmodify_button
 {
     float: left;
-    background-color: #ddd;
-    color: #888;
+    background-color: #4c798e;
+    color: #fff;
     height: 30px;
-    margin-right: 5px;
     padding: 9px 5px 0 5px;
-    border-radius: 4px;
+    border-radius: 4px 0 0 4px;
 }
 
 #quickmodify_button:hover
 {
     text-decoration: none;
-    background-color: #ccc;
 }
 
 @media (max-width: 991px) {
@@ -2718,6 +2722,7 @@ div.postarea .btn-group .dropdown-toggle
         padding: 0 10px 0 0;
         background: none;
         font-size: 18px;
+        color: #888;
     }
     #quickmodify_button:hover {
         background: none;
@@ -2797,6 +2802,7 @@ div.postarea .btn-group .dropdown-toggle
     }
     .btn-primary {
         height: 42px;
+        border-radius: 4px !important;
     }
     .signature {
         margin-bottom: 10px !important;
@@ -2863,12 +2869,13 @@ div.postarea .btn-group .dropdown-toggle
     }
     div.reportlinks_list {
         position: absolute;
-        bottom: 4px;
-        right: 49px;
-        white-space: nowrap;
-        background-color: #fcfcfc;
+        top: 0px;
+        right: 30px;
+        width: 150px;
+        background-color: #fff;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
         border-radius: 4px;
-        padding: 5px;
+        padding: 5px 15px 5px 5px;
     }
     a.reportlink_mobile {
         display: none;

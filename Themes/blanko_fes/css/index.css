@@ -2693,7 +2693,12 @@ div.postarea .btn-group, div.postarea .btn-group-vertical
 
 .modifybutton
 {
-    display: none;
+    clear: right;
+    float: right;
+    margin: 6px 20px 10px 0;
+    text-align: right;
+    font: bold 0.85em arial, sans-serif;
+    color: #334466;
 }
 
 @media (max-width: 991px) {

@@ -2691,6 +2691,11 @@ div.postarea .btn-group, div.postarea .btn-group-vertical
     margin: 0;
 }
 
+.modifybutton
+{
+    display: none;
+}
+
 @media (max-width: 991px) {
     .poster ul
     {

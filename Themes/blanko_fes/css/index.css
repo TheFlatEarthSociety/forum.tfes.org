@@ -985,28 +985,33 @@ table.table_list a.collapse
 }
 
 /* The half-round header bars for some tables. */
-.table_grid tr.catbg
+#messageindex .table_grid tr.catbg,
+#recent .table_grid tr.catbg
 {
     background: none;
 }
 
-.table_grid tr.catbg th
+#messageindex .table_grid tr.catbg th,
+#recent .table_grid tr.catbg th
 {
     background: #6590a5;
 }
 
-.table_grid tr.catbg th.first_th
+#messageindex .table_grid tr.catbg th.first_th,
+#recent .table_grid tr.catbg th.first_th
 {
     border-radius: 4px 0 0 4px
 }
 
-.table_grid tr.catbg th.last_th
+#messageindex .table_grid tr.catbg th.last_th,
+#recent .table_grid tr.catbg th.last_th
 {
     border-radius: 0 4px 4px 0;
 }
 
 @media (max-width: 767px) {
-    .table_grid tr.catbg th.lefttext {
+    #messageindex .table_grid tr.catbg th.lefttext,
+    #recent .table_grid tr.catbg th.lefttext {
         border-radius: 0 4px 4px 0;
     }
 }

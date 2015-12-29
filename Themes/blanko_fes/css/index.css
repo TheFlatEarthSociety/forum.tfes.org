@@ -2598,19 +2598,20 @@ span.arrow-left
     font-weight: 600;
 }
 
-.poster li.title, .poster li.blurb
-{
-    font-family: 'Open Sans', sans-serif !important;
-    line-height: 13px !important;
-    word-wrap: break-word;
-}
-
 li.title, li.postcount, li.blurb, li.warning, .poster ul ul
 {
     border-bottom: 1px solid #d3d3d3;
     border-top: none;
     background-color: #fcfcfc;
     padding: 5px;
+}
+
+.poster li.title, .poster li.blurb
+{
+    font-family: 'Open Sans', sans-serif !important;
+    line-height: 13px !important;
+    word-wrap: break-word;
+    padding: 5px 20px;
 }
 
 li.profile
@@ -3799,7 +3800,7 @@ tr.windowbg td, tr.windowbg2 td, tr.approvebg td, tr.highlight2 td
 {
     font-size: 0.85em;
     line-height: 1.3em;
-    padding: 7px 7px 4px 4px;
+    padding: 0 7px 0 4px;
 }
 
 .topic_table td.lastpost a:nth-child(1)
@@ -5212,7 +5213,7 @@ footer a
 {
     font-family: 'Oswald', sans-serif;
     font-size: 18px;
-    line-height: 20px;
+    line-height: 23px;
     font-weight: 300;
     color: #666;
     margin-left: 60px;

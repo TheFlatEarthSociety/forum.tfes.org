@@ -425,7 +425,8 @@ function template_main()
 					// Can the user modify the contents of this post?
 					if ($message['can_modify'])
 						echo '
-												<li class="modify_button"><a href="', $scripturl, '?action=post;msg=', $message['id'], ';topic=', $context['current_topic'], '.', $context['start'], '">', $txt['modify'], '</a></li>';
+												<li class="modify_button"><a href="', $scripturl, '?action=post;msg=', $message['id'], ';topic=', $context['current_topic'], '.', $context['start'], '">', $txt['modify'], '</a></li>
+												<li class="quickmodify_button" onclick="oQuickModify.modifyMsg(\'', $message['id'], '\')" /><a>Quick Modify</a></li>';
 
 					// How about... even... remove it entirely?!
 					if ($message['can_remove'])
@@ -489,9 +490,9 @@ function template_main()
 									</div>';
 
 				// Can the user modify the contents of this post?  Show the modify inline image.
-				if ($message['can_modify'])
+				/* if ($message['can_modify'])
 					echo '
-									<img src="', $settings['images_url'], '/icons/modify_inline.gif" alt="', $txt['modify_msg'], '" title="', $txt['modify_msg'], '" class="modifybutton" id="modify_button_', $message['id'], '" style="cursor: ', ($context['browser']['is_ie5'] || $context['browser']['is_ie5.5'] ? 'hand' : 'pointer'), '; display: none;" onclick="oQuickModify.modifyMsg(\'', $message['id'], '\')" />';
+									<img src="', $settings['images_url'], '/icons/modify_inline.gif" alt="', $txt['modify_msg'], '" title="', $txt['modify_msg'], '" class="modifybutton" id="modify_button_', $message['id'], '" style="cursor: ', ($context['browser']['is_ie5'] || $context['browser']['is_ie5.5'] ? 'hand' : 'pointer'), '; display: none;" onclick="oQuickModify.modifyMsg(\'', $message['id'], '\')" />';*/
 
 				// Assuming there are attachments...
 				if (!empty($message['attachment']))

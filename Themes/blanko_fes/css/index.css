@@ -2598,47 +2598,70 @@ span.arrow-left
     font-weight: 600;
 }
 
-li.title, li.postcount, li.blurb, li.warning, .poster ul ul
+.poster li.title, .poster li.postcount,
+.poster li.blurb, .poster li.profile,
+.poster ul ul, .poster li.warning
+{
+    background-color: #fcfcfc;
+}
+
+.poster li.title, .poster li.postcount
 {
     border-bottom: 1px solid #d3d3d3;
-    border-top: none;
-    background-color: #fcfcfc;
     padding: 5px;
 }
 
-.poster li.title, .poster li.blurb
+.poster li.title
 {
-    font-family: 'Open Sans', sans-serif !important;
-    line-height: 13px !important;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 13px;
     word-wrap: break-word;
-    padding: 5px 20px;
+    padding: 10px 20px;
 }
 
-li.profile
+.poster li.blurb
 {
-    background-color #fcfcfc;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 13px;
+    word-wrap: break-word;
+    padding: 10px 20px 0 20px;
+    margin-bottom: -5px;
 }
 
-li.im_icons
+.poster li.profile
+{
+    display: flex;
+    justify-content: center;
+}
+
+.poster ul ul
+{
+    border: 1px solid #d3d3d3;
+    width: 125px;
+    margin: 15px 0 10px 0;
+    padding: 5px 0;
+    border-radius: 4px !important;
+}
+
+.poster li.im_icons
 {
     display: none;
 }
 
-li.stars
+.poster li.stars
 {
     background: none;
     height: 2px;
-    padding: 0 !important;
+    padding: 0;
     margin: 0;
     position: absolute;
     width: 100%;
-    margin-top: -10px !important;
+    margin-top: -10px;
 }
 
 .poster ul li:last-child, .poster ul li:last-child ul
 {
     border-radius: 0;
-    border-bottom: none;
 }
 
 .poster img.img-circle, .avatar
@@ -2705,7 +2728,7 @@ div.postarea .btn-group .dropdown-toggle:nth-child(3)
 #quickmodify_button
 {
     float: left;
-    background-color: #4c798e;
+    background-color: #769fb3;
     color: #fff;
     height: 30px;
     padding: 9px 8px 0 10px;
@@ -2715,6 +2738,7 @@ div.postarea .btn-group .dropdown-toggle:nth-child(3)
 #quickmodify_button:hover
 {
     text-decoration: none;
+    background-color: #6590a5;
 }
 
 @media (min-width: 992px) {
@@ -2737,6 +2761,7 @@ div.postarea .btn-group .dropdown-toggle:nth-child(3)
     }
     #quickmodify_button_mobile:hover {
         background: none;
+        text-decoration: none;
         color: #000;
     }
     .poster ul {
@@ -3070,7 +3095,7 @@ div.smalltext.reportlinks
 {
     font-family: 'Oswald', sans-serif;
     font-weight: 300;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 div.smalltext.reportlinks a

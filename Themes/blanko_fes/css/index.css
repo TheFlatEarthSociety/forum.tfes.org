@@ -697,8 +697,8 @@ a.moderation_link, a.moderation_link:visited
     font-size: 0.9em;
     line-height: 1.4em;
     border: none;
-    background: none;
-    margin: 0.2em 1px 1em 1px;
+    background: #fcfcfc;
+    margin: 4px 0;
 }
 
 .description_board
@@ -3791,7 +3791,10 @@ tr.titlebg td
 
 .left_admmenu
 {
-    margin-bottom: 0.5em;
+    margin: 4px 0 8px 0;
+    background-color: #fcfcfc;
+    border-radius: 4px;
+    padding: 5px;
 }
 
 #main_admsection
@@ -4645,6 +4648,7 @@ tr.windowbg2 td.stats_day
 {
     margin-left: 0;
     margin-right: 0;
+    margin-top: 0;
 }
 
 #personal_messages h3 span#author, #personal_messages h3 span#topic_title

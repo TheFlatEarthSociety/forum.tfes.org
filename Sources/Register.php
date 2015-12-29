@@ -454,6 +454,10 @@ function Register2($verifiedOpenID = false)
 	if (!isset($regOptions['theme_vars']['display_quick_reply']))
 		$regOptions['theme_vars']['display_quick_reply'] = 1;
 
+	// If Quick Modify hasn't been set then set it to be shown.
+	if (!isset($regOptions['theme_vars']['display_quick_modify']))
+		$regOptions['theme_vars']['display_quick_modify'] = 1;
+
 	// Check whether we have fields that simply MUST be displayed?
 	$request = $smcFunc['db_query']('', '
 		SELECT col_name, field_name, field_type, field_length, mask, show_reg

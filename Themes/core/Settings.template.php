@@ -140,6 +140,15 @@ function template_options()
 			'default' => true,
 		),
 		array(
+			'id' => 'display_quick_modify',
+			'label' => $txt['display_quick_modify'],
+			'options' => array(
+				0 => $txt['display_quick_modify1'],
+				1 => $txt['display_quick_modify2'],
+			),
+			'default' => true,
+		),
+		array(
 			'id' => 'display_quick_mod',
 			'label' => $txt['display_quick_mod'],
 			'options' => array(

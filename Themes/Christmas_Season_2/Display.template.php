@@ -492,7 +492,7 @@ function template_main()
 		// Show the post itself, finally!
 		echo '
 							<hr width="100%" size="1" class="hrcolor" />
-							<div class="post" id="msg_' . $message['id'] . '">', $message['body'], '</div>', $message['can_modify'] ? '
+							<div class="post" id="msg_' . $message['id'] . '">', $message['body'], '</div>', ($message['can_modify'] && !empty($options['display_quick_modify'])) ? '
 							<img src="' . $settings['images_url'] . '/icons/modify_inline.gif" alt="" title="' . $txt['modify_msg'] . '" align="right" id="modify_button_' . $message['id'] . '" style="cursor: pointer;" onclick="oQuickModify.modifyMsg(\'' . $message['id'] . '\', \'' . $context['session_id'] . '\', \'' . $context['session_var'] . '\')" />' : '', '
 						</td>
 					</tr>';

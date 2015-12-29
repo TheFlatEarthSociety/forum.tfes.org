@@ -464,7 +464,7 @@ function template_main()
 						</div>';
 		echo '
 						<div class="inner" id="msg_', $message['id'], '"', '>', $message['body'], '</div>
-					</div>', $message['can_modify'] ? '
+					</div>', ($message['can_modify'] && !empty($options['display_quick_modify'])) ? '
 					<img src="' . $settings['images_url'] . '/icons/modify_inline.gif" alt="'. $txt['modify_msg']. '" title="' . $txt['modify_msg'] . '" class="modifybutton" id="modify_button_' . $message['id'] . '" style="cursor: ' . ($context['browser']['is_ie5'] || $context['browser']['is_ie5.5'] ? 'hand' : 'pointer') . '; display: none;" onclick="oQuickModify.modifyMsg(\'' . $message['id'] . '\')" />' : '';
 
 		// Assuming there are attachments...

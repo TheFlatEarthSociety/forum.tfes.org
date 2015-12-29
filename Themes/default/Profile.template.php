@@ -1575,6 +1575,13 @@ function template_profile_theme_settings()
 								</select>
 							</li>
 							<li>
+								<label for="display_quick_modify">', $txt['display_quick_modify'], '</label>
+								<select name="default_options[display_quick_modify]" id="display_quick_modify">
+									<option value="0"', empty($context['member']['options']['display_quick_modify']) ? ' selected="selected"' : '', '>', $txt['display_quick_modify1'], '</option>
+									<option value="1"', !empty($context['member']['options']['display_quick_modify']) && $context['member']['options']['display_quick_modify'] == 1 ? ' selected="selected"' : '', '>', $txt['display_quick_modify2'], '</option>
+								</select>
+							</li>
+							<li>
 								<label for="display_quick_mod">', $txt['display_quick_mod'], '</label>
 								<select name="default_options[display_quick_mod]" id="display_quick_mod">
 									<option value="0"', empty($context['member']['options']['display_quick_mod']) ? ' selected="selected"' : '', '>', $txt['display_quick_mod_none'], '</option>

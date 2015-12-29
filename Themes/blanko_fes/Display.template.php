@@ -398,12 +398,52 @@ function template_main()
 						<div class="col-md-10">
 							<div class="body_content">
 								<span class="arrow-left"></span>
-								<div class="postarea">';
+								<div class="postarea">
+									<div class="btn-group navbar-right">
+										<div class="smalltext reportlinks">
+											<div class="reportlinks_list">';
+
+				// Maybe they want to report this post to the moderator(s)?
+				if ($context['can_report_moderator'])
+					echo '
+											<a href="', $scripturl, '?action=reporttm;topic=', $context['current_topic'], '.', $message['counter'], ';msg=', $message['id'], '">', $txt['report_to_mod'], '</a> &nbsp;';
+
+				// Can we issue a warning because of this post?  Remember, we can't give guests warnings.
+				if ($context['can_issue_warning'] && !$message['is_message_author'] && !$message['member']['is_guest'])
+					echo '
+											<a href="', $scripturl, '?action=profile;area=issuewarning;u=', $message['member']['id'], ';msg=', $message['id'], '"><img src="', $settings['images_url'], '/warn.gif" alt="', $txt['issue_warning_post'], '" title="', $txt['issue_warning_post'], '" /></a>';
+				echo '
+											<img src="', $settings['images_url'], '/ip.gif" alt="" />';
+
+				// Show the IP to this user for this post - because you can moderate?
+				if ($context['can_moderate_forum'] && !empty($message['member']['ip']))
+					echo '
+											<a href="', $scripturl, '?action=', !empty($message['member']['is_guest']) ? 'trackip' : 'profile;area=tracking;sa=ip;u=' . $message['member']['id'], ';searchip=', $message['member']['ip'], '">', $message['member']['ip'], '</a> <a href="', $scripturl, '?action=helpadmin;help=see_admin_ip" onclick="return reqWin(this.href);" class="help">(?)</a>';
+				// Or, should we show it because this is you?
+				elseif ($message['can_see_ip'])
+					echo '
+											<a href="', $scripturl, '?action=helpadmin;help=see_member_ip" onclick="return reqWin(this.href);" class="help">', $message['member']['ip'], '</a>';
+				// Okay, are you at least logged in?  Then we can show something about why IPs are logged...
+				elseif (!$context['user']['is_guest'])
+					echo '
+											<a href="', $scripturl, '?action=helpadmin;help=see_member_ip" onclick="return reqWin(this.href);" class="help">', $txt['logged'], '</a>';
+				// Otherwise, you see NOTHING!
+				else
+					echo '
+											', $txt['logged'];
+
+				echo '
+											</div>
+										</div>';
+										
+				// Can the user modify the contents of this post?  Show the modify inline image.
+				if ($message['can_modify'])
+					echo '
+											<a class="fa fa-edit" id="quickmodify_button" title="Quick modify" onclick="oQuickModify.modifyMsg(\'', $message['id'], '\')" /></a>';
 
 				// If this is the first post, (#0) just say when it was posted - otherwise give the reply #.
 				if ($message['can_approve'] || $context['can_reply'] || $message['can_modify'] || $message['can_remove'] || $context['can_split'] || $context['can_restore_msg'])
 					echo '
-										<div class="btn-group navbar-right">
 											<button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown">Actions <span class="caret"></span></button>
 											<ul class="dropdown-menu" role="menu">';
 
@@ -557,39 +597,6 @@ function template_main()
 										&#171; <em>', $txt['last_edit'], ': ', $message['modified']['time'], ' ', $txt['by'], ' ', $message['modified']['name'], '</em> &#187;';
 
 				echo '
-									</div>
-									<div class="smalltext reportlinks">';
-
-				// Maybe they want to report this post to the moderator(s)?
-				if ($context['can_report_moderator'])
-					echo '
-										<a href="', $scripturl, '?action=reporttm;topic=', $context['current_topic'], '.', $message['counter'], ';msg=', $message['id'], '">', $txt['report_to_mod'], '</a> &nbsp;';
-
-				// Can we issue a warning because of this post?  Remember, we can't give guests warnings.
-				if ($context['can_issue_warning'] && !$message['is_message_author'] && !$message['member']['is_guest'])
-					echo '
-										<a href="', $scripturl, '?action=profile;area=issuewarning;u=', $message['member']['id'], ';msg=', $message['id'], '"><img src="', $settings['images_url'], '/warn.gif" alt="', $txt['issue_warning_post'], '" title="', $txt['issue_warning_post'], '" /></a>';
-				echo '
-										<img src="', $settings['images_url'], '/ip.gif" alt="" />';
-
-				// Show the IP to this user for this post - because you can moderate?
-				if ($context['can_moderate_forum'] && !empty($message['member']['ip']))
-					echo '
-										<a href="', $scripturl, '?action=', !empty($message['member']['is_guest']) ? 'trackip' : 'profile;area=tracking;sa=ip;u=' . $message['member']['id'], ';searchip=', $message['member']['ip'], '">', $message['member']['ip'], '</a> <a href="', $scripturl, '?action=helpadmin;help=see_admin_ip" onclick="return reqWin(this.href);" class="help">(?)</a>';
-				// Or, should we show it because this is you?
-				elseif ($message['can_see_ip'])
-					echo '
-										<a href="', $scripturl, '?action=helpadmin;help=see_member_ip" onclick="return reqWin(this.href);" class="help">', $message['member']['ip'], '</a>';
-				// Okay, are you at least logged in?  Then we can show something about why IPs are logged...
-				elseif (!$context['user']['is_guest'])
-					echo '
-										<a href="', $scripturl, '?action=helpadmin;help=see_member_ip" onclick="return reqWin(this.href);" class="help">', $txt['logged'], '</a>';
-				// Otherwise, you see NOTHING!
-				else
-					echo '
-										', $txt['logged'];
-
-				echo '
 									</div>';
 
 				// Are there any custom profile fields for above the signature?
@@ -620,6 +627,10 @@ function template_main()
 				if (!empty($message['member']['signature']) && empty($options['show_no_signatures']) && $context['signature_enabled'])
 					echo '
 									<div class="signature" id="msg_', $message['id'], '_signature">', $message['member']['signature'], '</div>';
+									
+				if ($context['can_report_moderator'])
+					echo '
+									<a href="', $scripturl, '?action=reporttm;topic=', $context['current_topic'], '.', $message['counter'], ';msg=', $message['id'], '" class="reportlink_mobile">', $txt['report_to_mod'], '</a>';
 
 				echo '
 								</div>

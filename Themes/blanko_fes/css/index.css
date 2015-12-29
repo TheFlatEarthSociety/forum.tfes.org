@@ -2691,23 +2691,42 @@ div.postarea .btn-group, div.postarea .btn-group-vertical
     margin: 0;
 }
 
-.modifybutton
+div.postarea .btn-group .dropdown-toggle
 {
-    clear: right;
-    float: right;
-    margin: 6px 20px 10px 0;
-    text-align: right;
-    font: bold 0.85em arial, sans-serif;
-    color: #334466;
+    border-radius: 4px;
+}
+
+#quickmodify_button
+{
+    float: left;
+    background-color: #ddd;
+    color: #888;
+    height: 30px;
+    margin-right: 5px;
+    padding: 9px 5px 0 5px;
+    border-radius: 4px;
+}
+
+#quickmodify_button:hover
+{
+    text-decoration: none;
+    background-color: #ccc;
 }
 
 @media (max-width: 991px) {
-    .poster ul
-    {
+    #quickmodify_button {
+        padding: 0 10px 0 0;
+        background: none;
+        font-size: 18px;
+    }
+    #quickmodify_button:hover {
+        background: none;
+        color: #000;
+    }
+    .poster ul {
         display: none;
     }
-    .buttonlist li span
-    {
+    .buttonlist li span {
         display: none;
     }
 }
@@ -2760,14 +2779,15 @@ div.postarea .btn-group, div.postarea .btn-group-vertical
         font-size: 15px;
     }
     div.smalltext.reportlinks {
-        visibility: hidden;
+        display: none;
     }
-    div.smalltext.reportlinks a:nth-child(1) {
-        visibility: visible;
+    a.reportlink_mobile {
         position: absolute;
         bottom: 5px;
         right: 20px;
         color: #aaa;
+        font-family: 'Oswald', sans-serif;
+        font-size: 13px;
     }
     div.btn-group.navbar-right {
         position: absolute;
@@ -2824,24 +2844,34 @@ div.postarea .btn-group, div.postarea .btn-group-vertical
         font-weight: normal;
         font-size: 18px;
         visibility: visible;
-        position: absolute;
         padding-left: 15px;
-        bottom: 1px;
     }
     div.smalltext.reportlinks:hover::after {
         color: #888;
     }
     div.smalltext.reportlinks {
-        position: absolute;
-        top: 22px;
-        right: 90px;
+        float: left;
+        position: relative;
         background-color: #fcfcfc;
         border-radius: 4px;
         visibility: hidden;
         padding: 5px;
+        bottom: 1px;
     }
     div.smalltext.reportlinks:hover {
         visibility: visible;
+    }
+    div.reportlinks_list {
+        position: absolute;
+        bottom: 4px;
+        right: 49px;
+        white-space: nowrap;
+        background-color: #fcfcfc;
+        border-radius: 4px;
+        padding: 5px;
+    }
+    a.reportlink_mobile {
+        display: none;
     }
 }
 
@@ -2980,7 +3010,7 @@ img.smiley
 
 #forumposts .reportlinks
 {
-    margin-right: 1.5em;
+    margin-right: 10px;
     text-align: right;
     clear: right;
 }

@@ -70,7 +70,7 @@ function template_main()
 		}
 
 		echo '
-								<span class="member', $member['is_hidden'] ? ' hidden' : '', '">
+								<span class="member">
 									', $member['is_guest'] ? $member['name'] : '<a href="' . $member['href'] . '" title="' . $txt['profile_of'] . ' ' . $member['name'] . '"' . (empty($member['color']) ? '' : ' style="color: ' . $member['color'] . '"') . '>' . $member['name'] . '</a>', '
 								</span>';
 

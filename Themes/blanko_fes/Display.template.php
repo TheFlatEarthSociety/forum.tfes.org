@@ -484,8 +484,7 @@ function template_main()
 
 					if ($message['can_approve'] || $context['can_reply'] || $message['can_modify'] || $message['can_remove'] || $context['can_split'] || $context['can_restore_msg'])
 						echo '
-											</ul>
-										</div>
+											</ul>	
 										<ul class="reset floatright" style="margin: 5px 15px 0 7px;">';
 
 					// Show a checkbox for quick moderation?
@@ -496,6 +495,7 @@ function template_main()
 										echo'
 										</ul>';
 										echo'
+										</div>
 										<div class="keyinfo">
 											<div class="messageicon">
 												<img src="', $message['icon_url'] . '" alt=""', $message['can_modify'] ? ' id="msg_icon_' . $message['id'] . '"' : '', ' />

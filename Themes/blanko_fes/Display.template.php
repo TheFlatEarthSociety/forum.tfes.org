@@ -446,7 +446,7 @@ function template_main()
 				// If this is the first post, (#0) just say when it was posted - otherwise give the reply #.
 				
 				// If the user can only quote, show a quote button.
-				if ($context['can_quote'] && $message['can_modify'] == 0)
+				if ($context['can_quote'] && !$message['can_modify'])
 					echo '
 											<a href="', $scripturl, '?action=post;quote=', $message['id'], ';topic=', $context['current_topic'], '.', $context['start'], ';last_msg=', $context['topic_last_message'], '" class="quotebutton-solitary">', $txt['quote'], '</a>';
 				

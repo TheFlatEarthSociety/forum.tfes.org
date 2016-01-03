@@ -444,7 +444,14 @@ function template_main()
 											<a class="fa fa-edit" id="quickmodify_button" title="Quick modify" onclick="oQuickModify.modifyMsg(\'', $message['id'], '\')" /></a>';
 
 				// If this is the first post, (#0) just say when it was posted - otherwise give the reply #.
-				if ($message['can_approve'] || $context['can_reply'] || $message['can_modify'] || $message['can_remove'] || $context['can_split'] || $context['can_restore_msg'])
+				
+				// If the user can only quote, show a quote button.
+				if ($context['can_quote'] && $message['can_modify'] == 0)
+					echo '
+											<a href="', $scripturl, '?action=post;quote=', $message['id'], ';topic=', $context['current_topic'], '.', $context['start'], ';last_msg=', $context['topic_last_message'], '" class="quotebutton-solitary">', $txt['quote'], '</a>';
+				
+				// Otherwise, show an action menu button.
+				elseif ($message['can_approve'] || $context['can_reply'] || $message['can_modify'] || $message['can_remove'] || $context['can_split'] || $context['can_restore_msg'])
 					echo '
 											<button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown">Actions <span class="caret"></span></button>
 											<ul class="dropdown-menu" role="menu">';
@@ -455,12 +462,12 @@ function template_main()
 												<li class="approve_button"><a href="', $scripturl, '?action=moderate;area=postmod;sa=approve;topic=', $context['current_topic'], '.', $context['start'], ';msg=', $message['id'], ';', $context['session_var'], '=', $context['session_id'], '">', $txt['approve'], '</a></li>';
 
 					// Can they reply? Have they turned on quick reply?
-					if ($context['can_quote'] && !empty($options['display_quick_reply']))
+					if ($context['can_quote'] && !empty($options['display_quick_reply']) && $message['can_modify'])
 						echo '
 												<li class="quote_button"><a href="', $scripturl, '?action=post;quote=', $message['id'], ';topic=', $context['current_topic'], '.', $context['start'], ';last_msg=', $context['topic_last_message'], '" onclick="return oQuickReply.quote(', $message['id'], ');">', $txt['quote'], '</a></li>';
 
 					// So... quick reply is off, but they *can* reply?
-					elseif ($context['can_quote'])
+					elseif ($context['can_quote'] && $message['can_modify'])
 						echo '
 												<li class="quote_button"><a href="', $scripturl, '?action=post;quote=', $message['id'], ';topic=', $context['current_topic'], '.', $context['start'], ';last_msg=', $context['topic_last_message'], '">', $txt['quote'], '</a></li>';
 

@@ -2824,9 +2824,12 @@ div.postarea .btn-group .dropdown-toggle:nth-child(3)
         right: 10px;
         float: right;
     }
-    .btn-primary {
+    .btn-primary, a.quotebutton-solitary {
         height: 42px;
         border-radius: 4px !important;
+    }
+    a.quotebutton-solitary {
+        padding-top: 12px !important;
     }
     div.body_message .body_content {
         margin-bottom: 15px !important;
@@ -2856,7 +2859,7 @@ div.postarea .btn-group .dropdown-toggle:nth-child(3)
     div.keyinfo .smalltext {
         font-size: 11px;
     }
-    .btn-primary {
+    .btn-primary, a.quotebutton-solitary {
         height: 30px;
     }
     .poster h4 {
@@ -2906,7 +2909,7 @@ div.postarea .btn-group .dropdown-toggle:nth-child(3)
     }
 }
 
-.btn-primary
+.btn-primary, a.quotebutton-solitary
 {
     background-color: #6590a5;
     border: none;
@@ -2914,6 +2917,15 @@ div.postarea .btn-group .dropdown-toggle:nth-child(3)
     border-radius: 4px;
     padding: 0;
     width: 42px;
+}
+
+a.quotebutton-solitary
+{
+    display: inline-block;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    padding-top: 7px;
 }
 
 .btn-primary span
@@ -2926,10 +2938,12 @@ div.postarea .btn-group .dropdown-toggle:nth-child(3)
 .btn-primary.focus,
 .btn-primary:active,
 .btn-primary.active,
-.open > .dropdown-toggle.btn-primary
+.open > .dropdown-toggle.btn-primary,
+a.quotebutton-solitary:hover
 {
     background-color: #4c798e;
     border: none;
+    text-decoration: none;
 }
 
 /* The quick buttons */

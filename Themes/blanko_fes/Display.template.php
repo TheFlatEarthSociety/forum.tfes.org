@@ -259,8 +259,6 @@ function template_main()
 							</h4>
 							<ul class="reset smalltext" id="msg_', $message['id'], '_extra_info">';
 
-
-
 		// Show the member's custom title, if they have one.
 		if (!empty($message['member']['title']))
 			echo '
@@ -269,6 +267,10 @@ function template_main()
 		// Don't show these things for guests.
 		if (!$message['member']['is_guest'])
 		{
+			// Show the member's primary group (like 'Administrator') if they have one.
+			if (isset($message['member']['group']) && $message['member']['group'] != '')
+				echo '
+								<li class="membergroup">', $message['member']['group'], '</li>';
 
 			// Show the stars if they are not in a group.
 				echo '

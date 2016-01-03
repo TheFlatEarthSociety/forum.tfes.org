@@ -486,12 +486,12 @@ function template_main()
 
 					if ($message['can_approve'] || $context['can_reply'] || $message['can_modify'] || $message['can_remove'] || $context['can_split'] || $context['can_restore_msg'])
 						echo '
-											</ul>	
-										<ul class="reset floatright" style="margin: 5px 15px 0 7px;">';
-
+											</ul>';	
+										
 					// Show a checkbox for quick moderation?
 					if (!empty($options['display_quick_mod']) && $options['display_quick_mod'] == 1 && $message['can_remove'])
 						echo '
+										<ul class="reset floatright" style="margin: 5px 15px 0 7px;">
 											<li class="inline_mod_check" style="display: none;" id="in_topic_mod_check_', $message['id'], '"></li>';
 					if ($message['can_approve'] || $context['can_reply'] || $message['can_modify'] || $message['can_remove'] || $context['can_split'] || $context['can_restore_msg'])
 										echo'

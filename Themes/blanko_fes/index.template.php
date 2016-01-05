@@ -631,7 +631,7 @@ function template_button_strip($button_strip, $direction = 'top', $strip_options
 			</ul>
 		</div>
 		<div class="buttonlist-mobile">
-			<button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" data-target="#nav nav-pills-mobile">Actions</button>
+			<button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown">Actions</button>
 			<ul class="dropdown-menu">',
 				implode('', $buttons), '
 			</ul>

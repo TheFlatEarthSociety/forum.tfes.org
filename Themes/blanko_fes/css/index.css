@@ -1530,71 +1530,29 @@ i.fa.fa-subscribe.fa-fw::after
 }
 
 @media (max-width: 767px) {
-    div.floatright:nth-child(2), div.action-button-mobile {
+    div.buttonlist.floatright, div.buttonlist-mobile:nth-child(1) {
         display: none;
     }
-    div.buttonlist.floatright:nth-child(1) {
+    div.buttonlist-mobile {
         position: fixed;
         z-index: 1010;
         bottom: 15px;
         right: 10px;
     }
-    div.buttonlist.floatright:nth-child(1) div.action-button-mobile {
-        display: block;
-        font-family: 'Oswald', sans-serif;
-        background-color: #6590a5;
-        position: relative;
+    div.buttonlist-mobile button {
         width: 55px;
         height: 30px;
-        padding-top: 6px;
-        border-radius: 4px;
-        text-align: center;
-        opacity: 1;
-        transition: all 0.3s ease;
     }
-    div.buttonlist.floatright:nth-child(1) div.action-button-mobile span {
-        font-size: 13px;
-        font-weight: normal;
-        color: #fff;
+    div.buttonlist-mobile .btn:focus {
+        outline: none;
     }
-    div.buttonlist.floatright:nth-child(1) div.action-button-mobile:hover {
-        opacity: 0.5;
+    div.buttonlist-mobile .dropdown-menu {
+        bottom: 100% !important;
+        top: auto !important;
+        margin-bottom: 20px;
     }
-    div.buttonlist.floatright:nth-child(1) .nav-pills {
-        left: 0px;
-        bottom: -100%;
-        width: 100%;
-        z-index: 1020;
-        margin: 0 auto;
-        padding: 5px;
-        position: fixed;
-        overflow: hidden;
-        background-color: #fff;
-        box-shadow: 0px -6px 12px rgba(0, 0, 0, 0.125);
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-justify-content: center;
-        -moz-justify-content: center;
-        justify-content: center;
-        flex-direction: row-reverse;
-        flex-wrap: wrap;
-        transition: all 0.5s ease;
-    }
-    div.buttonlist.floatright:nth-child(1):hover .nav-pills, div.buttonlist.floatright:nth-child(1):focus .nav-pills {
-        bottom: 5px;
-    }
-    div.buttonlist.floatright:nth-child(1) .nav-pills li {
-        min-width: 50%;
-    }
-    div.buttonlist.floatright:nth-child(1) .nav-pills li a {
-        border-radius: 5px !important;
-        margin: 2px;
-    }
-    div.buttonlist.floatright:nth-child(1) .nav-pills li a span {
-        display: inline;
+    div.buttonlist-mobile .dropdown-menu li a {
+        padding: 8px 20px;
     }
     #moderationbuttons_strip {
         position: relative;
@@ -1618,7 +1576,7 @@ i.fa.fa-subscribe.fa-fw::after
 }
 
 @media (min-width: 768px) {
-    div.action-button-mobile {
+    div.buttonlist-mobile {
         display: none;
     }
 }

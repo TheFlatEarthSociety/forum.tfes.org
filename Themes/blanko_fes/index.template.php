@@ -626,10 +626,13 @@ function template_button_strip($button_strip, $direction = 'top', $strip_options
 
 	echo '
 		<div class="buttonlist', !empty($direction) ? ' float' . $direction : '', '"', (empty($buttons) ? ' style="display: none;"' : ''), (!empty($strip_options['id']) ? ' id="' . $strip_options['id'] . '"': ''), '>
-			<div class="action-button-mobile">
-				<span>Actions</span>
-			</div>
 			<ul class="nav nav-pills">',
+				implode('', $buttons), '
+			</ul>
+		</div>
+		<div class="buttonlist-mobile">
+			<button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" data-target="#nav nav-pills-mobile">Actions</button>
+			<ul class="dropdown-menu">',
 				implode('', $buttons), '
 			</ul>
 		</div>';

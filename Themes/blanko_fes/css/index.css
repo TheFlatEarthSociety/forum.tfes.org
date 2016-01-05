@@ -701,7 +701,7 @@ a.moderation_link, a.moderation_link:visited
     margin: 0.2em 1px 1em 1px;
 }
 
-#main_admsection .description, .description_board
+#main_admsection .description, #admin_content .description, .description_board
 {
     padding: 10px 15px;
     font-size: 0.9em;
@@ -2883,7 +2883,7 @@ a.quotebutton-solitary
     color: #fff;
     text-align: center;
     font-size: 12px;
-    padding-top: 7px;
+    padding-top: 6px;
 }
 
 .btn-primary span

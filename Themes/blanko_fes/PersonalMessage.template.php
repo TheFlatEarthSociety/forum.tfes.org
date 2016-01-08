@@ -216,6 +216,10 @@ function template_folder()
 			// Don't show these things for guests.
 			if (!$message['member']['is_guest'])
 			{
+				// Show the member's primary group (like 'Administrator') if they have one.
+				if (isset($message['member']['group']) && $message['member']['group'] != '')
+					echo '
+								<li class="membergroup">', $message['member']['group'], '</li>';
 
 				echo '
 				<li class="stars">', $message['member']['group_stars'], '</li>';

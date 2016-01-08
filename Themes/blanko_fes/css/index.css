@@ -1596,6 +1596,12 @@ i.fa.fa-subscribe.fa-fw::after
     }
 }
 
+@media (min-width: 480px) and (max-width: 767px) {
+    div.buttonlist-mobile {
+        bottom: 10px;
+    }
+}
+
 @media (min-width: 768px) {
     div.buttonlist-mobile {
         display: none;
@@ -3165,6 +3171,12 @@ div#display_jump_to.plainbox label.smalltext
 form#postmodify .roundframe
 {
     padding: 0 20px;
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+    form#postmodify .roundframe {
+        padding: 0 40px;
+    }
 }
 
 #post_header, .postbox
@@ -4972,6 +4984,28 @@ i.fa.fa-search.mobile {
     background: #eee;
 }
 
+@media (min-width: 480px) and (max-width: 767px) {
+    i.fa.fa-search.mobile {
+        background: #6590A5;
+        color: #fff;
+    }
+    #mobile_quicksearch {
+        height: 36px;
+    }
+    #mobile_quicksearch::-webkit-input-placeholder {
+        color: #fff;
+    }
+    #mobile_quicksearch:-moz-placeholder {
+        color: #fff;
+    }
+    #mobile_quicksearch::-moz-placeholder {
+        color: #fff;
+    }
+    #mobile_quicksearch:-ms-input-placeholder {
+        color: #fff;
+    }
+}
+
 /* Styles for the advanced search section.
 ------------------------------------------------- */
 #searchform fieldset
@@ -5502,7 +5536,21 @@ nav .nav-notification>li .search-input-wrapper {
     }
 }
 
-@media (max-width: 767px) {
+@media (min-width: 480px) and (max-width: 767px) {
+    div.action-bar-mobile {
+        display: block;
+        position: absolute;
+        top: 12px;
+        z-index: 1010;
+        right: 80px;
+    }
+    .search-input input:focus, .search-input input:hover,
+    .search-input:focus input, .search-input:hover input {
+        width: 160px !important;
+    }
+}
+
+@media (max-width: 479px) {
     div.action-bar-mobile {
         display: block;
         position: fixed;
@@ -5712,11 +5760,17 @@ ul.social li .fa-rss:hover
     -o-transition: all .5s ease;
 }
 
+@media (min-width: 480px) and (max-width: 767px) {
+    .scroll-to-top {
+        bottom: 70px;
+    }
+}
+
 .scroll-to-top.active {
     right: 10px;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 479px) {
     .scroll-to-top {
         width: 30px;
         height: 30px;
@@ -5761,7 +5815,7 @@ a.link-to-home
     color: #fff;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 479px) {
     .link-to-home {
         width: 30px;
         height: 30px;
@@ -5777,6 +5831,31 @@ a.link-to-home
         margin-top: 7px;
         font-size: 17px;
         color: #666;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+    .scroll-to-top {
+        bottom: 10px;
+        left: -100px;
+        width: 30px;
+        height: 30px;
+        border-radius: 4px;
+        line-height: 30px;
+    }
+    .scroll-to-top.active {
+        left: 10px;
+    }
+    .link-to-home {
+        bottom: 50px;
+        left: -100px;
+        width: 30px;
+        height: 30px;
+        border-radius: 4px;
+        line-height: 30px;
+    }
+    .link-to-home.active {
+        left: 10px;
     }
 }
 

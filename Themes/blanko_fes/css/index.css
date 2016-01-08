@@ -4968,6 +4968,11 @@ span.hidelink
     color: #FFF;
 }
 
+#desktop_quicksearch {
+    font-family: "Oswald", sans-serif;
+    font-size: 13px;
+}
+
 #mobile_quicksearch {
     margin-top: 0px;
     font-size: 13px;

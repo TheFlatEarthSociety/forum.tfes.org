@@ -368,7 +368,7 @@ function template_body_above()
 				bToggleEnabled: true,
 				bCurrentlyCollapsed: ', empty($options['collapse_header']) ? 'false' : 'true', ',
 				aSwappableContainers: [
-					\'menu\', \'header\'
+					\'menu\'
 				],
 				aSwapTriggers: [
 					{

@@ -192,6 +192,7 @@ function template_unread()
 
 			echo '
 							<p>', $txt['started_by'], ' ', $topic['first_post']['member']['link'], '
+								', $txt['in'], ' <em>', $topic['board']['link'], '</em>
 								<small id="pages' . $topic['first_post']['id'] . '">', $topic['pages'], '</small>
 								<a class="lastpost_link" href="', $topic['last_post']['href'], '"><i class="fa fa-sign-in fa-fw"></i></a>
 							</p>
@@ -403,6 +404,7 @@ function template_replies()
 
 			echo '
 							<p>', $txt['started_by'], ' ', $topic['first_post']['member']['link'], '
+								', $txt['in'], ' <em>', $topic['board']['link'], '</em>
 								<small id="pages' . $topic['first_post']['id'] . '">', $topic['pages'], '</small>
 								<a class="lastpost_link" href="', $topic['last_post']['href'], '"><i class="fa fa-sign-in fa-fw"></i></a>
 							</p>

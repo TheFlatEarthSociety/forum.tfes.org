@@ -4908,6 +4908,9 @@ span.hidelink
     #mlist.tborder.topic_table {
         margin-top: 20px;
     }
+    #mlist div.pagesection {
+        height: 80px;
+    }
 }
 
 #mlist td
@@ -4920,7 +4923,7 @@ span.hidelink
     text-align: center;
 }
 
-#memberlist div.pagesection
+#mlist div.pagesection
 {
     margin: 10px 0;
 }

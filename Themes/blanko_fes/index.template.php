@@ -315,7 +315,7 @@ function template_body_above()
 									<li><i id="usericon" class="fa fa-user fa-fw"></i><input type="text" class="userpass" name="user" placeholder="' , $txt['username'] , '"/></li>
 									<li><i id="passicon" class="fa fa-lock fa-fw"></i><input type="password" class="userpass" name="passwrd" placeholder="', $txt['password'], '"/></li>
 									<li id="always_logged_in"><label><input type="checkbox" id="stayloggedin" name="cookieneverexp"/>', $txt['always_logged_in'], '</label></li>
-									<li id="quick_login_button"><input type="submit" value="', $txt['login'], '" class="button_submit" /></li>
+									<li id="quick_login_button"><input type="submit" value="', $txt['login'], '" class="button_submit" /> <a href="' , $scripturl , '?action=register" class="button_submit" style="color:#ffffff">' , $txt['register'] , '</a></li>
 									<input type="hidden" name="hash_passwrd" value="" />
 								</form>
 							</ul>

@@ -625,4 +625,7 @@ $helptxt['tp_iar_usergroup_assignment'] = 'You can assign users registered with 
 $helptxt['tp_iar_spam_prevention'] = 'By enabling StopForumSpam integration, new user registration from Tapatalk app and/or from web will be screened with StopForumSpam database to prevent existing black-listed spammers.';
 //Tapatalk ends
 
+$helptxt['image_proxy_enabled'] = 'Whether to enable the image proxy';
+$helptxt['image_proxy_secret'] = 'Keep this a secret, protects your forum from hotlinking images. Change it in order to render current hotlinked images useless';
+$helptxt['image_proxy_maxsize'] = 'Maximum image size that the image proxy will cache: bigger images will be not be cached. Cached images are stored in your SMF cache folder, so make sure you have enough free space.';
 ?>

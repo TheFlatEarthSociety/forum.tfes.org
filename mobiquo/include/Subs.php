@@ -10,7 +10,7 @@ defined('IN_MOBIQUO') or exit;
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.7
+ * @version 2.0.14
  */
 
 if (!defined('SMF'))
@@ -221,6 +221,9 @@ if (!defined('SMF'))
 	void remove_integration_function(string hook, string function)
 		- removes the given function from the given hook.
 		- does nothing if the functions is not available.
+
+	array safe_unserialize(string data)
+		- sanitizes input before unserializing string.
 */
 
 // Update some basic statistics...
@@ -678,7 +681,7 @@ function constructPageIndex($base_url, &$start, $max_value, $num_per_page, $flex
 		// Show all the pages.
 		$display_page = 1;
 		for ($counter = 0; $counter < $max_value; $counter += $num_per_page)
-			$pageindex .= $start == $counter && !$start_invalid ? '[<strong id="currentPage">' . $display_page++ . '</strong>] ' : sprintf($base_link, $counter, $display_page++);
+			$pageindex .= $start == $counter && !$start_invalid ? '[<strong class="currentPage">' . $display_page++ . '</strong>] ' : sprintf($base_link, $counter, $display_page++);
 	}
 	else
 	{
@@ -705,7 +708,7 @@ function constructPageIndex($base_url, &$start, $max_value, $num_per_page, $flex
 
 		// Show the current page. (1 ... 6 7 >[8]< 9 10 ... 15)
 		if (!$start_invalid)
-			$pageindex .= '[<strong id="currentPage">' . ($start / $num_per_page + 1) . '</strong>] ';
+			$pageindex .= '[<strong class="currentPage">' . ($start / $num_per_page + 1) . '</strong>] ';
 		else
 			$pageindex .= sprintf($base_link, $start, $start / $num_per_page + 1);
 
@@ -1296,22 +1299,34 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 					'height' => array('optional' => true, 'value' => ' height="$1"', 'match' => '(\d+)'),
 				),
 				'content' => '<img src="$1" alt="{alt}"{width}{height} class="bbc_img resized" />',
-				'validate' => create_function('&$tag, &$data, $disabled', '
-					$data = strtr($data, array(\'<br />\' => \'\'));
-					if (strpos($data, \'http://\') !== 0 && strpos($data, \'https://\') !== 0)
-						$data = \'http://\' . $data;
-				'),
+				'validate' => function (&$tag, &$data, $disabled)
+				{
+					global $image_proxy_enabled, $image_proxy_secret, $boardurl;
+
+					$data = strtr($data, array('<br>' => ''));
+					if (strpos($data, 'http://') !== 0 && strpos($data, 'https://') !== 0)
+						$data = 'http://' . $data;
+
+					if (substr($data, 0, 8) != 'https://' && $image_proxy_enabled)
+						$data = $boardurl . '/proxy.php?request=' . urlencode($data) . '&hash=' . md5($data . $image_proxy_secret);
+				},
 				'disabled_content' => '($1)',
 			),
 			array(
 				'tag' => 'img',
 				'type' => 'unparsed_content',
 				'content' => '<img src="$1" alt="" class="bbc_img" />',
-				'validate' => create_function('&$tag, &$data, $disabled', '
-					$data = strtr($data, array(\'<br />\' => \'\'));
-					if (strpos($data, \'http://\') !== 0 && strpos($data, \'https://\') !== 0)
-						$data = \'http://\' . $data;
-				'),
+				'validate' => function (&$tag, &$data, $disabled)
+				{
+					global $image_proxy_enabled, $image_proxy_secret, $boardurl;
+
+					$data = strtr($data, array('<br>' => ''));
+					if (strpos($data, 'http://') !== 0 && strpos($data, 'https://') !== 0)
+						$data = 'http://' . $data;
+
+					if (substr($data, 0, 8) != 'https://' && $image_proxy_enabled)
+						$data = $boardurl . '/proxy.php?request=' . urlencode($data) . '&hash=' . md5($data . $image_proxy_secret);
+				},
 				'disabled_content' => '($1)',
 			),
 			array(
@@ -1627,14 +1642,14 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 			array(
 				'tag' => 'youtube',
 				'type' => 'unparsed_content',
-				'content' => '<iframe style="border:0;" width="642" height="392" src="http://www.youtube.com/embed/$1" allowfullscreen></iframe>',
+				'content' => '<iframe style="border:0;" width="642" height="392" src="https://www.youtube-nocookie.com/embed/$1" allowfullscreen></iframe>',
 				'validate' => create_function('&$tag, &$data, $disabled', '
 				if (isset($disabled[\'url\']))
-					$tag[\'content\'] = \'http://www.youtube.com/watch?v=$1\';
-				$pattern = \'~(?:http|https|)(?::\/\/|)(?:www.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[a-z0-9;:@?&%=+\/\$_.-]*~i\';
+					$tag[\'content\'] = \'https://www.youtube.com/watch?v=$1\';
+				$pattern = \'~(?:http|https|)(?::\/\/|)(?:www\.|m\.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[a-z0-9;:@?&%=+\/\$_.-]*~i\';
 				if (preg_match($pattern, $data, $matches))
 					$data = $matches[1];'),
-				'disabled_content' => 'http://www.youtube.com/watch?v=$1',
+				'disabled_content' => 'https://www.youtube.com/watch?v=$1',
 			),
 			array(
 				'tag' => 'white',
@@ -1705,7 +1720,7 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 		$codes [] = array (
 				'tag' => 'tex',
 				'type' => 'unparsed_content',
-				'content' => '<img src="http://mathtex.tfes.org/$1" alt="$1" />',
+				'content' => '<img src="http://mathtex.tfes.org/$1" alt="$1" class="bbc_tex" />',
 				'validate' => create_function('&$tag, &$data, $disabled', '
 					$data = strtr($data, array(\'&nbsp;\' => \' \', \'<br />\' => \'
 \'));
@@ -1918,7 +1933,7 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 						// Only do this if the preg survives.
 						//First line in each array added by "Simple_Youtube_Video_Embed_BBC" mod to parse youtube videos automatically
 						if (is_string($result = preg_replace(array(
-							'~(?:http|https|)(?::\/\/|)(?:www.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[a-z0-9;:@?&%=+\/\$_.-]*~i',
+							'~(?:http|https|)(?::\/\/|)(?:www\.|m\.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[a-z0-9;:@?&%=+\/\$_.-]*~i',
 							'~(?<=[\s>\.(;\'"]|^)((?:http|https)://[\w\-_%@:|]+(?:\.[\w\-_%]+)*(?::\d+)?(?:/[\w\-_\~%\.@!,\?&;=#(){}+:\'\\\\]*)*[/\w\-_\~%@\?;=#}\\\\])~i',
 							'~(?<=[\s>\.(;\'"]|^)((?:ftp|ftps)://[\w\-_%@:|]+(?:\.[\w\-_%]+)*(?::\d+)?(?:/[\w\-_\~%\.@,\?&;=#(){}+:\'\\\\]*)*[/\w\-_\~%@\?;=#}\\\\])~i',
 							'~(?<=[\s>(\'<]|^)(www(?:\.[\w\-_]+)+(?::\d+)?(?:/[\w\-_\~%\.@!,\?&;=#(){}+:\'\\\\]*)*[/\w\-_\~%@\?;=#}\\\\])~i'
@@ -1934,7 +1949,7 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 					}
 
 					// Next, emails...
-					if (!isset($disabled['email']) && strpos($data, '@') !== false && strpos($data, '[email') === false)
+					if (!isset($disabled['email']) && filter_var($data, FILTER_VALIDATE_EMAIL) !== false && strpos($data, '[email') === false)
 					{
 						$data = preg_replace('~(?<=[\?\s' . $non_breaking_space . '\[\]()*\\\;>]|^)([\w\-\.]{1,80}@[\w\-]+\.[\w\-\.]+[\w\-])(?=[?,\s' . $non_breaking_space . '\[\]()*\\\]|$|<br />|&nbsp;|&gt;|&lt;|&quot;|&#039;|\.(?:\.|;|&nbsp;|\s|$|<br />))~' . ($context['utf8'] ? 'u' : ''), '[email]$1[/email]', $data);
 						$data = preg_replace('~(?<=<br />)([\w\-\.]{1,80}@[\w\-]+\.[\w\-\.]+[\w\-])(?=[?\.,;\s' . $non_breaking_space . '\[\]()*\\\]|$|<br />|&nbsp;|&gt;|&lt;|&quot;|&#039;)~' . ($context['utf8'] ? 'u' : ''), '[email]$1[/email]', $data);
@@ -1953,7 +1968,7 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 					$data = strtr($data, array($breaker => '< >', '&nbsp;' => $context['utf8'] ? "\xC2\xA0" : "\xA0"));
 					$data = preg_replace_callback(
 						'~(?<=[>;:!? ' . $non_breaking_space . '\]()]|^)([\w' . ($context['utf8'] ? '\pL' : '') . '\.]{' . $modSettings['fixLongWords'] . ',})~' . ($context['utf8'] ? 'u' : ''),
-						create_function('$m', 'return preg_replace(\'~(.{' . ($modSettings['fixLongWords'] - 1) . '})~' . ($context['utf8'] ? 'u' : '') . '\', \'$1< >\', "$m[1]");'),
+						'word_break__preg_callback',
 						$data);
 					$data = strtr($data, array('< >' => $breaker, $context['utf8'] ? "\xC2\xA0" : "\xA0" => '&nbsp;'));
 				}
@@ -2245,7 +2260,7 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 			if ($pos2 !== false && ($pos2 <= $pos3 || $pos3 === false))
 			{
 				preg_match('~^(<br />|&nbsp;|\s|\[)+~', substr($message, $pos2 + 6), $matches);
-				$message = substr($message, 0, $pos2) . "\n" . (!empty($matches[0]) && substr($matches[0], -1) == '[' ? '[/li]' : '[/li][/list]') . "\n" . substr($message, $pos2);
+				$message = substr($message, 0, $pos2) . "\n" . (!empty($matches[0]) && substr($matches[0], -1) == '[' ? '[/li]' : '[/li][/list]') . substr($message, $pos2);
 
 				$open_tags[count($open_tags) - 2]['after'] = '</ul>';
 			}
@@ -2607,8 +2622,8 @@ function parsesmileys(&$message)
 	// Replace away!
 
 	// TODO: When SMF supports only PHP 5.3+, we can change this to "uses" keyword and simplify this.
-	$callback = pregReplaceCurry('smielyPregReplaceCallback', 2);
-	$message = preg_replace_callback($smileyPregSearch, $callback($smileyPregReplacements), $message);
+	$context['smiley_replacements'] = $smileyPregReplacements;
+	$message = preg_replace_callback($smileyPregSearch, 'smileyPregReplaceCallback', $message);
 }
 
 // This allows use to do delayed argument binding and bring in the replacement variables for some preg replacements.
@@ -2629,9 +2644,10 @@ function pregReplaceCurry($func, $arity)
 }
 
 // Our callback that does the actual smiley replacements.
-function smielyPregReplaceCallback($replacements, $matches)
+function smileyPregReplaceCallback($matches)
 {
-    return $replacements[$matches[1]];
+	global $context;
+    return $context['smiley_replacements'][$matches[1]];
 }
 // Highlight any code...
 function highlight_php_code($code)
@@ -2752,17 +2768,16 @@ function writeLog($force = false)
 	// Otherwise, we have to delete and insert.
 	if (empty($_SESSION['log_time']))
 	{
-		if ($do_delete || !empty($user_info['id']))
+		if (!empty($user_info['id']))
 			$smcFunc['db_query']('', '
 				DELETE FROM {db_prefix}log_online
-				WHERE ' . ($do_delete ? 'log_time < {int:log_time}' : '') . ($do_delete && !empty($user_info['id']) ? ' OR ' : '') . (empty($user_info['id']) ? '' : 'id_member = {int:current_member}'),
+				WHERE id_member = {int:current_member}',
 				array(
 					'current_member' => $user_info['id'],
-					'log_time' => time() - $modSettings['lastActive'] * 60,
 				)
 			);
 
-		$smcFunc['db_insert']($do_delete ? 'ignore' : 'replace',
+		$smcFunc['db_insert']('replace',
 			'{db_prefix}log_online',
 			array('session' => 'string', 'id_member' => 'int', 'id_spider' => 'int', 'log_time' => 'int', 'ip' => 'raw', 'url' => 'string'),
 			array($session_id, $user_info['id'], empty($_SESSION['id_robot']) ? 0 : $_SESSION['id_robot'], time(), '\'' . $user_info['ip'] . '\'', $serialized),
@@ -2785,7 +2800,7 @@ function writeLog($force = false)
 			$_SESSION['timeOnlineUpdated'] = time();
 
 		$user_settings['total_time_logged_in'] += time() - $_SESSION['timeOnlineUpdated'];
-		updateMemberData($user_info['id'], array('last_login' => time(), 'member_ip' => $user_info['ip'], 'member_ip2' => $_SERVER['BAN_CHECK_IP'], 'total_time_logged_in' => $user_settings['total_time_logged_in']));
+		updateMemberData($user_info['id'], array('last_login' => time(), 'member_ip' => $user_info['ip'], 'member_ip2' => $_SERVER['BAN_CHECK_IP'], 'total_time_logged_in' => $user_settings['total_time_logged_in'], 'member_user_agent' => $_SERVER['HTTP_USER_AGENT']));
 
 		if (!empty($modSettings['cache_enable']) && $modSettings['cache_enable'] >= 2)
 			cache_put_data('user_settings-' . $user_info['id'], $user_settings, 60);
@@ -2834,9 +2849,9 @@ function redirectexit($setLocation = '', $refresh = false)
 	if (!empty($modSettings['queryless_urls']) && (empty($context['server']['is_cgi']) || @ini_get('cgi.fix_pathinfo') == 1 || @get_cfg_var('cgi.fix_pathinfo') == 1) && (!empty($context['server']['is_apache']) || !empty($context['server']['is_lighttpd'])))
 	{
 		if (defined('SID') && SID != '')
-			$setLocation = preg_replace_callback('~"' . preg_quote($scripturl, '/') . '\?(?:' . SID . '(?:;|&|&amp;))((?:board|topic)=[^#]+?)(#[^"]*?)?$~', create_function('$m', 'global $scripturl; return $scripturl . \'/\' . strtr("$m[1]", \'&;=\', \'//,\') . \'.html?\' . SID . (isset($m[2]) ? "$m[2]" : "");'), $setLocation);
+			$setLocation = preg_replace_callback('~^' . preg_quote($scripturl, '/') . '\?(?:' . SID . '(?:;|&|&amp;))((?:board|topic)=[^#]+?)(#[^"]*?)?$~', 'fix_redirect_sid__preg_callback', $setLocation);
 		else
-			$setLocation = preg_replace_callback('~"' . preg_quote($scripturl, '/') . '\?((?:board|topic)=[^#"]+?)(#[^"]*?)?$~', create_function('$m', 'global $scripturl; return $scripturl . \'/\' . strtr("$m[1]", \'&;=\', \'//,\') . \'.html\' . (isset($m[2]) ? "$m[2]" : "");'), $setLocation);
+			$setLocation = preg_replace_callback('~^' . preg_quote($scripturl, '/') . '\?((?:board|topic)=[^#"]+?)(#[^"]*?)?$~', 'fix_redirect_path__preg_callback', $setLocation);
 	}
 
 	// Maybe integrations want to change where we are heading?
@@ -3313,7 +3328,7 @@ function determineTopicClass(&$topic_context)
 function setupThemeContext($forceload = false)
 {
 	global $modSettings, $user_info, $scripturl, $context, $settings, $options, $txt, $maintenance;
-	global $user_settings, $smcFunc;
+	global $user_settings, $smcFunc, $boardurl, $image_proxy_enabled, $image_proxy_secret;
 	static $loaded = false;
 
 	// Under SSI this function can be called more then once.  That can cause some problems.
@@ -3366,9 +3381,12 @@ function setupThemeContext($forceload = false)
 		if ($user_info['avatar']['url'] == '' && !empty($user_info['avatar']['id_attach']))
 			$context['user']['avatar']['href'] = $user_info['avatar']['custom_dir'] ? $modSettings['custom_avatar_url'] . '/' . $user_info['avatar']['filename'] : $scripturl . '?action=dlattach;attach=' . $user_info['avatar']['id_attach'] . ';type=avatar';
 		// Full URL?
-		elseif (substr($user_info['avatar']['url'], 0, 7) == 'http://')
+		elseif (substr($user_info['avatar']['url'], 0, 7) == 'http://' || substr($user_info['avatar']['url'], 0, 8) == 'https://')
 		{
-			$context['user']['avatar']['href'] = $user_info['avatar']['url'];
+			if (substr($user_info['avatar']['url'], 0, 8) != 'https://' && $image_proxy_enabled)
+				$context['user']['avatar']['href'] = $boardurl . '/proxy.php?request=' . urlencode($user_info['avatar']['url']) . '&hash=' . md5($user_info['avatar']['url'] . $image_proxy_secret);
+			else
+				$context['user']['avatar']['href'] = $user_info['avatar']['url'];
 
 			if ($modSettings['avatar_action_too_large'] == 'option_html_resize' || $modSettings['avatar_action_too_large'] == 'option_js_resize')
 			{
@@ -3490,12 +3508,6 @@ function template_header()
 	{
 		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 		header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-
-		// Are we debugging the template/html content?
-		if (!isset($_REQUEST['xml']) && isset($_GET['debug']) && !$context['browser']['is_ie'] && !WIRELESS)
-			header('Content-Type: application/xhtml+xml');
-		elseif (!isset($_REQUEST['xml']) && !WIRELESS)
-			header('Content-Type: text/html; charset=' . (empty($context['character_set']) ? 'ISO-8859-1' : $context['character_set']));
 	}
 
 	header('Content-Type: text/' . (isset($_REQUEST['xml']) ? 'xml' : 'html') . '; charset=' . (empty($context['character_set']) ? 'ISO-8859-1' : $context['character_set']));
@@ -3766,7 +3778,7 @@ function getAttachmentFilename($filename, $attachment_id, $dir = null, $new = fa
 	if (!empty($modSettings['currentAttachmentUploadDir']))
 	{
 		if (!is_array($modSettings['attachmentUploadDir']))
-			$modSettings['attachmentUploadDir'] = unserialize($modSettings['attachmentUploadDir']);
+			$modSettings['attachmentUploadDir'] = safe_unserialize($modSettings['attachmentUploadDir']);
 		$path = $modSettings['attachmentUploadDir'][$dir];
 	}
 	else
@@ -3807,7 +3819,7 @@ function getLegacyAttachmentFilename($filename, $attachment_id, $dir = null, $ne
 	if (!empty($modSettings['currentAttachmentUploadDir']))
 	{
 		if (!is_array($modSettings['attachmentUploadDir']))
-			$modSettings['attachmentUploadDir'] = unserialize($modSettings['attachmentUploadDir']);
+			$modSettings['attachmentUploadDir'] = safe_unserialize($modSettings['attachmentUploadDir']);
 		$path = $modSettings['attachmentUploadDir'][$dir];
 	}
 	else
@@ -4494,4 +4506,272 @@ function remove_integration_function($hook, $function)
 	$modSettings[$hook] = implode(',', $functions);
 }
 
+function word_break__preg_callback($matches)
+{
+	global $modSettings, $context;
+	return preg_replace('~(.{' . ($modSettings['fixLongWords'] - 1) . '})~' . ($context['utf8'] ? 'u' : ''), '$1< >', $matches[1]);
+}
+
+function fix_redirect_sid__preg_callback($matches)
+{
+	global $scripturl;
+	return $scripturl . '/' . strtr($matches[1], '&;=', '//,') . '.html?' . SID . (isset($matches[2]) ? $matches[2] : '');
+}
+
+function fix_redirect_path__preg_callback($matches)
+{
+	global $scripturl;
+	return $scripturl . '/' . strtr($matches[1], '&;=', '//,') . '.html' . (isset($matches[2]) ? $matches[2] : '');
+}
+
+function return_chr__preg_callback($matches)
+{
+	return chr($matches[1]);
+}
+
+/**
+ * Safe serialize() and unserialize() replacements
+ *
+ * @license Public Domain
+ *
+ * @author anthon (dot) pang (at) gmail (dot) com
+ */
+
+/**
+ * Safe serialize() replacement. Recursive
+ * - output a strict subset of PHP's native serialized representation
+ * - does not serialize objects
+ *
+ * @param mixed $value
+ * @return string
+ */
+function _safe_serialize($value)
+{
+	if(is_null($value))
+		return 'N;';
+
+	if(is_bool($value))
+		return 'b:'. (int) $value .';';
+
+	if(is_int($value))
+		return 'i:'. $value .';';
+
+	if(is_float($value))
+		return 'd:'. str_replace(',', '.', $value) .';';
+
+	if(is_string($value))
+		return 's:'. strlen($value) .':"'. $value .'";';
+
+	if(is_array($value))
+	{
+		$out = '';
+		foreach($value as $k => $v)
+			$out .= _safe_serialize($k) . _safe_serialize($v);
+
+		return 'a:'. count($value) .':{'. $out .'}';
+	}
+
+	// safe_serialize cannot serialize resources or objects.
+	return false;
+}
+/**
+ * Wrapper for _safe_serialize() that handles exceptions and multibyte encoding issues.
+ *
+ * @param mixed $value
+ * @return string
+ */
+function safe_serialize($value)
+{
+	// Make sure we use the byte count for strings even when strlen() is overloaded by mb_strlen()
+	if (function_exists('mb_internal_encoding') &&
+		(((int) ini_get('mbstring.func_overload')) & 2))
+	{
+		$mbIntEnc = mb_internal_encoding();
+		mb_internal_encoding('ASCII');
+	}
+
+	$out = _safe_serialize($value);
+
+	if (isset($mbIntEnc))
+		mb_internal_encoding($mbIntEnc);
+
+	return $out;
+}
+
+/**
+ * Safe unserialize() replacement
+ * - accepts a strict subset of PHP's native serialized representation
+ * - does not unserialize objects
+ *
+ * @param string $str
+ * @return mixed
+ * @throw Exception if $str is malformed or contains unsupported types (e.g., resources, objects)
+ */
+function _safe_unserialize($str)
+{
+	// Input  is not a string.
+	if(empty($str) || !is_string($str))
+		return false;
+
+	$stack = array();
+	$expected = array();
+
+	/*
+	 * states:
+	 *   0 - initial state, expecting a single value or array
+	 *   1 - terminal state
+	 *   2 - in array, expecting end of array or a key
+	 *   3 - in array, expecting value or another array
+	 */
+	$state = 0;
+	while($state != 1)
+	{
+		$type = isset($str[0]) ? $str[0] : '';
+		if($type == '}')
+			$str = substr($str, 1);
+
+		else if($type == 'N' && $str[1] == ';')
+		{
+			$value = null;
+			$str = substr($str, 2);
+		}
+		else if($type == 'b' && preg_match('/^b:([01]);/', $str, $matches))
+		{
+			$value = $matches[1] == '1' ? true : false;
+			$str = substr($str, 4);
+		}
+		else if($type == 'i' && preg_match('/^i:(-?[0-9]+);(.*)/s', $str, $matches))
+		{
+			$value = (int)$matches[1];
+			$str = $matches[2];
+		}
+		else if($type == 'd' && preg_match('/^d:(-?[0-9]+\.?[0-9]*(E[+-][0-9]+)?);(.*)/s', $str, $matches))
+		{
+			$value = (float)$matches[1];
+			$str = $matches[3];
+		}
+		else if($type == 's' && preg_match('/^s:([0-9]+):"(.*)/s', $str, $matches) && substr($matches[2], (int)$matches[1], 2) == '";')
+		{
+			$value = substr($matches[2], 0, (int)$matches[1]);
+			$str = substr($matches[2], (int)$matches[1] + 2);
+		}
+		else if($type == 'a' && preg_match('/^a:([0-9]+):{(.*)/s', $str, $matches))
+		{
+			$expectedLength = (int)$matches[1];
+			$str = $matches[2];
+		}
+
+		// Object or unknown/malformed type.
+		else
+			return false;
+
+		switch($state)
+		{
+			case 3: // In array, expecting value or another array.
+				if($type == 'a')
+				{
+					$stack[] = &$list;
+					$list[$key] = array();
+					$list = &$list[$key];
+					$expected[] = $expectedLength;
+					$state = 2;
+					break;
+				}
+				if($type != '}')
+				{
+					$list[$key] = $value;
+					$state = 2;
+					break;
+				}
+
+				// Missing array value.
+				return false;
+
+			case 2: // in array, expecting end of array or a key
+				if($type == '}')
+				{
+					// Array size is less than expected.
+					if(count($list) < end($expected))
+						return false;
+
+					unset($list);
+					$list = &$stack[count($stack)-1];
+					array_pop($stack);
+
+					// Go to terminal state if we're at the end of the root array.
+					array_pop($expected);
+
+					if(count($expected) == 0)
+						$state = 1;
+
+					break;
+				}
+
+				if($type == 'i' || $type == 's')
+				{
+					// Array size exceeds expected length.
+					if(count($list) >= end($expected))
+						return false;
+
+					$key = $value;
+					$state = 3;
+					break;
+				}
+
+				// Illegal array index type.
+				return false;
+
+			// Expecting array or value.
+			case 0:
+				if($type == 'a')
+				{
+					$data = array();
+					$list = &$data;
+					$expected[] = $expectedLength;
+					$state = 2;
+					break;
+				}
+
+				if($type != '}')
+				{
+					$data = $value;
+					$state = 1;
+					break;
+				}
+
+				// Not in array.
+				return false;
+		}
+	}
+
+	// Trailing data in input.
+	if(!empty($str))
+		return false;
+
+	return $data;
+}
+
+/**
+ * Wrapper for _safe_unserialize() that handles exceptions and multibyte encoding issue
+ *
+ * @param string $str
+ * @return mixed
+ */
+function safe_unserialize($str)
+{
+	// Make sure we use the byte count for strings even when strlen() is overloaded by mb_strlen()
+	if (function_exists('mb_internal_encoding') &&
+		(((int) ini_get('mbstring.func_overload')) & 0x02))
+	{
+		$mbIntEnc = mb_internal_encoding();
+		mb_internal_encoding('ASCII');
+	}
+
+	$out = _safe_unserialize($str);
+
+	if (isset($mbIntEnc))
+		mb_internal_encoding($mbIntEnc);
+
+	return $out;
+}
 ?>

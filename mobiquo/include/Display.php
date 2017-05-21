@@ -10,7 +10,7 @@ defined('IN_MOBIQUO') or exit;
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.7
+ * @version 2.0.12
  */
 
 if (!defined('SMF'))
@@ -76,6 +76,9 @@ function Display()
 	// What are you gonna display if these are empty?!
 	if (empty($topic))
 		fatal_lang_error('no_board', false);
+
+	// Required by the Display template.
+	require_once($sourcedir . "/Unsubscribe.php");
 
 	// Load the proper template and/or sub template.
 	if (WIRELESS)
@@ -768,7 +771,7 @@ function Display()
 		// 4. you've waited long enough for the poll to expire. (whether hide_results is 1 or 2.)
 		$context['allow_poll_view'] = allowedTo('moderate_board') || $pollinfo['hide_results'] == 0 || ($pollinfo['hide_results'] == 1 && $context['poll']['has_voted']) || $context['poll']['is_expired'];
 		$context['poll']['show_results'] = $context['allow_poll_view'] && (isset($_REQUEST['viewresults']) || isset($_REQUEST['viewResults']));
-		$context['show_view_results_button'] = $context['allow_vote'] && (!$context['allow_poll_view'] || !$context['poll']['show_results'] || !$context['poll']['has_voted']);
+		$context['show_view_results_button'] = $context['allow_vote'] && $context['allow_poll_view'] && !$context['poll']['show_results'];
 
 		// You're allowed to change your vote if:
 		// 1. the poll did not expire, and
@@ -1530,7 +1533,7 @@ function loadAttachmentContext($id_msg)
 						if (!empty($modSettings['currentAttachmentUploadDir']))
 						{
 							if (!is_array($modSettings['attachmentUploadDir']))
-								$modSettings['attachmentUploadDir'] = @unserialize($modSettings['attachmentUploadDir']);
+								$modSettings['attachmentUploadDir'] = safe_unserialize($modSettings['attachmentUploadDir']);
 							$path = $modSettings['attachmentUploadDir'][$modSettings['currentAttachmentUploadDir']];
 							$id_folder_thumb = $modSettings['currentAttachmentUploadDir'];
 						}

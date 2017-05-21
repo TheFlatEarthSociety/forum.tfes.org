@@ -973,8 +973,10 @@ function UnreadTopics()
 				SELECT t.id_topic, t.id_board, t.id_last_msg, IFNULL(lmr.id_msg, 0) AS id_msg' . (!in_array($_REQUEST['sort'], array('t.id_last_msg', 't.id_topic')) ? ', ' . $_REQUEST['sort'] . ' AS sort_key' : '') . '
 				FROM {db_prefix}messages AS m
 					INNER JOIN {db_prefix}topics AS t ON (t.id_topic = m.id_topic)
-					LEFT JOIN {db_prefix}log_mark_read AS lmr ON (lmr.id_board = t.id_board AND lmr.id_member = {int:current_member})' . (isset($sortKey_joins[$_REQUEST['sort']]) ? $sortKey_joins[$_REQUEST['sort']] : '') . '
-				WHERE m.id_member = {int:current_member}' . (!empty($board) ? '
+					LEFT JOIN {db_prefix}log_mark_read AS lmr ON (lmr.id_board = t.id_board AND lmr.id_member = {int:current_member})
+					LEFT JOIN {db_prefix}topics_unsubscribe AS u ON (u.id_topic = t.id_topic AND u.id_member = {int:current_member})' . (isset($sortKey_joins[$_REQUEST['sort']]) ? $sortKey_joins[$_REQUEST['sort']] : '') . '
+				WHERE m.id_member = {int:current_member}
+					AND IFNULL(u.unsubscribed, 0) != {int:unsubscribed}' . (!empty($board) ? '
 					AND t.id_board = {int:current_board}' : '') . ($modSettings['postmod_active'] ? '
 					AND t.approved = {int:is_approved}' : '') . '
 				GROUP BY m.id_topic',
@@ -984,6 +986,7 @@ function UnreadTopics()
 					'is_approved' => 1,
 					'string_zero' => '0',
 					'db_error_skip' => true,
+					'unsubscribed' => 1,
 				)
 			) !== false;
 
@@ -1026,13 +1029,16 @@ function UnreadTopics()
 					INNER JOIN {db_prefix}messages AS m ON (m.id_topic = t.id_topic)
 					LEFT JOIN {db_prefix}log_topics AS lt ON (lt.id_topic = t.id_topic AND lt.id_member = {int:current_member})
 					LEFT JOIN {db_prefix}log_mark_read AS lmr ON (lmr.id_board = t.id_board AND lmr.id_member = {int:current_member})
+					LEFT JOIN {db_prefix}topics_unsubscribe AS u ON (u.id_topic = t.id_topic AND u.id_member = {int:current_member})
 				WHERE t.' . $query_this_board . '
 					AND m.id_member = {int:current_member}
+					AND IFNULL(u.unsubscribed, 0) != {int:unsubscribed}
 					AND IFNULL(lt.id_msg, IFNULL(lmr.id_msg, 0)) < t.id_last_msg' . ($modSettings['postmod_active'] ? '
 					AND t.approved = {int:is_approved}' : ''),
 				array_merge($query_parameters, array(
 					'current_member' => $user_info['id'],
 					'is_approved' => 1,
+					'unsubscribed' => 1,
 				))
 			);
 			list ($num_topics, $min_message) = $smcFunc['db_fetch_row']($request);
@@ -1089,8 +1095,10 @@ function UnreadTopics()
 					LEFT JOIN {db_prefix}members AS mems ON (mems.id_member = ms.id_member)') . '
 					LEFT JOIN {db_prefix}log_topics AS lt ON (lt.id_topic = t.id_topic AND lt.id_member = {int:current_member})
 					LEFT JOIN {db_prefix}log_mark_read AS lmr ON (lmr.id_board = t.id_board AND lmr.id_member = {int:current_member})
+					LEFT JOIN {db_prefix}topics_unsubscribe AS u ON (u.id_topic = t.id_topic AND u.id_member = {int:current_member})
 				WHERE t.' . $query_this_board . '
 					AND t.id_last_msg >= {int:min_message}
+					AND IFNULL(u.unsubscribed, 0) != {int:unsubscribed}
 					AND (IFNULL(lt.id_msg, IFNULL(lmr.id_msg, 0))) < t.id_last_msg
 					AND t.approved = {int:is_approved}
 				ORDER BY {raw:order}
@@ -1103,6 +1111,7 @@ function UnreadTopics()
 					'offset' => $_REQUEST['start'],
 					'limit' => $context['topics_per_page'],
 					'sort' => $_REQUEST['sort'],
+					'unsubscribed' => 1,
 				))
 			);
 

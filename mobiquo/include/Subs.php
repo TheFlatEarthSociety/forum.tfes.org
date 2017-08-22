@@ -1732,18 +1732,18 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 		// [spoiler] tag
 		$codes[] = array(
 				'tag' => 'spoiler',
-				'type' => 'unparsed_content',
- 				'content' => '<span style="background: black; color: black" onclick="(function(obj){ (obj.style.background.indexOf(\'black\') != -1) ? obj.style.background = \'\' : obj.style.background = \'black\'; })(this)">$1</span>'
+				'before' => '<span style="background: black; color: black" onclick="(function(obj){ (obj.style.background.indexOf(\'black\') != -1) ? obj.style.background = \'\' : obj.style.background = \'black\'; })(this)">',
+				'after' => '</span>'
 		);
 
 		// [spoiler color=plzcolor]
 		$codes[] = array(
 				'tag' => 'spoiler',
-				'type' => 'unparsed_content',
 				'parameters' => array(
 					'color' => array('match' => '(#[\da-fA-F]{3}|#[\da-fA-F]{6}|[A-Za-z]{1,20}|rgb\(\d{1,3}, ?\d{1,3}, ?\d{1,3}\))'),
 				),
-				'content' => '<span style="background: {color}; color: {color}" onclick="(function(obj){ (obj.style.background.indexOf(\'{color}\') != -1) ? obj.style.background = \'\' : obj.style.background = \'{color}\'; })(this)">$1</span>'
+				'before' => '<span style="background: {color}; color: {color}" onclick="(function(obj){ (obj.style.background.indexOf(\'{color}\') != -1) ? obj.style.background = \'\' : obj.style.background = \'{color}\'; })(this)">',
+				'after' => '</span>'
 		);
 
 		foreach ($codes as $code)

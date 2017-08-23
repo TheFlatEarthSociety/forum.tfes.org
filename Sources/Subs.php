@@ -3955,7 +3955,7 @@ function setupMenuContext()
 		$buttons = array(
 			'realhome' => array (
 				'title' => "Home",
-				'href'  => "http://www.tfes.org/",
+				'href'  => "//www.tfes.org/",
 				'show'  => true,
 				'sub_buttons' => array (),
 				'is_last' => $context['right_to_left'],
@@ -3969,7 +3969,7 @@ function setupMenuContext()
 			),
 			'wiki' => array(
 				'title' => "Wiki",
-				'href'  => "http://wiki.tfes.org/",
+				'href'  => "//wiki.tfes.org/",
 				'show'  => true,
 				'sub_buttons' => array (),
 			),

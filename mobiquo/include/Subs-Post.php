@@ -677,13 +677,14 @@ function sendmail($to, $subject, $message, $from = null, $message_id = null, $se
 	list (, $subject) = mimespecialchars($subject, true, $hotmail_fix, $line_break);
 
 	// Construct the mail headers...
-	$headers = 'From: "' . $from_name . '" <' . (empty($modSettings['mail_from']) ? $webmaster_email : $modSettings['mail_from']) . '>' . $line_break;
+	$from_addr = empty($modSettings['mail_from']) ? $webmaster_email : $modSettings['mail_from'];
+	$headers = 'From: "' . $from_name . '" <' . $from_addr . '>' . $line_break;
 	$headers .= $from !== null ? 'Reply-To: <' . $from . '>' . $line_break : '';
-	$headers .= 'Return-Path: ' . (empty($modSettings['mail_from']) ? $webmaster_email : $modSettings['mail_from']) . $line_break;
+	$headers .= 'Return-Path: ' . $from_addr . $line_break;
 	$headers .= 'Date: ' . gmdate('D, d M Y H:i:s') . ' -0000' . $line_break;
 
 	if ($message_id !== null && empty($modSettings['mail_no_message_id']))
-		$headers .= 'Message-ID: <' . md5($scripturl . microtime()) . '-' . $message_id . strstr(empty($modSettings['mail_from']) ? $webmaster_email : $modSettings['mail_from'], '@') . '>' . $line_break;
+		$headers .= 'Message-ID: <' . md5($scripturl . microtime()) . '-' . $message_id . strstr($from_addr, '@') . '>' . $line_break;
 	$headers .= 'X-Mailer: SMF' . $line_break;
 
 	// Pass this to the integration before we start modifying the output -- it'll make it easier later.
@@ -764,7 +765,7 @@ function sendmail($to, $subject, $message, $from = null, $message_id = null, $se
 
 		foreach ($to_array as $to)
 		{
-			if (!mail(strtr($to, array("\r" => '', "\n" => '')), $subject, $message, $headers))
+			if (!mail(strtr($to, array("\r" => '', "\n" => '')), $subject, $message, $headers, "-f $from_addr"))
 			{
 				log_error(sprintf($txt['mail_send_unable'], $to));
 				$mail_result = false;

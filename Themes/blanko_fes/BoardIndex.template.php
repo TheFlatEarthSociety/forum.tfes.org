@@ -13,6 +13,7 @@
 function template_main()
 {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings;
+
 	// Google searchbox
 	// This is only supposed to be included in the forum's homepage, so this seems to be its natural homepage
 	echo '
@@ -24,7 +25,7 @@ function template_main()
 			<input type="submit"/>
 		</form>
 	</div>';
-	
+
 	// Add "New Posts" and "New Replies" buttons
 	if ($context['user']['is_logged'])
 		echo '

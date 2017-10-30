@@ -16,7 +16,7 @@ function template_main()
 	// Google searchbox
 	// This is only supposed to be included in the forum's homepage, so this seems to be its natural homepage
 	echo '
-	<div itemscope itemtype="http://schema.org/WebSite" style="display: none;">
+	<div itemscope itemtype="http://schema.org/WebSite">
 		<meta itemprop="url" content="https://forum.tfes.org/"/>
 		<form itemprop="potentialAction" itemscope itemtype="http://schema.org/SearchAction">
 			<meta itemprop="target" content="https://forum.tfes.org/index.php?action=search2&search={search_term_string}"/>

@@ -10,7 +10,7 @@ defined('IN_MOBIQUO') or exit;
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.14
+ * @version 2.0.15
  */
 
 if (!defined('SMF'))
@@ -129,7 +129,7 @@ function SendTopic()
 		fatal_lang_error('no_name', false);
 	if (!isset($_POST['y_email']) || $_POST['y_email'] == '')
 		fatal_lang_error('no_email', false);
-	if (filter_var($_POST['ryemail'], FILTER_VALIDATE_EMAIL) === false)
+	if (filter_var($_POST['y_email'], FILTER_VALIDATE_EMAIL) === false)
 		fatal_lang_error('email_invalid_character', false);
 
 	// The receiver should be valid to.

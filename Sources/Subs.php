@@ -1924,7 +1924,7 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 							function($matches)
 							{
 								// Identify start time
-								$startpattern = '~[?&;](?:star)?t=(?:(\d+)h)?(?:(\d+)m)?(\d+)s?~';
+								$startpattern = '~[?&;](?:star)?t=(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s?)?~';
 								preg_match ($startpattern, $matches[0], $startmatches);
 								// Translate from a hours/minutes/seconds format to seconds only
 								$startval = $startmatches[1]*3600 + $startmatches[2]*60 + $startmatches[3];

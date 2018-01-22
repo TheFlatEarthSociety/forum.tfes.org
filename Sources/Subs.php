@@ -889,6 +889,7 @@ function permute($array)
 }
 
 // Parse bulletin board code in a string, as well as smileys optionally.
+define(YOUTUBE_PATTERN, '~(?:http|https|)(?::\/\/|)(?:www\.|m\.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[a-z0-9;:@?&%=+\/\$_.-]*~i');
 function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = array())
 {
 	global $txt, $scripturl, $context, $modSettings, $user_info, $smcFunc;
@@ -1618,7 +1619,7 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 				'validate' => create_function('&$tag, &$data, $disabled', '
 				if (isset($disabled[\'url\']))
 					$tag[\'content\'] = \'https://www.youtube.com/watch?v=$1\';
-				$pattern = \'~(?:http|https|)(?::\/\/|)(?:www\.|m\.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[a-z0-9;:@?&%=+\/\$_.-]*~i\';
+				$pattern = YOUTUBE_PATTERN;
 				if (preg_match($pattern, $data, $matches))
 					$data = $matches[1];'),
 				'disabled_content' => 'https://www.youtube.com/watch?v=$1',
@@ -1634,7 +1635,7 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 				'validate' => create_function('&$tag, &$data, $disabled', '
 				if (isset($disabled[\'url\']))
 					$tag[\'content\'] = \'https://www.youtube.com/watch?v=$1\';
-				$pattern = \'~(?:http|https|)(?::\/\/|)(?:www\.|m\.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[a-z0-9;:@?&%=+\/\$_.-]*~i\';
+				$pattern = YOUTUBE_PATTERN;
 				if (preg_match($pattern, $data, $matches))
 					$data = $matches[1];'),
 				'disabled_content' => 'https://www.youtube.com/watch?v=$1',
@@ -1918,23 +1919,24 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 						// Switch out quotes really quick because they can cause problems.
 						$data = strtr($data, array('&#039;' => '\'', '&nbsp;' => $context['utf8'] ? "\xC2\xA0" : "\xA0", '&quot;' => '>">', '"' => '<"<', '&lt;' => '<lt<'));
 
-						// Only do this if the preg survives.
 						// Do the YouTube!
-						// Start with the regex we originally used to identify YT links
-                                                if (is_string($result = preg_replace_callback('~(?:http|https|)(?::\/\/|)(?:www\.|m\.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[a-z0-9;:@?&%=+\/\$_.-]*~i',
+						if (is_string($result = preg_replace_callback(YOUTUBE_PATTERN,
 							function($matches)
 							{
-								//Identify start time
-								$startpattern = '~[?&;](?:star)?t=(?:([0-9]+)h)?(?:([0-9]+)m)?([0-9]+)s?~';
+								// Identify start time
+								$startpattern = '~[?&;](?:star)?t=(?:(\d+)h)?(?:(\d+)m)?(\d+)s?~';
 								preg_match ($startpattern, $matches[0], $startmatches);
-								//Translate from a hours/minutes/seconds format to seconds only
+								// Translate from a hours/minutes/seconds format to seconds only
 								$startval = $startmatches[1]*3600 + $startmatches[2]*60 + $startmatches[3];
-								//Do we have a meaningful start timestamp?
-								if($startval > 0)
+								// Do we have a meaningful start timestamp? Assume that start
+								// times greater than 1 week are bogus input.
+								if($startval > 0 && $startval <= 604800)
 									return '[youtube start=' . $startval . ']' . $matches[1] . '[/youtube]';
 								return '[youtube]' . $matches[1] . '[/youtube]';
 							}, $data)))
 							$data = $result;
+
+						// Only do this if the preg survives.
 						if (is_string($result = preg_replace(array(
 							'~(?<=[\s>\.(;\'"]|^)((?:http|https)://[\w\-_%@:|]+(?:\.[\w\-_%]+)*(?::\d+)?(?:/[\w\-_\~%\.@!,\?&;=#(){}+:\'\\\\]*)*[/\w\-_\~%@\?;=#}\\\\])~i',
 							'~(?<=[\s>\.(;\'"]|^)((?:ftp|ftps)://[\w\-_%@:|]+(?:\.[\w\-_%]+)*(?::\d+)?(?:/[\w\-_\~%\.@,\?&;=#(){}+:\'\\\\]*)*[/\w\-_\~%@\?;=#}\\\\])~i',
@@ -4742,4 +4744,3 @@ function safe_unserialize($str)
 	return $out;
 }
 ?>
-

@@ -1614,7 +1614,23 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 			array(
 				'tag' => 'youtube',
 				'type' => 'unparsed_content',
-				'content' => '<iframe style="border:0;" width="642" height="392" src="https://www.youtube-nocookie.com/embed/$1" allowfullscreen></iframe>',
+				'content' => '<iframe class="youtube_iframe" style="border:0;" width="642" height="392" src="https://www.youtube-nocookie.com/embed/$1?modestbranding=1" allowfullscreen></iframe>',
+				'validate' => create_function('&$tag, &$data, $disabled', '
+				if (isset($disabled[\'url\']))
+					$tag[\'content\'] = \'https://www.youtube.com/watch?v=$1\';
+				$pattern = \'~(?:http|https|)(?::\/\/|)(?:www\.|m\.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[a-z0-9;:@?&%=+\/\$_.-]*~i\';
+				if (preg_match($pattern, $data, $matches))
+					$data = $matches[1];'),
+				'disabled_content' => 'https://www.youtube.com/watch?v=$1',
+			),
+			array(
+				'tag' => 'youtube',
+				'type' => 'unparsed_content',
+				'parameters' => array(
+					'start' => array('optional' => true, 'value' => '&start=$1', 'match' => '(\d+)'),
+					'end' => array('optional' => true, 'value' => '&end=$1', 'match' => '(\d+)'),
+				),
+				'content' => '<iframe class="youtube_iframe" style="border:0;" width="642" height="392" src="https://www.youtube-nocookie.com/embed/$1?modestbranding=1{start}{end}" allowfullscreen></iframe>',
 				'validate' => create_function('&$tag, &$data, $disabled', '
 				if (isset($disabled[\'url\']))
 					$tag[\'content\'] = \'https://www.youtube.com/watch?v=$1\';
@@ -1903,14 +1919,27 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 						$data = strtr($data, array('&#039;' => '\'', '&nbsp;' => $context['utf8'] ? "\xC2\xA0" : "\xA0", '&quot;' => '>">', '"' => '<"<', '&lt;' => '<lt<'));
 
 						// Only do this if the preg survives.
-						//First line in each array added by "Simple_Youtube_Video_Embed_BBC" mod to parse youtube videos automatically
+						// Do the YouTube!
+						// Start with the regex we originally used to identify YT links
+                                                if (is_string($result = preg_replace_callback('~(?:http|https|)(?::\/\/|)(?:www\.|m\.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[a-z0-9;:@?&%=+\/\$_.-]*~i',
+							function($matches)
+							{
+								//Identify start time
+								$startpattern = '~[?&;](?:star)?t=(?:([0-9]+)h)?(?:([0-9]+)m)?([0-9]+)s?~';
+								preg_match ($startpattern, $matches[0], $startmatches);
+								//Translate from a hours/minutes/seconds format to seconds only
+								$startval = $startmatches[1]*3600 + $startmatches[2]*60 + $startmatches[3];
+								//Do we have a meaningful start timestamp?
+								if($startval > 0)
+									return '[youtube start=' . $startval . ']' . $matches[1] . '[/youtube]';
+								return '[youtube]' . $matches[1] . '[/youtube]';
+							}, $data)))
+							$data = $result;
 						if (is_string($result = preg_replace(array(
-							'~(?:http|https|)(?::\/\/|)(?:www\.|m\.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[a-z0-9;:@?&%=+\/\$_.-]*~i',
 							'~(?<=[\s>\.(;\'"]|^)((?:http|https)://[\w\-_%@:|]+(?:\.[\w\-_%]+)*(?::\d+)?(?:/[\w\-_\~%\.@!,\?&;=#(){}+:\'\\\\]*)*[/\w\-_\~%@\?;=#}\\\\])~i',
 							'~(?<=[\s>\.(;\'"]|^)((?:ftp|ftps)://[\w\-_%@:|]+(?:\.[\w\-_%]+)*(?::\d+)?(?:/[\w\-_\~%\.@,\?&;=#(){}+:\'\\\\]*)*[/\w\-_\~%@\?;=#}\\\\])~i',
 							'~(?<=[\s>(\'<]|^)(www(?:\.[\w\-_]+)+(?::\d+)?(?:/[\w\-_\~%\.@!,\?&;=#(){}+:\'\\\\]*)*[/\w\-_\~%@\?;=#}\\\\])~i'
 						), array(
-							'[youtube]$1[/youtube]',
 							'[url]$1[/url]',
 							'[ftp]$1[/ftp]',
 							'[url=http://$1]$1[/url]'
@@ -4713,3 +4742,4 @@ function safe_unserialize($str)
 	return $out;
 }
 ?>
+

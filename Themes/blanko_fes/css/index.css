@@ -421,6 +421,7 @@ code.bbc_code
 
 .bbc_table td
 {
+    padding: 0px 3px 0px 3px;
     font: inherit;
     color: inherit;
     vertical-align: top;

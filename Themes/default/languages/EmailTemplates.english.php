@@ -28,14 +28,16 @@ $txt['emails'] = array(
 				FORGOTPASSWORDLINK: The url to the "forgot password" page.
 			@description:
 		*/
-		'subject' => 'Welcome to {FORUMNAME}',
-		'body' => 'Thank you for registering at {FORUMNAME}. Your username is {USERNAME}. If you forget your password, you can reset it by visiting {FORGOTPASSWORDLINK}.
+		'subject' => 'Please verify your account at {FORUMNAME}',
+		'body' => 'Hello, {USERNAME}! Welcome to {FORUMNAME}.
 
-Before you can login, you must first activate your account by selecting the following link:
+Before you can log in, please activate your account by visiting {ACTIVATIONLINK}.
 
-{ACTIVATIONLINK}
+Please also familiarise yourself with the FAQ (https://faq.tfes.org/) and our forum rules (https://forum.tfes.org/index.php?topic=977.0).
 
-Should you have any problems with the activation, please visit {ACTIVATIONLINKWITHOUTCODE} and enter the code "{ACTIVATIONCODE}".
+If you forget your password, you can always reset it by visiting {FORGOTPASSWORDLINK}.
+
+If you were not expecting this e-mail, someone may have provided your e-mail address during registration. Simply ignore this message and the account will not be activated. You will not receive any further communication from us.
 
 {REGARDS}',
 	),
@@ -540,14 +542,16 @@ You may change it after you login by going to the profile page, or by visiting t
 				FORGOTPASSWORDLINK: The url to the "forgot password" page.
 			@description:
 		*/
-		'subject' => 'Welcome to {FORUMNAME}',
-		'body' => 'Thank you for registering at {FORUMNAME}. Your username is {USERNAME}. If you forget your password, you can reset it by visiting {FORGOTPASSWORDLINK}.
+		'subject' => 'Please verify your account at {FORUMNAME}',
+		'body' => 'Hello, {USERNAME}! Welcome to {FORUMNAME}.
 
-Before you can login, you first need to activate your account. To do so, please follow this link:
+Before you can log in, please activate your account by visiting {ACTIVATIONLINK}.
 
-{ACTIVATIONLINK}
+Please also familiarise yourself with the FAQ (https://faq.tfes.org/) and our forum rules (https://forum.tfes.org/index.php?topic=977.0).
 
-Should you have any problems with activation, please visit {ACTIVATIONLINKWITHOUTCODE} use the code "{ACTIVATIONCODE}".
+If you forget your password, you can always reset it by visiting {FORGOTPASSWORDLINK}.
+
+If you were not expecting this e-mail, someone may have provided your e-mail address during registration. Simply ignore this message and the account will not be activated. You will not receive any further communication from us.
 
 {REGARDS}',
 	),

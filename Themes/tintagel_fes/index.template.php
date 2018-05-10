@@ -235,7 +235,7 @@ function template_html_above()
   })(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');
 
   ga(\'create\', \'UA-48900853-2\', \'tfes.org\');
-  ga(\'set\', \'anonymizeIp\', \'true\');
+  ga(\'set\', \'anonymizeIp\', true);
   ga(\'send\', \'pageview\');
 
 </script>';

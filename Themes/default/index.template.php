@@ -130,8 +130,8 @@ function template_html_above()
 	if (!empty($context['canonical_url']))
 		echo '
 	<link rel="canonical" href="', $context['canonical_url'], '" />';
-	// Don't respect SMF's noindex value if we have a perfectly good canonical URL to work with.
-	else if(!empty($context['robot_no_index']))
+	// Robots, no roboting!
+	if(!empty($context['robot_no_index']))
 		echo '
 	<meta name="robots" content="noindex" />';
 

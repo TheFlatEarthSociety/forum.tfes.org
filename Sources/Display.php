@@ -93,17 +93,6 @@ function Display()
 		$context['messages_per_page_canonical'] = empty($modSettings['disableCustomPerPage']) && !empty($options['messages_per_page']) ? $options['messages_per_page'] : $modSettings['defaultMaxMessages_orig'];
 	}
 
-	// Let's do some work on what to search index.
-	if (count($_GET) > 2)
-		foreach ($_GET as $k => $v)
-		{
-			if (!in_array($k, array('topic', 'board', 'start', session_name())))
-				$context['robot_no_index'] = true;
-		}
-
-	if (!empty($_REQUEST['start']) && (!is_numeric($_REQUEST['start']) || $_REQUEST['start'] % $context['messages_per_page'] != 0))
-		$context['robot_no_index'] = true;
-
 	// Find the previous or next topic.  Make a fuss if there are no more.
 	if (isset($_REQUEST['prev_next']) && ($_REQUEST['prev_next'] == 'prev' || $_REQUEST['prev_next'] == 'next'))
 	{

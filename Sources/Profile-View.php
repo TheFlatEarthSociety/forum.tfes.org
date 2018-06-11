@@ -84,6 +84,10 @@ function summary($memID)
 	$context['member'] = &$memberContext[$memID];
 	$context['can_view_warning'] = in_array('w', $context['admin_features']) && (allowedTo('issue_warning') && !$context['user']['is_owner']) || (!empty($modSettings['warning_show']) && ($modSettings['warning_show'] > 1 || $context['user']['is_owner']));
 
+	// Do not index this user if their post count is less than 500.
+	if ($context['member']['real_posts'] < 500)
+		$context['robot_no_index'] = true;
+
 	// Set a canonical URL for this page.
 	$context['canonical_url'] = $scripturl . '?action=profile;u=' . $memID;
 

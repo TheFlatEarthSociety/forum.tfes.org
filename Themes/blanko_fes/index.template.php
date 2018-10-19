@@ -155,7 +155,7 @@ function template_html_above()
 	<meta http-equiv="Content-Type" content="text/html; charset=', $context['character_set'], '" />';
 	//Theme colour for mobile browsers
 	echo '
-	<meta name="theme-color" content="#6590a5">';
+	<meta name="theme-color" content="#4c798e">';
 
 	//Here comes SexWarrior`s meta description bloat!
 	//If it has a defined description, use that.

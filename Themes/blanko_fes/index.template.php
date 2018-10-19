@@ -153,6 +153,10 @@ function template_html_above()
 	</style>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=', $context['character_set'], '" />';
+	//Theme colour for mobile browsers
+	echo '
+	<meta name="theme-color" content="#6590a5">';
+
 	//Here comes SexWarrior`s meta description bloat!
 	//If it has a defined description, use that.
 	if (!empty($context['description']))

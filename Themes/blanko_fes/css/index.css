@@ -209,6 +209,7 @@ em
 iframe, video, audio
 {
     max-width: 100%;
+    height: auto;
 }
 
 /* Common classes to easy styling.

@@ -209,7 +209,15 @@ em
 iframe, video, audio
 {
     max-width: 100%;
-    height: auto;
+}
+
+/* Keep YouTube iframes in aspect ratio */
+iframe.youtube_iframe
+{
+    width: 642px;
+    height: 392px;
+    max-width: 80vw;
+    max-height: 45vw;
 }
 
 /* Common classes to easy styling.

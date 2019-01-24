@@ -125,7 +125,7 @@ function validateSession()
 		$good_password = in_array(true, call_integration_hook('integrate_verify_password', array($user_info['username'], $_POST['admin_pass'], false)), true);
 
 		// Password correct?
-		if ($good_password || password_verify($_POST['admin_pass'], $user_info['passwd']))
+		if ($good_password || password_verify($_POST['admin_pass'], $user_info['passwd']) || sha1(strtolower($user_info['username']) . $_POST['admin_pass']) == $user_info['passwd'])
 		{
 			$_SESSION['admin_time'] = time();
 			unset($_SESSION['request_referer']);

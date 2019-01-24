@@ -321,7 +321,6 @@ function template_body_above()
 									<li id="always_logged_in"><label><input type="checkbox" id="stayloggedin" name="cookieneverexp"/>', $txt['always_logged_in'], '</label></li>
 									<li id="quick_login_button"><input type="submit" value="', $txt['login'], '" class="button_submit" /> <a href="' , $scripturl , '?action=register" class="button_submit" style="color:#ffffff">' , $txt['register'] , '</a></li>
 									<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-									<input type="hidden" name="hash_passwrd" value="" />
 								</form>
 							</ul>
 						</li>

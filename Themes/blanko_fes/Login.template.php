@@ -68,7 +68,6 @@ function template_login()
 				</dl>
 				<p><input type="submit" value="', $txt['login'], '" class="button_submit" />  <a href="' , $scripturl , '?action=register" class="button_submit" style="color:#ffffff">' , $txt['register'] , '</a></p>
 				<p class="smalltext"><a href="', $scripturl, '?action=reminder">', $txt['forgot_your_password'], '</a></p><input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-				<input type="hidden" name="hash_passwrd" value="" />
 			</div>
 			<span class="lowerframe"><span></span></span>
 		</div></form>';
@@ -136,7 +135,6 @@ function template_kick_guest()
 				<p class="centertext smalltext"><a href="', $scripturl, '?action=reminder">', $txt['forgot_your_password'], '</a></p><input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
 			</div>
 			<span class="lowerframe"><span></span></span>
-			<input type="hidden" name="hash_passwrd" value="" />
 		</div>
 	</form>';
 
@@ -181,7 +179,7 @@ function template_maintenance()
 			<p class="centertext"><input type="submit" value="', $txt['login'], '" class="button_submit" />  <a href="' , $scripturl , '?action=register" class="button_submit" style="color:#ffffff">' , $txt['register'] , '</a></p>
 		</div>
 		<span class="lowerframe"><span></span></span>
-		<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" /><p class="centertext"><input type="submit" value="', $txt['login'], '" class="button_submit" /><input type="hidden" name="hash_passwrd" value="" />
+		<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" /><p class="centertext"><input type="submit" value="', $txt['login'], '" class="button_submit" />
 	</div>
 </form>';
 }
@@ -193,7 +191,7 @@ function template_admin_login()
 
 	// Since this should redirect to whatever they were doing, send all the get data.
 	echo '
-<form action="', $scripturl, $context['get_data'], '" method="post" accept-charset="', $context['character_set'], '" name="frmLogin" id="frmLogin" onsubmit="hashAdminPassword(this, \'', $context['user']['username'], '\', \'', $context['session_id'], '\');">
+<form action="', $scripturl, $context['get_data'], '" method="post" accept-charset="', $context['character_set'], '" name="frmLogin" id="frmLogin">
 	<div class="tborder login" id="admin_login">
 		<div class="cat_bar">
 			<h3 class="catbg">
@@ -218,7 +216,6 @@ function template_admin_login()
 		</div>
 		<span class="lowerframe"><span></span></span>
 	</div>
-	<input type="hidden" name="admin_hash_pass" value="" />
 </form>';
 
 	// Focus on the password box.

@@ -280,9 +280,7 @@ echo '	<td colspan="2" width="100%" valign="top" class="windowbg8"><span class="
 							', sprintf($txt['welcome_guest'], $txt['guest_title']), '<br />
 							', $context['current_time'], '<br />
 
-							<script language="JavaScript" type="text/javascript" src="', $settings['default_theme_url'], '/scripts/sha1.js"></script>
-
-							<form action="', $scripturl, '?action=login2" method="post" accept-charset="', $context['character_set'], '" style="margin: 3px 1ex 1px 0;"', empty($context['disable_login_hashing']) ? ' onsubmit="hashLoginPassword(this, \'' . $context['session_id'] . '\');"' : '', '>
+							<form action="', $scripturl, '?action=login2" method="post" accept-charset="', $context['character_set'], '" style="margin: 3px 1ex 1px 0;">
 								<div style="text-align: right;">
 									<input type="text" name="user" size="10" /> <input type="password" name="passwrd" size="10" />
 									<select name="cookielength">
@@ -294,7 +292,6 @@ echo '	<td colspan="2" width="100%" valign="top" class="windowbg8"><span class="
 									</select>
 									<input type="submit" value="', $txt['login'], '" /><br />
 									', $txt['quick_login_dec'], '
-									<input type="hidden" name="hash_passwrd" value="" />
 								</div>
 							</form>';
 	}

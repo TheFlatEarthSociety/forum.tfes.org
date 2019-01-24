@@ -243,8 +243,7 @@ function template_body_above()
 	elseif (!empty($context['show_login_bar']))
 	{
 		echo '
-				<script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/sha1.js"></script>
-				<form id="guest_form" action="', $scripturl, '?action=login2" method="post" accept-charset="', $context['character_set'], '" ', empty($context['disable_login_hashing']) ? ' onsubmit="hashLoginPassword(this, \'' . $context['session_id'] . '\');"' : '', '>
+				<form id="guest_form" action="', $scripturl, '?action=login2" method="post" accept-charset="', $context['character_set'], '">
 					<div class="info">', sprintf($txt['welcome_guest'], $txt['guest_title']), '</div>
 					<input type="text" name="user" size="10" class="input_text" />
 					<input type="password" name="passwrd" size="10" class="input_password" />
@@ -263,7 +262,7 @@ function template_body_above()
 					<br /><input type="text" name="openid_identifier" id="openid_url" size="25" class="input_text openid_login" />';
 
 		echo '
-					<input type="hidden" name="hash_passwrd" value="" /><input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
+					<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
 				</form>';
 	}
 

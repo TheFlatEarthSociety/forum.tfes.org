@@ -264,7 +264,7 @@ function Login2()
 	// Let's hold on to the SHA1 hash for legacy login support
 	$sha_passwd = sha1(strtolower($user_settings['member_name']) . un_htmlspecialchars($password_attempt));
 	// Check modern login
-	if(password_verify($password_attempt, $user_settings['passwd'])
+	if(password_verify($password_attempt, $user_settings['passwd']))
 	{
 		// TODO: Check if password needs rehashing
 		// Final cleanup bits borrowed from original SMF login code

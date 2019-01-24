@@ -266,7 +266,14 @@ function Login2()
 	// Check modern login
 	if(password_verify($password_attempt, $user_settings['passwd']))
 	{
-		// TODO: Check if password needs rehashing
+		// Check if password needs rehashing
+		if(password_needs_rehash($user_settings['passwd'], PASSWORD_DEFAULT))
+		{
+			// Rehash password
+			$user_settings['passwd'] = password_hash($password_attempt, PASSWORD_DEFAULT);
+			// Update the password and set up the hash.
+			updateMemberData($user_settings['id_member'], array('passwd' => $user_settings['passwd'], 'passwd_flood' => ''));
+		}
 		// Final cleanup bits borrowed from original SMF login code
 		if (!empty($user_settings['passwd_flood']))
 		{

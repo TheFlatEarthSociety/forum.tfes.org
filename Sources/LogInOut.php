@@ -260,10 +260,56 @@ function Login2()
 	$user_settings = $smcFunc['db_fetch_assoc']($request);
 	$smcFunc['db_free_result']($request);
 
-	$sha_passwd = sha1(strtolower($user_settings['member_name']) . un_htmlspecialchars($_POST['passwrd']));
+	$password_attempt = $_POST['passwrd'];
+	// Let's hold on to the SHA1 hash for legacy login support
+	$sha_passwd = sha1(strtolower($user_settings['member_name']) . un_htmlspecialchars($password_attempt));
+	// Check modern login
+	if(password_verify($password_attempt, $user_settings['passwd'])
+	{
+		// TODO: Check if password needs rehashing
+		// Final cleanup bits borrowed from original SMF login code
+		if (!empty($user_settings['passwd_flood']))
+		{
+			// Let's be sure they weren't a little hacker.
+			validatePasswordFlood($user_settings['id_member'], $user_settings['passwd_flood'], true);
 
+			// If we got here then we can reset the flood counter.
+			updateMemberData($user_settings['id_member'], array('passwd_flood' => ''));
+		}
+
+		// Check their activation status.
+		if (!checkActivation())
+			return;
+
+		DoLogin();
+		return;
+	}
+	// Check crappy SHA1 login
+	elseif($user_settings['passwd'] == $sha_passwd)
+	{
+		// Rehash password
+		$user_settings['passwd'] = password_hash($password_attempt, PASSWORD_DEFAULT);
+		// Update the password and set up the hash.
+		updateMemberData($user_settings['id_member'], array('passwd' => $user_settings['passwd'], 'passwd_flood' => ''));
+		// Final cleanup bits borrowed from original SMF login code
+		if (!empty($user_settings['passwd_flood']))
+		{
+			// Let's be sure they weren't a little hacker.
+			validatePasswordFlood($user_settings['id_member'], $user_settings['passwd_flood'], true);
+
+			// If we got here then we can reset the flood counter.
+			updateMemberData($user_settings['id_member'], array('passwd_flood' => ''));
+		}
+
+		// Check their activation status.
+		if (!checkActivation())
+			return;
+
+		DoLogin();
+		return;
+	}
 	// Bad password!  Thought you could fool the database?!
-	if ($user_settings['passwd'] != $sha_passwd)
+	else
 	{
 		// Let's be cautious, no hacking please. thanx.
 		validatePasswordFlood($user_settings['id_member'], $user_settings['passwd_flood']);
@@ -288,20 +334,6 @@ function Login2()
 		}
 	
 	}
-	elseif (!empty($user_settings['passwd_flood']))
-	{
-		// Let's be sure they weren't a little hacker.
-		validatePasswordFlood($user_settings['id_member'], $user_settings['passwd_flood'], true);
-
-		// If we got here then we can reset the flood counter.
-		updateMemberData($user_settings['id_member'], array('passwd_flood' => ''));
-	}
-
-	// Check their activation status.
-	if (!checkActivation())
-		return;
-
-	DoLogin();
 }
 
 function checkActivation()

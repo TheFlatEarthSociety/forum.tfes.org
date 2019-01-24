@@ -3016,7 +3016,7 @@ function profileReloadUser()
 	if (isset($_POST['passwrd2']) && $_POST['passwrd2'] != '')
 	{
 		require_once($sourcedir . '/Subs-Auth.php');
-		setLoginCookie(60 * $modSettings['cookieTime'], $context['id_member'], sha1($cur_profile['passwd'] . $cur_profile['password_salt']));
+		setLoginCookie(60 * $modSettings['cookieTime'], $context['id_member'], sha1($cur_profile['passwrd1'] . $cur_profile['password_salt']));
 	}
 
 	loadUserSettings();

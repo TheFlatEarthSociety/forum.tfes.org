@@ -513,7 +513,7 @@ function loadProfileFields($force_reload = false)
 					return \'password_\' . $passwordErrors;
 
 				// Set up the new password variable... ready for storage.
-				$value = sha1(strtolower($cur_profile[\'member_name\']) . un_htmlspecialchars($value));
+				$value = password_hash($value, PASSWORD_DEFAULT);
 				return true;
 			'),
 		),
@@ -1782,12 +1782,12 @@ function authentication($memID, $saving = false)
 				call_integration_hook('integrate_reset_pass', array($cur_profile['member_name'], $cur_profile['member_name'], $_POST['passwrd1']));
 
 				// Go then.
-				$passwd = sha1(strtolower($cur_profile['member_name']) . un_htmlspecialchars($_POST['passwrd1']));
+				$passwd = password_hash($_POST['passwrd1'], PASSWORD_DEFAULT);
 
 				// Do the important bits.
 				updateMemberData($memID, array('openid_uri' => '', 'passwd' => $passwd));
 				if ($context['user']['is_owner'])
-					setLoginCookie(60 * $modSettings['cookieTime'], $memID, sha1(sha1(strtolower($cur_profile['member_name']) . un_htmlspecialchars($_POST['passwrd2'])) . $cur_profile['password_salt']));
+					setLoginCookie(60 * $modSettings['cookieTime'], $memID, sha1($passwd . $cur_profile['password_salt']));
 
 				redirectexit('action=profile;u=' . $memID);
 			}
@@ -3016,7 +3016,7 @@ function profileReloadUser()
 	if (isset($_POST['passwrd2']) && $_POST['passwrd2'] != '')
 	{
 		require_once($sourcedir . '/Subs-Auth.php');
-		setLoginCookie(60 * $modSettings['cookieTime'], $context['id_member'], sha1(sha1(strtolower($cur_profile['member_name']) . un_htmlspecialchars($_POST['passwrd2'])) . $cur_profile['password_salt']));
+		setLoginCookie(60 * $modSettings['cookieTime'], $context['id_member'], sha1($cur_profile['passwd'] . $cur_profile['password_salt']));
 	}
 
 	loadUserSettings();

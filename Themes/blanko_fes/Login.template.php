@@ -16,9 +16,7 @@ function template_login()
 	global $context, $settings, $options, $scripturl, $modSettings, $txt;
 
 	echo '
-		<script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/sha1.js"></script>
-
-		<form action="', $scripturl, '?action=login2" name="frmLogin" id="frmLogin" method="post" accept-charset="', $context['character_set'], '" ', empty($context['disable_login_hashing']) ? ' onsubmit="hashLoginPassword(this, \'' . $context['session_id'] . '\');"' : '', '>
+		<form action="', $scripturl, '?action=login2" name="frmLogin" id="frmLogin" method="post" accept-charset="', $context['character_set'], '">
 		<div class="tborder login">
 			<div class="cat_bar">
 				<h3 class="catbg">
@@ -89,8 +87,7 @@ function template_kick_guest()
 
 	// This isn't that much... just like normal login but with a message at the top.
 	echo '
-	<script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/sha1.js"></script>
-	<form action="', $scripturl, '?action=login2" method="post" accept-charset="', $context['character_set'], '" name="frmLogin" id="frmLogin"', empty($context['disable_login_hashing']) ? ' onsubmit="hashLoginPassword(this, \'' . $context['session_id'] . '\');"' : '', '>
+	<form action="', $scripturl, '?action=login2" method="post" accept-charset="', $context['character_set'], '" name="frmLogin" id="frmLogin">
 		<div class="tborder login">
 			<div class="cat_bar">
 				<h3 class="catbg">', $txt['warning'], '</h3>
@@ -157,8 +154,7 @@ function template_maintenance()
 
 	// Display the administrator's message at the top.
 	echo '
-<script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/sha1.js"></script>
-<form action="', $scripturl, '?action=login2" method="post" accept-charset="', $context['character_set'], '"', empty($context['disable_login_hashing']) ? ' onsubmit="hashLoginPassword(this, \'' . $context['session_id'] . '\');"' : '', '>
+<form action="', $scripturl, '?action=login2" method="post" accept-charset="', $context['character_set'], '">
 	<div class="tborder login" id="maintenance_mode">
 		<div class="cat_bar">
 			<h3 class="catbg">', $context['title'], '</h3>
@@ -197,8 +193,6 @@ function template_admin_login()
 
 	// Since this should redirect to whatever they were doing, send all the get data.
 	echo '
-<script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/sha1.js"></script>
-
 <form action="', $scripturl, $context['get_data'], '" method="post" accept-charset="', $context['character_set'], '" name="frmLogin" id="frmLogin" onsubmit="hashAdminPassword(this, \'', $context['user']['username'], '\', \'', $context['session_id'], '\');">
 	<div class="tborder login" id="admin_login">
 		<div class="cat_bar">

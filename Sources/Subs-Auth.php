@@ -585,7 +585,7 @@ function resetPassword($memID, $username = null)
 
 	// Generate a random password.
 	$newPassword = substr(preg_replace('/\W/', '', md5(mt_rand())), 0, 10);
-	$newPassword_sha1 = sha1(strtolower($user) . $newPassword);
+	$newPassword_hash = password_hash($newpassword, PASSWORD_DEFAULT);
 
 	// Do some checks on the username if needed.
 	if ($username !== null)
@@ -593,10 +593,10 @@ function resetPassword($memID, $username = null)
 		validateUsername($memID, $user);
 
 		// Update the database...
-		updateMemberData($memID, array('member_name' => $user, 'passwd' => $newPassword_sha1));
+		updateMemberData($memID, array('member_name' => $user, 'passwd' => $newPassword_hash));
 	}
 	else
-		updateMemberData($memID, array('passwd' => $newPassword_sha1));
+		updateMemberData($memID, array('passwd' => $newPassword_hash));
 
 	call_integration_hook('integrate_reset_pass', array($old_user, $user, $newPassword));
 

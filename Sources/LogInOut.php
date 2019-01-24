@@ -320,9 +320,6 @@ function Login2()
 	{
 		// Let's be cautious, no hacking please. thanx.
 		validatePasswordFlood($user_settings['id_member'], $user_settings['passwd_flood']);
-
-		// Maybe we were too hasty... let's try some other authentication methods.
-		$other_passwords = array();
 		
 		// They've messed up again - keep a count to see if they need a hand.
 		$_SESSION['failed_login'] = @$_SESSION['failed_login'] + 1;

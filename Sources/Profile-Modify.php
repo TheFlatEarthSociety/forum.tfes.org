@@ -3012,13 +3012,9 @@ function profileReloadUser()
 {
 	global $sourcedir, $modSettings, $context, $cur_profile, $smcFunc, $profile_vars;
 
-	// Log them back in - using the verify password as they must have matched and this one doesn't get changed by anyone!
-	if (isset($_POST['passwrd2']) && $_POST['passwrd2'] != '')
-	{
-		require_once($sourcedir . '/Subs-Auth.php');
-		setLoginCookie(60 * $modSettings['cookieTime'], $context['id_member'], sha1($cur_profile['passwrd1'] . $cur_profile['password_salt']));
-	}
-
+	// Log them back in
+	require_once($sourcedir . '/Subs-Auth.php');
+	setLoginCookie(60 * $modSettings['cookieTime'], $context['id_member'], sha1($cur_profile['passwrd1'] . $cur_profile['password_salt']));
 	loadUserSettings();
 	writeLog();
 }

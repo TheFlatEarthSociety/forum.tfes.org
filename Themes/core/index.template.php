@@ -198,7 +198,6 @@ function template_body_above()
 {
 	global $context, $settings, $options, $scripturl, $txt, $modSettings;
 
-
 	echo '
 <div id="mainframe"', !empty($settings['forum_width']) ? ' style="width: ' . $settings['forum_width'] . '"' : '', '>
 	<div class="tborder">
@@ -290,8 +289,7 @@ function template_body_above()
 	elseif (!empty($context['show_login_bar']))
 	{
 		echo '
-				<script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/sha1.js"></script>
-				<form class="windowbg" id="guest_form" action="', $scripturl, '?action=login2" method="post" accept-charset="', $context['character_set'], '" ', empty($context['disable_login_hashing']) ? ' onsubmit="hashLoginPassword(this, \'' . $context['session_id'] . '\');"' : '', '>
+				<form class="windowbg" id="guest_form" action="', $scripturl, '?action=login2" method="post" accept-charset="', $context['character_set'], '">
 					', $txt['login_or_register'], '<br />
 					<input type="text" name="user" size="10" class="input_text" />
 					<input type="password" name="passwrd" size="10" class="input_password" />
@@ -311,7 +309,6 @@ function template_body_above()
 					<input type="text" name="openid_identifier" id="openid_url" size="25" class="input_text openid_login" />';
 
 		echo '
-					<input type="hidden" name="hash_passwrd" value="" />
 				</form>';
 	}
 

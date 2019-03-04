@@ -164,8 +164,8 @@ function reloadSettings()
 			cache_put_data('modSettings', $modSettings, 90);
 	}
 
-	// UTF-8 in regular expressions is unsupported on PHP(win) versions < 4.2.3.
-	$utf8 = (empty($modSettings['global_character_set']) ? $txt['lang_character_set'] : $modSettings['global_character_set']) === 'UTF-8' && (strpos(strtolower(PHP_OS), 'win') === false || @version_compare(PHP_VERSION, '4.2.3') != -1);
+	// A legacy check for UTF-8 support used to live here, but it seems to produce false negatives. In the long term, it would be preferable to simply remove all checks for $utf8 from the application
+	$utf8 = true;
 
 	// Set a list of common functions.
 	$ent_list = empty($modSettings['disableEntityCheck']) ? '&(#\d{1,7}|quot|amp|lt|gt|nbsp);' : '&(#021|quot|amp|lt|gt|nbsp);';

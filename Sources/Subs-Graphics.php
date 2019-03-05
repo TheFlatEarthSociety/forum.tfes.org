@@ -318,38 +318,45 @@ function resizeImageFile($source, $destination, $max_width, $max_height, $prefer
 		// Get the image file, we have to work with something after all
 		if(!copy($source, $destination))
 			return false;
-
-		$imagick = new Imagick();
-		$imagick->readImage($destination);
-		$imageformat = $imagick->getImageFormat();
-		$gif = ($imageformat === 'GIF');
-		if ($gif) // If this is a GIF, we need to coalesce all frames to ensure they're all of the same size
-			$imagick = $imagick->coalesceImages();
-		do
+		try
 		{
-			$imagick->gammaImage(0.45454545); // Work around gamma error, see http://www.ericbrasseur.org/gamma.html
+			$imagick = new Imagick();
+			$imagick->readImage($destination);
+			$imageformat = $imagick->getImageFormat();
+			$gif = ($imageformat === 'GIF');
+			if ($gif) // If this is a GIF, we need to coalesce all frames to ensure they're all of the same size
+				$imagick = $imagick->coalesceImages();
+			do
+			{
+				$imagick->gammaImage(0.45454545); // Work around gamma error, see http://www.ericbrasseur.org/gamma.html
 
-			// if either the width or height are null, set the current dimension to be the maximum
-			if($max_width === null)
-				$max_width = $imagick->getImageWidth();
-			if($max_height === null)
-				$max_height = $imagick->getImageHeight();
+				// if either the width or height are null, set the current dimension to be the maximum
+				if($max_width === null)
+					$max_width = $imagick->getImageWidth();
+				if($max_height === null)
+					$max_height = $imagick->getImageHeight();
+				
+				// FILTER_CATROM has been chosen as a middle ground between performance and quality. Could be changed to FILTER_BOX if performance is struggling
+				$imagick->resizeImage($max_width, $max_height, Imagick::FILTER_CATROM, 1, true, false);
+				$imagick->gammaImage(2.2); // Work around gamma error, see http://www.ericbrasseur.org/gamma.html
+			} while ($imagick->nextImage());
+
+			if ($gif) // Now that all frames have been resized, we can deconstruct it back to a progressive GIF
+				$imagick = $imagick->deconstructImages();
+
+			//If the preferred format is set to 3 (PNG), respect it for things that aren't gifs
+			if(!$gif && $preferred_format == 3)
+				$imagick->setImageFormat('PNG');
+			$imagick->writeImages($destination, true);
+			$imagick->clear();
 			
-			// FILTER_CATROM has been chosen as a middle ground between performance and quality. Could be changed to FILTER_BOX if performance is struggling
-			$imagick->resizeImage($max_width, $max_height, Imagick::FILTER_CATROM, 1, true, false);
-			$imagick->gammaImage(2.2); // Work around gamma error, see http://www.ericbrasseur.org/gamma.html
-		} while ($imagick->nextImage());
-
-		if ($gif) // Now that all frames have been resized, we can deconstruct it back to a progressive GIF
-			$imagick = $imagick->deconstructImages();
-
-		//If the preferred format is set to 3 (PNG), respect it for things that aren't gifs
-		if(!$gif && $preferred_format == 3)
-			$imagick->setImageFormat('PNG');
-		$imagick->writeImages($destination, true);
-		$imagick->clear();
-		
-		return true;
+			return true;
+		}
+		catch (Exception $imagick_exception)
+		{
+			log_error($imagick_exception->getMessage(), 'general', $imagick_exception->getFile(), $imagick_exception->getLine());
+			return false;
+		}
 	}
 	else //Default to SMF default function
 		return legacyResizeImageFile($source, $destination, $max_width, $max_height, $preferred_format);

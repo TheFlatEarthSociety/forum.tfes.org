@@ -306,10 +306,84 @@ function checkGD()
 	return true;
 }
 
+function checkImagick()
+{
+	return class_exists('Imagick');
+}
+
 function resizeImageFile($source, $destination, $max_width, $max_height, $preferred_format = 0)
 {
 	global $sourcedir;
+	require_once($sourcedir . '/Subs-Package.php');
+	@ini_set('memory_limit', '90M');
+	
+	//Can we do this with ImageMagick?
+	if(checkImagick())
+	{
+		// Get the image file, we have to work with something after all
+		$fp_destination = fopen($destination, 'wb');
+		if ($fp_destination && (substr($source, 0, 7) == 'http://' || substr($source, 0, 8) == 'https://'))
+		{
+			$fileContents = fetch_web_data($source);
 
+			fwrite($fp_destination, $fileContents);
+			fclose($fp_destination);
+		}
+		elseif ($fp_destination)
+		{
+			$fp_source = fopen($source, 'rb');
+			if ($fp_source !== false)
+			{
+				while (!feof($fp_source))
+					fwrite($fp_destination, fread($fp_source, 8192));
+				fclose($fp_source);
+			}
+			else
+			{
+				fclose($fp_destination);
+				return false; //Can't open source file
+			}
+			
+		}
+		// We can't write to the destination file.
+		else
+			return false;
+
+		$imagick = new Imagick();
+		$imagick->readImage($destination);
+		$imageformat = $imagick->getImageFormat();
+		$gif = ($imageformat === 'GIF');
+		if ($gif)
+			$imagick = $imagick->coalesceImages();
+		do
+		{
+			$imagick->gammaImage(0.45454545);
+			if($max_width === null)
+				$max_width = $imagick->getImageWidth();
+			if($max_height === null)
+				$max_height = $imagick->getImageHeight();
+			$imagick->resizeImage($max_width, $max_height, Imagick::FILTER_CATROM, 1, true, false);
+			$imagick->gammaImage(2.2);
+		} while ($imagick->nextImage());
+
+		if ($gif)		
+			$imagick = $imagick->deconstructImages();
+
+		//If the preferred format is set to 3 (PNG), respect it for things that aren't gifs
+		if(!$gif && $preferred_format == 3)
+			$imagick->setImageFormat('PNG');
+		$imagick->writeImages($destination, true);
+		$imagick->clear();
+		
+		return true;
+	}
+	else //Default to SMF default function
+		return legacyResizeImageFile($source, $destination, $max_width, $max_height, $preferred_format);
+}
+
+function legacyResizeImageFile($source, $destination, $max_width, $max_height, $preferred_format = 0)
+{
+	global $sourcedir;
 	// Nothing to do without GD
 	if (!checkGD())
 		return false;
@@ -329,7 +403,7 @@ function resizeImageFile($source, $destination, $max_width, $max_height, $prefer
 
 	// Get the image file, we have to work with something after all
 	$fp_destination = fopen($destination, 'wb');
-	if ($fp_destination && substr($source, 0, 7) == 'http://')
+	if ($fp_destination && (substr($source, 0, 7) == 'http://' || substr($source, 0, 8) == 'https://'))
 	{
 		$fileContents = fetch_web_data($source);
 

@@ -234,10 +234,6 @@ function createThumbnail($source, $max_width, $max_height)
 
 function reencodeImage($fileName, $preferred_format = 0)
 {
-	// There is nothing we can do without GD, sorry!
-	if (!checkGD())
-		return false;
-
 	if (!resizeImageFile($fileName, $fileName . '.tmp', null, null, $preferred_format))
 	{
 		if (file_exists($fileName . '.tmp'))
@@ -306,10 +302,66 @@ function checkGD()
 	return true;
 }
 
+function checkImagick()
+{
+	return class_exists('Imagick');
+}
+
 function resizeImageFile($source, $destination, $max_width, $max_height, $preferred_format = 0)
 {
 	global $sourcedir;
+	@ini_set('memory_limit', '90M');
+	
+	//Can we do this with ImageMagick? If not, default to legacy functions.
+	if(!checkImagick())
+		return legacyResizeImageFile($source, $destination, $max_width, $max_height, $preferred_format);
+	// Get the image file, we have to work with something after all
+	if(!copy($source, $destination))
+		return false;
+	try
+	{
+		$imagick = new Imagick();
+		$imagick->readImage($destination);
+		$imageformat = $imagick->getImageFormat();
+		$gif = ($imageformat === 'GIF');
+		if ($gif) // If this is a GIF, we need to coalesce all frames to ensure they're all of the same size
+			$imagick = $imagick->coalesceImages();
+		do
+		{
+			$imagick->gammaImage(0.45454545); // Work around gamma error, see http://www.ericbrasseur.org/gamma.html
 
+			// if either the width or height are null, set the current dimension to be the maximum
+			if($max_width === null)
+				$max_width = $imagick->getImageWidth();
+			if($max_height === null)
+				$max_height = $imagick->getImageHeight();
+			
+			// FILTER_CATROM has been chosen as a middle ground between performance and quality. Could be changed to FILTER_BOX if performance is struggling
+			$imagick->resizeImage($max_width, $max_height, Imagick::FILTER_CATROM, 1, true, false);
+			$imagick->gammaImage(2.2); // Work around gamma error, see http://www.ericbrasseur.org/gamma.html
+		} while ($imagick->nextImage());
+
+		if ($gif) // Now that all frames have been resized, we can deconstruct it back to a progressive GIF
+			$imagick = $imagick->deconstructImages();
+
+		//If the preferred format is set to 3 (PNG), respect it for things that aren't gifs
+		if(!$gif && $preferred_format == 3)
+			$imagick->setImageFormat('PNG');
+		$imagick->writeImages($destination, true);
+		$imagick->clear();
+		
+		return true;
+	}
+	catch (Exception $imagick_exception)
+	{
+		log_error($imagick_exception->getMessage(), 'general', $imagick_exception->getFile(), $imagick_exception->getLine());
+		return false;
+	}
+}
+
+function legacyResizeImageFile($source, $destination, $max_width, $max_height, $preferred_format = 0)
+{
+	global $sourcedir;
 	// Nothing to do without GD
 	if (!checkGD())
 		return false;
@@ -329,7 +381,7 @@ function resizeImageFile($source, $destination, $max_width, $max_height, $prefer
 
 	// Get the image file, we have to work with something after all
 	$fp_destination = fopen($destination, 'wb');
-	if ($fp_destination && substr($source, 0, 7) == 'http://')
+	if ($fp_destination && (substr($source, 0, 7) == 'http://' || substr($source, 0, 8) == 'https://'))
 	{
 		$fileContents = fetch_web_data($source);
 

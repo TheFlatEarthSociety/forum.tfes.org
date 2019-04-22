@@ -145,8 +145,10 @@ elseif (!isset($_SESSION['nowap']))
 	}
 }
 
+// The WIRELESS constant was used to enable WAP support for phones that would request it in the olden days.
+// We got rid of this functionality for TFES, but I'm keeping the define in place just in case future SMF code tries to reference it.
 if (!defined('WIRELESS'))
-	define('WIRELESS', isset($_REQUEST['wap']) || isset($_REQUEST['wap2']) || isset($_REQUEST['imode']));
+	define('WIRELESS', false);
 
 // Some settings and headers are different for wireless protocols.
 if (WIRELESS)

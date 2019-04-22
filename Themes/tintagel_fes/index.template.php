@@ -345,7 +345,6 @@ function template_body_below()
 					<ul class="reset">
 						<li class="copyright">', theme_copyright(), '</li>
 						<li><b>Anecdota</b> by <a href="http://www.jpr62.com/theme/" target="_blank" class="new_win" title=""><span><b>Crip</b></span></a></li>
-						<li class="last"><a id="button_wap2" href="', $scripturl , '?action=forum;wap2" class="new_win"><span>', $txt['wap2'], '</span></a></li>
 					</ul>';
 
 	// Show the load time?

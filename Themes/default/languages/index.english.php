@@ -616,7 +616,6 @@ $txt['valid_css'] = 'Valid CSS!';
 // Current footer strings
 $txt['valid_html'] = 'Valid HTML 4.01!';
 $txt['valid_xhtml'] = 'Valid XHTML 1.0!';
-$txt['wap2'] = 'WAP2';
 $txt['rss'] = 'RSS';
 $txt['xhtml'] = 'XHTML';
 $txt['html'] = 'HTML';

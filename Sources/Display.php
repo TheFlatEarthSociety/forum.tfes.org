@@ -20,7 +20,6 @@ if (!defined('SMF'))
 
 	void Display()
 		- loads the posts in a topic up so they can be displayed.
-		- supports wireless, using wap/wap2/imode and the Wireless templates.
 		- uses the main sub template of the Display template.
 		- requires a topic, and can go to the previous or next topic from it.
 		- jumps to the correct post depending on a number/time/IS_MSG passed.
@@ -74,10 +73,7 @@ function Display()
 	require_once($sourcedir . "/Unsubscribe.php");
 
 	// Load the proper template and/or sub template.
-	if (WIRELESS)
-		$context['sub_template'] = WIRELESS_PROTOCOL . '_display';
-	else
-		loadTemplate('Display');
+	loadTemplate('Display');
 
 	// Not only does a prefetch make things slower for the server, but it makes it impossible to know if they read it.
 	if (isset($_SERVER['HTTP_X_MOZ']) && $_SERVER['HTTP_X_MOZ'] == 'prefetch')
@@ -88,10 +84,7 @@ function Display()
 	}
 
 	// How much are we sticking on each page?
-	$context['messages_per_page'] = empty($modSettings['disableCustomPerPage']) && !empty($options['messages_per_page']) && !WIRELESS ? $options['messages_per_page'] : $modSettings['defaultMaxMessages'];
-	if (WIRELESS) {
-		$context['messages_per_page_canonical'] = empty($modSettings['disableCustomPerPage']) && !empty($options['messages_per_page']) ? $options['messages_per_page'] : $modSettings['defaultMaxMessages_orig'];
-	}
+	$context['messages_per_page'] = empty($modSettings['disableCustomPerPage']) && !empty($options['messages_per_page']) ? $options['messages_per_page'] : $modSettings['defaultMaxMessages'];
 
 	// Find the previous or next topic.  Make a fuss if there are no more.
 	if (isset($_REQUEST['prev_next']) && ($_REQUEST['prev_next'] == 'prev' || $_REQUEST['prev_next'] == 'next'))
@@ -458,7 +451,7 @@ function Display()
 		'num_pages' => floor(($context['total_visible_posts'] - 1) / $context['messages_per_page']) + 1,
 	);
 
-	// Figure out all the link to the next/prev/first/last/etc. for wireless mainly.
+	// Figure out all the link to the next/prev/first/last/etc for correct pagination
 	$context['links'] = array(
 		'first' => $_REQUEST['start'] >= $context['messages_per_page'] ? $scripturl . '?topic=' . $topic . '.0' : '',
 		'prev' => $_REQUEST['start'] >= $context['messages_per_page'] ? $scripturl . '?topic=' . $topic . '.' . ($_REQUEST['start'] - $context['messages_per_page']) : '',
@@ -527,14 +520,7 @@ function Display()
 	$context['mark_unread_time'] = $topicinfo['new_from'];
 
 	// Set a canonical URL for this page.
-	if (WIRELESS) {
-		// The canonical URL goes to the non-WIRELESS display,
-		// so for WIRELESS we need to make sure start is a
-		// multiple of messages_per_page_canonical.
-		$start_canonical = max(0, (int) $context['start'] - ((int) $context['start'] % (int) $context['messages_per_page_canonical']));
-	} else {
-		$start_canonical = $context['start'];
-	}
+	$start_canonical = $context['start'];
 	$context['canonical_url'] = $scripturl . '?topic=' . $topic . '.' . $start_canonical;
 
 	// For quick reply we need a response prefix in the default forum language.
@@ -1074,13 +1060,6 @@ function Display()
 	// Can restore topic?  That's if the topic is in the recycle board and has a previous restore state.
 	$context['can_restore_topic'] &= !empty($modSettings['recycle_enable']) && $modSettings['recycle_board'] == $board && !empty($topicinfo['id_previous_board']);
 	$context['can_restore_msg'] &= !empty($modSettings['recycle_enable']) && $modSettings['recycle_board'] == $board && !empty($topicinfo['id_previous_topic']);
-
-	// Wireless shows a "more" if you can do anything special.
-	if (WIRELESS && WIRELESS_PROTOCOL != 'wap')
-	{
-		$context['wireless_more'] = $context['can_sticky'] || $context['can_lock'] || allowedTo('modify_any');
-		$context['wireless_moderate'] = isset($_GET['moderate']) ? ';moderate' : '';
-	}
 
 	// Load up the "double post" sequencing magic.
 	if (!empty($options['display_quick_reply']))

@@ -1652,7 +1652,7 @@ function loadTheme($id_theme = 0, $initialize = true)
 	);
 
 	// Output is fully XML, so no need for the index template.
-	elseif (isset($_REQUEST['xml']))
+	if (isset($_REQUEST['xml']))
 	{
 		loadLanguage('index+Modifications');
 		loadTemplate('Xml');

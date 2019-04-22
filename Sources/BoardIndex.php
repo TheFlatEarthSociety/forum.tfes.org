@@ -20,7 +20,6 @@ if (!defined('SMF'))
 	void BoardIndex()
 		- shows the board index.
 		- uses the BoardIndex template, and main sub template.
-		- may use the boardindex subtemplate for wireless support.
 		- updates the most online statistics.
 		- is accessed by ?action=boardindex.
 
@@ -33,11 +32,7 @@ function BoardIndex()
 {
 	global $txt, $user_info, $sourcedir, $modSettings, $context, $settings, $scripturl;
 
-	// For wireless, we use the Wireless template...
-	if (WIRELESS)
-		$context['sub_template'] = WIRELESS_PROTOCOL . '_boardindex';
-	else
-		loadTemplate('BoardIndex');
+	loadTemplate('BoardIndex');
 
 	// Set a canonical URL for this page.
 	$context['canonical_url'] = $scripturl;

@@ -127,45 +127,10 @@ set_exception_handler(function ($e) use ($db_show_debug)
 // Start the session. (assuming it hasn't already been.)
 loadSession();
 
-// Determine if this is using WAP, WAP2, or imode.  Technically, we should check that wap comes before application/xhtml or text/html, but this doesn't work in practice as much as it should.
-if (isset($_REQUEST['wap']) || isset($_REQUEST['wap2']) || isset($_REQUEST['imode']))
-	unset($_SESSION['nowap']);
-elseif (isset($_REQUEST['nowap']))
-	$_SESSION['nowap'] = true;
-elseif (!isset($_SESSION['nowap']))
-{
-	if (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/vnd.wap.xhtml+xml') !== false)
-		$_REQUEST['wap2'] = 1;
-	elseif (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'text/vnd.wap.wml') !== false)
-	{
-		if (strpos($_SERVER['HTTP_USER_AGENT'], 'DoCoMo/') !== false || strpos($_SERVER['HTTP_USER_AGENT'], 'portalmmm/') !== false)
-			$_REQUEST['imode'] = 1;
-		else
-			$_REQUEST['wap'] = 1;
-	}
-}
-
 // The WIRELESS constant was used to enable WAP support for phones that would request it in the olden days.
 // We got rid of this functionality for TFES, but I'm keeping the define in place just in case future SMF code tries to reference it.
 if (!defined('WIRELESS'))
 	define('WIRELESS', false);
-
-// Some settings and headers are different for wireless protocols.
-if (WIRELESS)
-{
-	define('WIRELESS_PROTOCOL', isset($_REQUEST['wap']) ? 'wap' : (isset($_REQUEST['wap2']) ? 'wap2' : (isset($_REQUEST['imode']) ? 'imode' : '')));
-
-	// Some cellphones can't handle output compression...
-	$modSettings['enableCompressedOutput'] = '0';
-	// !!! Do we want these hard coded?
-	$modSettings['defaultMaxMessages_orig'] = $modSettings['defaultMaxMessages'];
-	$modSettings['defaultMaxMessages'] = 5;
-	$modSettings['defaultMaxTopics'] = 9;
-
-	// Wireless protocol header.
-	if (WIRELESS_PROTOCOL == 'wap')
-		header('Content-Type: text/vnd.wap.wml');
-}
 
 // Restore post data if we are revalidating OpenID.
 if (isset($_GET['openid_restore_post']) && !empty($_SESSION['openid']['saved_data'][$_GET['openid_restore_post']]['post']) && empty($_POST))

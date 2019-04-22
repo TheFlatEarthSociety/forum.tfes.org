@@ -60,7 +60,6 @@ if (!defined('SMF'))
 		- builds the page list, e.g. 1 ... 6 7 [8] 9 10 ... 15.
 		- compact_start caused it to use "url.page" instead of
 		  "url;start=page".
-		- handles any wireless settings (adding special things to URLs.)
 		- very importantly, cleans up the start value passed, and forces it to
 		  be a multiple of num_per_page.
 		- also checks that start is not more than max_value.
@@ -647,10 +646,6 @@ function constructPageIndex($base_url, &$start, $max_value, $num_per_page, $flex
 	else
 		$start = max(0, (int) $start - ((int) $start % (int) $num_per_page));
 
-	// Wireless will need the protocol on the URL somewhere.
-	if (WIRELESS)
-		$base_url .= ';' . WIRELESS_PROTOCOL;
-
 	$base_link = '<a class="navPages" href="' . ($flexible_start ? $base_url : strtr($base_url, array('%' => '%%')) . ';start=%1$d') . '">%2$s</a> ';
 
 	$pageindex = '';
@@ -900,10 +895,7 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 	if ($message === '')
 		return '';
 
-	// Never show smileys for wireless clients.  More bytes, can't see it anyway :P.
-	if (WIRELESS)
-		$smileys = false;
-	elseif ($smileys !== null && ($smileys == '1' || $smileys == '0'))
+	if ($smileys !== null && ($smileys == '1' || $smileys == '0'))
 		$smileys = (bool) $smileys;
 
 	if (empty($modSettings['enableBBC']) && $message !== false)
@@ -2821,20 +2813,7 @@ function redirectexit($setLocation = '', $refresh = false)
 
 	$add = preg_match('~^(ftp|http)[s]?://~', $setLocation) == 0 && substr($setLocation, 0, 6) != 'about:';
 
-	if (WIRELESS)
-	{
-		// Add the scripturl on if needed.
-		if ($add)
-			$setLocation = $scripturl . '?' . $setLocation;
-
-		$char = strpos($setLocation, '?') === false ? '?' : ';';
-
-		if (strpos($setLocation, '#') !== false)
-			$setLocation = strtr($setLocation, array('#' => $char . WIRELESS_PROTOCOL . '#'));
-		else
-			$setLocation .= $char . WIRELESS_PROTOCOL;
-	}
-	elseif ($add)
+	if ($add)
 		$setLocation = $scripturl . ($setLocation != '' ? '?' . $setLocation : '');
 
 	// Put the session ID in.
@@ -2856,7 +2835,7 @@ function redirectexit($setLocation = '', $refresh = false)
 	call_integration_hook('integrate_redirect', array(&$setLocation, &$refresh));
 
 	// We send a Refresh header only in special cases because Location looks better. (and is quicker...)
-	if ($refresh && !WIRELESS)
+	if ($refresh)
 		header('Refresh: 0; URL=' . strtr($setLocation, array(' ' => '%20')));
 	else
 		header('Location: ' . str_replace(' ', '%20', $setLocation));
@@ -2929,9 +2908,6 @@ function obExit($header = null, $do_footer = null, $from_index = false, $from_fa
 	}
 	if ($do_footer)
 	{
-		if (WIRELESS && !isset($context['sub_template']))
-			fatal_lang_error('wireless_error_notyet', false);
-
 		// Just show the footer, then.
 		loadSubTemplate(isset($context['sub_template']) ? $context['sub_template'] : 'main');
 
@@ -2976,10 +2952,10 @@ function obExit($header = null, $do_footer = null, $from_index = false, $from_fa
 	}
 
 	// Hand off the output to the portal, etc. we're integrated with.
-	call_integration_hook('integrate_exit', array($do_footer && !WIRELESS));
+	call_integration_hook('integrate_exit', array($do_footer));
 
 	// Don't exit if we're coming from index.php; that will pass through normally.
-	if (!$from_index || WIRELESS)
+	if (!$from_index)
 		exit;
 }
 
@@ -3596,7 +3572,7 @@ function db_debug_junk()
 	global $db_cache, $db_count, $db_show_debug, $cache_count, $cache_hits, $txt;
 
 	// Add to Settings.php if you want to show the debugging information.
-	if (!isset($db_show_debug) || $db_show_debug !== true || (isset($_GET['action']) && $_GET['action'] == 'viewquery') || WIRELESS)
+	if (!isset($db_show_debug) || $db_show_debug !== true || (isset($_GET['action']) && $_GET['action'] == 'viewquery'))
 		return;
 
 	if (empty($_SESSION['view_queries']))

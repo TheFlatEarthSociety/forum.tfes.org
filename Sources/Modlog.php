@@ -260,9 +260,9 @@ function ViewModlog()
 					'value' => '<input type="checkbox" name="all" class="input_check" onclick="invertAll(this, this.form);" />',
 				),
 				'data' => array(
-					'function' => create_function('$entry', '
-						return \'<input type="checkbox" class="input_check" name="delete[]" value="\' . $entry[\'id\'] . \'"\' . ($entry[\'editable\'] ? \'\' : \' disabled="disabled"\') . \' />\';
-					'),
+					'function' => function($entry) {
+						return '<input type="checkbox" class="input_check" name="delete[]" value="' . $entry['id'] . '"' . ($entry['editable'] ? '' : ' disabled="disabled"') . ' />';
+					},
 					'style' => 'text-align: center;',
 				),
 			),
@@ -588,7 +588,6 @@ function list_getModLogEntries($start, $items_per_page, $sort, $query_string = '
 	}
 
 	// Do some formatting of the action string.
-	$callback = pregReplaceCurry('list_getModLogEntriesCallback', 3);
 	foreach ($entries as $k => $entry)
 	{
 		// Make any message info links so its easier to go find that message.
@@ -602,7 +601,10 @@ function list_getModLogEntries($start, $items_per_page, $sort, $query_string = '
 
 		if (empty($entries[$k]['action_text']))
 			$entries[$k]['action_text'] = isset($txt['modlog_ac_' . $entry['action']]) ? $txt['modlog_ac_' . $entry['action']] : $entry['action'];
-		$entries[$k]['action_text'] = preg_replace_callback('~\{([A-Za-z\d_]+)\}~i', $callback($entries, $k), $entries[$k]['action_text']);
+		$entries[$k]['action_text'] = preg_replace_callback('~\{([A-Za-z\d_]+)\}~i', function ($matches) use ($entries, $k)
+			{
+				return isset($entries[$k]['extra'][$matches[1]]) ? $entries[$k]['extra'][$matches[1]] : '';
+			}, $entries[$k]['action_text']);
 
 	}
 

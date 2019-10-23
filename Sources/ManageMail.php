@@ -121,10 +121,10 @@ function BrowseMailQueue()
 					'value' => $txt['mailqueue_subject'],
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
+					'function' => function($rowData) {
 						global $smcFunc;
-						return $smcFunc[\'strlen\']($rowData[\'subject\']) > 50 ? sprintf(\'%1$s...\', htmlspecialchars($smcFunc[\'substr\']($rowData[\'subject\'], 0, 47))) : htmlspecialchars($rowData[\'subject\']);
-					'),
+						return $smcFunc['strlen']($rowData['subject']) > 50 ? sprintf('%1$s...', htmlspecialchars($smcFunc['substr']($rowData['subject'], 0, 47))) : htmlspecialchars($rowData['subject']);
+					},
 					'class' => 'smalltext',
 				),
 				'sort' => array(
@@ -155,15 +155,15 @@ function BrowseMailQueue()
 					'value' => $txt['mailqueue_priority'],
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
+					'function' => function($rowData) {
 						global $txt;
 
 						// We probably have a text label with your priority.
-						$txtKey = sprintf(\'mq_mpriority_%1$s\', $rowData[\'priority\']);
+						$txtKey = sprintf('mq_mpriority_%1$s', $rowData['priority']);
 
 						// But if not, revert to priority 0.
-						return isset($txt[$txtKey]) ? $txt[$txtKey] : $txt[\'mq_mpriority_1\'];
-					'),
+						return isset($txt[$txtKey]) ? $txt[$txtKey] : $txt['mq_mpriority_1'];
+					},
 					'class' => 'smalltext',
 				),
 				'sort' => array(
@@ -176,9 +176,9 @@ function BrowseMailQueue()
 					'value' => $txt['mailqueue_age'],
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
-						return time_since(time() - $rowData[\'time_sent\']);
-					'),
+					'function' => function($rowData) {
+						return time_since(time() - $rowData['time_sent']);
+					},
 					'class' => 'smalltext',
 				),
 				'sort' => array(
@@ -191,9 +191,9 @@ function BrowseMailQueue()
 					'value' => '<input type="checkbox" onclick="invertAll(this, this.form);" class="input_check" />',
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
-						return \'<input type="checkbox" name="delete[]" value="\' . $rowData[\'id_mail\'] . \'" class="input_check" />\';
-					'),
+					'function' => function($rowData) {
+						return '<input type="checkbox" name="delete[]" value="' . $rowData['id_mail'] . '" class="input_check" />';
+					},
 					'class' => 'smalltext',
 				),
 			),

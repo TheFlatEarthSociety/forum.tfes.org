@@ -236,7 +236,9 @@ function preparsecode(&$message, $previewing = false)
 				{
 					static $htmlfunc = null;
 					if ($htmlfunc === null)
-						$htmlfunc = create_function('$m', 'return \'[html]\' . strtr(un_htmlspecialchars("$m[1]"), array("\n" => \'&#13;\', \'  \' => \' &#32;\', \'[\' => \'&#91;\', \']\' => \'&#93;\')) . \'[/html]\';');
+						$htmlfunc = function($m) {
+							return '[html]' . strtr(un_htmlspecialchars("$m[1]"), array("\n" => '&#13;', '  ' => ' &#32;', '[' => '&#91;', ']' => '&#93;')) . '[/html]';
+						};
 					$parts[$i] = preg_replace_callback('~\[html\](.+?)\[/html\]~is', $htmlfunc, $parts[$i]);
 				}
 
@@ -1242,7 +1244,7 @@ function mimespecialchars($string, $with_charset = true, $hotmail_fix = false, $
 					$string = $newstring;
 			}
 
-			$fixchar = create_function('$n', '
+			$fixchar = function($n) {
 				if ($n < 128)
 					return chr($n);
 				elseif ($n < 2048)
@@ -1250,7 +1252,8 @@ function mimespecialchars($string, $with_charset = true, $hotmail_fix = false, $
 				elseif ($n < 65536)
 					return chr(224 | $n >> 12) . chr(128 | $n >> 6 & 63) . chr(128 | $n & 63);
 				else
-					return chr(240 | $n >> 18) . chr(128 | $n >> 12 & 63) . chr(128 | $n >> 6 & 63) . chr(128 | $n & 63);');
+					return chr(240 | $n >> 18) . chr(128 | $n >> 12 & 63) . chr(128 | $n >> 6 & 63) . chr(128 | $n & 63);
+			};
 
 			$string = preg_replace_callback('~&#(\d{3,8});~', 'fixchar__callback', $string);
 

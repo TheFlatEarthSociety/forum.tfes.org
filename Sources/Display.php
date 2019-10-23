@@ -1365,9 +1365,9 @@ function Download()
 
 	// Convert the file to UTF-8, cuz most browsers dig that.
 	$utf8name = !$context['utf8'] && function_exists('iconv') ? iconv($context['character_set'], 'UTF-8', $real_filename) : (!$context['utf8'] && function_exists('mb_convert_encoding') ? mb_convert_encoding($real_filename, 'UTF-8', $context['character_set']) : $real_filename);
-	$fixchar = create_function('$n', '
+	$fixchar = function($n) {
 		if ($n < 32)
-			return \'\';
+			return '';
 		elseif ($n < 128)
 			return chr($n);
 		elseif ($n < 2048)
@@ -1375,7 +1375,8 @@ function Download()
 		elseif ($n < 65536)
 			return chr(224 | $n >> 12) . chr(128 | $n >> 6 & 63) . chr(128 | $n & 63);
 		else
-			return chr(240 | $n >> 18) . chr(128 | $n >> 12 & 63) . chr(128 | $n >> 6 & 63) . chr(128 | $n & 63);');
+			return chr(240 | $n >> 18) . chr(128 | $n >> 12 & 63) . chr(128 | $n >> 6 & 63) . chr(128 | $n & 63);
+	};
 
 	$disposition = !isset($_REQUEST['image']) ? 'attachment' : 'inline';
 
@@ -1408,11 +1409,11 @@ function Download()
 	if (!empty($modSettings['attachmentRecodeLineEndings']) && !isset($_REQUEST['image']) && in_array($file_ext, array('txt', 'css', 'htm', 'html', 'php', 'xml')))
 	{
 		if (strpos($_SERVER['HTTP_USER_AGENT'], 'Windows') !== false)
-			$callback = create_function('$buffer', 'return preg_replace(\'~[\r]?\n~\', "\r\n", $buffer);');
+			$callback = function($buffer) {return preg_replace('~[\r]?\n~', "\r\n", $buffer);};
 		elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Mac') !== false)
-			$callback = create_function('$buffer', 'return preg_replace(\'~[\r]?\n~\', "\r", $buffer);');
+			$callback = function() use($buffer) {return preg_replace('~[\r]?\n~', "\r", $buffer);};
 		else
-			$callback = create_function('$buffer', 'return preg_replace(\'~[\r]?\n~\', "\n", $buffer);');
+			$callback = function() use($buffer) {return preg_replace('~[\r]?\n~', "\n", $buffer);};
 	}
 
 	// Since we don't do output compression for files this large...

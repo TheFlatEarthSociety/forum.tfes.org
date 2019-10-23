@@ -536,7 +536,7 @@ function RequestMembers()
 
 		if (preg_match('~&#\d+;~', $row['real_name']) != 0)
 		{
-			$fixchar = create_function('$n', '
+			$fixchar = function($n) {
 				if ($n < 128)
 					return chr($n);
 				elseif ($n < 2048)
@@ -544,7 +544,8 @@ function RequestMembers()
 				elseif ($n < 65536)
 					return chr(224 | $n >> 12) . chr(128 | $n >> 6 & 63) . chr(128 | $n & 63);
 				else
-					return chr(240 | $n >> 18) . chr(128 | $n >> 12 & 63) . chr(128 | $n >> 6 & 63) . chr(128 | $n & 63);');
+					return chr(240 | $n >> 18) . chr(128 | $n >> 12 & 63) . chr(128 | $n >> 6 & 63) . chr(128 | $n & 63);
+			};
 
 			$row['real_name'] = preg_replace_callback('~&#(\d+);~', 'fixchar__callback', $row['real_name']);
 		}

@@ -948,6 +948,7 @@ function prepareMessageContext($type = 'subject', $reset = false)
 
 		$subject['subject'] = $subject['subject'] == '' ? $txt['no_subject'] : $subject['subject'];
 		censorText($subject['subject']);
+		$count = !empty($context['message_labels'][$subject['id_pm']]) ? count($context['message_labels'][$subject['id_pm']]) : 0;
 
 		$output = array(
 			'id' => $subject['id_pm'],
@@ -962,7 +963,7 @@ function prepareMessageContext($type = 'subject', $reset = false)
 			'timestamp' => forum_time(true, $subject['msgtime']),
 			'number_recipients' => count($recipients[$subject['id_pm']]['to']),
 			'labels' => &$context['message_labels'][$subject['id_pm']],
-			'fully_labeled' => count($context['message_labels'][$subject['id_pm']]) == count($context['labels']),
+			'fully_labeled' => $count == count($context['labels']) ? true : false,
 			'is_replied_to' => &$context['message_replied'][$subject['id_pm']],
 			'is_unread' => &$context['message_unread'][$subject['id_pm']],
 			'is_selected' => !empty($temp_pm_selected) && in_array($subject['id_pm'], $temp_pm_selected),
@@ -1016,6 +1017,9 @@ function prepareMessageContext($type = 'subject', $reset = false)
 
 	// Run UBBC interpreter on the message.
 	$message['body'] = parse_bbc($message['body'], true, 'pm' . $message['id_pm']);
+	$context['labels'] = !empty($context['labels']) ? $context['labels'] : array();
+	$context['labels'] = is_array($context['labels']) ? $context['labels'] : array($context['labels']);
+	$count = !empty($context['message_labels'][$message['id_pm']]) ? count($context['message_labels'][$message['id_pm']]) : 0;
 
 	// Send the array.
 	$output = array(
@@ -1030,7 +1034,7 @@ function prepareMessageContext($type = 'subject', $reset = false)
 		'recipients' => &$recipients[$message['id_pm']],
 		'number_recipients' => count($recipients[$message['id_pm']]['to']),
 		'labels' => &$context['message_labels'][$message['id_pm']],
-		'fully_labeled' => count($context['message_labels'][$message['id_pm']]) == count($context['labels']),
+		'fully_labeled' => $count == count($context['labels']) ? true : false,
 		'is_replied_to' => &$context['message_replied'][$message['id_pm']],
 		'is_unread' => &$context['message_unread'][$message['id_pm']],
 		'is_selected' => !empty($temp_pm_selected) && in_array($message['id_pm'], $temp_pm_selected),

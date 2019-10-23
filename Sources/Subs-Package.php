@@ -680,12 +680,10 @@ function create_chmod_control($chmodFiles = array(), $chmodOptions = array(), $r
 						'value' => $txt['package_restore_permissions_cur_status'],
 					),
 					'data' => array(
-						'function' => create_function('$rowData', '
-							global $txt;
-
-							$formatTxt = $rowData[\'result\'] == \'\' || $rowData[\'result\'] == \'skipped\' ? $txt[\'package_restore_permissions_pre_change\'] : $txt[\'package_restore_permissions_post_change\'];
-							return sprintf($formatTxt, $rowData[\'cur_perms\'], $rowData[\'new_perms\'], $rowData[\'writable_message\']);
-						'),
+						'function' => function($rowData) use($txt) {
+							$formatTxt = $rowData['result'] == '' || $rowData['result'] == 'skipped' ? $txt['package_restore_permissions_pre_change'] : $txt['package_restore_permissions_post_change'];
+							return sprintf($formatTxt, $rowData['cur_perms'], $rowData['new_perms'], $rowData['writable_message']);
+						},
 						'class' => 'smalltext',
 					),
 				),
@@ -708,11 +706,9 @@ function create_chmod_control($chmodFiles = array(), $chmodOptions = array(), $r
 						'value' => $txt['package_restore_permissions_result'],
 					),
 					'data' => array(
-						'function' => create_function('$rowData', '
-							global $txt;
-
-							return $txt[\'package_restore_permissions_action_\' . $rowData[\'result\']];
-						'),
+						'function' => function($rowData) use($txt) {
+							return $txt['package_restore_permissions_action_' . $rowData['result']];
+						},
 						'class' => 'smalltext',
 					),
 				),
@@ -2745,31 +2741,33 @@ function package_create_backup($id = 'backup')
 
 	while (!empty($dirs))
 	{
-		list ($dir, $dest) = each($dirs);
-		unset($dirs[$dir]);
-
-		$listing = @dir($dir);
-		if (!$listing)
-			continue;
-		while ($entry = $listing->read())
+		foreach ($dirs as $dir => $dest)
 		{
-			if (preg_match('~^(\.{1,2}|CVS|backup.*|help|images|.*\~)$~', $entry) != 0)
-				continue;
+			unset($dirs[$dir]);
 
-			$filepath = realpath($dir . '/' . $entry);
-			if (isset($files[$filepath]))
+			$listing = @dir($dir);
+			if (!$listing)
 				continue;
-
-			$stat = stat($dir . '/' . $entry);
-			if ($stat['mode'] & 040000)
+			while ($entry = $listing->read())
 			{
-				$files[$filepath] = array($dest . $entry . '/', $stat);
-				$dirs[$dir . '/' . $entry] = $dest . $entry . '/';
+				if (preg_match('~^(\.{1,2}|CVS|backup.*|help|images|.*\~)$~', $entry) != 0)
+					continue;
+
+				$filepath = realpath($dir . '/' . $entry);
+				if (isset($files[$filepath]))
+					continue;
+
+				$stat = stat($dir . '/' . $entry);
+				if ($stat['mode'] & 040000)
+				{
+					$files[$filepath] = array($dest . $entry . '/', $stat);
+					$dirs[$dir . '/' . $entry] = $dest . $entry . '/';
+				}
+				else
+					$files[$filepath] = array($dest . $entry, $stat);
 			}
-			else
-				$files[$filepath] = array($dest . $entry, $stat);
+			$listing->close();
 		}
-		$listing->close();
 	}
 
 	if (!file_exists($boarddir . '/Packages/backups'))

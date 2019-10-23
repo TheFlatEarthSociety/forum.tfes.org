@@ -224,25 +224,25 @@ function ModifyCoreFeatures($return_config = false)
 		// cp = custom profile fields.
 		'cp' => array(
 			'url' => 'action=admin;area=featuresettings;sa=profile',
-			'save_callback' => create_function('$value', '
+			'save_callback' => function($value) {
 				global $smcFunc;
 				if (!$value)
 				{
-					$smcFunc[\'db_query\'](\'\', \'
+					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}custom_fields
-						SET active = 0\');
+						SET active = 0');
 				}
-			'),
-			'setting_callback' => create_function('$value', '
+			},
+			'setting_callback' => function($value) {
 				if (!$value)
 					return array(
-						\'disabled_profile_fields\' => \'\',
-						\'registration_fields\' => \'\',
-						\'displayFields\' => \'\',
+						'disabled_profile_fields' => '',
+						'registration_fields' => '',
+						'displayFields' => '',
 					);
 				else
 					return array();
-			'),
+			},
 		),
 		// k = karma.
 		'k' => array(
@@ -261,20 +261,20 @@ function ModifyCoreFeatures($return_config = false)
 		// pm = post moderation.
 		'pm' => array(
 			'url' => 'action=admin;area=permissions;sa=postmod',
-			'setting_callback' => create_function('$value', '
+			'setting_callback' => function($value) {
 				global $sourcedir;
 
 				// Cant use warning post moderation if disabled!
 				if (!$value)
 				{
-					require_once($sourcedir . \'/PostModeration.php\');
+					require_once($sourcedir . '/PostModeration.php');
 					approveAllData();
 
-					return array(\'warning_moderate\' => 0);
+					return array('warning_moderate' => 0);
 				}
 				else
 					return array();
-			'),
+			},
 		),
 		// ps = Paid Subscriptions.
 		'ps' => array(
@@ -282,27 +282,27 @@ function ModifyCoreFeatures($return_config = false)
 			'settings' => array(
 				'paid_enabled' => 1,
 			),
-			'setting_callback' => create_function('$value', '
+			'setting_callback' => function($value) {
 				global $smcFunc, $sourcedir;
 
 				// Set the correct disabled value for scheduled task.
-				$smcFunc[\'db_query\'](\'\', \'
+				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}scheduled_tasks
 					SET disabled = {int:disabled}
-					WHERE task = {string:task}\',
+					WHERE task = {string:task}',
 					array(
-						\'disabled\' => $value ? 0 : 1,
-						\'task\' => \'paid_subscriptions\',
+						'disabled' => $value ? 0 : 1,
+						'task' => 'paid_subscriptions',
 					)
 				);
 
 				// Should we calculate next trigger?
 				if ($value)
 				{
-					require_once($sourcedir . \'/ScheduledTasks.php\');
-					CalculateNextTrigger(\'paid_subscriptions\');
+					require_once($sourcedir . '/ScheduledTasks.php');
+					CalculateNextTrigger('paid_subscriptions');
 				}
-			'),
+			},
 		),
 		// rg = report generator.
 		'rg' => array(
@@ -311,32 +311,32 @@ function ModifyCoreFeatures($return_config = false)
 		// w = warning.
 		'w' => array(
 			'url' => 'action=admin;area=securitysettings;sa=moderation',
-			'setting_callback' => create_function('$value', '
+			'setting_callback' => function($value) {
 				global $modSettings;
-				list ($modSettings[\'warning_enable\'], $modSettings[\'user_limit\'], $modSettings[\'warning_decrement\']) = explode(\',\', $modSettings[\'warning_settings\']);
-				$warning_settings = ($value ? 1 : 0) . \',\' . $modSettings[\'user_limit\'] . \',\' . $modSettings[\'warning_decrement\'];
+				list ($modSettings['warning_enable'], $modSettings['user_limit'], $modSettings['warning_decrement']) = explode(',', $modSettings['warning_settings']);
+				$warning_settings = ($value ? 1 : 0) . ',' . $modSettings['user_limit'] . ',' . $modSettings['warning_decrement'];
 				if (!$value)
 				{
 					$returnSettings = array(
-						\'warning_watch\' => 0,
-						\'warning_moderate\' => 0,
-						\'warning_mute\' => 0,
+						'warning_watch' => 0,
+						'warning_moderate' => 0,
+						'warning_mute' => 0,
 					);
 				}
-				elseif (empty($modSettings[\'warning_enable\']) && $value)
+				elseif (empty($modSettings['warning_enable']) && $value)
 				{
 					$returnSettings = array(
-						\'warning_watch\' => 10,
-						\'warning_moderate\' => 35,
-						\'warning_mute\' => 60,
+						'warning_watch' => 10,
+						'warning_moderate' => 35,
+						'warning_mute' => 60,
 					);
 				}
 				else
 					$returnSettings = array();
 
-				$returnSettings[\'warning_settings\'] = $warning_settings;
+				$returnSettings['warning_settings'] = $warning_settings;
 				return $returnSettings;
-			'),
+			},
 		),
 		// Search engines
 		'sp' => array(
@@ -344,16 +344,16 @@ function ModifyCoreFeatures($return_config = false)
 			'settings' => array(
 				'spider_mode' => 1,
 			),
-			'setting_callback' => create_function('$value', '
+			'setting_callback' => function($value) {
 				// Turn off the spider group if disabling.
 				if (!$value)
-					return array(\'spider_group\' => 0, \'show_spider_online\' => 0);
-			'),
-			'on_save' => create_function('', '
+					return array('spider_group' => 0, 'show_spider_online' => 0);
+			},
+			'on_save' => function() {
 				global $sourcedir, $modSettings;
-				require_once($sourcedir . \'/ManageSearchEngines.php\');
+				require_once($sourcedir . '/ManageSearchEngines.php');
 				recacheSpiderNames();
-			'),
+			},
 		),
 	);
 
@@ -1334,11 +1334,11 @@ function ShowCustomProfiles()
 					'value' => $txt['custom_edit_active'],
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
-						$isChecked = $rowData[\'disabled\'] ? \'\' : \' checked="checked"\';
-						$onClickHandler = $rowData[\'can_show_register\'] ? sprintf(\'onclick="document.getElementById(\\\'reg_%1$s\\\').disabled = !this.checked;"\', $rowData[\'id\']) : \'\';
-						return sprintf(\'<input type="checkbox" name="active[]" id="active_%1$s" value="%1$s" class="input_check"%2$s%3$s />\', $rowData[\'id\'], $isChecked, $onClickHandler);
-					'),
+					'function' => function($rowData) {
+						$isChecked = $rowData['disabled'] ? '' : ' checked="checked"';
+						$onClickHandler = $rowData['can_show_register'] ? sprintf(' onclick="document.getElementById(\'reg_%1$s\').disabled = !this.checked;"', $rowData['id']) : '';
+						return sprintf('<input type="checkbox" name="active[]" id="active_%1$s" value="%1$s" class="input_check"%2$s%3$s />', $rowData['id'], $isChecked, $onClickHandler);
+					},
 					'style' => 'width: 20%; text-align: center;',
 				),
 			),
@@ -1347,11 +1347,11 @@ function ShowCustomProfiles()
 					'value' => $txt['custom_edit_registration'],
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
-						$isChecked = $rowData[\'on_register\'] && !$rowData[\'disabled\'] ? \' checked="checked"\' : \'\';
-						$isDisabled = $rowData[\'can_show_register\'] ? \'\' : \' disabled="disabled"\';
-						return sprintf(\'<input type="checkbox" name="reg[]" id="reg_%1$s" value="%1$s" class="input_check"%2$s%3$s />\', $rowData[\'id\'], $isChecked, $isDisabled);
-					'),
+					'function' => function($rowData) {
+						$isChecked = $rowData['on_register'] && !$rowData['disabled'] ? ' checked="checked"' : '';
+						$isDisabled = $rowData['can_show_register'] ? '' : ' disabled="disabled"';
+						return sprintf('<input type="checkbox" name="reg[]" id="reg_%1$s" value="%1$s" class="input_check" %2$s%3$s />', $rowData['id'], $isChecked, $isDisabled);
+					},
 					'style' => 'width: 20%; text-align: center;',
 				),
 			),
@@ -1393,11 +1393,11 @@ function ShowCustomProfiles()
 					'style' => 'text-align: left;',
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
+					'function' => function($rowData) {
 						global $scripturl;
 
-						return sprintf(\'<a href="%1$s?action=admin;area=featuresettings;sa=profileedit;fid=%2$d">%3$s</a><div class="smalltext">%4$s</div>\', $scripturl, $rowData[\'id_field\'], $rowData[\'field_name\'], $rowData[\'field_desc\']);
-					'),
+						return sprintf('<a href="%1$s?action=admin;area=featuresettings;sa=profileedit;fid=%2$d">%3$s</a><div class="smalltext">%4$s</div>', $scripturl, $rowData['id_field'], $rowData['field_name'], $rowData['field_desc']);
+					},
 					'style' => 'width: 62%;',
 				),
 				'sort' => array(
@@ -1411,12 +1411,12 @@ function ShowCustomProfiles()
 					'style' => 'text-align: left;',
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
+					'function' => function($rowData) {
 						global $txt;
 
-						$textKey = sprintf(\'custom_profile_type_%1$s\', $rowData[\'field_type\']);
+						$textKey = sprintf('custom_profile_type_%1$s', $rowData['field_type']);
 						return isset($txt[$textKey]) ? $txt[$textKey] : $textKey;
-					'),
+					},
 					'style' => 'width: 15%;',
 				),
 				'sort' => array(
@@ -1429,11 +1429,11 @@ function ShowCustomProfiles()
 					'value' => $txt['custom_profile_active'],
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
+					'function' => function($rowData) {
 						global $txt;
 
-						return $rowData[\'active\'] ? $txt[\'yes\'] : $txt[\'no\'];
-					'),
+						return $rowData['active'] ? $txt['yes'] : $txt['no'];
+					},
 					'style' => 'width: 8%; text-align: center;',
 				),
 				'sort' => array(
@@ -1446,11 +1446,11 @@ function ShowCustomProfiles()
 					'value' => $txt['custom_profile_placement'],
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
+					'function' => function($rowData) {
 						global $txt;
 
-						return $txt[\'custom_profile_placement_\' . (empty($rowData[\'placement\']) ? \'standard\' : ($rowData[\'placement\'] == 1 ? \'withicons\' : \'abovesignature\'))];
-					'),
+						return $txt['custom_profile_placement_' . (empty($rowData['placement']) ? 'standard' : ($rowData['placement'] == 1 ? 'withicons' : 'abovesignature'))];
+					},
 					'style' => 'width: 8%; text-align: center;',
 				),
 				'sort' => array(

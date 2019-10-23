@@ -237,16 +237,16 @@ function ViewSubscriptions()
 		'items_per_page' => 20,
 		'base_href' => $scripturl . '?action=admin;area=paidsubscribe;sa=view',
 		'get_items' => array(
-			'function' => create_function('', '
+			'function' => function() {
 				global $context;
-				return $context[\'subscriptions\'];
-			'),
+				return $context['subscriptions'];
+			},
 		),
 		'get_count' => array(
-			'function' => create_function('', '
+			'function' => function() {
 				global $context;
-				return count($context[\'subscriptions\']);
-			'),
+				return count($context['subscriptions']);
+			},
 		),
 		'no_items_label' => $txt['paid_none_yet'],
 		'columns' => array(
@@ -256,11 +256,11 @@ function ViewSubscriptions()
 					'style' => 'text-align: left; width: 35%;',
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
+					'function' => function($rowData) {
 						global $scripturl;
 
-						return sprintf(\'<a href="%1$s?action=admin;area=paidsubscribe;sa=viewsub;sid=%2$s">%3$s</a>\', $scripturl, $rowData[\'id\'], $rowData[\'name\']);
-					'),
+						return sprintf('<a href="%1$s?action=admin;area=paidsubscribe;sa=viewsub;sid=%2$s">%3$s</a>', $scripturl, $rowData['id'], $rowData['name']);
+					},
 				),
 			),
 			'cost' => array(
@@ -269,11 +269,10 @@ function ViewSubscriptions()
 					'style' => 'text-align: left;',
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
+					'function' => function($rowData) {
 						global $context, $txt;
-
-						return $rowData[\'flexible\'] ? \'<em>\' . $txt[\'flexible\'] . \'</em>\' : $rowData[\'cost\'] . \' / \' . $rowData[\'length\'];
-					'),
+						return $rowData['flexible'] ? '<em>' . $txt['flexible'] . '</em>' : $rowData['cost'] . ' / ' . $rowData['length'];
+					},
 				),
 			),
 			'pending' => array(
@@ -309,31 +308,30 @@ function ViewSubscriptions()
 					'value' => $txt['paid_is_active'],
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
+					'function' => function($rowData) {
 						global $context, $txt;
-
-						return \'<span style="color: \' . ($rowData[\'active\'] ? \'green\' : \'red\') . \'">\' . ($rowData[\'active\'] ? $txt[\'yes\'] : $txt[\'no\']) . \'</span>\';
-					'),
+						return '<span style="color: ' . ($rowData['active'] ? 'green' : 'red') . '">' . ($rowData['active'] ? $txt['yes'] : $txt['no']) . '</span>';
+					},
 					'style' => 'text-align: center;',
 				),
 			),
 			'modify' => array(
 				'data' => array(
-					'function' => create_function('$rowData', '
+					'function' => function($rowData) {
 						global $context, $txt, $scripturl;
 
-						return \'<a href="\' . $scripturl . \'?action=admin;area=paidsubscribe;sa=modify;sid=\' . $rowData[\'id\'] . \'">\' . $txt[\'modify\'] . \'</a>\';
-					'),
+						return '<a href="' . $scripturl . '?action=admin;area=paidsubscribe;sa=modify;sid=' . $rowData['id'] . '">' . $txt['modify'] . '</a>';
+					},
 					'style' => 'text-align: center;',
 				),
 			),
 			'delete' => array(
 				'data' => array(
-					'function' => create_function('$rowData', '
+					'function' => function($rowData) {
 						global $context, $txt, $scripturl;
 
-						return \'<a href="\' . $scripturl . \'?action=admin;area=paidsubscribe;sa=modify;delete;sid=\' . $rowData[\'id\'] . \'">\' . $txt[\'delete\'] . \'</a>\';
-					'),
+						return '<a href="' . $scripturl . '?action=admin;area=paidsubscribe;sa=modify;delete;sid=' . $rowData['id'] . '">' . $txt['delete'] . '</a>';
+					},
 					'style' => 'text-align: center;',
 				),
 			),
@@ -672,11 +670,11 @@ function ViewSubscribedUsers()
 					'style' => 'text-align: left; width: 20%;',
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
+					'function' => function($rowData) {
 						global $context, $txt, $scripturl;
 
-						return $rowData[\'id_member\'] == 0 ? $txt[\'guest\'] : \'<a href="\' . $scripturl . \'?action=profile;u=\' . $rowData[\'id_member\'] . \'">\' . $rowData[\'name\'] . \'</a>\';
-					'),
+						return $rowData['id_member'] == 0 ? $txt['guest'] : '<a href="' . $scripturl . '?action=profile;u=' . $rowData['id_member'] . '">' . $rowData['name'] . '</a>';
+					},
 				),
 				'sort' => array(
 					'default' => 'name',
@@ -742,11 +740,11 @@ function ViewSubscribedUsers()
 					'style' => 'width: 10%;',
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
+					'function' => function($rowData) {
 						global $context, $txt, $scripturl;
 
-						return \'<a href="\' . $scripturl . \'?action=admin;area=paidsubscribe;sa=modifyuser;lid=\' . $rowData[\'id\'] . \'">\' . $txt[\'modify\'] . \'</a>\';
-					'),
+						return '<a href="' . $scripturl . '?action=admin;area=paidsubscribe;sa=modifyuser;lid=' . $rowData['id'] . '">' . $txt['modify'] . '</a>';
+					},
 					'style' => 'text-align: center;',
 				),
 			),
@@ -755,11 +753,11 @@ function ViewSubscribedUsers()
 					'style' => 'width: 4%;',
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
+					'function' => function($rowData) {
 						global $context, $txt, $scripturl;
 
-						return \'<input type="checkbox" name="delsub[\' . $rowData[\'id\'] . \']" class="input_check" />\';
-					'),
+						return '<input type="checkbox" name="delsub[' . $rowData['id'] . ']" class="input_check" />';
+					},
 					'style' => 'text-align: center;',
 				),
 			),

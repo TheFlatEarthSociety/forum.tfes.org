@@ -1376,18 +1376,7 @@ function populateDuplicateMembers(&$members)
 // Generate a random validation code.
 function generateValidationCode()
 {
-	global $smcFunc, $modSettings;
-
-	$request = $smcFunc['db_query']('get_random_number', '
-		SELECT RAND()',
-		array(
-		)
-	);
-
-	list ($dbRand) = $smcFunc['db_fetch_row']($request);
-	$smcFunc['db_free_result']($request);
-
-	return substr(preg_replace('/\W/', '', sha1(microtime() . mt_rand() . $dbRand . $modSettings['rand_seed'])), 0, 10);
+	return bin2hex(random_bytes(5));
 }
 
 ?>

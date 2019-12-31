@@ -1,5 +1,5 @@
 <?php
-// Version: 2.0; Profile
+// Version: 2.0.16; Profile
 
 global $scripturl, $context;
 
@@ -467,5 +467,11 @@ $txt['trackEdit_action_member_name'] = 'Username';
 $txt['trackEdit_action_email_address'] = 'Email Address';
 $txt['trackEdit_action_id_group'] = 'Primary Membergroup';
 $txt['trackEdit_action_additional_groups'] = 'Additional Membergroups';
+
+// Registration Agreement
+$txt['trackEdit_action_agreement_accepted'] = 'Accepted the registration agreement';
+$txt['trackEdit_action_policy_accepted'] = 'Accepted the privacy policy';
+
+$txt['export_profile_data'] = 'Download profile data';
 
 ?>

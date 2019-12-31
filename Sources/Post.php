@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.14
+ * @version 2.0.16
  */
 
 if (!defined('SMF'))
@@ -2298,7 +2298,17 @@ function AnnouncementSend()
 				'TOPICSUBJECT' => $context['topic_subject'],
 				'MESSAGE' => $message,
 				'TOPICLINK' => $scripturl . '?topic=' . $topic . '.0',
+				'UNSUBSCRIBELINK' => $scripturl . '?action=notifyannouncements',
 			);
+
+			// Tokens allow people to unsubscribe without logging in
+			if (!empty($modSettings['notify_tokens']))
+			{
+				require_once($sourcedir . '/Notify.php');
+				$token = createUnsubscribeToken($row['id_member'], $row['email_address'], 'announcements');
+
+				$replacements['UNSUBSCRIBELINK'] .= ';u=' . $row['id_member'] . ';token=' . $token;
+			}
 
 			$emaildata = loadEmailTemplate('new_announcement', $replacements, $cur_language);
 
@@ -2443,6 +2453,15 @@ function notifyMembersBoard(&$topicData)
 
 			if (!$send_body)
 				unset($replacements['MESSAGE']);
+
+			// Make a token for the unsubscribe link
+			if (!empty($modSettings['notify_tokens']))
+			{
+				require_once($sourcedir . '/Notify.php');
+				$token = createUnsubscribeToken($rowmember['id_member'], $rowmember['email_address'], 'board', $rowmember['id_board']);
+
+				$replacements['UNSUBSCRIBELINK'] .= ';u=' . $rowmember['id_member'] . ';token=' . $token;
+			}
 
 			// Figure out which email to send off
 			$emailtype = '';

@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.14
+ * @version 2.0.16
  */
 
 if (!defined('SMF'))
@@ -204,6 +204,7 @@ function ModifyModSettings()
 function ModifyCoreFeatures($return_config = false)
 {
 	global $txt, $scripturl, $context, $settings, $sc, $modSettings;
+	global $language;
 
 	/* This is an array of all the features that can be enabled/disabled - each option can have the following:
 		title		- Text title of this item (If standard string does not exist).
@@ -355,6 +356,36 @@ function ModifyCoreFeatures($return_config = false)
 				recacheSpiderNames();
 			'),
 		),
+		// Quick setting to toggle into GDPR compliance
+		'gdpr' => array(
+			'url' => 'action=admin;area=regcenter;sa=policy',
+			'settings' => array(
+				'force_gdpr' => 1,
+				// DEVELOPERS: Add values to toggle here
+			),
+			'setting_callback' => create_function('$value', '
+				global $modSettings;
+
+				$returnSettings = array();
+
+				if ($value)
+				{
+					$returnSettings[\'requireAgreement\'] = 1;
+					$returnSettings[\'requirePolicyAgreement\'] = 1;
+					$returnSettings[\'allow_disableAnnounce\'] = 1;
+					$returnSettings[\'announcements_default\'] = 0;
+					$returnSettings[\'notify_tokens\'] = 1;
+				}
+
+				return $returnSettings;
+			'),
+			'save_callback' => create_function('$value', '
+				global $modSettings, $language, $context;
+
+				if ($value && empty($modSettings[\'policy_\' . $language]))
+					redirectexit(\'action=admin;area=regcenter;sa=policy;\' . $context[\'session_var\'] . \'=\' . $context[\'session_id\']);
+			'),
+		),
 	);
 
 	// Anyone who would like to add a core feature?
@@ -444,6 +475,8 @@ function ModifyCoreFeatures($return_config = false)
 	if ($context['is_new_install'])
 		updateSettings(array('admin_features' => ''));
 
+	$context['show_privacy_policy_warning'] = empty($modSettings['policy_' . $language]);
+
 	$context['sub_template'] = 'core_features';
 	$context['page_title'] = $txt['core_settings_title'];
 }
@@ -483,7 +516,8 @@ function ModifyBasicSettings($return_config = false)
 			array('check', 'hitStats'),
 		'',
 			// Option-ish things... miscellaneous sorta.
-			array('check', 'allow_disableAnnounce'),
+			array('check', 'allow_disableAnnounce', 'disabled' => !empty($modSettings['force_gdpr'])),
+			array('check', 'notify_tokens', 'disabled' => !empty($modSettings['force_gdpr'])),
 			array('check', 'disallow_sendBody'),
 	);
 
@@ -509,6 +543,13 @@ function ModifyBasicSettings($return_config = false)
 		// Prevent absurd boundaries here - make it a day tops.
 		if (isset($_POST['lastActive']))
 			$_POST['lastActive'] = min((int) $_POST['lastActive'], 1440);
+
+		// GDPR requires these settings to always be true
+		if (!empty($modSettings['force_gdpr']))
+		{
+			$_POST['allow_disableAnnounce'] = 1;
+			$_POST['notify_tokens'] = 1;
+		}
 
 		saveDBSettings($config_vars);
 

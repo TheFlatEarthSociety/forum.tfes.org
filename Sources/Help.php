@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0
+ * @version 2.0.16
  */
 
 if (!defined('SMF'))
@@ -41,7 +41,7 @@ function ShowHelp()
 	loadLanguage('Manual');
 
 	// We need to know where our wiki is.
-	$context['wiki_url'] = 'http://wiki.simplemachines.org/smf';
+	$context['wiki_url'] = 'https://wiki.simplemachines.org/smf';
 
 	// Sections were are going to link...
 	$context['manual_sections'] = array(

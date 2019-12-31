@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.14
+ * @version 2.0.16
  */
 
 if (!defined('SMF'))
@@ -1504,7 +1504,7 @@ function compareVersions($version1, $version2)
 			'minor' => !empty($parts[2]) ? (int) $parts[2] : 0,
 			'patch' => !empty($parts[3]) ? (int) $parts[3] : 0,
 			'type' => empty($parts[4]) ? 'stable' : $parts[4],
-			'type_major' => !empty($parts[6]) ? (int) $parts[5] : 0,
+			'type_major' => !empty($parts[5]) ? (int) $parts[5] : 0,
 			'type_minor' => !empty($parts[6]) ? (int) $parts[6] : 0,
 			'dev' => !empty($parts[7]),
 		);
@@ -1582,8 +1582,9 @@ function deltree($dir, $delete_dir = true)
 		if ($delete_dir && isset($package_ftp))
 		{
 			$ftp_file = strtr($dir, array($_SESSION['pack_ftp']['root'] => ''));
-			if (!is_writable($dir . '/' . $entryname))
+			if (!is_writable($dir . '/' . $ftp_file))
 				$package_ftp->chmod($ftp_file, 0777);
+
 			$package_ftp->unlink($ftp_file);
 		}
 
@@ -3019,6 +3020,48 @@ if (!function_exists('smf_crc32'))
 
 		return $crc;
 	}
+}
+
+// Checks whether a file or data retrieved by fetch_web_data has the expected MIME type.
+// Returns 1 if the detected MIME type matches the pattern, 0 if it doesn't, or 2 if we can't check.
+function check_mime_type($data, $type_pattern, $is_path = false)
+{
+	// On Windows, the Fileinfo extension may not be enabled by default.
+	if (!extension_loaded('fileinfo'))
+	{
+		// Maybe we can load it dynamically?
+		$loaded = false;
+		$safe = ini_get('safe_mode');
+		$dl_ok = ini_get('enable_dl');
+		if (empty($safe) && !empty($dl_ok))
+			$loaded = @dl(((PHP_SHLIB_SUFFIX === 'dll') ? 'php_' : '') . 'fileinfo.' . PHP_SHLIB_SUFFIX);
+
+		// Oh well. We tried.
+		if (!$loaded)
+			return 2;
+	}
+
+	// Just some nice, simple data to analyze.
+	if (empty($is_path))
+		$mime_type = finfo_buffer(finfo_open(FILEINFO_MIME), $data);
+
+	// A file, or maybe a URL?
+	else
+	{
+		// Local file.
+		if (file_exists($data))
+			$mime_type = mime_content_type($data);
+
+		// URL.
+		elseif (url_exists($data))
+			$mime_type = finfo_buffer(finfo_open(FILEINFO_MIME), fetch_web_data($data));
+
+		// Non-existent files obviously don't have the right MIME type.
+		else
+			return 0;
+	}
+
+	return (int) @preg_match('~' . $type_pattern . '~', $mime_type);
 }
 
 ?>

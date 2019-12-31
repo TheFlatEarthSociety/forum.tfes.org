@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.14
+ * @version 2.0.16
  */
 
 if (!defined('SMF'))
@@ -1343,12 +1343,21 @@ function smtp_mail($mail_to_array, $subject, $message, $headers)
 	if (!server_parse(null, $socket, '220'))
 		return false;
 
+	// Start off by using the stored mail server.
+	$helo = $modSettings['smtp_host'];
+
+	// Try and determine this server's name.
+	if (function_exists('gethostname') && gethostname() !== false)
+		$helo = gethostname();
+	elseif (function_exists('php_uname'))
+		$helo = php_uname('n');
+	elseif (!empty($_SERVER['SERVER_NAME']))
+		$helo = $_SERVER['SERVER_NAME'];
+
 	if ($modSettings['mail_type'] == 1 && $modSettings['smtp_username'] != '' && $modSettings['smtp_password'] != '')
 	{
-		// !!! These should send the CURRENT server's name, not the mail server's!
-
 		// EHLO could be understood to mean encrypted hello...
-		if (server_parse('EHLO ' . $modSettings['smtp_host'], $socket, null) == '250')
+		if (server_parse('EHLO ' . $helo, $socket, null) == '250')
 		{
 			if (!server_parse('AUTH LOGIN', $socket, '334'))
 				return false;
@@ -1359,13 +1368,13 @@ function smtp_mail($mail_to_array, $subject, $message, $headers)
 			if (!server_parse($modSettings['smtp_password'], $socket, '235'))
 				return false;
 		}
-		elseif (!server_parse('HELO ' . $modSettings['smtp_host'], $socket, '250'))
+		elseif (!server_parse('HELO ' . $helo, $socket, '250'))
 			return false;
 	}
 	else
 	{
 		// Just say "helo".
-		if (!server_parse('HELO ' . $modSettings['smtp_host'], $socket, '250'))
+		if (!server_parse('HELO ' . $helo, $socket, '250'))
 			return false;
 	}
 
@@ -1659,6 +1668,15 @@ function sendNotifications($topics, $type, $exclude = array(), $members_only = a
 			'TOPICLINK' => $scripturl . '?topic=' . $row['id_topic'] . '.new;topicseen#new',
 			'UNSUBSCRIBELINK' => $scripturl . '?action=notify;topic=' . $row['id_topic'] . '.0',
 		);
+
+		// Make a token for the unsubscribe link
+		if (!empty($modSettings['notify_tokens']))
+		{
+			require_once($sourcedir . '/Notify.php');
+			$token = createUnsubscribeToken($row['id_member'], $row['email_address'], 'topic', $row['id_topic']);
+
+			$replacements['UNSUBSCRIBELINK'] .= ';u=' . $row['id_member'] . ';token=' . $token;
+		}
 
 		if ($type == 'remove')
 			unset($replacements['TOPICLINK'], $replacements['UNSUBSCRIBELINK']);
@@ -2916,6 +2934,15 @@ function sendApprovalNotifications(&$topicData)
 				'TOPICLINK' => $scripturl . '?topic=' . $row['id_topic'] . '.new;topicseen#new',
 				'UNSUBSCRIBELINK' => $scripturl . '?action=notify;topic=' . $row['id_topic'] . '.0',
 			);
+
+			// Make a token for the unsubscribe link
+			if (!empty($modSettings['notify_tokens']))
+			{
+				require_once($sourcedir . '/Notify.php');
+				$token = createUnsubscribeToken($row['id_member'], $row['email_address'], 'topic', $row['id_topic']);
+
+				$replacements['UNSUBSCRIBELINK'] .= ';u=' . $row['id_member'] . ';token=' . $token;
+			}
 
 			$message_type = 'notification_reply';
 			// Do they want the body of the message sent too?

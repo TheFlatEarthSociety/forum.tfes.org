@@ -142,22 +142,7 @@ String.prototype.php_to8bit = function ()
 {
 	if (smf_charset == 'UTF-8')
 	{
-		var n, sReturn = '';
-
-		for (var i = 0, iTextLen = this.length; i < iTextLen; i++)
-		{
-			n = this.charCodeAt(i);
-			if (n < 128)
-				sReturn += String.fromCharCode(n)
-			else if (n < 2048)
-				sReturn += String.fromCharCode(192 | n >> 6) + String.fromCharCode(128 | n & 63);
-			else if (n < 65536)
-				sReturn += String.fromCharCode(224 | n >> 12) + String.fromCharCode(128 | n >> 6 & 63) + String.fromCharCode(128 | n & 63);
-			else
-				sReturn += String.fromCharCode(240 | n >> 18) + String.fromCharCode(128 | n >> 12 & 63) + String.fromCharCode(128 | n >> 6 & 63) + String.fromCharCode(128 | n & 63);
-		}
-
-		return sReturn;
+		return this;
 	}
 
 	else if (this.oCharsetConversion.from.length == 0)
@@ -280,6 +265,9 @@ String.prototype.php_strtolower = function ()
 
 String.prototype.php_urlencode = function()
 {
+	if (smf_charset == 'UTF-8')
+		return encodeURIComponent(this);
+
 	return escape(this).replace(/\+/g, '%2b').replace('*', '%2a').replace('/', '%2f').replace('@', '%40');
 }
 
@@ -1360,7 +1348,11 @@ function smfSelectText(oCurElement, bActOnElement)
 	{
 		var oCurSelection = window.getSelection();
 		// Safari is special!
-		if (oCurSelection.setBaseAndExtent)
+		if (oCurSelection.selectAllChildren)
+		{
+			oCurSelection.selectAllChildren(oCodeArea);
+		}
+		else if (oCurSelection.setBaseAndExtent)
 		{
 			var oLastChild = oCodeArea.lastChild;
 			oCurSelection.setBaseAndExtent(oCodeArea, 0, oLastChild, 'innerText' in oLastChild ? oLastChild.innerText.length : oLastChild.textContent.length);

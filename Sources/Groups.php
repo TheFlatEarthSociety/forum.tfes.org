@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0
+ * @version 2.0.16
  */
 
 if (!defined('SMF'))
@@ -456,6 +456,10 @@ function MembergroupMembers()
 	{
 		checkSession();
 
+		// Only proven admins can remove admins.
+		if ($context['group']['id'] == 1)
+			validateSession();
+
 		// Make sure we're dealing with integers only.
 		foreach ($_REQUEST['rem'] as $key => $group)
 			$_REQUEST['rem'][$key] = (int) $group;
@@ -467,6 +471,10 @@ function MembergroupMembers()
 	elseif (isset($_REQUEST['add']) && (!empty($_REQUEST['toAdd']) || !empty($_REQUEST['member_add'])) && $context['group']['assignable'])
 	{
 		checkSession();
+
+		// Demand an admin password before adding new admins -- every time, no matter what.
+		if ($context['group']['id'] == 1)
+			validateSession(true);
 
 		$member_query = array();
 		$member_parameters = array();

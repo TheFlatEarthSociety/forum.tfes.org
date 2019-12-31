@@ -8,13 +8,13 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.15
+ * @version 2.0.16
  */
 
-$GLOBALS['current_smf_version'] = '2.0.15';
+$GLOBALS['current_smf_version'] = '2.0.16';
 $GLOBALS['db_script_version'] = '2-0';
 
-$GLOBALS['required_php_version'] = '5.4.0';
+$GLOBALS['required_php_version'] = '5.3.0';
 
 // Don't have PHP support, do you?
 // ><html dir="ltr"><head><title>Error!</title></head><body>Sorry, this installer requires PHP!<div style="display: none;">
@@ -36,10 +36,10 @@ $databases = array(
 		'utf8_default' => false,
 		'utf8_required' => false,
 		'alter_support' => true,
-		'validate_prefix' => create_function('&$value', '
-			$value = preg_replace(\'~[^A-Za-z0-9_\$]~\', \'\', $value);
+		'validate_prefix' => function(&$value) {
+			$value = preg_replace('~[^A-Za-z0-9_\$]~', '', $value);
 			return true;
-		'),
+		},
 	),
 	'postgresql' => array(
 		'name' => 'PostgreSQL',
@@ -53,19 +53,21 @@ $databases = array(
 		'utf8_support' => true,
 		'utf8_version' => '8.0',
 		'utf8_version_check' => '$request = pg_query(\'SELECT version()\'); list ($version) = pg_fetch_row($request); list($pgl, $version) = explode(" ", $version); return $version;',
-		'validate_prefix' => create_function('&$value', '
-			$value = preg_replace(\'~[^A-Za-z0-9_\$]~\', \'\', $value);
+		'validate_prefix' => function(&$value) {
+			global $txt;
+
+			$value = preg_replace('~[^A-Za-z0-9_\$]~', '', $value);
 
 			// Is it reserved?
-			if ($value == \'pg_\')
-				return $txt[\'error_db_prefix_reserved\'];
+			if ($value == 'pg_')
+				return $txt['error_db_prefix_reserved'];
 
 			// Is the prefix numeric?
-			if (preg_match(\'~^\d~\', $value))
-				return $txt[\'error_db_prefix_numeric\'];
+			if (preg_match('~^\d~', $value))
+				return $txt['error_db_prefix_numeric'];
 
 			return true;
-		'),
+		},
 	),
 	'sqlite' => array(
 		'name' => 'SQLite',
@@ -76,21 +78,21 @@ $databases = array(
 		'always_has_db' => true,
 		'utf8_default' => true,
 		'utf8_required' => true,
-		'validate_prefix' => create_function('&$value', '
+		'validate_prefix' => function(&$value) {
 			global $incontext, $txt;
 
-			$value = preg_replace(\'~[^A-Za-z0-9_\$]~\', \'\', $value);
+			$value = preg_replace('~[^A-Za-z0-9_\$]~', '', $value);
 
 			// Is it reserved?
-			if ($value == \'sqlite_\')
-				return $txt[\'error_db_prefix_reserved\'];
+			if ($value == 'sqlite_')
+				return $txt['error_db_prefix_reserved'];
 
 			// Is the prefix numeric?
-			if (preg_match(\'~^\d~\', $value))
-				return $txt[\'error_db_prefix_numeric\'];
+			if (preg_match('~^\d~', $value))
+				return $txt['error_db_prefix_numeric'];
 
 			return true;
-		'),
+		},
 	),
 );
 
@@ -101,7 +103,7 @@ load_lang_file();
 // This is what we are.
 $installurl = $_SERVER['PHP_SELF'];
 // This is where SMF is.
-$smfsite = 'http://www.simplemachines.org/smf';
+$smfsite = 'https://www.simplemachines.org/smf';
 
 // All the steps in detail.
 // Number,Name,Function,Progress Weight.
@@ -158,7 +160,9 @@ function initialize_inputs()
 	// Turn off magic quotes runtime and enable error reporting.
 	if (function_exists('set_magic_quotes_runtime'))
 		@set_magic_quotes_runtime(0);
-	error_reporting(E_ALL);
+
+	// Report all errors except for depreciation notices.
+	error_reporting(E_ALL & ~E_DEPRECATED);
 
 	// Fun.  Low PHP version...
 	if (!isset($_GET))
@@ -258,6 +262,9 @@ function initialize_inputs()
 		$server_offset = @mktime(0, 0, 0, 1, 1, 1970);
 		date_default_timezone_set('Etc/GMT' . ($server_offset > 0 ? '+' : '') . ($server_offset / 3600));
 	}
+	header('X-Frame-Options: SAMEORIGIN');
+	header('X-XSS-Protection: 1');
+	header('X-Content-Type-Options: nosniff');
 
 	// Force an integer step, defaulting to 0.
 	$_GET['step'] = (int) @$_GET['step'];
@@ -306,7 +313,7 @@ function load_lang_file()
 		<p>In some cases, FTP clients do not properly upload files with this many folders.  Please double check to make sure you <span style="font-weight: 600;">have uploaded all the files in the distribution</span>.</p>
 		<p>If that doesn\'t help, please make sure this install.php file is in the same place as the Themes folder.</p>
 
-		<p>If you continue to get this error message, feel free to <a href="http://support.simplemachines.org/">look to us for support</a>.</p>
+		<p>If you continue to get this error message, feel free to <a href="https://support.simplemachines.org/">look to us for support</a>.</p>
 	</div></body>
 </html>';
 		die;
@@ -725,7 +732,7 @@ function DatabaseSettings()
 		$incontext['db']['prefix'] = $_POST['db_prefix'];
 	}
 	else
-		$incontext['db']['prefix'] = 'smf_';
+		$incontext['db']['prefix'] = substr(str_shuffle('abcdefghijklmnopqrstuvwxyz'), 0, 3) . '_';
 
 	// Should we use a non standard port?
 	if (!empty($_port))
@@ -936,6 +943,19 @@ function ForumSettings()
 			'image_proxy_maxsize' => 5190,
 			'image_proxy_enabled' => 0,
 		);
+
+		// Generate a strong authentication secret.
+		if (function_exists('random_bytes'))
+			$vars['auth_secret'] = bin2hex(random_bytes(32));
+		elseif (function_exists('mcrypt_create_iv'))
+			$vars['auth_secret'] = bin2hex(mcrypt_create_iv(32));
+		elseif (function_exists('openssl_random_pseudo_bytes'))
+			$vars['auth_secret'] = bin2hex(openssl_random_pseudo_bytes(32));
+		// Less than ideal, but we're running out of options.
+		elseif (function_exists('hash'))
+			$vars['auth_secret'] = hash('sha256', mt_rand());
+		else
+			$vars['auth_secret'] = substr(sha1(mt_rand()) . sha1(mt_rand()), 0, 64);
 
 		// Must save!
 		if (!updateSettingsFile($vars) && substr(__FILE__, 1, 2) == ':\\')
@@ -1427,6 +1447,7 @@ function DeleteInstall()
 	global $txt, $db_prefix, $db_connection, $HTTP_SESSION_VARS, $cookiename, $incontext;
 	global $smcFunc, $db_character_set, $mbname, $context, $scripturl, $boardurl;
 	global $current_smf_version, $databases, $sourcedir, $forum_version, $modSettings, $user_info, $language, $db_type;
+	global $auth_secret;
 
 	$incontext['page_title'] = $txt['congratulations'];
 	$incontext['sub_template'] = 'delete_install';
@@ -1977,6 +1998,11 @@ function updateSettingsFile($vars)
 	fwrite($fp, $settingsArray[$i] . '?' . '>');
 	fclose($fp);
 
+	// Even though on normal installations the filemtime should prevent this being used by the installer incorrectly
+	// it seems that there are times it might not. So let's MAKE it dump the cache.
+	if (function_exists('opcache_invalidate'))
+		opcache_invalidate(dirname(__FILE__) . '/Settings.php', true);
+
 	return true;
 }
 
@@ -2132,7 +2158,7 @@ function template_install_below()
 		</div>
 	</div></div>
 	<div id="footer_section"><div class="frame" style="height: 40px;">
-		<div class="smalltext"><a href="http://www.simplemachines.org/" title="Simple Machines Forum" target="_blank" class="new_win">SMF &copy; 2015, Simple Machines</a></div>
+		<div class="smalltext"><a href="https://www.simplemachines.org/" title="Simple Machines Forum" target="_blank" class="new_win">SMF &copy; 2019, Simple Machines</a></div>
 	</div></div>
 	</body>
 </html>';
@@ -2141,10 +2167,10 @@ function template_install_below()
 // Welcome them to the wonderful world of SMF!
 function template_welcome_message()
 {
-	global $incontext, $installurl, $txt;
+	global $incontext, $installurl, $txt, $smfsite;
 
 	echo '
-	<script type="text/javascript" src="http://www.simplemachines.org/smf/current-version.js?version=' . $GLOBALS['current_smf_version'] . '"></script>
+	<script type="text/javascript" src="' . $smfsite . '/current-version.js?version=' . $GLOBALS['current_smf_version'] . '"></script>
 	<form action="', $incontext['form_url'], '" method="post">
 		<p>', sprintf($txt['install_welcome_desc'], $GLOBALS['current_smf_version']), '</p>
 		<div id="version_warning" style="margin: 2ex; padding: 2ex; border: 2px dashed #a92174; color: black; background-color: #fbbbe2; display: none;">
@@ -2352,7 +2378,7 @@ function template_database_settings()
 			</tr><tr id="db_name_contain">
 				<td valign="top" class="textbox"><label for="db_name_input">', $txt['db_settings_database'], ':</label></td>
 				<td>
-					<input type="text" name="db_name" id="db_name_input" value="', empty($incontext['db']['name']) ? 'smf' : $incontext['db']['name'], '" size="30" class="input_text" /><br />
+					<input type="text" name="db_name" id="db_name_input" value="', empty($incontext['db']['name']) ? 'smf_' . substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 5) : $incontext['db']['name'], '" size="30" class="input_text" /><br />
 					<div style="font-size: smaller; margin-bottom: 2ex;">', $txt['db_settings_database_info'], '
 					<span id="db_name_info_warning">', $txt['db_settings_database_info_note'], '</span></div>
 				</td>

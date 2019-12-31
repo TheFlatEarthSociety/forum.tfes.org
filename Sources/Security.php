@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.3
+ * @version 2.0.16
  */
 
 if (!defined('SMF'))
@@ -101,7 +101,7 @@ if (!defined('SMF'))
 */
 
 // Check if the user is who he/she says he is
-function validateSession()
+function validateSession($force = false)
 {
 	global $modSettings, $sourcedir, $user_info, $sc, $user_settings;
 
@@ -112,7 +112,7 @@ function validateSession()
 	$refreshTime = isset($_GET['xml']) ? 4200 : 3600;
 
 	// Is the security option off?  Or are they already logged in?
-	if (!empty($modSettings['securityDisable']) || (!empty($_SESSION['admin_time']) && $_SESSION['admin_time'] + $refreshTime >= time()))
+	if (!$force && (!empty($modSettings['securityDisable']) || (!empty($_SESSION['admin_time']) && $_SESSION['admin_time'] + $refreshTime >= time())))
 		return;
 
 	require_once($sourcedir . '/Subs-Auth.php');
@@ -818,6 +818,11 @@ function allowedTo($permission, $boards = null)
 
 	// You're never allowed to do something if your data hasn't been loaded yet!
 	if (empty($user_info))
+		return false;
+
+	// Calling this before permissions have not been set up properly?
+	// Assume a denial, since we don't know if you can do anything yet.
+	if (!isset($user_info['permissions']))
 		return false;
 
 	// Administrators are supermen :P.

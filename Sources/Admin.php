@@ -9,7 +9,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.15
+ * @version 2.0.16
  */
 
 if (!defined('SMF'))
@@ -336,6 +336,7 @@ function AdminMain()
 					'subsections' => array(
 						'register' => array($txt['admin_browse_register_new'], 'moderate_forum'),
 						'agreement' => array($txt['registration_agreement'], 'admin_forum'),
+						'policy' => array($txt['privacy_policy'], 'admin_forum'),
 						'reservednames' => array($txt['admin_reserved_set'], 'admin_forum'),
 						'settings' => array($txt['settings'], 'admin_forum'),
 					),
@@ -603,18 +604,18 @@ function AdminHome()
 
 	// Lastly, fill in the blanks in the support resources paragraphs.
 	$txt['support_resources_p1'] = sprintf($txt['support_resources_p1'],
-		'http://wiki.simplemachines.org/',
-		'http://wiki.simplemachines.org/smf/features2',
-		'http://wiki.simplemachines.org/smf/options2',
-		'http://wiki.simplemachines.org/smf/themes2',
-		'http://wiki.simplemachines.org/smf/packages2'
+		'https://wiki.simplemachines.org/',
+		'https://wiki.simplemachines.org/smf/features2',
+		'https://wiki.simplemachines.org/smf/options2',
+		'https://wiki.simplemachines.org/smf/themes2',
+		'https://wiki.simplemachines.org/smf/packages2'
 	);
 	$txt['support_resources_p2'] = sprintf($txt['support_resources_p2'],
-		'http://www.simplemachines.org/community/',
-		'http://www.simplemachines.org/redirect/english_support',
-		'http://www.simplemachines.org/redirect/international_support_boards',
-		'http://www.simplemachines.org/redirect/smf_support',
-		'http://www.simplemachines.org/redirect/customize_support'
+		'https://www.simplemachines.org/community/',
+		'https://www.simplemachines.org/redirect/english_support',
+		'https://www.simplemachines.org/redirect/international_support_boards',
+		'https://www.simplemachines.org/redirect/smf_support',
+		'https://www.simplemachines.org/redirect/customize_support'
 	);
 }
 
@@ -833,7 +834,7 @@ function AdminSearchInternal()
 					'url' => (substr($item[1], 0, 4) == 'area' ? $scripturl . '?action=admin;' . $item[1] : $item[1]) . ';' . $context['session_var'] . '=' . $context['session_id'] . ((substr($item[1], 0, 4) == 'area' && $section == 'settings' ? '#' . $item[0][0] : '')),
 					'name' => $name,
 					'type' => $section,
-					'help' => shorten_subject(isset($item[2]) ? strip_tags($helptxt[$item2]) : (isset($helptxt[$found]) ? strip_tags($helptxt[$found]) : ''), 255),
+					'help' => shorten_subject(isset($item[2]) ? strip_tags($helptxt[$item[2]]) : (isset($helptxt[$found]) ? strip_tags($helptxt[$found]) : ''), 255),
 				);
 			}
 		}

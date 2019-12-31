@@ -7,7 +7,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.15
+ * @version 2.0.16
  */
 
 // This is just the basic "login" form.
@@ -139,7 +139,7 @@ function template_kick_guest()
 				<p class="centertext smalltext"><a href="', $scripturl, '?action=reminder">', $txt['forgot_your_password'], '</a></p><input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
 			</div>
 			<span class="lowerframe"><span></span></span>
-			<input type="hidden" name="hash_passwrd" value="" />
+			<input type="hidden" name="hash_passwrd" value="" /><input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
 		</div>
 	</form>';
 

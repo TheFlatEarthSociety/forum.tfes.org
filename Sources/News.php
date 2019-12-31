@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.16
+ * @version 2.0.17
  */
 
 if (!defined('SMF'))
@@ -412,7 +412,7 @@ function cdata_parse($data, $ns = '')
 	{
 		$positions = array(
 			$smcFunc['strpos']($data, '&', $pos),
-			$smcFunc['strpos']($data, ']', $pos),
+			$smcFunc['strpos']($data, ']]>', $pos),
 		);
 		if ($ns != '')
 			$positions[] = $smcFunc['strpos']($data, '<', $pos);

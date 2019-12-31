@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.16
+ * @version 2.0.17
  */
 
 if (!defined('SMF'))
@@ -536,7 +536,7 @@ function getPackageInfo($gzfilename)
 	global $boarddir;
 
 	// Extract package-info.xml from downloaded file. (*/ is used because it could be in any directory.)
-	if (strpos($gzfilename, 'http://') !== false)
+	if (strpos($gzfilename, 'http://') !== false || strpos($gzfilename, 'https://') !== false)
 		$packageInfo = read_tgz_data(fetch_web_data($gzfilename, '', true), '*/package-info.xml', true);
 	else
 	{
@@ -2744,11 +2744,8 @@ function package_create_backup($id = 'backup')
 		$dirs[$row['value']] = empty($_REQUEST['use_full_paths']) ? 'Themes/' . basename($row['value']) . '/' : strtr($row['value'] . '/', '\\', '/');
 	$smcFunc['db_free_result']($request);
 
-	while (!empty($dirs))
+	foreach ($dirs as $dir => $dest)
 	{
-		list ($dir, $dest) = each($dirs);
-		unset($dirs[$dir]);
-
 		$listing = @dir($dir);
 		if (!$listing)
 			continue;

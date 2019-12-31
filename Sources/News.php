@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.8
+ * @version 2.0.16
  */
 
 if (!defined('SMF'))
@@ -259,6 +259,19 @@ function ShowXmlFeed()
 	elseif ($xml_format == 'rdf')
 		header('Content-Type: ' . ($context['browser']['is_ie'] ? 'text/xml' : 'application/rdf+xml') . '; charset=' . (empty($context['character_set']) ? 'ISO-8859-1' : $context['character_set']));
 
+	// Descriptive filenames = good
+	$xml_filename = array(preg_replace('/\s+/', '_', $feed_title), $_GET['sa']);
+	if ($_GET['sa'] === 'profile')
+		$xml_filename[] = 'u=' . (isset($_GET['u']) ? (int) $_GET['u'] : $user_info['id']);
+	if (!empty($boards))
+		$xml_filename[] = 'boards=' . implode(',', $boards);
+	elseif (!empty($board))
+		$xml_filename[] = 'board=' . $board;
+	$xml_filename[] = $xml_format;
+	$xml_filename = strtr(un_htmlspecialchars(implode('-', $xml_filename)), '"', '') ;
+
+	header('Content-Disposition: ' . (isset($_GET['download']) ? 'attachment' : 'inline') . '; filename="' . $xml_filename . '.xml"');
+
 	// First, output the xml header.
 	echo '<?xml version="1.0" encoding="', $context['character_set'], '"?' . '>';
 
@@ -313,7 +326,7 @@ function ShowXmlFeed()
 
 	<modified>', gmstrftime('%Y-%m-%dT%H:%M:%SZ'), '</modified>
 	<tagline><![CDATA[', strip_tags($txt['xml_rss_desc']), ']]></tagline>
-	<generator uri="http://www.simplemachines.org" version="', strtr($forum_version, array('SMF' => '')), '">SMF</generator>
+	<generator uri="https://www.simplemachines.org" version="', strtr($forum_version, array('SMF' => '')), '">SMF</generator>
 	<author>
 		<name>', strip_tags($context['forum_name']), '</name>
 	</author>';
@@ -389,6 +402,10 @@ function cdata_parse($data, $ns = '')
 	if (!empty($cdata_override))
 		return $data;
 
+	// Do we even need to do this?
+	if (strpbrk($data, '<>&') == false)
+		return $data;
+
 	$cdata = '<![CDATA[';
 
 	for ($pos = 0, $n = $smcFunc['strlen']($data); $pos < $n; null)
@@ -424,10 +441,10 @@ function cdata_parse($data, $ns = '')
 				$cdata .= ']]><' . $ns . ':' . $smcFunc['substr']($data, $pos + 1, $pos2 - $pos) . '<![CDATA[';
 			$pos = $pos2 + 1;
 		}
-		elseif ($smcFunc['substr']($data, $pos, 1) == ']')
+		elseif ($smcFunc['substr']($data, $pos, 3) == ']]>')
 		{
-			$cdata .= ']]>&#093;<![CDATA[';
-			$pos++;
+			$cdata .= ']]]]><![CDATA[>';
+			$pos = $pos + 3;
 		}
 		elseif ($smcFunc['substr']($data, $pos, 1) == '&')
 		{
@@ -850,7 +867,7 @@ function getXmlRecent($xml_format)
 
 function getXmlProfile($xml_format)
 {
-	global $scripturl, $memberContext, $user_profile, $modSettings, $user_info;
+	global $scripturl, $memberContext, $user_profile, $modSettings, $user_info, $smcFunc, $language;
 
 	// You must input a valid user....
 	if (empty($_GET['u']) || loadMemberData((int) $_GET['u']) === false)
@@ -903,7 +920,7 @@ function getXmlProfile($xml_format)
 			'link' => $scripturl . '?action=profile;u=' . $profile['id'],
 			'posts' => $profile['posts'],
 			'post-group' => cdata_parse($profile['post_group']),
-			'language' => cdata_parse($profile['language']),
+			'language' => cdata_parse(!empty($profile['language']) ? $profile['language'] : $smcFunc['ucwords'](strtr($language, array('_' => ' ', '-utf8' => '')))),
 			'last-login' => gmdate('D, d M Y H:i:s \G\M\T', $user_profile[$profile['id']]['last_login']),
 			'registered' => gmdate('D, d M Y H:i:s \G\M\T', $user_profile[$profile['id']]['date_registered'])
 		);

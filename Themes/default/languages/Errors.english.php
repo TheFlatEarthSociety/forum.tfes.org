@@ -1,5 +1,5 @@
 <?php
-// Version: 2.0; Errors
+// Version: 2.0.16; Errors
 
 global $scripturl, $modSettings;
 
@@ -404,4 +404,11 @@ $txt['restore_not_found'] = 'The following messages could not be restored; the o
 $txt['error_invalid_dir'] = 'The directory you entered is invalid.';
 
 $txt['error_sqlite_optimizing'] = 'Sqlite is optimizing the database, the forum can not be accessed until it has finished.  Please try refreshing this page momentarily.';
+
+// Registration Agreement
+$txt['error_no_agreement'] = 'There is no registration agreement to display!';
+$txt['error_no_privacy_policy'] = 'A privacy policy has not been created for this forum.';
+
+// Unsubscribe
+$txt['unsubscribe_invalid'] = 'The unsubscribe link that brought you here does not appear to be valid.';
 ?>

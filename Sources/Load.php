@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.16
+ * @version 2.0.17
  */
 
 if (!defined('SMF'))
@@ -1556,7 +1556,9 @@ function loadTheme($id_theme = 0, $initialize = true)
 				redirectexit('wwwRedirect');
 			else
 			{
-				list ($k, $v) = each($_GET);
+				reset($_GET);
+				$k = key($_GET);
+				$v = $_GET[$k];
 
 				if ($k != 'wwwRedirect')
 					redirectexit('wwwRedirect;' . $k . '=' . $v);

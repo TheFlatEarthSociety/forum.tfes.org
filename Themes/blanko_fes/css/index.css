@@ -30,12 +30,15 @@ table
     empty-cells: show;
 }
 
-/* Set a fontsize that will look the same in all browsers. */
+/* Set a fontsize that will look the same in all browsers.
+   Override Bootstrap's default font to fall back to sans-serif.
+*/
 body
 {
     margin: 0 auto;
     padding: 0;
     background-color: #ebebeb;
+	font-family: 'Open Sans', sans-serif;
 }
 
 /* Help popups require a different styling of the body element. */

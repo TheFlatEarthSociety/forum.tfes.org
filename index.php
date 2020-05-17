@@ -146,7 +146,7 @@ elseif (!isset($_SESSION['nowap']))
 }
 
 if (!defined('WIRELESS'))
-	define('WIRELESS', isset($_REQUEST['wap']) || isset($_REQUEST['wap2']) || isset($_REQUEST['imode']));
+	define('WIRELESS', false);
 
 // Some settings and headers are different for wireless protocols.
 if (WIRELESS)

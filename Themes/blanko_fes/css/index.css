@@ -38,7 +38,7 @@ body
     margin: 0 auto;
     padding: 0;
     background-color: #ebebeb;
-	font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 /* Help popups require a different styling of the body element. */

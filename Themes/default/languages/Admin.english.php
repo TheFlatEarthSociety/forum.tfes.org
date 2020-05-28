@@ -1,5 +1,5 @@
 <?php
-// Version: 2.0; Admin
+// Version: 2.0.16; Admin
 
 global $settings, $scripturl;
 
@@ -41,13 +41,18 @@ $txt['admin_smfpackage'] = 'SMF Package';
 $txt['admin_maintenance'] = 'Maintenance';
 $txt['admin_image_text'] = 'Show buttons as images instead of text';
 $txt['admin_credits'] = 'Credits';
-$txt['admin_agreement'] = 'Show and require agreement letter when registering';
+$txt['admin_agreement'] = 'Require new members to accept the registration agreement';
+$txt['admin_agreement_minor_edit'] = 'This is a minor edit';
+$txt['reset_agreement_desc'] = 'This will force all members to re-read and accept the registration agreement in order to continue using the forum.';
+$txt['admin_privacy_policy'] = 'Require new members to accept the privacy policy';
+$txt['reset_privacy_policy_desc'] = 'This will force all members to re-read and accept the privacy policy in order to continue using the forum.';
+$txt['admin_agreement_info'] = 'Last updated: %1$s.';
 $txt['admin_agreement_default'] = 'Default';
 $txt['admin_agreement_select_language'] = 'Language to edit';
 $txt['admin_agreement_select_language_change'] = 'Change';
 $txt['admin_delete_members'] = 'Delete Selected Members';
 $txt['admin_repair'] = 'Repair All Boards and Topics';
-$txt['admin_main_welcome'] = 'This is your &quot;%1$s&quot;.  From here, you can edit settings, maintain your forum, view logs, install packages, manage themes, and many other things.<div style="margin-top: 1ex;">If you have any trouble, please look at the &quot;Support &amp; Credits&quot; page.  If the information there doesn\'t help you, feel free to <a href="http://www.simplemachines.org/community/index.php" target="_blank" class="new_win">look to us for help</a> with the problem.</div>You may also find answers to your questions or problems by clicking the <img src="' . $settings['images_url'] . '/helptopics.gif" alt="%2$s" title="%3$s" /> symbols for more information on the related functions.';
+$txt['admin_main_welcome'] = 'This is your &quot;%1$s&quot;.  From here, you can edit settings, maintain your forum, view logs, install packages, manage themes, and many other things.<div style="margin-top: 1ex;">If you have any trouble, please look at the &quot;Support &amp; Credits&quot; page.  If the information there doesn\'t help you, feel free to <a href="https://www.simplemachines.org/community/index.php" target="_blank" class="new_win">look to us for help</a> with the problem.</div>You may also find answers to your questions or problems by clicking the <img src="' . $settings['images_url'] . '/helptopics.gif" alt="%2$s" title="%3$s" /> symbols for more information on the related functions.';
 $txt['admin_news_desc'] = 'Please place one news item per box. BBC tags, such as <span title="Are you bold?">[b]</span>, <span title="I tall icks!!">[i]</span> and <span title="Brackets are great, no?">[u]</span> are allowed in your news, as well as smileys. Clear a news item\'s text box to remove it.';
 $txt['administrators'] = 'Forum Administrators';
 $txt['admin_reserved_desc'] = 'Reserved names will keep members from registering certain usernames or using these words in their displayed names. Choose the options you wish to use from the bottom before submitting.';
@@ -68,6 +73,8 @@ $txt['database_password'] = 'Database Password';
 $txt['database_name'] = 'Database Name';
 $txt['registration_agreement'] = 'Registration Agreement';
 $txt['registration_agreement_desc'] = 'This agreement is shown when a user registers an account on this forum and has to be accepted before users can continue registration.';
+$txt['privacy_policy'] = 'Privacy Policy';
+$txt['privacy_policy_desc'] = 'This privacy policy describes the promises you make to your users regarding how you will use their personal data. It is shown when a user registers an account on this forum and has to be accepted before the user can continue registration.';
 $txt['database_prefix'] = 'Database Tables Prefix';
 $txt['errors_list'] = 'Listing of forum errors';
 $txt['errors_found'] = 'The following errors are fouling up your forum';
@@ -103,7 +110,7 @@ $txt['remove_all'] = 'Remove All';
 $txt['approve_new_members'] = 'Admin must approve all new members';
 $txt['agreement_not_writable'] = 'Warning - agreement.txt is not writable, any changes you make will NOT be saved.';
 
-$txt['version_check_desc'] = 'This shows you the versions of your installation\'s files versus those of the latest version. If any of these files are out of date, you should download and upgrade to the latest version at <a href="http://www.simplemachines.org/" target="_blank" class="new_win">www.simplemachines.org</a>.';
+$txt['version_check_desc'] = 'This shows you the versions of your installation\'s files versus those of the latest version. If any of these files are out of date, you should download and upgrade to the latest version at <a href="https://www.simplemachines.org/" target="_blank" class="new_win">www.simplemachines.org</a>.';
 $txt['version_check_more'] = '(more detailed)';
 
 $txt['lfyi'] = 'You are unable to connect to simplemachines.org\'s latest news file.';

@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.14
+ * @version 2.0.17
  */
 
 if (!defined('SMF'))
@@ -392,8 +392,8 @@ function loadUserSettings()
 			$user_settings = $smcFunc['db_fetch_assoc']($request);
 			$smcFunc['db_free_result']($request);
 
-			if (!empty($modSettings['force_ssl']) && $image_proxy_enabled && stripos($user_settings['avatar'], 'http://') !== false)
-				$user_settings['avatar'] = strtr($boardurl, array('http://' => 'https://')) . '/proxy.php?request=' . urlencode($user_settings['avatar']) . '&hash=' . md5($user_settings['avatar'] . $image_proxy_secret);
+			if (!empty($user_settings['avatar']))
+				$user_settings['avatar'] = get_proxied_url($user_settings['avatar']);
 
 			if (!empty($modSettings['cache_enable']) && $modSettings['cache_enable'] >= 2)
 				cache_put_data('user_settings-' . $id_member, $user_settings, 60);
@@ -407,7 +407,7 @@ function loadUserSettings()
 				$check = true;
 			// SHA-1 passwords should be 40 characters long.
 			elseif (strlen($password) == 40)
-				$check = sha1($user_settings['passwd'] . $user_settings['password_salt']) == $password;
+				$check = hash_hmac('sha1', sha1($user_settings['passwd'] . $user_settings['password_salt']), get_auth_secret()) == $password;
 			else
 				$check = false;
 
@@ -957,7 +957,7 @@ function loadPermissions()
 function loadMemberData($users, $is_name = false, $set = 'normal')
 {
 	global $user_profile, $modSettings, $board_info, $smcFunc;
-	global $boardurl, $image_proxy_enabled, $image_proxy_secret;
+	global $boardurl, $image_proxy_enabled, $image_proxy_secret, $user_info;
 	// Can't just look for no users :P.
 	if (empty($users))
 		return false;
@@ -1049,8 +1049,8 @@ function loadMemberData($users, $is_name = false, $set = 'normal')
 				$row['avatar_original'] = $row['avatar'];
 
 			// Take care of proxying avatar if required, do this here for maximum reach
-			if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false)
-				$row['avatar'] = $boardurl . '/proxy.php?request=' . urlencode($row['avatar']) . '&hash=' . md5($row['avatar'] . $image_proxy_secret);
+			if (!empty($row['avatar']))
+				$row['avatar'] = get_proxied_url($row['avatar']);
 
 			$new_loaded_ids[] = $row['id_member'];
 			$loaded_ids[] = $row['id_member'];
@@ -1495,6 +1495,36 @@ function loadTheme($id_theme = 0, $initialize = true)
 	if (!$initialize)
 		return;
 
+	// Perhaps we've changed the agreement or privacy policy? Only redirect if:
+	// 1. They're not a guest or admin
+	// 2. This isn't called from SSI
+	// 3. This isn't an XML request
+	// 4. They're not trying to do any of the following actions:
+	// 4a. View or accept the agreement and/or policy
+	// 4b. Login or logout
+	// 4c. Get a feed (RSS, ATOM, etc.)
+	if (!$user_info['is_guest'] && !$user_info['is_admin'] && SMF != 'SSI' && !isset($_REQUEST['xml']) && (!isset($_REQUEST['action']) || !in_array($_REQUEST['action'], array('agreement', 'acceptagreement', 'login2', 'logout', '.xml'))))
+	{
+		$agreement_lang = !empty($modSettings['agreement_updated_' . $user_info['language']]) ? $user_info['language'] : 'default';
+		$policy_lang = !empty($modSettings['policy_' . $user_info['language']]) ? $user_info['language'] : $language;
+
+		// Do they need to accept the latest registration agreement?
+		if (!empty($modSettings['requireAgreement']) && !empty($modSettings['agreement_updated_' . $agreement_lang]) && (empty($options['agreement_accepted']) || $modSettings['agreement_updated_' . $agreement_lang] > $options['agreement_accepted']))
+		{
+			$agreement_subaction = 'agreement';
+		}
+
+		// Do they need to consent to the latest privacy policy?
+		if (!empty($modSettings['requirePolicyAgreement']) && !empty($modSettings['policy_updated_' . $policy_lang]) && (empty($options['policy_accepted']) || $modSettings['policy_updated_' . $policy_lang] > $options['policy_accepted']))
+		{
+			$agreement_subaction = !empty($agreement_subaction) ? 'both' : 'policy';
+		}
+
+		// Send them to the right place
+		if (!empty($agreement_subaction))
+			redirectexit('action=agreement;sa=' . $agreement_subaction);
+	}
+
 	// Check to see if they're accessing it from the wrong place.
 	if (isset($_SERVER['HTTP_HOST']) || isset($_SERVER['SERVER_NAME']))
 	{
@@ -1527,7 +1557,9 @@ function loadTheme($id_theme = 0, $initialize = true)
 				redirectexit('wwwRedirect');
 			else
 			{
-				list ($k, $v) = each($_GET);
+				reset($_GET);
+				$k = key($_GET);
+				$v = $_GET[$k];
 
 				if ($k != 'wwwRedirect')
 					redirectexit('wwwRedirect;' . $k . '=' . $v);
@@ -2813,6 +2845,36 @@ function get_memcached_server($level = 3)
 
 	if (!$memcached && $level > 0)
 		get_memcached_server($level - 1);
+}
+
+function get_auth_secret()
+{
+	global $auth_secret, $sourcedir;
+
+	if (empty($auth_secret))
+	{
+		// Best.
+		if (function_exists('random_bytes'))
+			$auth_secret = bin2hex(random_bytes(32));
+
+		// Equally good, if installed.
+		elseif (function_exists('mcrypt_create_iv'))
+			$auth_secret = bin2hex(mcrypt_create_iv(32));
+
+		// Good enough.
+		elseif (function_exists('openssl_random_pseudo_bytes'))
+			$auth_secret = bin2hex(openssl_random_pseudo_bytes(32));
+
+		// Less than ideal, but we're out of options.
+		else
+			$auth_secret = hash('sha256', mt_rand());
+
+		// It is important to store this in Settings.php, not the database.
+		require_once($sourcedir . '/Subs-Admin.php');
+		updateSettingsFile(array('auth_secret' => '\'' . $auth_secret . '\''));
+	}
+
+	return $auth_secret;
 }
 
 ?>

@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.15
+ * @version 2.0.16
  */
 
 if (!defined('SMF'))
@@ -313,7 +313,7 @@ function ModifyDatabaseSettings($return_config = false)
 // This function basically edits anything which is configuration and stored in the database, except for caching.
 function ModifyCookieSettings($return_config = false)
 {
-	global $context, $scripturl, $txt, $sourcedir, $modSettings, $cookiename, $user_settings;
+	global $context, $scripturl, $txt, $sourcedir, $modSettings, $cookiename, $cookie_no_auth_secret, $user_settings;
 
 	// Define the variables we want to edit.
 	$config_vars = array(
@@ -323,6 +323,7 @@ function ModifyCookieSettings($return_config = false)
 		array('localCookies', $txt['localCookies'], 'db', 'check', false, 'localCookies'),
 		array('globalCookies', $txt['globalCookies'], 'db', 'check', false, 'globalCookies'),
 		array('secureCookies', $txt['secureCookies'], 'db', 'check', false, 'secureCookies',  'disabled' => !isset($_SERVER['HTTPS']) || !(strtolower($_SERVER['HTTPS']) == 'on' || strtolower($_SERVER['HTTPS']) == '1')),
+		array('cookie_no_auth_secret', $txt['cookie_no_auth_secret'], 'db', 'check', false, 'cookie_no_auth_secret',  'disabled' => empty($modSettings['integrate_verify_user'])),
 		'',
 		// Sessions
 		array('databaseSession_enable', $txt['databaseSession_enable'], 'db', 'check', false, 'databaseSession_enable'),
@@ -339,6 +340,10 @@ function ModifyCookieSettings($return_config = false)
 	// Saving settings?
 	if (isset($_REQUEST['save']))
 	{
+		// If this setting will be ignored anyway, disable it.
+		if (empty($modSettings['integrate_verify_user']) && !empty($cookie_no_auth_secret))
+			$_POST['cookie_no_auth_secret'] = 0;
+
 		saveSettings($config_vars);
 
 		// If the cookie name was changed, reset the cookie.
@@ -542,7 +547,7 @@ function AddLanguage()
 		$context['smf_search_term'] = htmlspecialchars(trim($_POST['smf_add']));
 
 		// We're going to use this URL.
-		$url = 'http://download.simplemachines.org/fetch_language.php?version=' . urlencode(strtr($forum_version, array('SMF ' => '')));
+		$url = 'https://download.simplemachines.org/fetch_language.php?version=' . urlencode(strtr($forum_version, array('SMF ' => '')));
 
 		// Load the class file and stick it into an array.
 		loadClassFile('Class-Package.php');
@@ -624,7 +629,7 @@ function DownloadLanguage()
 		// Otherwise, go go go!
 		elseif (!empty($install_files))
 		{
-			$archive_content = read_tgz_file('http://download.simplemachines.org/fetch_language.php?version=' . urlencode(strtr($forum_version, array('SMF ' => ''))) . ';fetch=' . urlencode($_GET['did']), $boarddir, false, true, $install_files);
+			$archive_content = read_tgz_file('https://download.simplemachines.org/fetch_language.php?version=' . urlencode(strtr($forum_version, array('SMF ' => ''))) . ';fetch=' . urlencode($_GET['did']), $boarddir, false, true, $install_files);
 			// Make sure the files aren't stuck in the cache.
 			package_flush_cache();
 			$context['install_complete'] = sprintf($txt['languages_download_complete_desc'], $scripturl . '?action=admin;area=languages');
@@ -635,7 +640,7 @@ function DownloadLanguage()
 
 	// Open up the old china.
 	if (!isset($archive_content))
-		$archive_content = read_tgz_file('http://download.simplemachines.org/fetch_language.php?version=' . urlencode(strtr($forum_version, array('SMF ' => ''))) . ';fetch=' . urlencode($_GET['did']), null);
+		$archive_content = read_tgz_file('https://download.simplemachines.org/fetch_language.php?version=' . urlencode(strtr($forum_version, array('SMF ' => ''))) . ';fetch=' . urlencode($_GET['did']), null);
 
 	if (empty($archive_content))
 		fatal_error($txt['add_language_error_no_response']);
@@ -2034,6 +2039,7 @@ function saveSettings(&$config_vars)
 	$config_bools = array(
 		'db_persist', 'db_error_send',
 		'maintenance', 'image_proxy_enabled',
+		'cookie_no_auth_secret',
 	);
 
 	// Now sort everything into a big array, and figure out arrays and etc.

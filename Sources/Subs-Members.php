@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.14
+ * @version 2.0.16
  */
 
 if (!defined('SMF'))
@@ -792,6 +792,11 @@ function registerMember(&$regOptions, $return_errors = false)
 			array('id_member', 'variable')
 		);
 	}
+
+	// Log their acceptance of the agreement and privacy policy, for future reference.
+	foreach (array('agreement_accepted', 'policy_accepted') as $key)
+		if (!empty($theme_vars[$key]))
+			logAction($key, array('applicator' => $memberID), 'user');
 
 	// If it's enabled, increase the registrations for today.
 	trackStats(array('registers' => '+'));

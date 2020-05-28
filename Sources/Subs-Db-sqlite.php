@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0
+ * @version 2.0.16
  */
 
 if (!defined('SMF'))
@@ -710,8 +710,9 @@ function smf_udf_locate($find, $string)
 // This is used to replace RLIKE.
 function smf_udf_regexp($exp, $search)
 {
-	if (preg_match($exp, $match))
+	if (preg_match($exp, $search))
 		return 1;
+
 	return 0;
 }
 

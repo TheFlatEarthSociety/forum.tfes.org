@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.14
+ * @version 2.0.16
  */
 
 if (!defined('SMF'))
@@ -2556,6 +2556,7 @@ function profileSaveAvatarData(&$value)
 		return false;
 
 	require_once($sourcedir . '/ManageAttachments.php');
+	require_once($sourcedir . '/Subs-Package.php');
 
 	// We need to know where we're going to be putting it..
 	if (!empty($modSettings['custom_avatar_enabled']))
@@ -2583,8 +2584,6 @@ function profileSaveAvatarData(&$value)
 	{
 		if (!is_writable($uploadDir))
 			fatal_lang_error('attachments_no_write', 'critical');
-
-		require_once($sourcedir . '/Subs-Package.php');
 
 		$url = parse_url($_POST['userpicpersonal']);
 		$contents = fetch_web_data('http://' . $url['host'] . (empty($url['port']) ? '' : ':' . $url['port']) . str_replace(' ', '%20', trim($url['path'])));
@@ -2635,11 +2634,14 @@ function profileSaveAvatarData(&$value)
 		removeAttachments(array('id_member' => $memID));
 
 		$profile_vars['avatar'] = str_replace('%20', '', preg_replace('~action(?:=|%3d)(?!dlattach)~i', 'action-', $_POST['userpicpersonal']));
+		$mime_valid = check_mime_type($profile_vars['avatar'], 'image/', true);
 
 		if ($profile_vars['avatar'] == 'http://' || $profile_vars['avatar'] == 'http:///')
 			$profile_vars['avatar'] = '';
 		// Trying to make us do something we'll regret?
 		elseif (substr($profile_vars['avatar'], 0, 7) != 'http://' && substr($profile_vars['avatar'], 0, 8) != 'https://')
+			return 'bad_avatar';
+		elseif (empty($mime_valid))
 			return 'bad_avatar';
 		// Should we check dimensions?
 		elseif (!empty($modSettings['avatar_max_height_external']) || !empty($modSettings['avatar_max_width_external']))
@@ -2685,9 +2687,9 @@ function profileSaveAvatarData(&$value)
 				$_FILES['attachment']['tmp_name'] = $new_filename;
 			}
 
-			$sizes = @getimagesize($_FILES['attachment']['tmp_name']);
+			$mime_valid = check_mime_type($_FILES['attachment']['tmp_name'], 'image/', true);
+			$sizes = empty($mime_valid) ? false : @getimagesize($_FILES['attachment']['tmp_name']);
 
-			// No size, then it's probably not a valid pic.
 			// No size, then it's probably not a valid pic.
 			if ($sizes === false)
 			{

@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.9
+ * @version 2.0.16
  */
 
 if (!defined('SMF'))
@@ -481,6 +481,21 @@ function ob_sessrewrite($buffer)
 		else
 			$buffer = preg_replace_callback('~"' . preg_quote($scripturl, '/') . '\?((?:board|topic)=[^#"]+?)(#[^"]*?)?"~', 'pathinfo_insert__preg_callback', $buffer);
 	}
+
+	// Be nice and try to inject session tokens into login forms since many older themes don't.
+	if ($user_info['is_guest'])
+		$buffer = preg_replace_callback(
+			'~(<form[^<]+action=login2(.+))</form>~iUs' . (!empty($context['utf8']) ? 'u' : ''),
+			function ($m) use ($context)
+			{
+				$repl = '';
+				if (strpos($m[0], $context['session_var']) === false)
+					$repl .= '<input type="hidden" name="' . $context['session_var'] . '" value="' . $context['session_id'] . '"/>';
+
+				return $m[1] . $repl . '</form>';
+			},
+			$buffer
+		);
 
 	// Return the changed buffer.
 	return $buffer;

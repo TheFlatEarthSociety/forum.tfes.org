@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.12
+ * @version 2.0.16
  */
 
 if (!defined('SMF'))
@@ -219,7 +219,7 @@ function EditSearchMethod()
 			array(
 			)
 		);
-		$context['fulltext_index'] = '';
+		$context['fulltext_index'] = array();
 		if ($request !== false || $smcFunc['db_num_rows']($request) != 0)
 		{
 			while ($row = $smcFunc['db_fetch_assoc']($request))

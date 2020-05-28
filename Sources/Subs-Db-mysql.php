@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.14
+ * @version 2.0.16
  */
 
 if (!defined('SMF'))
@@ -26,8 +26,9 @@ function smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix,
 {
 	global $smcFunc, $mysql_set_mode, $sourcedir;
 
-	// Checck for MySQLi first...
-	if (function_exists('mysqli_connect'))
+	// Check for MySQLi first...
+	// !!! This driver does not work on PHP < 5.4.0.
+	if (function_exists('mysqli_connect') && version_compare(PHP_VERSION, '5.4') >= 0)
 	{
 		$db = new SMF_DB_MySQLi;
 
@@ -235,8 +236,10 @@ function smf_db_query($identifier, $db_string, $db_values = array(), $connection
 	global $db_cache, $db_count, $db_connection, $db_show_debug, $time_start;
 	global $db_unbuffered, $db_callback, $modSettings, $smcFunc;
 
-	// Checck for MySQLi first...
-	if (function_exists('mysqli_connect'))
+	// Check for MySQLi first...
+	// !!! This driver does not work on PHP < 5.4.0.
+	// !!! This passthrough is needed for the search functions.
+	if (function_exists('mysqli_connect') && version_compare(PHP_VERSION, '5.4') >= 0)
 		return $smcFunc['db_query']($identifier, $db_string, $db_values, $connection);
 
 	// Comments that are allowed in a query are preg_removed.
@@ -777,7 +780,7 @@ class SMF_DB_MySQLi
 				'db_server_info'            => array($this, 'get_server_info'),
 				'db_affected_rows'          => array($this, 'affected_rows'),
 				'db_transaction'            => array($this, 'transaction'),
-				'db_error'                  => 'mysqli_error',
+				'db_error'                  => array($this, 'show_error'),
 				'db_select_db'              => array($this, 'select'),
 				'db_title'                  => 'MySQL',
 				'db_sybase'                 => false,
@@ -807,7 +810,7 @@ class SMF_DB_MySQLi
 		if (isset($mysql_set_mode) && $mysql_set_mode === true)
 			$smcFunc['db_query']('', 'SET sql_mode = \'\', AUTOCOMMIT = 1',
 			array(),
-			false
+			$connection
 		);
 
 		return $connection;
@@ -986,7 +989,7 @@ class SMF_DB_MySQLi
 	public function query($identifier, $db_string, $db_values = array(), $connection = null)
 	{
 		global $db_cache, $db_count, $db_connection, $db_show_debug, $time_start;
-		global $db_unbuffered, $db_callback, $modSettings;
+		global $db_unbuffered, $db_persist, $db_callback, $modSettings;
 
 		// Comments that are allowed in a query are preg_removed.
 		static $allowed_comments_from = array(
@@ -1226,6 +1229,22 @@ class SMF_DB_MySQLi
 			return @mysqli_query($connection, 'COMMIT');
 
 		return false;
+	}
+
+	/**
+	 * Database error!
+	 *
+	 * @param object $connection = null
+	 */
+	public function show_error($connection = null)
+	{
+		global $db_connection;
+
+		// Decide which connection to use
+		$connection = $connection === null ? $db_connection : $connection;
+
+		// This is the error message...
+		return mysqli_errno($connection);
 	}
 
 	/**

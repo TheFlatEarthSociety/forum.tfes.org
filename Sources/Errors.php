@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.4
+ * @version 2.0.16
  */
 
 if (!defined('SMF'))
@@ -203,9 +203,18 @@ function error_handler($error_level, $error_string, $file, $line)
 {
 	global $settings, $modSettings, $db_show_debug;
 
-	// Ignore errors if we're ignoring them or they are strict notices from PHP 5 (which cannot be solved without breaking PHP 4.)
-	if (error_reporting() == 0 || (defined('E_STRICT') && $error_level == E_STRICT && (empty($modSettings['enableErrorLogging']) || $modSettings['enableErrorLogging'] != 2)))
-		return;
+	// Error was suppressed with the @-operator.
+	if (error_reporting() == 0)
+		return true;
+
+	// Ignore errors that should should not be logged.
+	$error_match = error_reporting() & $error_level;
+	if (empty($error_match) || empty($modSettings['enableErrorLogging']))
+		return false;
+
+	// Send these notices introduced by PHP 7.2 to where the sun don't shine!
+	if (strpos($error_string, 'create_function()') !== false)
+		return true;
 
 	if (strpos($file, 'eval()') !== false && !empty($settings['current_include_filename']))
 	{

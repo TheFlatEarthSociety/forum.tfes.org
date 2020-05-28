@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0
+ * @version 2.0.16
  */
 
 if (!defined('SMF'))
@@ -84,6 +84,8 @@ function RecentPosts()
 
 	loadTemplate('Recent');
 	$context['page_title'] = $txt['recent_posts'];
+
+	$_REQUEST['start'] = (int) $_REQUEST['start'];
 
 	if (isset($_REQUEST['start']) && $_REQUEST['start'] > 95)
 		$_REQUEST['start'] = 95;

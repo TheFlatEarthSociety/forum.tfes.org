@@ -813,11 +813,7 @@ $txt['debug_query_which_took_at'] = 'which took %1$s seconds at %2$s into reques
 $txt['debug_show_queries'] = '[Show Queries]';
 $txt['debug_hide_queries'] = '[Hide Queries]';
 
-<<<<<<< HEAD
 $txt['unsubscribe'] = 'Unsubscribe';
 $txt['subscribe'] = 'Subscribe';
 
 ?>
-=======
-?>
->>>>>>> upstream

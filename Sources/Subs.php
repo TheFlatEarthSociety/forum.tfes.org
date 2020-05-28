@@ -1921,6 +1921,10 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 								$startpattern = '~[?&;](?:star)?t=(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s?)?~';
 								preg_match ($startpattern, $matches[0], $startmatches);
 								// Translate from a hours/minutes/seconds format to seconds only
+								// Apparently allowing these values to be empty makes PHP grumpy, so let's explicitly set them to 0 as needed
+								$startmatches[1] = empty($startmatches[1]) ? 0 : $startmatches[1];
+								$startmatches[2] = empty($startmatches[2]) ? 0 : $startmatches[2];
+								$startmatches[3] = empty($startmatches[3]) ? 0 : $startmatches[3];
 								$startval = $startmatches[1]*3600 + $startmatches[2]*60 + $startmatches[3];
 								// Do we have a meaningful start timestamp? Assume that start
 								// times greater than 1 week are bogus input.

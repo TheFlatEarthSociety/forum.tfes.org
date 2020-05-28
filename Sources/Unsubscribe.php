@@ -50,7 +50,7 @@ function Unsubscribe() {
 function CheckUnsubscribe() {
 	global $context, $smcFunc, $user_info;
 
-	if ($context['is_subscribed'] or $context['is_unsubscribed'])
+	if (!empty($context['is_subscribed']) or !empty($context['is_unsubscribed']))
 		return;
 
 	$topic = $context['current_topic'];

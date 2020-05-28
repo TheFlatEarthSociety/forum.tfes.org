@@ -1,5 +1,5 @@
 <?php
-// Version: 2.0; Errors
+// Version: 2.0.16; Errors
 
 global $scripturl, $modSettings;
 
@@ -410,4 +410,10 @@ $txt['error_sqlite_optimizing'] = 'Sqlite is optimizing the database, the forum 
 $txt['unsubscribe_notopic'] = 'No topic given to subscribe to.';
 $txt['unsubscribe_nounsubscribe'] = 'Unsubscribe flag not specified.';
 
+// Registration Agreement
+$txt['error_no_agreement'] = 'There is no registration agreement to display!';
+$txt['error_no_privacy_policy'] = 'A privacy policy has not been created for this forum.';
+
+// Unsubscribe
+$txt['unsubscribe_invalid'] = 'The unsubscribe link that brought you here does not appear to be valid.';
 ?>

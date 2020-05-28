@@ -1,9 +1,8 @@
 <?php
-// Version: 2.0; EmailTemplates
+// Version: 2.0.16; EmailTemplates
 
 global $context, $birthdayEmails;
 
-// Important! Before editing these language files please read the text at the top of index.english.php.
 // Since all of these strings are being used in emails, numeric entities should be used.
 // Do not translate anything that is between {}, they are used as replacement variables and MUST remain exactly how they are.
 //   Additionally do not translate the @additioinal_parmas: line or the variable names in the lines that follow it.  You may
@@ -215,16 +214,20 @@ Should you have any problems with the activation, please visit {ACTIVATIONLINKWI
 				TOPICSUBJECT: The subject of the topic being announced.
 				MESSAGE: The message body of the first post of the announced topic.
 				TOPICLINK: A link to the topic being announced.
+				UNSUBSCRIBELINK: Link to unsubscribe from announcements.
 			@description:
 
 		*/
 		'subject' => 'New announcement: {TOPICSUBJECT}',
 		'body' => '{MESSAGE}
 
-To unsubscribe from these announcements, login to the forum and uncheck "Receive forum announcements and important notifications by email." in your profile.
-
 You can view the full announcement by following this link:
 {TOPICLINK}
+
+To unsubscribe from these announcements, follow this link:
+{UNSUBSCRIBELINK}
+
+For more control over the email notifications you receive, login to the forum and go to the Notification area in your profile.
 
 {REGARDS}',
 	),
@@ -995,7 +998,7 @@ $birthdayEmails = array(
 We here at {FORUMNAME} would like to wish you a happy birthday.  May this day and the year to follow be full of joy.
 
 {REGARDS}',
-		'author' => '<a href="http://www.simplemachines.org/community/?action=profile;u=2676">Thantos</a>',
+		'author' => '<a href="https://www.simplemachines.org/community/?action=profile;u=2676">Thantos</a>',
 	),
 	'karlbenson1' => array(
 		'subject' => 'On your Birthday...',
@@ -1014,7 +1017,7 @@ We would like to wish you a very special birthday.
 {REGARDS}
 
 //:: This message was automatically generated :://',
-		'author' => '<a href="http://www.simplemachines.org/community/?action=profile;u=63186">karlbenson</a>',
+		'author' => '<a href="https://www.simplemachines.org/community/?action=profile;u=63186">karlbenson</a>',
 	),
 	'nite0859' => array(
 		'subject' => 'Happy Birthday!',
@@ -1024,7 +1027,7 @@ Even though today is your birthday, {REALNAME}, we would like to remind you that
 
 Best Wishes,
 The Staff of {FORUMNAME}',
-		'author' => '<a href="http://www.simplemachines.org/community/?action=profile;u=46625">nite0859</a>',
+		'author' => '<a href="https://www.simplemachines.org/community/?action=profile;u=46625">nite0859</a>',
 	),
 	'zwaldowski' => array(
 		'subject' => 'Birthday Wishes to {REALNAME}',
@@ -1033,7 +1036,7 @@ The Staff of {FORUMNAME}',
 Another year in your life has passed.  We at {FORUMNAME} hope it has been filled with happiness, and wish you luck in the coming one.
 
 {REGARDS}',
-		'author' => '<a href="http://www.simplemachines.org/community/?action=profile;u=72038">zwaldowski</a>',
+		'author' => '<a href="https://www.simplemachines.org/community/?action=profile;u=72038">zwaldowski</a>',
 	),
 	'geezmo' => array(
 		'subject' => 'Happy birthday, {REALNAME}!',
@@ -1048,7 +1051,7 @@ You\'re now a year older but we hope you\'re a lot happier than last year.
 Enjoy your day today, {REALNAME}!
 
 - From your {FORUMNAME} family',
-		'author' => '<a href="http://www.simplemachines.org/community/?action=profile;u=48671">geezmo</a>',
+		'author' => '<a href="https://www.simplemachines.org/community/?action=profile;u=48671">geezmo</a>',
 	),
 	'karlbenson2' => array(
 		'subject' => 'Your Birthday Greeting',
@@ -1058,7 +1061,7 @@ Have lots of birthday cake and fun, and tell us what you have done.
 We hope this message brought you cheer, and make it last, until same time same place, next year.
 
 {REGARDS}',
-		'author' => '<a href="http://www.simplemachines.org/community/?action=profile;u=63186">karlbenson</a>',
+		'author' => '<a href="https://www.simplemachines.org/community/?action=profile;u=63186">karlbenson</a>',
 	),
 );
 

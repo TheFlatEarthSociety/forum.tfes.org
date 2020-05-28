@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.15
+ * @version 2.0.16
  */
 
 if (!defined('SMF'))
@@ -936,6 +936,8 @@ function prepareMessageContext($type = 'subject', $reset = false)
 		$_SESSION['pm_selected'] = array();
 	}
 
+	$context['labels'] = !empty($context['labels']) ? (array) $context['labels'] : array();
+
 	// If we're in non-boring view do something exciting!
 	if ($context['display_mode'] != 0 && $subjects_request && $type == 'subject')
 	{
@@ -962,7 +964,7 @@ function prepareMessageContext($type = 'subject', $reset = false)
 			'timestamp' => forum_time(true, $subject['msgtime']),
 			'number_recipients' => count($recipients[$subject['id_pm']]['to']),
 			'labels' => &$context['message_labels'][$subject['id_pm']],
-			'fully_labeled' => count($context['message_labels'][$subject['id_pm']]) == count($context['labels']),
+			'fully_labeled' => (!empty($context['message_labels'][$subject['id_pm']]) ? count($context['message_labels'][$subject['id_pm']]) : 0) == count($context['labels']),
 			'is_replied_to' => &$context['message_replied'][$subject['id_pm']],
 			'is_unread' => &$context['message_unread'][$subject['id_pm']],
 			'is_selected' => !empty($temp_pm_selected) && in_array($subject['id_pm'], $temp_pm_selected),
@@ -1030,7 +1032,7 @@ function prepareMessageContext($type = 'subject', $reset = false)
 		'recipients' => &$recipients[$message['id_pm']],
 		'number_recipients' => count($recipients[$message['id_pm']]['to']),
 		'labels' => &$context['message_labels'][$message['id_pm']],
-		'fully_labeled' => count($context['message_labels'][$message['id_pm']]) == count($context['labels']),
+		'fully_labeled' => (!empty($context['message_labels'][$message['id_pm']]) ? count($context['message_labels'][$message['id_pm']]) : 0) == count($context['labels']),
 		'is_replied_to' => &$context['message_replied'][$message['id_pm']],
 		'is_unread' => &$context['message_unread'][$message['id_pm']],
 		'is_selected' => !empty($temp_pm_selected) && in_array($message['id_pm'], $temp_pm_selected),
@@ -2466,7 +2468,7 @@ function MessageActionsApply()
 				$set = '-1';
 
 			// Check that this string isn't going to be too large for the database.
-			if ($set > 60)
+			if ($smcFunc['strlen']($set) > 60)
 				$updateErrors++;
 			else
 			{
@@ -3228,6 +3230,12 @@ function ManageRules()
 {
 	global $txt, $context, $user_info, $scripturl, $smcFunc;
 
+	// Limit the Criteria and Actions to this.
+	$context['rule_limiters'] = array(
+		'criteria' => 10,
+		'actions' => 10,
+	);
+
 	// The link tree - gotta have this :o
 	$context['linktree'][] = array(
 		'url' => $scripturl . '?action=pm;sa=manrules',
@@ -3271,6 +3279,7 @@ function ManageRules()
 	if (isset($_GET['apply']))
 	{
 		checkSession('get');
+		spamProtection('pm');
 
 		ApplyRules(true);
 		redirectexit('action=pm;sa=manrules');
@@ -3332,6 +3341,7 @@ function ManageRules()
 
 		// Let's do the criteria first - it's also hardest!
 		$criteria = array();
+		$criteriaCount = 0;
 		foreach ($_POST['ruletype'] as $ind => $type)
 		{
 			// Check everything is here...
@@ -3339,6 +3349,10 @@ function ManageRules()
 				continue;
 			elseif ($type != 'bud' && !isset($_POST['ruledef'][$ind]))
 				continue;
+
+			// Too many rules in this rule.
+			if ($criteriaCount++ >= $context['rule_limiters']['criteria'])
+				break;
 
 			// Members need to be found.
 			if ($type == 'mid')
@@ -3372,11 +3386,16 @@ function ManageRules()
 		$actions = array();
 		$doDelete = 0;
 		$isOr = $_POST['rule_logic'] == 'or' ? 1 : 0;
+		$actionCount = 0;
 		foreach ($_POST['acttype'] as $ind => $type)
 		{
 			// Picking a valid label?
-			if ($type == 'lab' && (!isset($_POST['labdef'][$ind]) || !isset($context['labels'][$_POST['labdef'][$ind] - 1])))
+			if ($type == 'lab' && (!ctype_digit((string) $ind) || !isset($_POST['labdef'][$ind]) || $_POST['labdef'][$ind] == '' || !isset($context['labels'][$_POST['labdef'][$ind] - 1])))
 				continue;
+
+			// Too many actions in this rule.
+			if ($actionCount++ >= $context['rule_limiters']['actions'])
+				break;
 
 			// Record what we're doing.
 			if ($type == 'del')

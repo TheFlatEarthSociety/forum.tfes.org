@@ -1,5 +1,5 @@
 <?php
-// Version: 2.0; Help
+// Version: 2.0.16; Help
 
 global $helptxt;
 
@@ -141,7 +141,7 @@ $helptxt['time_format'] = '<strong>Time Format</strong><br />
 	<em>* Does not work on Windows-based servers.</em></span>';
 
 $helptxt['live_news'] = '<strong>Live announcements</strong><br />
-	This box shows recently updated announcements from <a href="http://www.simplemachines.org/" target="_blank" class="new_win">www.simplemachines.org</a>.
+	This box shows recently updated announcements from <a href="https://www.simplemachines.org/" target="_blank" class="new_win">www.simplemachines.org</a>.
 	You should check here every now and then for updates, new releases, and important information from Simple Machines.';
 
 $helptxt['registrations'] = '<strong>Registration Management</strong><br />
@@ -281,7 +281,9 @@ $helptxt['databaseSession_loose'] = 'Turning this on will decrease the bandwidth
 $helptxt['databaseSession_lifetime'] = 'This is the number of seconds for sessions to last after they haven\'t been accessed.  If a session is not accessed for too long, it is said to have &quot;timed out&quot;.  Anything higher than 2400 is recommended.';
 $helptxt['enableErrorLogging'] = 'This will log any errors, like a failed login, so you can see what went wrong.';
 $helptxt['enableErrorQueryLogging'] = 'This will include the full query sent to the database in the error log.  Requires error logging to be turned on.<br /><br /><strong>Note:  This will affect the ability to filter the error log by the error message.</strong>';
-$helptxt['allow_disableAnnounce'] = 'This will allow users to opt out of notification of topics you announce by checking the &quot;announce topic&quot; checkbox when posting.';
+$helptxt['allow_disableAnnounce'] = 'This will allow users to opt out of notification of topics you announce by checking the &quot;announce topic&quot; checkbox when posting.<br /><br />This setting must be enabled in order to comply with the rules of the <a href="https://ec.europa.eu/commission/priorities/justice-and-fundamental-rights/data-protection/2018-reform-eu-data-protection-rules_en" class="bbc_link">GDPR</a>.';
+$helptxt['announcements_default'] = 'This simply controls whether the the checkbox on the registration form starts as checked or unchecked.<br /><br />This setting must be disabled in order to comply with the rules of the <a href="https://ec.europa.eu/commission/priorities/justice-and-fundamental-rights/data-protection/2018-reform-eu-data-protection-rules_en" class="bbc_link">GDPR</a>.';
+$helptxt['notify_tokens'] = 'When this setting is enabled, the unsubscribe link included in every notification email includes a unique token to identify an unsubscribe request as legitimate. Without this, users must instead log into the forum to verify their identities before being allowed to unsubscribe.<br /><br />This setting must be enabled in order to comply with the rules of the <a href="https://ec.europa.eu/commission/priorities/justice-and-fundamental-rights/data-protection/2018-reform-eu-data-protection-rules_en" class="bbc_link">GDPR</a>.';
 $helptxt['disallow_sendBody'] = 'This option removes the option to receive the text of replies and posts in notification emails.<br /><br />Often, members will reply to the notification email, which in most cases means the webmaster receives the reply.';
 $helptxt['compactTopicPagesEnable'] = 'This will just show a selection of the number of pages.<br /><em>Example:</em>
 		&quot;3&quot; to display: 1 ... 4 [5] 6 ... 9 <br />
@@ -361,6 +363,7 @@ $helptxt['globalCookies'] = 'Makes log in cookies available across subdomains.  
 	And your forum is at http://forum.simplemachines.org/,<br />
 	Using this option will allow you to access the forum\'s cookie on your site.  Do not enable this if there are other subdomains (like hacker.simplemachines.org) not controlled by you.';
 $helptxt['secureCookies'] = 'Enabling this option will force the cookies created for users on your forum to be marked as secure. Only enable this option if you are using HTTPS throughout your site as it will break cookie handling otherwise!';
+$helptxt['cookie_no_auth_secret'] = 'This option forces SMF to use a weaker form of authentication for login cookies. It should only be enabled if you need backwards compatibility with login integration mods that have not yet been updated to support SMF 2.0.16 and higher.';
 $helptxt['securityDisable'] = 'This <em>disables</em> the additional password check for the administration section. This is not recommended!';
 $helptxt['securityDisable_why'] = 'This is your current password. (the same one you use to login.)<br /><br />Having to type this helps ensure that you want to do whatever administration you are doing, and that it is <strong>you</strong> doing it.';
 $helptxt['emailmembers'] = 'In this message you can use a few &quot;variables&quot;.  These are:<br />
@@ -454,6 +457,9 @@ $helptxt['password_strength'] = 'This setting determines the strength required f
 		<li><strong>High:</strong> As for medium, except the password must also contain a mixture of upper and lower case letters, and at least one number.</li>
 	</ul>';
 
+$helptxt['requireAgreement'] = 'This setting must be enabled in order to comply with the rules of the <a href="https://ec.europa.eu/commission/priorities/justice-and-fundamental-rights/data-protection/2018-reform-eu-data-protection-rules_en" class="bbc_link">GDPR</a>.';
+$helptxt['requirePolicyAgreement'] = 'This setting must be enabled in order to comply with the rules of the <a href="https://ec.europa.eu/commission/priorities/justice-and-fundamental-rights/data-protection/2018-reform-eu-data-protection-rules_en" class="bbc_link">GDPR</a>.';
+
 $helptxt['coppaAge'] = 'The value specified in this box will determine the minimum age that new members must be to be granted immediate access to the forums.
 	On registration they will be prompted to confirm whether they are over this age, and if not will either have their application rejected or suspended awaiting parental approval - dependant on the type of restriction chosen.
 	If a value of 0 is chosen for this setting then all other age restriction settings shall be ignored.';
@@ -474,9 +480,9 @@ $helptxt['allow_hideOnline'] = 'With this option enabled all members will be abl
 $helptxt['make_email_viewable'] = 'If this option is enabled instead of users email addresses being hidden to normal members and guests they will be publicly viewable on the forum. Enabling this will put your users at greater risk of being victims of spam as a result of email harvesters visiting your forum. Note this setting does not override the user setting for hiding their email address from users. Enabling this setting is <strong>not</strong> recommended.';
 $helptxt['meta_keywords'] = 'These keywords are sent in the output of every page to indicate to search engines (etc) the key content of your site. They should be a comma separated list of words, and should not use HTML.';
 
-$helptxt['latest_support'] = 'This panel shows you some of the most common problems and questions on your server configuration. Don\'t worry, this information isn\'t logged or anything.<br /><br />If this stays as &quot;Retrieving support information...&quot;, your computer probably cannot connect to <a href="http://www.simplemachines.org/" target="_blank" class="new_win">www.simplemachines.org</a>.';
-$helptxt['latest_packages'] = 'Here you can see some of the most popular and some random packages or mods, with quick and easy installations.<br /><br />If this section doesn\'t show up, your computer probably cannot connect to <a href="http://www.simplemachines.org/" target="_blank" class="new_win">www.simplemachines.org</a>.';
-$helptxt['latest_themes'] = 'This area shows a few of the latest and most popular themes from <a href="http://www.simplemachines.org/" target="_blank" class="new_win">www.simplemachines.org</a>.  It may not show up properly if your computer can\'t find <a href="http://www.simplemachines.org/" target="_blank" class="new_win">www.simplemachines.org</a>, though.';
+$helptxt['latest_support'] = 'This panel shows you some of the most common problems and questions on your server configuration. Don\'t worry, this information isn\'t logged or anything.<br /><br />If this stays as &quot;Retrieving support information...&quot;, your computer probably cannot connect to <a href="https://www.simplemachines.org/" target="_blank" class="new_win">www.simplemachines.org</a>.';
+$helptxt['latest_packages'] = 'Here you can see some of the most popular and some random packages or mods, with quick and easy installations.<br /><br />If this section doesn\'t show up, your computer probably cannot connect to <a href="https://www.simplemachines.org/" target="_blank" class="new_win">www.simplemachines.org</a>.';
+$helptxt['latest_themes'] = 'This area shows a few of the latest and most popular themes from <a href="https://www.simplemachines.org/" target="_blank" class="new_win">www.simplemachines.org</a>.  It may not show up properly if your computer can\'t find <a href="https://www.simplemachines.org/" target="_blank" class="new_win">www.simplemachines.org</a>, though.';
 
 $helptxt['secret_why_blank'] = 'For your security, your password and the answer to your secret question are encrypted so that the SMF software will never tell you, or anyone else, what they are.';
 $helptxt['moderator_why_missing'] = 'Since moderation is done on a board-by-board basis, you have to make members moderators from the <a href="javascript:window.open(\'%1$s?action=admin;area=manageboards\'); self.close();">board management interface</a>.';

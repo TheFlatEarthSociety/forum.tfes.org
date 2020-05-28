@@ -1,5 +1,5 @@
 <?php
-// Version: 2.0; Modlog
+// Version: 2.0.16; Modlog
 
 global $scripturl;
 
@@ -52,6 +52,7 @@ $txt['modlog_ac_ban_trigger_hostname'] = ' <em>Hostname:</em> {hostname}';
 $txt['modlog_admin_log'] = 'Administration Log';
 $txt['modlog_admin_log_desc'] = 'Below is a list of administration actions which have been logged on your forum.<br /><strong>Please note:</strong> Entries cannot be removed from this log until they are at least twenty-four hours old.';
 $txt['modlog_admin_log_no_entries_found'] = 'There are currently no administration log entries.';
+$txt['modlog_admin_log_gdpr_no_delete'] = '<strong>Also note:</strong> Entries for updates to the registration agreement and privacy policy cannot be removed from this log while the GDPR Compliance setting is enabled.';
 
 // Admin type strings.
 $txt['modlog_ac_upgrade'] = 'Upgraded the forum to version {version}';
@@ -69,6 +70,9 @@ $txt['modlog_ac_edited_group'] = 'Edited the &quot;{group}&quot; group';
 $txt['modlog_ac_added_to_group'] = 'Added &quot;{member}&quot; to the &quot;{group}&quot; group';
 $txt['modlog_ac_removed_from_group'] = 'Removed &quot;{member}&quot; from the &quot;{group}&quot; group';
 $txt['modlog_ac_removed_all_groups'] = 'Removed &quot;{member}&quot; from all groups';
+
+$txt['modlog_ac_agreement_updated'] = 'Updated the {language} registration agreement';
+$txt['modlog_ac_policy_updated'] = 'Updated the {language} privacy policy';
 
 $txt['modlog_ac_remind_member'] = 'Sent out a reminder to &quot;{member}&quot; to activate their account';
 $txt['modlog_ac_approve_member'] = 'Approved/Activated the account of &quot;{member}&quot;';

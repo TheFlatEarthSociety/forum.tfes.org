@@ -4,9 +4,9 @@
  * Simple Machines Forum (SMF)
  *
  * @package SMF
- * @author Simple Machines http://www.simplemachines.org
+ * @author Simple Machines https://www.simplemachines.org
  * @copyright 2011 Simple Machines
- * @license http://www.simplemachines.org/about/smf/license.php BSD
+ * @license https://www.simplemachines.org/about/smf/license.php BSD
  *
  * @version 2.0
  */
@@ -44,10 +44,10 @@ template_ssi_above();
 			<h2>Some notes on usage</h2>
 			<p>All the functions have an output method parameter.  This can either be &quot;echo&quot; (the default) or &quot;array&quot;</p>
 			<p>If it is &quot;echo&quot;, the function will act normally - otherwise, it will return an array containing information about the requested task. For example, it might return a list of topics for ssi_recentTopics.</p>
-			<p onclick="if (getInnerHTML(this).indexOf('Bird') == -1) setInnerHTML(this, getInnerHTML(this) + '<br /><img src=&quot;http://www.simplemachines.org/images/chocobo.jpg&quot; title=&quot;Bird-san&quot; alt=&quot;Chocobo!&quot; />'); return false;">This functionality can be used to allow you to present the information in any way you wish.</p>
+			<p onclick="if (getInnerHTML(this).indexOf('Bird') == -1) setInnerHTML(this, getInnerHTML(this) + '<br /><img src=&quot;https://www.simplemachines.org/images/chocobo.jpg&quot; title=&quot;Bird-san&quot; alt=&quot;Chocobo!&quot; />'); return false;">This functionality can be used to allow you to present the information in any way you wish.</p>
 
 			<h2>Additional Guides &amp; FAQ</h2>
-			<p>Need more information on using SSI.php? Check out <a href="http://docs.simplemachines.org/index.php?topic=400.0">Using SSI.php article</a> or <a href="http://www.simplemachines.org/community/index.php?topic=14906.0">the SSI FAQ</a>.</p>
+			<p>Need more information on using SSI.php? Check out <a href="https://docs.simplemachines.org/index.php?topic=400.0">Using SSI.php article</a> or <a href="https://www.simplemachines.org/community/index.php?topic=14906.0">the SSI FAQ</a>.</p>
 
 			<div id="sidenav" class="windowbg">
 				<span class="topslice"><span></span></span>
@@ -547,7 +547,7 @@ function template_ssi_below()
 				</div>
 			</div></div>
 			<div id="footer_section"><div class="frame">
-				<div class="smalltext"><a href="http://www.simplemachines.org">Simple Machines Forum</a></div>
+				<div class="smalltext"><a href="https://www.simplemachines.org">Simple Machines Forum</a></div>
 			</div></div>
 		</div>
 	</body>

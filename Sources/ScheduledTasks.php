@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.14
+ * @version 2.0.16
  */
 
 if (!defined('SMF'))
@@ -391,7 +391,7 @@ function scheduled_approval_notification()
 // Do some daily cleaning up.
 function scheduled_daily_maintenance()
 {
-	global $smcFunc, $modSettings, $sourcedir, $db_type;
+	global $smcFunc, $modSettings, $sourcedir, $db_type, $image_proxy_enabled, $cachedir;
 
 	// First clean out the cache.
 	clean_cache();
@@ -490,6 +490,19 @@ function scheduled_daily_maintenance()
 				'dh_keys' => 'dh_keys',
 			)
 		);
+
+	// Cleanup old proxied images.
+	if (!empty($image_proxy_enabled) && $handle = opendir($cachedir . '/images'))
+	{
+		while (false !== ($file = readdir($handle)))
+		{
+			// Remove images older than 5 days.
+			if (filemtime($cachedir . '/images/' . $file) < time() - (5 * 86400))
+				unlink($cachedir . '/images/' . $file);
+		}
+
+		closedir($handle);
+	}
 
 	// Log we've done it...
 	return true;
@@ -1273,7 +1286,7 @@ function scheduled_fetchSMfiles()
 	foreach ($js_files as $ID_FILE => $file)
 	{
 		// Create the url
-		$server = empty($file['path']) || substr($file['path'], 0, 7) != 'http://' ? 'http://www.simplemachines.org' : '';
+		$server = empty($file['path']) || !in_array(parse_url($file['path'], PHP_URL_SCHEME), array('http', 'https')) ? 'https://www.simplemachines.org' : '';
 		$url = $server . (!empty($file['path']) ? $file['path'] : $file['path']) . $file['filename'] . (!empty($file['parameters']) ? '?' . $file['parameters'] : '');
 
 		// Get the file

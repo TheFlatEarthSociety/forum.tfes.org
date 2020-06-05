@@ -303,7 +303,8 @@ function issueWarning($memID)
 		SELECT recipient_name AS template_title, body
 		FROM {db_prefix}log_comments
 		WHERE comment_type = {string:warntpl}
-			AND (id_recipient = {int:generic} OR id_recipient = {int:current_member})',
+			AND (id_recipient = {int:generic} OR id_recipient = {int:current_member})
+		ORDER BY template_title',
 		array(
 			'warntpl' => 'warntpl',
 			'generic' => 0,

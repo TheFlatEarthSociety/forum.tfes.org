@@ -750,7 +750,7 @@ function template_main()
 <script type="text/javascript" src="' . $settings['default_theme_url'] . '/scripts/spellcheck.js"></script>';
 
 	echo '
-<script type="text/javascript" src="' . $settings['default_theme_url'] . '/scripts/topic.js"></script>
+<script type="text/javascript" src="' . $settings['default_theme_url'] . '/scripts/topic.js?t=DEPLOY_TIMESTAMP"></script>
 <script type="text/javascript"><!-- // --><![CDATA[';
 
 	if (!empty($options['display_quick_reply']))

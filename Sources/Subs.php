@@ -3438,6 +3438,16 @@ function setupThemeContext($forceload = false)
 	// ]]></script>';
 	}
 
+	// Google Analytics code snippet
+	$context['html_headers'] .= '
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-48900853-2"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag(\'js\', new Date());
+		gtag(\'config\', \'UA-48900853-2\', { \'anonymize_ip\': true });
+	</script>';
+
 	// This looks weird, but it's because BoardIndex.php references the variable.
 	$context['common_stats']['latest_member'] = array(
 		'id' => $modSettings['latestMember'],

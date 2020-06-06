@@ -5918,19 +5918,6 @@ a.link-to-home
     }
 }
 
-@media (max-width: 991px)
-{
-    #admin_content .table > thead > tr > th:nth-child(2), #admin_content .table > tbody > tr > td:nth-child(2),
-    #admin_content .table > thead > tr > th:nth-child(4), #admin_content .table > tbody > tr > td:nth-child(4),
-    #admin_content .table > thead > tr > th:nth-child(5), #admin_content .table > tbody > tr > td:nth-child(5) {
-        display: none;
-    }
-    #admin_content .table > thead > tr > th:last-child, #admin_content .table > tbody > tr > td:last-child {
-        display: table-cell !important;
-        text-align: right !important;
-    }
-}
-
 #IC .nav
 {
     margin: 0;

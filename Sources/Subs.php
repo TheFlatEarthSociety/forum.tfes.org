@@ -4052,7 +4052,7 @@ function setupMenuContext()
 					'errorlog' => array(
 						'title' => $txt['errlog'],
 						'href' => $scripturl . '?action=admin;area=logs;sa=errorlog;desc',
-						'show' => allowedTo('admin_forum') && !empty($modSettings['enableErrorLogging']),
+						'show' => allowedTo('view_logs') && !empty($modSettings['enableErrorLogging']),
 					),
 					'permissions' => array(
 						'title' => $txt['edit_permissions'],

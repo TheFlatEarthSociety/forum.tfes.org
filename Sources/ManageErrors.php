@@ -49,7 +49,7 @@ function ViewErrorLog()
 		return ViewFile();
 
 	// Check for the administrative permission to do this.
-	isAllowedTo('admin_forum');
+	isAllowedTo('view_logs');
 
 	// Templates, etc...
 	loadLanguage('ManageMaintenance');

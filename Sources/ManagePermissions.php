@@ -1477,6 +1477,7 @@ function loadAllPermissions($loadType = 'classic')
 			'manage_attachments' => array(false, 'maintenance', 'administrate'),
 			'manage_smileys' => array(false, 'maintenance', 'administrate'),
 			'edit_news' => array(false, 'maintenance', 'administrate'),
+			'view_logs' => array(false, 'maintenance', 'administrate'),
 			'access_mod_center' => array(false, 'maintenance', 'moderate_general'),
 			'moderate_forum' => array(false, 'member_admin', 'moderate_general'),
 			'manage_membergroups' => array(false, 'member_admin', 'administrate'),

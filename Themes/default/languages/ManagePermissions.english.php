@@ -114,6 +114,8 @@ $txt['permissionname_manage_smileys'] = 'Manage smileys and message icons';
 $txt['permissionhelp_manage_smileys'] = 'This allows access to the smiley center. In the smiley center you can add, edit and remove smileys and smiley sets. If you\'ve enabled customized message icons you are also able to add and edit message icons with this permission.';
 $txt['permissionname_edit_news'] = 'Edit news';
 $txt['permissionhelp_edit_news'] = 'The news function allows a random news line to appear on each screen. In order to use the news function, enabled it in the forum settings.';
+$txt['permissionname_view_logs'] = 'View logs';
+$txt['permissionhelp_view_logs'] = 'Read various forum logs, which may include sensitive user and/or database information.';
 $txt['permissionname_access_mod_center'] = 'Access the moderation center';
 $txt['permissionhelp_access_mod_center'] = 'With this permission any members of this group can access the moderation center from where they will have access to functionality to ease moderation. Note that this does not in itself grant any moderation privileges.';
 

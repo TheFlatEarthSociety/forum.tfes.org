@@ -384,10 +384,11 @@ function AdminMain()
 		),
 		'maintenance' => array(
 			'title' => $txt['admin_maintenance'],
-			'permission' => array('admin_forum'),
+			'permission' => array('admin_forum', 'view_logs'),
 			'areas' => array(
 				'maintain' => array(
 					'label' => $txt['maintain_title'],
+					'permission' => array('admin_forum'),
 					'file' => 'ManageMaintenance.php',
 					'icon' => 'maintain.gif',
 					'function' => 'ManageMaintenance',
@@ -400,6 +401,7 @@ function AdminMain()
 				),
 				'scheduledtasks' => array(
 					'label' => $txt['maintain_tasks'],
+					'permission' => array('admin_forum'),
 					'file' => 'ManageScheduledTasks.php',
 					'icon' => 'scheduled.gif',
 					'function' => 'ManageScheduledTasks',
@@ -410,6 +412,7 @@ function AdminMain()
 				),
 				'mailqueue' => array(
 					'label' => $txt['mailqueue_title'],
+					'permission' => array('admin_forum'),
 					'file' => 'ManageMail.php',
 					'function' => 'ManageMail',
 					'icon' => 'mail.gif',
@@ -420,6 +423,7 @@ function AdminMain()
 				),
 				'reports' => array(
 					'enabled' => in_array('rg', $context['admin_features']),
+					'permission' => array('admin_forum'),
 					'label' => $txt['generate_reports'],
 					'file' => 'Reports.php',
 					'function' => 'ReportsMain',
@@ -430,17 +434,18 @@ function AdminMain()
 					'function' => 'AdminLogs',
 					'icon' => 'logs.gif',
 					'subsections' => array(
-						'errorlog' => array($txt['errlog'], 'admin_forum', 'enabled' => !empty($modSettings['enableErrorLogging']), 'url' => $scripturl . '?action=admin;area=logs;sa=errorlog;desc'),
+						'errorlog' => array($txt['errlog'], 'view_logs', 'enabled' => !empty($modSettings['enableErrorLogging']), 'url' => $scripturl . '?action=admin;area=logs;sa=errorlog;desc'),
 						'adminlog' => array($txt['admin_log'], 'admin_forum', 'enabled' => in_array('ml', $context['admin_features'])),
-						'modlog' => array($txt['moderation_log'], 'admin_forum', 'enabled' => in_array('ml', $context['admin_features'])),
+						'modlog' => array($txt['moderation_log'], 'view_logs', 'enabled' => in_array('ml', $context['admin_features'])),
 						'banlog' => array($txt['ban_log'], 'manage_bans'),
-						'spiderlog' => array($txt['spider_logs'], 'admin_forum', 'enabled' => in_array('sp', $context['admin_features'])),
-						'tasklog' => array($txt['scheduled_log'], 'admin_forum'),
-						'pruning' => array($txt['pruning_title'], 'admin_forum'),
+						'spiderlog' => array($txt['spider_logs'], 'view_logs', 'enabled' => in_array('sp', $context['admin_features'])),
+						'tasklog' => array($txt['scheduled_log'], 'view_logs'),
+						'pruning' => array($txt['pruning_title'], 'view_logs'),
 					),
 				),
 				'repairboards' => array(
 					'label' => $txt['admin_repair'],
+					'permission' => array('admin_forum'),
 					'file' => 'RepairBoards.php',
 					'function' => 'RepairBoards',
 					'select' => 'maintain',
@@ -512,7 +517,7 @@ function AdminHome()
 	global $sourcedir, $forum_version, $txt, $scripturl, $context, $user_info, $boardurl, $modSettings, $smcFunc;
 
 	// You have to be able to do at least one of the below to see this page.
-	isAllowedTo(array('admin_forum', 'manage_permissions', 'moderate_forum', 'manage_membergroups', 'manage_bans', 'send_mail', 'edit_news', 'manage_boards', 'manage_smileys', 'manage_attachments'));
+	isAllowedTo(array('admin_forum', 'manage_permissions', 'moderate_forum', 'manage_membergroups', 'manage_bans', 'send_mail', 'edit_news', 'view_logs', 'manage_boards', 'manage_smileys', 'manage_attachments'));
 
 	// Find all of this forum's administrators...
 	require_once($sourcedir . '/Subs-Membergroups.php');

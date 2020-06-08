@@ -251,12 +251,6 @@ function template_main()
 		echo '
 			</tbody>';
 		}
-		echo '
-			<tbody class="divider">
-				<tr>
-					<td colspan="5"></td>
-				</tr>
-			</tbody>';
 	}
 	echo '
 		</table>

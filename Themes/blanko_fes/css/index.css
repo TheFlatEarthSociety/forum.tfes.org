@@ -924,7 +924,14 @@ div.cat_bar
     height: 38px;
     overflow: hidden;
     margin-bottom: 1px;
+    margin-top: 10px;
     border-radius: 5px;
+}
+
+/* Exception: no need for margin on first category */
+#category_1 div.cat_bar
+{
+    margin-top: 0px;
 }
 
 div.title_bar

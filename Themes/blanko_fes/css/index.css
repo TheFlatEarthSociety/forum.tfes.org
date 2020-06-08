@@ -3139,6 +3139,10 @@ div.smalltext.reportlinks a
 #quickReplyOptions .roundframe
 {
     padding: 0 10%;
+    margin-top: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 4px 4px 4px 4px;
 }
 
 #quickReplyOptions form textarea

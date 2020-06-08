@@ -283,61 +283,21 @@ function template_info_center()
 	// Here's where the "Info Center" starts...
 	echo '
 	<br /><br /><br />
-	<div class="clear" id="IC" role="tabpanel">
+	<div class="clear" id="IC">
 		<div class="cat_bar">
 			<h3 class="catbg">
 				', sprintf($txt['info_center_title'], $context['forum_name_html_safe']), '
 			</h3>
 		</div>
 		<div id="upshrinkHeaderIC">
-			<ul class="nav nav-tabs" role="tablist">';
-			if (!empty($settings['number_recent_posts']) && (!empty($context['latest_posts']) || !empty($context['latest_post'])))
-			{
-			echo'
-				<li role="presentation">
-					<a href="#recent" aria-controls="recent" role="tab" data-toggle="tab">
-						<i class="fa fa-comments"></i>
-						<span>&nbsp;', $txt['recent_posts'], '</span>
-					</a>
-				</li>';
-			}
-			if ($context['show_calendar'])
-			{
-			echo'
-				<li role="presentation">
-					<a href="#calendar" aria-controls="calendar" role="tab" data-toggle="tab">
-						<i class="fa fa-comments"></i>
-						<span>&nbsp;', $context['calendar_only_today'] ? $txt['calendar_today'] : $txt['calendar_upcoming'], '</span>
-					</a>
-				</li>';
-
-			}
-			if ($settings['show_stats_index'])
-			{
-			echo'
-				<li role="presentation">
-					<a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">
-						<i class="fa fa-comments"></i>
-						<span>&nbsp;', $txt['forum_stats'], '</span>
-					</a>
-				</li>';
-			}
-			echo'
-				<li role="presentation" class="active">
-					<a href="#users" aria-controls="users" role="tab" data-toggle="tab">
-						<i class="fa fa-users"></i>
-						<span>&nbsp;', $txt['online_users'], '</span>
-					</a>
-				</li>
-			</ul>
 			<div class="tab-content">';
 
 	// This is the "Recent Posts" bar.
 	if (!empty($settings['number_recent_posts']) && (!empty($context['latest_posts']) || !empty($context['latest_post'])))
 	{
 		echo '
-			<div class="hslice tab-pane" id="recent_posts_content recent" role="tabpanel">
-				<div class="entry-title" style="display: none;">', $context['forum_name_html_safe'], ' - ', $txt['recent_posts'], '</div>
+			<div class="hslice" id="recent_posts_content recent">
+				<h4><i class="fa fa-comments"></i>&nbsp;', $txt['recent_posts'], '</h4>
 				<div class="entry-content" style="display: none;">
 					<a rel="feedurl" href="', $scripturl, '?action=.xml;type=webslice">', $txt['subscribe_webslice'], '</a>
 				</div>';
@@ -376,7 +336,7 @@ function template_info_center()
 	if ($context['show_calendar'])
 	{
 		echo '
-			<p class="smalltext tab-pane" id="calendar" role="tabpanel">';
+			<p class="smalltext" id="calendar">';
 
 		// Holidays like "Christmas", "Chanukah", and "We Love [Unknown] Day" :P.
 		if (!empty($context['calendar_holidays']))
@@ -413,7 +373,8 @@ function template_info_center()
 	if ($settings['show_stats_index'])
 	{
 		echo '
-			<p class="tab-pane" id="stats" role="tabpanel">
+			<h4><i class="fa fa-comments"></i>&nbsp;', $txt['forum_stats'], '</h4>
+			<p id="stats" class="inline smalltext">
 				', $context['common_stats']['total_posts'], ' ', $txt['posts_made'], ' ', $txt['in'], ' ', $context['common_stats']['total_topics'], ' ', $txt['topics'], ' ', $txt['by'], ' ', $context['common_stats']['total_members'], ' ', $txt['members'], '. ', !empty($settings['show_latest_member']) ? $txt['latest_member'] . ': <strong> ' . $context['common_stats']['latest_member']['link'] . '</strong>' : '', '<br />
 				', (!empty($context['latest_post']) ? $txt['latest_post'] . ': <strong>&quot;' . $context['latest_post']['link'] . '&quot;</strong>  ( ' . $context['latest_post']['time'] . ' )<br />' : ''), '
 				<a href="', $scripturl, '?action=recent">', $txt['recent_view'], '</a>', $context['show_stats'] ? '<br />
@@ -423,10 +384,8 @@ function template_info_center()
 
 	// "Users online" - in order of activity.
 	echo '
-			<div class="tab-pane active" id="users" role="tabpanel">
-				<p class="inline stats">
-					', $context['show_who'] ? '<a href="' . $scripturl . '?action=who">' : '', comma_format($context['num_guests']), ' ', $context['num_guests'] == 1 ? $txt['guest'] : $txt['guests'], ', ' . comma_format($context['num_users_online']), ' ', $context['num_users_online'] == 1 ? $txt['user'] : $txt['users'];
-
+			<div id="users">
+				<h4><i class="fa fa-users"></i>&nbsp;', $txt['online_users'], ':&nbsp;', $context['show_who'] ? '<a href="' . $scripturl . '?action=who">' : '', comma_format($context['num_guests']), ' ', $context['num_guests'] == 1 ? $txt['guest'] : $txt['guests'], ', ' . comma_format($context['num_users_online']), ' ', $context['num_users_online'] == 1 ? $txt['user'] : $txt['users'], $context['show_who'] ? '</a>' : '','</h4>';
 		// Handle hidden users and buddies.
 		$bracketList = array();
 		if ($context['show_buddies'])
@@ -437,10 +396,10 @@ function template_info_center()
 			$bracketList[] = comma_format($context['num_users_hidden']) . ' ' . $txt['hidden'];
 
 		if (!empty($bracketList))
-			echo ' (' . implode(', ', $bracketList) . ')';
+			echo '
+				<p class="inline smalltext"> (' . implode(', ', $bracketList) . ')</p>';
 
-		echo $context['show_who'] ? '</a>' : '', '
-				</p>
+		echo '
 				<p class="inline smalltext">';
 
 		// Assuming there ARE users online... each user in users_online has an id, username, name, group, href, and link.
@@ -489,3 +448,4 @@ function template_info_center()
 	</div>';
 }
 ?>
+

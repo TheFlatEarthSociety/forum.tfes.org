@@ -276,7 +276,8 @@ function template_main()
 				echo '
 								<li class="membergroup">', $message['member']['group'], '</li>';
 
-			// Show the stars if they are not in a group.
+			// Show the stars if they are in a group.
+			if (isset($message['member']['group']) && $message['member']['group'] != '')
 				echo '
 								<li class="stars">', $message['member']['group_stars'], '</li>';
 

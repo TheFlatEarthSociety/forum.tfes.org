@@ -2462,6 +2462,7 @@ p#whoisviewing
 
 .body_message
 {
+    display: flex;
     background-color: #fcfcfc;
     padding: 0;
     margin-top: 10px;
@@ -2873,9 +2874,6 @@ div.postarea .btn-group .dropdown-toggle:nth-child(3)
         padding-left: 10px;
         padding-right: 0px;
         border-left: 1px solid #d3d3d3;
-    }
-    .post_wrapper {
-        display: flex;
     }
     div.keyinfo h5 {
         font-weight: 600;

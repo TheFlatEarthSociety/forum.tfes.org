@@ -180,8 +180,7 @@ function template_folder()
 
 			echo '
 
-<div class="body_message row">
-	<div class="post_wrapper">
+<article class="body_message row">
 		<div class="poster col-md-2">
 			<a id="msg', $message['id'], '"></a>';
 
@@ -497,8 +496,7 @@ function template_folder()
 		</div>
 						</div>
 					</div>
-				</div>
-	</div>
+	</article>
 	<hr />';
 		}
 

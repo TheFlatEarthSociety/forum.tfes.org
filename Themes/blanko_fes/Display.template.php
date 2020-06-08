@@ -233,8 +233,7 @@ function template_main()
 				<a id="msg', $message['id'], '"></a>', $message['first_new'] ? '<a id="new"></a>' : '';
 
 		echo '
-				<div class="body_message">
-					<div class="post_wrapper">';
+				<article class="body_message">';
 
 		// Show information about the poster of this message.
 		echo '
@@ -653,8 +652,7 @@ function template_main()
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
+				</article>
 				<hr  />';
 	}
 	echo '

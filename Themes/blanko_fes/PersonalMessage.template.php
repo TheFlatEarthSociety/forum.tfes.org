@@ -145,16 +145,6 @@ function template_folder()
 	// Got some messages to display?
 	if ($context['get_pmessage']('message', true))
 	{
-		// Show the helpful titlebar - generally.
-		if ($context['display_mode'] != 1)
-			echo '
-				<div class="cat_bar">
-					<h3 class="catbg">
-						<span id="author">', $txt['author'], '</span>
-						<span id="topic_title">', $txt[$context['display_mode'] == 0 ? 'messages' : 'conversation'], '</span>
-					</h3>
-				</div>';
-
 		// Show a few buttons if we are in conversation mode and outputting the first message.
 		if ($context['display_mode'] == 2)
 		{

@@ -1,5 +1,10 @@
 /* Styles for the general looks for the Curve theme.
 ------------------------------------------------------- */
+div.divider
+{
+    padding: 5px;
+}
+
 img
 {
     max-width: 100%;

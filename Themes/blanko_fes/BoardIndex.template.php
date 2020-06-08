@@ -252,11 +252,7 @@ function template_main()
 			</tbody>';
 		}
 		echo '
-			<tbody class="divider">
-				<tr>
-					<td colspan="5"></td>
-				</tr>
-			</tbody>';
+			<div class="divider"></div>';
 	}
 	echo '
 		</table>

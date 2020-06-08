@@ -934,6 +934,13 @@ div.cat_bar
     margin-top: 0px;
 }
 
+/* Adjust mark_read button to no longer rely on an empty table padding it out */
+.mark_read
+{
+    margin-top: 10px;
+    margin-bottom: -10px;
+}
+
 div.title_bar
 {
     background: #6590a5;

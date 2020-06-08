@@ -362,10 +362,6 @@ QuickModify.prototype.onModifyDone = function (XMLDoc)
 		// If this is the first message, also update the topic subject.
 		if (oSubject.getAttribute('is_first') == '1')
 			setInnerHTML(document.getElementById('top_subject'), this.opt.sTemplateTopSubject.replace(/%subject%/, sSubjectText).replace(/\{&dollarfix;\$\}/g, '$'));
-
-		// Show this message as 'modified on x by y'.
-		if (this.opt.bShowModify)
-			setInnerHTML(document.getElementById('modified_' + this.sCurMessageId.substr(4)), message.getElementsByTagName('modified')[0].childNodes[0].nodeValue);
 	}
 	else if (error)
 	{

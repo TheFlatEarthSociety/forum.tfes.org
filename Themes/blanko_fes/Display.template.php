@@ -404,7 +404,6 @@ function template_main()
 						</div>
 						<div class="col-md-10">
 							<div class="body_content">
-								<span class="arrow-left"></span>
 								<div class="postarea">
 									<div class="btn-group navbar-right">
 										<div class="smalltext reportlinks">

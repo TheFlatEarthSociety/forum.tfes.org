@@ -13,18 +13,7 @@
 function template_main()
 {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings;
-	// Google searchbox
-	// This is only supposed to be included in the forum's homepage, so this seems to be its natural homepage
-	echo '
-	<div itemscope itemtype="http://schema.org/WebSite" style="display: none;">
-		<meta itemprop="url" content="https://forum.tfes.org/"/>
-		<form itemprop="potentialAction" itemscope itemtype="http://schema.org/SearchAction">
-			<meta itemprop="target" content="https://forum.tfes.org/index.php?action=search2&search={search_term_string}"/>
-			<input itemprop="query-input" type="text" name="search_term_string" required/>
-			<input type="submit"/>
-		</form>
-	</div>';
-	
+
 	// Add "New Posts" and "New Replies" buttons
 	if ($context['user']['is_logged'])
 		echo '

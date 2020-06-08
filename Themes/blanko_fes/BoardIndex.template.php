@@ -280,7 +280,6 @@ function template_main()
 function template_info_center()
 {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings;
-
 	// Here's where the "Info Center" starts...
 	echo '
 	<br /><br /><br />
@@ -290,7 +289,7 @@ function template_info_center()
 				', sprintf($txt['info_center_title'], $context['forum_name_html_safe']), '
 			</h3>
 		</div>
-		<div id="upshrinkHeaderIC"', empty($options['collapse_header_ic']) ? '' : ' style="display: none;"', '>
+		<div id="upshrinkHeaderIC">
 			<ul class="nav nav-tabs" role="tablist">';
 			if (!empty($settings['number_recent_posts']) && (!empty($context['latest_posts']) || !empty($context['latest_post'])))
 			{
@@ -488,36 +487,5 @@ function template_info_center()
 			</div>
 		</div>
 	</div>';
-
-	// Info center collapse object.
-	echo '
-	<script type="text/javascript"><!-- // --><![CDATA[
-		var oInfoCenterToggle = new smc_Toggle({
-			bToggleEnabled: true,
-			bCurrentlyCollapsed: ', empty($options['collapse_header_ic']) ? 'false' : 'true', ',
-			aSwappableContainers: [
-				\'upshrinkHeaderIC\'
-			],
-			aSwapImages: [
-				{
-					sId: \'upshrink_ic\',
-					srcExpanded: smf_images_url + \'/collapse.gif\',
-					altExpanded: ', JavaScriptEscape($txt['upshrink_description']), ',
-					srcCollapsed: smf_images_url + \'/expand.gif\',
-					altCollapsed: ', JavaScriptEscape($txt['upshrink_description']), '
-				}
-			],
-			oThemeOptions: {
-				bUseThemeSettings: ', $context['user']['is_guest'] ? 'false' : 'true', ',
-				sOptionName: \'collapse_header_ic\',
-				sSessionVar: ', JavaScriptEscape($context['session_var']), ',
-				sSessionId: ', JavaScriptEscape($context['session_id']), '
-			},
-			oCookieOptions: {
-				bUseCookie: ', $context['user']['is_guest'] ? 'true' : 'false', ',
-				sCookieName: \'upshrinkIC\'
-			}
-		});
-	// ]]></script>';
 }
 ?>

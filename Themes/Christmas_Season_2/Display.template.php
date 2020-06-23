@@ -645,6 +645,7 @@ function template_main()
 					</td>
 					<td align="', !$context['right_to_left'] ? 'right' : 'left', '" style="font-size: smaller;">';
 
+	CheckUnsubscribe();
 	$buttonArray = array();
 	if ($context['can_reply'])
 		$buttonArray[] = '<a href="' . $scripturl . '?action=post;topic=' . $context['current_topic'] . '.' . $context['start'] . ';num_replies=' . $context['num_replies'] . '">' . ($settings['use_image_buttons'] ? '<img src="' . $settings['lang_images_url'] . '/reply.gif" alt="' . $txt['reply'] . '" border="0" />' : $txt['reply']) . '</a>';

@@ -50,8 +50,12 @@ function Unsubscribe() {
 function CheckUnsubscribe() {
 	global $context, $smcFunc, $user_info;
 
-	if (!empty($context['is_subscribed']) or !empty($context['is_unsubscribed']))
+	// Do not generate subscribed/unsubscribed values if:
+	// * One of them is already set
+	// * The user is a guest and the concept of (un)subscribing is meaningless
+	if (!empty($context['is_subscribed']) or !empty($context['is_unsubscribed']) or $context['user']['is_guest'])
 		return;
+
 
 	$topic = $context['current_topic'];
 	$request = $smcFunc['db_query']('', '

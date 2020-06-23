@@ -633,17 +633,17 @@ function pages_titlesdesc()
 {
 	global $txt, $context, $scripturl, $settings, $modSettings, $options, $sourcedir, $topic, $topicinfo, $board_info, $board, $category;
 
-	if(!empty($topic))
+	if(!empty($topic) && !empty($context['subject']))
 	{
 		echo '
 		<h2>', $context['subject'], '</h2>';
 	}
-	elseif(!empty($board))
+	elseif(!empty($board) && !empty($board_info['name']))
 	{
 		echo '
 		<h2>',$board_info['name'],'</h2>';
 	}
-	else
+	elseif(!empty($context['page_title']))
 	{
 		echo '
 		<h2>',$context['page_title'],'</h2>';

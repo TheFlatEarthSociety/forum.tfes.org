@@ -227,7 +227,7 @@ function template_html_above()
 	// If we're viewing a topic, these should be the previous and next pages of the same topic, respectively.
 	// For some reason SMF developers thought that the best thing to put down as the "next page" is the next thread.
 	// That's retarded, and thus now fixed.
-	if (!empty($context['current_topic']) && empty($context['current_action']))
+	if (!empty($context['current_topic']) && empty($context['current_action']) && !empty($context["start"]) && !empty($context["messages_per_page"]) && !empty($context["total_visible_posts"]))
 	{
 		$next_page = $context['start'] + $context['messages_per_page'];
 		$prev_page = $context['start'] - $context['messages_per_page'];
@@ -633,17 +633,17 @@ function pages_titlesdesc()
 {
 	global $txt, $context, $scripturl, $settings, $modSettings, $options, $sourcedir, $topic, $topicinfo, $board_info, $board, $category;
 
-	if(!empty($topic))
+	if(!empty($topic) && !empty($context['subject']))
 	{
 		echo '
 		<h2>', $context['subject'], '</h2>';
 	}
-	elseif(!empty($board))
+	elseif(!empty($board) && !empty($board_info['name']))
 	{
 		echo '
 		<h2>',$board_info['name'],'</h2>';
 	}
-	else
+	elseif(!empty($context['page_title']))
 	{
 		echo '
 		<h2>',$context['page_title'],'</h2>';

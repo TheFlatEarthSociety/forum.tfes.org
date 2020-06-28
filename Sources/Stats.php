@@ -546,12 +546,13 @@ function DisplayStats()
 	$members_result = $smcFunc['db_query']('', '
 		SELECT id_member, real_name, posts, total_time_logged_in
 		FROM {db_prefix}members ' . (!empty($temp_lurk) ? '
-		WHERE id_member IN ({array_int:member_list_cached})' : 'WHERE posts > {int:no_posts}') . '
+		WHERE id_member IN ({array_int:member_list_cached})' : 'WHERE posts > {int:no_posts} AND total_time_logged_in > {int:time_logged_in}') . '
 		ORDER BY total_time_logged_in/posts DESC
 		LIMIT 10',
 		array(
 			'member_list_cached' => $temp_lurk,
 			'no_posts' => 0,
+			'time_logged_in' => 0,
 		)
 	);
 	$context['top_lurk'] = array();
@@ -606,12 +607,13 @@ function DisplayStats()
 	$members_result = $smcFunc['db_query']('', '
 		SELECT id_member, real_name, posts, total_time_logged_in
 		FROM {db_prefix}members ' . (!empty($temp_lurk) ? '
-		WHERE id_member IN ({array_int:member_list_cached})' : 'WHERE posts > {int:no_posts}') . '
+		WHERE id_member IN ({array_int:member_list_cached})' : 'WHERE posts > {int:no_posts} AND total_time_logged_in > {int:time_logged_in}') . '
 		ORDER BY total_time_logged_in/posts ASC
 		LIMIT 10',
 		array(
 			'member_list_cached' => $temp_lurk,
 			'no_posts' => 0,
+			'time_logged_in' => 0
 		)
 	);
 	$context['worst_lurk'] = array();

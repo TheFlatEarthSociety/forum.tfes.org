@@ -684,12 +684,23 @@ function statPanel($memID)
 	$context['num_posts'] = comma_format($user_profile[$memID]['posts']);
 
 	//Personal lurk ratio.
-	$lurkRatio = $user_profile[$memID]['total_time_logged_in']/$user_profile[$memID]['posts'];
-	$lurkDays = floor($lurkRatio / 86400);
-	$lurkHours = floor(($lurkRatio % 86400) / 3600);
-	$lurkMinutes = floor(($lurkRatio % 3600) / 60);
-	$lurkSeconds = $lurkRatio % 60;
-	$context['lurk_ratio'] = ($lurkDays > 0 ? $lurkDays . " days, " : '') . ($lurkHours > 0 ? $lurkHours . " hours, " : '') . ($lurkMinutes > 0 ? $lurkMinutes . " minutes and " : '') . $lurkSeconds . " seconds per post.";
+	if($user_profile[$memID]['total_time_logged_in'] > 0 && $user_profile[$memID]['posts'] > 0)
+	{
+		$lurkRatio = $user_profile[$memID]['total_time_logged_in']/$user_profile[$memID]['posts'];
+		$lurkDays = floor($lurkRatio / 86400);
+		$lurkHours = floor(($lurkRatio % 86400) / 3600);
+		$lurkMinutes = floor(($lurkRatio % 3600) / 60);
+		$lurkSeconds = $lurkRatio % 60;
+		$context['lurk_ratio'] = ($lurkDays > 0 ? $lurkDays . " days, " : '') .
+					($lurkHours > 0 ? $lurkHours . " hours, " : '') .
+					($lurkMinutes > 0 ? $lurkMinutes . " minutes, " : '') .
+					($lurkSeconds > 0 ? $lurkSeconds . " seconds " : '') .
+					"per post.";
+	}
+	else
+	{
+		$context['lurk_ratio'] = "N/A";
+	}
 	
 	// Number of topics started.
 	$result = $smcFunc['db_query']('', '

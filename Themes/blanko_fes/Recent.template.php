@@ -148,11 +148,8 @@ function template_unread()
 
 		foreach ($context['topics'] as $topic)
 		{
-			// Is this topic pending approval, or does it have any posts pending approval?
-			if ($context['can_approve_posts'] && $topic['unapproved_posts'])
-				$color_class = !$topic['approved'] ? 'approvetbg' : 'approvebg';
 			// We start with locked and sticky topics.
-			elseif ($topic['is_sticky'] && $topic['is_locked'])
+			if ($topic['is_sticky'] && $topic['is_locked'])
 				$color_class = 'stickybg locked_sticky';
 			// Sticky topics should get a different color, too.
 			elseif ($topic['is_sticky'])
@@ -360,11 +357,8 @@ function template_replies()
 
 		foreach ($context['topics'] as $topic)
 		{
-			// Is this topic pending approval, or does it have any posts pending approval?
-			if ($context['can_approve_posts'] && $topic['unapproved_posts'])
-				$color_class = !$topic['approved'] ? 'approvetbg' : 'approvebg';
 			// We start with locked and sticky topics.
-			elseif ($topic['is_sticky'] && $topic['is_locked'])
+			if ($topic['is_sticky'] && $topic['is_locked'])
 				$color_class = 'stickybg locked_sticky';
 			// Sticky topics should get a different color, too.
 			elseif ($topic['is_sticky'])

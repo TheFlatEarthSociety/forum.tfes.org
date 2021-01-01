@@ -451,7 +451,7 @@ function BanEdit()
 		}
 		elseif ($_POST['bantype'] == 'hostname_ban')
 		{
-			if (preg_match('/[^\w.\-*]/', $_POST['hostname']) == 1)
+			if (preg_match('/[^\w.\-:*]/', $_POST['hostname']) == 1)
 				fatal_lang_error('invalid_hostname', false);
 
 			// Replace the * wildcard by a MySQL compatible wildcard %.
@@ -642,7 +642,7 @@ function BanEdit()
 				}
 				if (in_array('hostname', $_POST['ban_suggestion']) && !empty($_POST['hostname']))
 				{
-					if (preg_match('/[^\w.\-*]/', $_POST['hostname']) == 1)
+					if (preg_match('/[^\w.\-:*]/', $_POST['hostname']) == 1)
 						fatal_lang_error('invalid_hostname', false);
 
 					// Replace the * wildcard by a MySQL wildcard %.

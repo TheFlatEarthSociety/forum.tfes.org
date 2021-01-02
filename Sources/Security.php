@@ -247,17 +247,6 @@ function is_not_banned($forceCheck = false)
 							AND (' . $ip_parts[2] . ' BETWEEN bi.ip_low2 AND bi.ip_high2)
 							AND (' . $ip_parts[3] . ' BETWEEN bi.ip_low3 AND bi.ip_high3)
 							AND (' . $ip_parts[4] . ' BETWEEN bi.ip_low4 AND bi.ip_high4))';
-
-				// IP was valid, maybe there's also a hostname...
-				if (empty($modSettings['disableHostnameLookup']))
-				{
-					$hostname = host_from_ip($user_info[$ip_number]);
-					if (strlen($hostname) > 0)
-					{
-						$ban_query[] = '({string:hostname} LIKE bi.hostname)';
-						$ban_query_vars['hostname'] = $hostname;
-					}
-				}
 			}
 			// We use '255.255.255.255' for 'unknown' since it's not valid anyway.
 			elseif ($user_info['ip'] == 'unknown')
@@ -265,6 +254,20 @@ function is_not_banned($forceCheck = false)
 							AND bi.ip_low2 = 255 AND bi.ip_high2 = 255
 							AND bi.ip_low3 = 255 AND bi.ip_high3 = 255
 							AND bi.ip_low4 = 255 AND bi.ip_high4 = 255)';
+		}
+
+		
+		if (empty($modSettings['disableHostnameLookup']))
+		{
+			foreach (array('ip', 'ip2') as $ip_number)
+			{
+				$hostname = host_from_ip($user_info[$ip_number]);
+				if (strlen($hostname) > 0)
+				{
+					$ban_query[] = '({string:hostname} LIKE bi.hostname)';
+					$ban_query_vars['hostname'] = $hostname;
+				}
+			}
 		}
 
 		// Is their email address banned?

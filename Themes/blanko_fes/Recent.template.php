@@ -23,7 +23,6 @@ function template_main()
 		</div>
 	<div class="pagesection">
 		<div class="pagelinks floatleft">', $txt['pages'], ': ', $context['page_index'], !empty($modSettings['topbottomEnable']) ? $context['menu_separator'] . '&nbsp;&nbsp;<a href="#bot"><strong>' . $txt['go_down'] . '</strong></a>' : '', '</div>
-		', template_button_strip($mark_read, 'right'), '
 	</div>';
 
 	foreach ($context['posts'] as $post)
@@ -79,7 +78,6 @@ function template_main()
 	echo '
 	<div class="pagesection">
 		<div class="pagelinks floatleft">', $txt['pages'], ': ', $context['page_index'], !empty($modSettings['topbottomEnable']) ? $context['menu_separator'] . '&nbsp;&nbsp;<a href="#bot"><strong>' . $txt['go_down'] . '</strong></a>' : '', '</div>
-		', template_button_strip($mark_read, 'right'), '
 	</div>
 	</div>';
 }

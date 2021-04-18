@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.16
+ * @version 2.0.18
  */
 
 if (!defined('SMF'))
@@ -236,7 +236,10 @@ function preparsecode(&$message, $previewing = false)
 				{
 					static $htmlfunc = null;
 					if ($htmlfunc === null)
-						$htmlfunc = create_function('$m', 'return \'[html]\' . strtr(un_htmlspecialchars("$m[1]"), array("\n" => \'&#13;\', \'  \' => \' &#32;\', \'[\' => \'&#91;\', \']\' => \'&#93;\')) . \'[/html]\';');
+						$htmlfunc = function($m)
+						{
+							return '[html]' . strtr(un_htmlspecialchars("$m[1]"), array("\n" => '&#13;', '  ' => ' &#32;', '[' => '&#91;', ']' => '&#93;')) . '[/html]';
+						};
 					$parts[$i] = preg_replace_callback('~\[html\](.+?)\[/html\]~is', $htmlfunc, $parts[$i]);
 				}
 
@@ -1241,7 +1244,8 @@ function mimespecialchars($string, $with_charset = true, $hotmail_fix = false, $
 					$string = $newstring;
 			}
 
-			$fixchar = create_function('$n', '
+			$fixchar = function($n)
+			{
 				if ($n < 128)
 					return chr($n);
 				elseif ($n < 2048)
@@ -1249,7 +1253,8 @@ function mimespecialchars($string, $with_charset = true, $hotmail_fix = false, $
 				elseif ($n < 65536)
 					return chr(224 | $n >> 12) . chr(128 | $n >> 6 & 63) . chr(128 | $n & 63);
 				else
-					return chr(240 | $n >> 18) . chr(128 | $n >> 12 & 63) . chr(128 | $n >> 6 & 63) . chr(128 | $n & 63);');
+					return chr(240 | $n >> 18) . chr(128 | $n >> 12 & 63) . chr(128 | $n >> 6 & 63) . chr(128 | $n & 63);
+			};
 
 			$string = preg_replace_callback('~&#(\d{3,8});~', 'fixchar__callback', $string);
 
@@ -2124,7 +2129,7 @@ function createAttachment(&$attachmentOptions)
 			if (!empty($size['mime']))
 				$attachmentOptions['mime_type'] = $size['mime'];
 			// Otherwise a valid one?
-			elseif (isset($validImageTypes[$size[2]]))
+			elseif (!empty($size[2]) && isset($validImageTypes[$size[2]]))
 				$attachmentOptions['mime_type'] = 'image/' . $validImageTypes[$size[2]];
 		}
 	}
@@ -2279,7 +2284,7 @@ function createAttachment(&$attachmentOptions)
 		{
 			if (!empty($size['mime']))
 				$attachmentOptions['mime_type'] = $size['mime'];
-			elseif (isset($validImageTypes[$size[2]]))
+			elseif (!empty($size[2]) && isset($validImageTypes[$size[2]]))
 				$attachmentOptions['mime_type'] = 'image/' . $validImageTypes[$size[2]];
 		}
 
@@ -2310,7 +2315,7 @@ function createAttachment(&$attachmentOptions)
 
 	// Security checks for images
 	// Do we have an image? If yes, we need to check it out!
-	if (isset($validImageTypes[$size[2]]))
+	if (!empty($size[2]) && isset($validImageTypes[$size[2]]))
 	{
 		if (!checkImageContents($attachmentOptions['destination'], !empty($modSettings['attachment_image_paranoid'])))
 		{
@@ -2336,7 +2341,7 @@ function createAttachment(&$attachmentOptions)
 				// Let's update the image information
 				// !!! This is becoming a mess: we keep coming back and update the database,
 				//  instead of getting it right the first time.
-				if (isset($validImageTypes[$size[2]]))
+				if (!empty($size[2]) && isset($validImageTypes[$size[2]]))
 				{
 					$attachmentOptions['mime_type'] = 'image/' . $validImageTypes[$size[2]];
 					$smcFunc['db_query']('', '
@@ -2368,7 +2373,7 @@ function createAttachment(&$attachmentOptions)
 
 			if (!empty($size['mime']))
 				$thumb_mime = $size['mime'];
-			elseif (isset($validImageTypes[$size[2]]))
+			elseif (!empty($size[2]) && isset($validImageTypes[$size[2]]))
 				$thumb_mime = 'image/' . $validImageTypes[$size[2]];
 			// Lord only knows how this happened...
 			else

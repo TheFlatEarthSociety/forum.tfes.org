@@ -2205,6 +2205,7 @@ INSERT INTO {$db_prefix}settings (variable, value) VALUES ('smiley_sets_names', 
 INSERT INTO {$db_prefix}settings (variable, value) VALUES ('smiley_sets_default', 'default');
 INSERT INTO {$db_prefix}settings (variable, value) VALUES ('cal_days_for_index', '7');
 INSERT INTO {$db_prefix}settings (variable, value) VALUES ('requireAgreement', '1');
+INSERT INTO {$db_prefix}settings (variable, value) VALUES ('requirePolicyAgreement', '0');
 INSERT INTO {$db_prefix}settings (variable, value) VALUES ('unapprovedMembers', '0');
 INSERT INTO {$db_prefix}settings (variable, value) VALUES ('default_personal_text', '');
 INSERT INTO {$db_prefix}settings (variable, value) VALUES ('package_make_backups', '1');

@@ -581,7 +581,7 @@ function smf_db_unescape_string($string)
 }
 
 // For inserting data in a special way...
-function smf_db_insert($method = 'replace', $table, $columns, $data, $keys, $disable_trans = false, $connection = null)
+function smf_db_insert($method, $table, $columns, $data, $keys, $disable_trans = false, $connection = null)
 {
 	global $db_replace_result, $db_in_transact, $smcFunc, $db_connection, $db_prefix;
 

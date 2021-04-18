@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.16
+ * @version 2.0.18
  */
 
 if (!defined('SMF'))
@@ -70,8 +70,8 @@ function ViewModlog()
 		$smcFunc['db_query']('', '
 			DELETE FROM {db_prefix}log_actions
 			WHERE id_log = {int:moderate_log}
-				AND log_time < {int:twenty_four_hours_wait}
-				AND action NOT IN ({array_string:uneditable})',
+				AND log_time < {int:twenty_four_hours_wait}' . (!empty($context['uneditable_actions']) ? '
+				AND action NOT IN ({array_string:uneditable})' : ''),
 			array(
 				'twenty_four_hours_wait' => time() - $context['hoursdisable'] * 3600,
 				'moderate_log' => $context['log_type'],
@@ -86,8 +86,8 @@ function ViewModlog()
 			DELETE FROM {db_prefix}log_actions
 			WHERE id_log = {int:moderate_log}
 				AND id_action IN ({array_string:delete_actions})
-				AND log_time < {int:twenty_four_hours_wait}
-				AND action NOT IN ({array_string:uneditable})',
+				AND log_time < {int:twenty_four_hours_wait}' . (!empty($context['uneditable_actions']) ? '
+				AND action NOT IN ({array_string:uneditable})' : ''),
 			array(
 				'twenty_four_hours_wait' => time() - $context['hoursdisable'] * 3600,
 				'delete_actions' => array_unique($_POST['delete']),
@@ -266,9 +266,10 @@ function ViewModlog()
 					'value' => '<input type="checkbox" name="all" class="input_check" onclick="invertAll(this, this.form);" />',
 				),
 				'data' => array(
-					'function' => create_function('$entry', '
-						return \'<input type="checkbox" class="input_check" name="delete[]" value="\' . $entry[\'id\'] . \'"\' . ($entry[\'editable\'] ? \'\' : \' disabled="disabled"\') . \' />\';
-					'),
+					'function' => function($entry)
+					{
+						return '<input type="checkbox" class="input_check" name="delete[]" value="' . $entry['id'] . '"' . ($entry['editable'] ? '' : ' disabled="disabled"') . ' />';
+					},
 					'style' => 'text-align: center;',
 				),
 			),
@@ -596,7 +597,6 @@ function list_getModLogEntries($start, $items_per_page, $sort, $query_string = '
 	}
 
 	// Do some formatting of the action string.
-	$callback = pregReplaceCurry('list_getModLogEntriesCallback', 3);
 	foreach ($entries as $k => $entry)
 	{
 		// Make any message info links so its easier to go find that message.
@@ -610,18 +610,15 @@ function list_getModLogEntries($start, $items_per_page, $sort, $query_string = '
 
 		if (empty($entries[$k]['action_text']))
 			$entries[$k]['action_text'] = isset($txt['modlog_ac_' . $entry['action']]) ? $txt['modlog_ac_' . $entry['action']] : $entry['action'];
-		$entries[$k]['action_text'] = preg_replace_callback('~\{([A-Za-z\d_]+)\}~i', $callback($entries, $k), $entries[$k]['action_text']);
-
+		$entries[$k]['action_text'] = preg_replace_callback('~\{([A-Za-z\d_]+)\}~i',
+			function($matches) use ($entries, $k)
+			{
+				return isset($entries[$k]['extra'][$matches[1]]) ? $entries[$k]['extra'][$matches[1]] : '';
+			}, $entries[$k]['action_text']);
 	}
 
 	// Back we go!
 	return $entries;
-}
-
-// Mog Log Replacment Callback.
-function list_getModLogEntriesCallback($entries, $key, $matches)
-{
-    return isset($entries[$key]['extra'][$matches[1]]) ? $entries[$key]['extra'][$matches[1]] : '';
 }
 
 ?>

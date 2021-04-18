@@ -133,7 +133,7 @@
 				<div id="liftup">
 					<div class="panel">
 						<h2 id="contents">Installing your forum</h2>
-						<p>Thank you for deciding to use, or at least try, <a href="https://www.simplemachines.org/smf/">SMF</a>.  Before you get started, please remember that there is <a href="https://www.simplemachines.org/community/index.php">a place for help at www.simplemachines.org</a> if you run into any problems at all.</p>
+						<p>Thank you for deciding to use, or at least try, <a href="https://simplemachines.org/about/">SMF</a>.  Before you get started, please remember that there is <a href="https://www.simplemachines.org/community/index.php">a place for help at www.simplemachines.org</a> if you run into any problems at all.</p>
 						<p>If you are looking to upgrade an installation of SMF, or convert from YaBB SE, you may have downloaded the wrong package.  Please check <a href="https://download.simplemachines.org/">the downloads page</a> for more information.</p>
 						<p>You can find the following information in this file:</p>
 						<ul style="list-style-type: none;">
@@ -151,22 +151,22 @@
 						<h2 id="requirements">Minimum installation requirements</h2>
 						<p>Your server must meet a few requirements to be able to run SMF.  If you are unsure as to whether your webserver meets these, please try to upgrade anyway - it should detect any problems.</p>
 						<ul>
-							<li>Any webserver that properly supports PHP, such as <a href="https://httpd.apache.org/" target="_blank">Apache</a> or <a href="https://www.microsoft.com/iis" target="_blank">Internet Information Services (IIS)</a>.</li>
+							<li>Any webserver that properly supports PHP, such as <a href="https://httpd.apache.org/" target="_blank" rel="noopener">Apache</a> or <a href="https://www.iis.net/" target="_blank" rel="noopener">Internet Information Services (IIS)</a>.</li>
 							<li>
-								<a href="http://www.php.net" target="_blank">PHP</a> 4.1.0 or higher.  The following directives are required to be set correctly in php.ini:
+								<a href="https://php.net" target="_blank" rel="noopener">PHP</a> 4.1.0 or higher.  The following directives are required to be set correctly in php.ini:
 								<ul>
 									<li>the engine directive must be On.</li>
-									<li>the <a href="http://www.php.net/sybase#ini.magic-quotes-sybase" target="_blank">magic_quotes_sybase</a> directive must be set to Off.</li>
-									<li>the <a href="http://www.php.net/session#ini.session.save-path" target="_blank">session.save_path</a> directive must be set to a valid directory.</li>
-									<li>the <a href="http://www.php.net/manual/en/ini.core.php#ini.file-uploads" target="_blank">file_uploads</a> directive must be On.</li>
-									<li>the <a href="http://www.php.net/manual/en/ini.core.php#ini.upload-tmp-dir" target="_blank">upload_tmp_dir</a> must be set to a valid directory.</li>
+									<li>the <a href="https://php.net/sybase#ini.magic-quotes-sybase" target="_blank" rel="noopener">magic_quotes_sybase</a> directive must be set to Off.</li>
+									<li>the <a href="https://php.net/session#ini.session.save-path" target="_blank" rel="noopener">session.save_path</a> directive must be set to a valid directory.</li>
+									<li>the <a href="https://php.net/manual/en/ini.core.php#ini.file-uploads" target="_blank" rel="noopener">file_uploads</a> directive must be On.</li>
+									<li>the <a href="https://php.net/manual/en/ini.core.php#ini.upload-tmp-dir" target="_blank" rel="noopener">upload_tmp_dir</a> must be set to a valid directory.</li>
 								</ul>
 							</li>
 							<li>Any of the following database systems
 								<ul>
-									<li><a href="https://www.mysql.com/" target="_blank">MySQL</a> 4.0.18 or higher.</li>
-									<li><a href="https://www.postgresql.org/" target="_blank">PostgreSQL</a> 8.0 or higher.</li>
-									<li><a href="https://www.sqlite.org/" target="_blank">SQLite</a> 1.x - 2.x.</li>
+									<li><a href="https://www.mysql.com/" target="_blank" rel="noopener">MySQL</a> 4.0.18 or higher.</li>
+									<li><a href="https://www.postgresql.org/" target="_blank" rel="noopener">PostgreSQL</a> 8.0 or higher.</li>
+									<li><a href="https://www.sqlite.org/" target="_blank" rel="noopener">SQLite</a> 1.x - 2.x.</li>
 								</ul>
 							</li>
 							<li>at least 2 megabytes of storage space in the database, although more is highly recommended.</li>
@@ -175,30 +175,30 @@
 						</ul><br />
 						<h2 id="recommendations">Recommendations for best performance</h2>
 						<ul>
-							<li>Windows, <a href="https://www.linux.org/" target="_blank">Linux</a> or another Unix based operating system.</li>
-							<li>the <a href="http://aspell.sf.net/" target="_blank">GNU Aspell</a> 0.50 or higher and <a href="https://ftp.gnu.org/gnu/aspell/dict/" target="_blank">its dictionaries</a> for spell checking functionality.</li>
-							<li><a href="http://httpd.apache.org/" target="_blank">Apache</a> 2.0.0 or higher with <a href="https://httpd.apache.org/docs-2.0/mod/core.html#acceptpathinfo" target="_blank">AcceptPathInfo</a> set to On (Apache 2 and later only) for queryless URL support.</li>
+							<li>Windows, <a href="https://www.linux.org/" target="_blank" rel="noopener">Linux</a> or another Unix based operating system.</li>
+							<li>the <a href="http://aspell.net/" target="_blank" rel="noopener">GNU Aspell</a> 0.50 or higher and <a href="https://ftp.gnu.org/gnu/aspell/dict/" target="_blank" rel="noopener">its dictionaries</a> for spell checking functionality.</li>
+							<li><a href="https://httpd.apache.org/" target="_blank" rel="noopener">Apache</a> 2.0.0 or higher with <a href="https://httpd.apache.org/docs-2.0/mod/core.html#acceptpathinfo" target="_blank" rel="noopener">AcceptPathInfo</a> set to On (Apache 2 and later only) for queryless URL support.</li>
 							<li>
-								<a href="http://www.php.net" target="_blank">PHP</a> 5.2.0 or higher, with the following set in php.ini:
+								<a href="https://php.net" target="_blank" rel="noopener">PHP</a> 5.2.0 or higher, with the following set in php.ini:
 								<ul>
-									<li>the <a href="http://www.php.net/manual/en/info.configuration.php#ini.max-input-time" target="_blank">max_input_time</a> directive is set to a value of at least 30.</li>
-									<li>the <a href="http://www.php.net/manual/en/ini.core.php#ini.post-max-size" target="_blank">post_max_size</a> and <a href="http://www.php.net/configuration.directives#ini.upload-max-filesize" target="_blank">upload_max_filesize</a> directives set to the size of the largest attachments you wish to be able to upload.</li>
-									<li>the <a href="http://www.php.net/session#ini.session.use-trans-sid" target="_blank">session.use_trans_sid</a> directive set to Off.</li>
-									<li>the <a href="http://www.php.net/manual/en/ini.core.php#ini.memory-limit" target="_blank">memory_limit</a> directive is set to at least 8M.</li>
-									<li>the <a href="http://www.php.net/manual/en/info.configuration.php#ini.max-execution-time" target="_blank">max_execution_time</a> directive is set to at least 15.</li>
-									<li>the <a href="http://www.php.net/manual/en/ini.core.php#ini.register-globals" target="_blank">register_globals</a> directive is set to Off.</li>
-									<li>the <a href="http://www.php.net/manual/en/features.safe-mode.php" target="_blank">safe mode</a> disabled or <a href="http://httpd.apache.org/docs/2.0/suexec.html" target="_blank">suEXEC</a> ensabled.</li>
-									<li>the <a href="http://www.php.net/manual/en/book.bc.php" target="_blank">BCMath</a> library enabled for using the <a href="/smf/Registration#Settings" title="Registration">OpenID</a> registration method.</li>
+									<li>the <a href="https://php.net/manual/en/info.configuration.php#ini.max-input-time" target="_blank" rel="noopener">max_input_time</a> directive is set to a value of at least 30.</li>
+									<li>the <a href="https://php.net/manual/en/ini.core.php#ini.post-max-size" target="_blank" rel="noopener">post_max_size</a> and <a href="https://php.net/configuration.directives#ini.upload-max-filesize" target="_blank" rel="noopener">upload_max_filesize</a> directives set to the size of the largest attachments you wish to be able to upload.</li>
+									<li>the <a href="https://php.net/session#ini.session.use-trans-sid" target="_blank" rel="noopener">session.use_trans_sid</a> directive set to Off.</li>
+									<li>the <a href="https://php.net/manual/en/ini.core.php#ini.memory-limit" target="_blank" rel="noopener">memory_limit</a> directive is set to at least 8M.</li>
+									<li>the <a href="https://php.net/manual/en/info.configuration.php#ini.max-execution-time" target="_blank" rel="noopener">max_execution_time</a> directive is set to at least 15.</li>
+									<li>the <a href="https://php.net/manual/en/ini.core.php#ini.register-globals" target="_blank" rel="noopener">register_globals</a> directive is set to Off.</li>
+									<li>the <a href="https://php.net/manual/en/features.safe-mode.php" target="_blank" rel="noopener">safe mode</a> disabled or <a href="https://httpd.apache.org/docs/2.0/suexec.html" target="_blank" rel="noopener">suEXEC</a> enabled.</li>
+									<li>the <a href="https://php.net/manual/en/book.bc.php" target="_blank" rel="noopener">BCMath</a> library enabled for using the <a href="/smf/Registration#Settings" title="Registration">OpenID</a> registration method.</li>
 								</ul>
 							</li>
 							<li>Any of the following database systems
 								<ul>
-									<li><a href="https://www.mysql.com/" target="_blank">MySQL</a> 5.0 or higher.</li>
-									<li><a href="https://www.postgresql.org/" target="_blank">PostgreSQL</a> 8.3.3 or higher.</li>
-									<li><a href="https://www.sqlite.org/" target="_blank">SQLite</a> 2.8.</li>
+									<li><a href="https://www.mysql.com/" target="_blank" rel="noopener">MySQL</a> 5.0 or higher.</li>
+									<li><a href="https://www.postgresql.org/" target="_blank" rel="noopener">PostgreSQL</a> 8.3.3 or higher.</li>
+									<li><a href="https://www.sqlite.org/" target="_blank" rel="noopener">SQLite</a> 2.8.</li>
 								</ul>
 							</li>
-							<li><a href="https://www.boutell.com/gd/" target="_blank">GD Graphics Library</a> 2.0 or higher.</li>
+							<li><a href="https://libgd.github.io/" target="_blank" rel="noopener">GD Graphics Library</a> 2.0 or higher.</li>
 						</ul>
 						<p>If your server does not meet these requirements, SMF may not work properly.</p>
 					</div>
@@ -220,6 +220,7 @@
 						<p>The following files and directories must be writable. Depending on how your server is set up, this could mean that they must have <b>CHMOD</b> values of 644, 664 or 666 for files, and 755, 775 or 777 for folders:</p>
 						<ul><li>/attachments
 						</li><li>/avatars
+						</li><li>/cache
 						</li><li>/Packages
 						</li><li>/Packages/installed.list
 						</li><li>/Smileys

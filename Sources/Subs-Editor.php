@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.11
+ * @version 2.0.18
  */
 
 if (!defined('SMF'))
@@ -897,7 +897,7 @@ function fetchTagAttributes($text)
 	for ($i = 0; $i < strlen($text); $i++)
 	{
 		// We're either moving from the key to the attribute or we're in a string and this is fine.
-		if ($text{$i} == '=')
+		if ($text[$i] == '=')
 		{
 			if ($tag_state == 0)
 				$tag_state = 1;
@@ -905,7 +905,7 @@ function fetchTagAttributes($text)
 				$value .= '=';
 		}
 		// A space is either moving from an attribute back to a potential key or in a string is fine.
-		elseif ($text{$i} == ' ')
+		elseif ($text[$i] == ' ')
 		{
 			if ($tag_state == 2)
 				$value .= ' ';
@@ -917,7 +917,7 @@ function fetchTagAttributes($text)
 			}
 		}
 		// A quote?
-		elseif ($text{$i} == '"')
+		elseif ($text[$i] == '"')
 		{
 			// Must be either going into or out of a string.
 			if ($tag_state == 1)
@@ -929,9 +929,9 @@ function fetchTagAttributes($text)
 		else
 		{
 			if ($tag_state == 0)
-				$key .= $text{$i};
+				$key .= $text[$i];
 			else
-				$value .= $text{$i};
+				$value .= $text[$i];
 		}
 	}
 

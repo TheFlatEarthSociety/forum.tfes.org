@@ -8,10 +8,10 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.17
+ * @version 2.0.18
  */
 
-$GLOBALS['current_smf_version'] = '2.0.17';
+$GLOBALS['current_smf_version'] = '2.0.18';
 $GLOBALS['db_script_version'] = '2-0';
 
 $GLOBALS['required_php_version'] = '5.3.0';
@@ -33,7 +33,7 @@ $databases = array(
 		'utf8_support' => true,
 		'utf8_version' => '4.1.0',
 		'utf8_version_check' => 'return mysqli_get_server_info($db_connection);',
-		'utf8_default' => false,
+		'utf8_default' => true,
 		'utf8_required' => false,
 		'alter_support' => true,
 		'validate_prefix' => function(&$value) {
@@ -735,7 +735,7 @@ function DatabaseSettings()
 		$incontext['db']['prefix'] = substr(str_shuffle('abcdefghijklmnopqrstuvwxyz'), 0, 3) . '_';
 
 	// Should we use a non standard port?
-	if (!empty($_port))
+	if (!empty($db_port))
 		$incontext['db']['server'] .= ':' . $db_port;
 
 	// Are we submitting?
@@ -1545,8 +1545,7 @@ function DeleteInstall()
 	updateStats('topic');
 
 	// This function is needed to do the updateStats('subject') call.
-	$smcFunc['strtolower'] = $db_character_set === 'utf8' || $txt['lang_character_set'] === 'UTF-8' ? create_function('$string', '
-		return $string;') : 'strtolower';
+	$smcFunc['strtolower'] = $db_character_set === 'utf8' || $txt['lang_character_set'] === 'UTF-8' ? function($string){return $string;} : 'strtolower';
 
 	$request = $smcFunc['db_query']('', '
 		SELECT id_msg
@@ -2158,7 +2157,7 @@ function template_install_below()
 		</div>
 	</div></div>
 	<div id="footer_section"><div class="frame" style="height: 40px;">
-		<div class="smalltext"><a href="https://www.simplemachines.org/" title="Simple Machines Forum" target="_blank" class="new_win">SMF &copy; 2019, Simple Machines</a></div>
+		<div class="smalltext"><a href="https://www.simplemachines.org/" title="Simple Machines Forum" target="_blank" class="new_win">SMF &copy; 2020, Simple Machines</a></div>
 	</div></div>
 	</body>
 </html>';

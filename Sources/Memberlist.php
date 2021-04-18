@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.12
+ * @version 2.0.18
  */
 
 if (!defined('SMF'))
@@ -438,7 +438,7 @@ function MLSearch()
 	{
 		$_POST['search'] = trim(isset($_GET['search']) ? $_GET['search'] : $_POST['search']);
 
-		if (!get_magic_quotes_gpc())
+		if (!(version_compare(PHP_VERSION, '7.4.0') == -1 && function_exists('get_magic_quotes_gpc') && @get_magic_quotes_gpc() != 0))
 		{
 			// Escape things just in case...
 			if (isset($_GET['fields']))

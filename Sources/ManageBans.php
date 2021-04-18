@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0
+ * @version 2.0.18
  */
 
 if (!defined('SMF'))
@@ -240,11 +240,10 @@ function BanList()
 					'value' => $txt['ban_added'],
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
-						global $context;
-
-						return timeformat($rowData[\'ban_time\'], empty($context[\'ban_time_format\']) ? true : $context[\'ban_time_format\']);
-					'),
+					'function' => function($rowData) use ($context)
+					{
+						return timeformat($rowData['ban_time'], empty($context['ban_time_format']) ? true : $context['ban_time_format']);
+					},
 				),
 				'sort' => array(
 					'default' => 'bg.ban_time',
@@ -256,21 +255,20 @@ function BanList()
 					'value' => $txt['ban_expires'],
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
-						global $txt;
-
+					'function' => function($rowData) use ($txt)
+					{
 						// This ban never expires...whahaha.
-						if ($rowData[\'expire_time\'] === null)
-							return $txt[\'never\'];
+						if ($rowData['expire_time'] === null)
+							return $txt['never'];
 
 						// This ban has already expired.
-						elseif ($rowData[\'expire_time\'] < time())
-							return sprintf(\'<span style="color: red">%1$s</span>\', $txt[\'ban_expired\']);
+						elseif ($rowData['expire_time'] < time())
+							return sprintf('<span style="color: red">%1$s</span>', $txt['ban_expired']);
 
 						// Still need to wait a few days for this ban to expire.
 						else
-							return sprintf(\'%1$d&nbsp;%2$s\', ceil(($rowData[\'expire_time\'] - time()) / (60 * 60 * 24)), $txt[\'ban_days\']);
-					'),
+							return sprintf('%1$d&nbsp;%2$s', ceil(($rowData['expire_time'] - time()) / (60 * 60 * 24)), $txt['ban_days']);
+					},
 				),
 				'sort' => array(
 					'default' => 'IFNULL(bg.expire_time, 1=1) DESC, bg.expire_time DESC',
@@ -1216,19 +1214,20 @@ function BanBrowseTriggers()
 	if ($context['selected_entity'] === 'ip')
 	{
 		$listOptions['columns']['banned_entity']['data'] = array(
-			'function' => create_function('$rowData', '
+			'function' => function($rowData)
+			{
 				return range2ip(array(
-					$rowData[\'ip_low1\'],
-					$rowData[\'ip_low2\'],
-					$rowData[\'ip_low3\'],
-					$rowData[\'ip_low4\']
+					$rowData['ip_low1'],
+					$rowData['ip_low2'],
+					$rowData['ip_low3'],
+					$rowData['ip_low4']
 				), array(
-					$rowData[\'ip_high1\'],
-					$rowData[\'ip_high2\'],
-					$rowData[\'ip_high3\'],
-					$rowData[\'ip_high4\']
+					$rowData['ip_high1'],
+					$rowData['ip_high2'],
+					$rowData['ip_high3'],
+					$rowData['ip_high4']
 				));
-			'),
+			},
 		);
 		$listOptions['columns']['banned_entity']['sort'] = array(
 			'default' => 'bi.ip_low1, bi.ip_high1, bi.ip_low2, bi.ip_high2, bi.ip_low3, bi.ip_high3, bi.ip_low4, bi.ip_high4',
@@ -1238,10 +1237,10 @@ function BanBrowseTriggers()
 	elseif ($context['selected_entity'] === 'hostname')
 	{
 		$listOptions['columns']['banned_entity']['data'] = array(
-			'function' => create_function('$rowData', '
-				global $smcFunc;
-				return strtr($smcFunc[\'htmlspecialchars\']($rowData[\'hostname\']), array(\'%\' => \'*\'));
-			'),
+			'function' => function($rowData) use ($smcFunc)
+			{
+				return strtr($smcFunc['htmlspecialchars']($rowData['hostname']), array('%' => '*'));
+			},
 		);
 		$listOptions['columns']['banned_entity']['sort'] = array(
 			'default' => 'bi.hostname',
@@ -1251,10 +1250,10 @@ function BanBrowseTriggers()
 	elseif ($context['selected_entity'] === 'email')
 	{
 		$listOptions['columns']['banned_entity']['data'] = array(
-			'function' => create_function('$rowData', '
-				global $smcFunc;
-				return strtr($smcFunc[\'htmlspecialchars\']($rowData[\'email_address\']), array(\'%\' => \'*\'));
-			'),
+			'function' => function($rowData) use ($smcFunc)
+			{
+				return strtr($smcFunc['htmlspecialchars']($rowData['email_address']), array('%' => '*'));
+			},
 		);
 		$listOptions['columns']['banned_entity']['sort'] = array(
 			'default' => 'bi.email_address',
@@ -1445,9 +1444,10 @@ function BanLog()
 					'value' => $txt['ban_log_date'],
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
-						return timeformat($rowData[\'log_time\']);
-					'),
+					'function' => function($rowData)
+					{
+						return timeformat($rowData['log_time']);
+					},
 				),
 				'sort' => array(
 					'default' => 'lb.log_time DESC',

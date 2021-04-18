@@ -627,7 +627,7 @@ function smf_db_error($db_string, $connection = null)
 }
 
 // Insert some data...
-function smf_db_insert($method = 'replace', $table, $columns, $data, $keys, $disable_trans = false, $connection = null)
+function smf_db_insert($method, $table, $columns, $data, $keys, $disable_trans = false, $connection = null)
 {
 	global $smcFunc, $db_connection, $db_prefix;
 

@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.16
+ * @version 2.0.18
  */
 
 if (!defined('SMF'))
@@ -356,17 +356,17 @@ function updateSettingsFile($config_vars)
 	if (filemtime($boarddir . '/Settings.php') === $last_settings_change)
 	{
 		// You asked for it...
-		// Blank out the file - done to fix a oddity with some servers.
-		$fp = @fopen($boarddir . '/Settings.php', 'w');
+		$fp = @fopen($boarddir . '/Settings.php', 'c');
 
 		// Is it even writable, though?
 		if ($fp)
 		{
-			fclose($fp);
-
-			$fp = fopen($boarddir . '/Settings.php', 'r+');
+			flock($fp, LOCK_EX);
+			ftruncate($fp, 0);
+			rewind($fp);
 			foreach ($settingsArray as $line)
 				fwrite($fp, strtr($line, "\r", ''));
+			flock($fp, LOCK_UN);
 			fclose($fp);
 		}
 	}
@@ -523,13 +523,15 @@ function updateLastDatabaseError()
 	$data = preg_replace('~\$db_last_error = \d+;~', '$db_last_error = ' . time() . ';', $data);
 
 	// Open the backup file for writing
-	if ($fp = @fopen($file, 'w'))
+	if ($fp = @fopen($file, 'c'))
 	{
 		// Reset the file buffer.
 		set_file_buffer($fp, 0);
 
 		// Update the file.
 		$t = flock($fp, LOCK_EX);
+		ftruncate($fp, 0);
+		rewind($fp);
 		$bytes = fwrite($fp, $data);
 		flock($fp, LOCK_UN);
 		fclose($fp);

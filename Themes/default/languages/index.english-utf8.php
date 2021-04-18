@@ -1,5 +1,5 @@
 <?php
-// Version: 2.0.16; Index
+// Version: 2.0.18; Index
 
 global $forum_copyright, $forum_version, $webmaster_email, $scripturl, $context, $boardurl;
 
@@ -486,7 +486,7 @@ $txt['go_up'] = 'Go Up';
 $txt['go_down'] = 'Go Down';
 
 $forum_copyright = '<a href="' . $scripturl . '?action=credits" title="Simple Machines Forum" target="_blank" class="new_win">%1$s</a> |
- <a href="https://www.simplemachines.org/about/smf/license.php" title="License" target="_blank" class="new_win">SMF &copy; 2019</a>, <a href="https://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a>';
+ <a href="https://www.simplemachines.org/about/smf/license.php" title="License" target="_blank" class="new_win">SMF &copy; 2021</a>, <a href="https://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a>';
 
 $txt['birthdays'] = 'Birthdays:';
 $txt['events'] = 'Events:';

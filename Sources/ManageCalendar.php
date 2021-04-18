@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0
+ * @version 2.0.18
  */
 
 if (!defined('SMF'))
@@ -111,15 +111,14 @@ function ModifyHolidays()
 					'value' => $txt['date'],
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
-						global $txt;
-
+					'function' => function($rowData) use ($txt)
+					{
 						// Recurring every year or just a single year?
-						$year = $rowData[\'year\'] == \'0004\' ? sprintf(\'(%1$s)\', $txt[\'every_year\']) : $rowData[\'year\'];
+						$year = $rowData['year'] == '0004' ? sprintf('(%1$s)', $txt['every_year']) : $rowData['year'];
 
 						// Construct the date.
-						return sprintf(\'%1$d %2$s %3$s\', $rowData[\'day\'], $txt[\'months\'][(int) $rowData[\'month\']], $year);
-					'),
+						return sprintf('%1$d %2$s %3$s', $rowData['day'], $txt['months'][(int) $rowData['month']], $year);
+					},
 					'class' => 'windowbg',
 				),
 				'sort' => array(

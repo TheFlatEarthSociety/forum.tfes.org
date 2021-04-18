@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.16
+ * @version 2.0.18
  */
 
 if (!defined('SMF'))
@@ -125,12 +125,12 @@ function cleanRequest()
 		parse_str(preg_replace('/&(\w+)(?=&|$)/', '&$1=', strtr($_SERVER['QUERY_STRING'], array(';?' => '&', ';' => '&', '%00' => '', "\0" => ''))), $_GET);
 
 		// Magic quotes still applies with parse_str - so clean it up.
-		if (function_exists('get_magic_quotes_gpc') && @get_magic_quotes_gpc() != 0 && empty($modSettings['integrate_magic_quotes']))
+		if (version_compare(PHP_VERSION, '7.4.0') == -1 && function_exists('get_magic_quotes_gpc') && @get_magic_quotes_gpc() != 0 && empty($modSettings['integrate_magic_quotes']))
 			$_GET = $removeMagicQuoteFunction($_GET);
 	}
 	elseif (strpos(@ini_get('arg_separator.input'), ';') !== false)
 	{
-		if (function_exists('get_magic_quotes_gpc') && @get_magic_quotes_gpc() != 0 && empty($modSettings['integrate_magic_quotes']))
+		if (version_compare(PHP_VERSION, '7.4.0') == -1 && function_exists('get_magic_quotes_gpc') && @get_magic_quotes_gpc() != 0 && empty($modSettings['integrate_magic_quotes']))
 			$_GET = $removeMagicQuoteFunction($_GET);
 
 		// Search engines will send action=profile%3Bu=1, which confuses PHP.
@@ -179,7 +179,7 @@ function cleanRequest()
 	}
 
 	// If magic quotes is on we have some work...
-	if (function_exists('get_magic_quotes_gpc') && @get_magic_quotes_gpc() != 0)
+	if (version_compare(PHP_VERSION, '7.4.0') == -1 && function_exists('get_magic_quotes_gpc') && @get_magic_quotes_gpc() != 0)
 	{
 		$_ENV = $removeMagicQuoteFunction($_ENV);
 		$_POST = $removeMagicQuoteFunction($_POST);

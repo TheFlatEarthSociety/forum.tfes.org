@@ -1575,6 +1575,11 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 				'after' => '</tt>',
 			),
 			array(
+				'tag' => 'twitter',
+				'type' => 'unparsed_content',
+				'content' => '<blockquote class="twitter-tweet" data-lang="en" data-dnt="true" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0"><a href="$1" class="bbc_link" target="_blank" rel="noopener noreferrer">$1</a></blockquote>',
+			),
+			array(
 				'tag' => 'u',
 				'before' => '<span class="bbc_u">',
 				'after' => '</span>',
@@ -1936,10 +1941,12 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 
 						// Only do this if the preg survives.
 						if (is_string($result = preg_replace(array(
+							'~(?<=[\s>\.(;\'"]|^)(https://twitter\.com/\w+/status/\d+(?:\?[\w\-_\~%\.@!,\?&;=#(){}+:\'\\\\]*[/\w\-_\~%@\?;=#}\\\\])?)~i',
 							'~(?<=[\s>\.(;\'"]|^)((?:http|https)://[\w\-_%@:|]+(?:\.[\w\-_%]+)*(?::\d+)?(?:/[\w\-_\~%\.@!,\?&;=#(){}+:\'\\\\]*)*[/\w\-_\~%@\?;=#}\\\\])~i',
 							'~(?<=[\s>\.(;\'"]|^)((?:ftp|ftps)://[\w\-_%@:|]+(?:\.[\w\-_%]+)*(?::\d+)?(?:/[\w\-_\~%\.@,\?&;=#(){}+:\'\\\\]*)*[/\w\-_\~%@\?;=#}\\\\])~i',
 							'~(?<=[\s>(\'<]|^)(www(?:\.[\w\-_]+)+(?::\d+)?(?:/[\w\-_\~%\.@!,\?&;=#(){}+:\'\\\\]*)*[/\w\-_\~%@\?;=#}\\\\])~i'
 						), array(
+							'[twitter]$1[/twitter]',
 							'[url]$1[/url]',
 							'[ftp]$1[/ftp]',
 							'[url=http://$1]$1[/url]'

@@ -125,7 +125,8 @@ function template_html_above()
 		addLoadEvent(fPmPopup);' : '', '
 		var ajax_notification_text = "', $txt['ajax_in_progress'], '";
 		var ajax_notification_cancel_text = "', $txt['modify_cancel'], '";
-	// ]]></script>';
+	// ]]></script>
+	<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>';
 	//If it has a defined description, use that.
 	if (!empty($context['description']))
 	{

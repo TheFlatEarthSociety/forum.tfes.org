@@ -1106,6 +1106,27 @@ function sendpm($recipients, $subject, $message, $store_outbox = false, $from = 
 			unset($all_to[array_search($row['id_member'], $all_to)]);
 			continue;
 		}
+		
+		// New ignore list
+		$ignore_request = $smcFunc['db_query']('', '
+			SELECT
+				id_member, id_member_ignored
+			FROM {db_prefix}pm_ignore_list
+			WHERE id_member={int:recipient}
+			AND id_member_ignored={int:from_id}',
+			array(
+				'recipient' => $row['id_member'],
+				'from_id' => $from['id'],
+			)
+		);
+
+		if ($ignore_result = $smcFunc['db_fetch_assoc']($ignore_request))
+		{
+			$log['failed'][$row['id_member']] = sprintf($txt['pm_error_ignored_by_user'], $row['real_name']);
+			unset($all_to[array_search($row['id_member'], $all_to)]);
+			continue;
+		}
+			
 
 		// If the receiving account is banned (>=10) or pending deletion (4), refuse to send the PM.
 		if ($row['is_activated'] >= 10 || ($row['is_activated'] == 4 && !$user_info['is_admin']))

@@ -1708,7 +1708,7 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 		$codes [] = array (
 				'tag' => 'tex',
 				'type' => 'unparsed_content',
-				'content' => '<img src="http://mathtex.tfes.org/$1" alt="$1" class="bbc_tex" />',
+				'content' => '<img src="//mathtex.tfes.org/$1" alt="$1" class="bbc_tex" />',
 				'validate' => create_function('&$tag, &$data, $disabled', '
 					$data = strtr($data, array(\'&nbsp;\' => \' \', \'<br />\' => \'
 \'));

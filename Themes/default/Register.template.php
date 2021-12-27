@@ -150,12 +150,6 @@ function template_registration_form()
 				<span class="topslice"><span></span></span>
 				<fieldset class="content">
 					<dl class="register_form">
-						<div style="display: none">
-							<input type="text" name="user" />
-							<input type="text" name="email" />
-							<input type="password" name="passwrd1" />
-							<input type="password" name="passwrd2" />
-						</div>
 						<dt><strong><label for="smf_autov_username">', $txt['username'], ':</label></strong></dt>
 						<dd>
 							<input type="text" name="', $_SESSION['antibotuf']['user'] ,'" id="smf_autov_username" size="30" tabindex="', $context['tabindex']++, '" maxlength="25" value="', isset($context['username']) ? $context['username'] : '', '" class="input_text" />

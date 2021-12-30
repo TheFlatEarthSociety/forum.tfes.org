@@ -67,17 +67,6 @@ function template_registration_form()
 	echo '
 		<script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/register.js"></script>
 		<script type="text/javascript"><!-- // --><![CDATA[
-			function verifyAgree()
-			{
-				if (currentAuthMethod == \'passwd\' && document.forms.registration.smf_autov_pwmain.value != document.forms.registration.smf_autov_pwverify.value)
-				{
-					alert("', $txt['register_passwords_differ_js'], '");
-					return false;
-				}
-
-				return true;
-			}
-
 			var currentAuthMethod = \'passwd\';
 			function updateAuthMethod()
 			{
@@ -139,7 +128,7 @@ function template_registration_form()
 	}
 
 	echo '
-		<form action="', $scripturl, '?action=register2" method="post" accept-charset="', $context['character_set'], '" name="registration" id="registration" autocomplete="off" onsubmit="return verifyAgree();">
+		<form action="', $scripturl, '?action=register2" method="post" accept-charset="', $context['character_set'], '" name="registration" id="registration" autocomplete="off">
 			<div class="cat_bar">
 				<h3 class="catbg">', $txt['registration_form'], '</h3>
 			</div>

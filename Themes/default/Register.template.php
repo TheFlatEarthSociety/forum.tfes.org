@@ -150,18 +150,28 @@ function template_registration_form()
 				<span class="topslice"><span></span></span>
 				<fieldset class="content">
 					<dl class="register_form">
-						<dt><strong><label for="smf_autov_username">', $txt['username'], ':</label></strong></dt>
+						<div style="display: none">
+							<dt><strong><label for="smf_autov_username">', $txt['username'], ':</label></strong></dt>
+							<dd><input type="hidden" name="user" id="smf_autov_username" /></dd>
+							<dt><strong><label for="smf_autov_reserve1">', $txt['email'], ':</label></strong></dt>
+							<dd><input type="hidden" name="email" id="smf_autov_reserve1" /></dd>
+							<dt><strong><label for="smf_autov_pwmain">', $txt['choose_pass'], ':</label></strong></dt>
+							<dd><input type="hidden" name="passwrd1" id="smf_autov_pwmain" class="input_password" /></dd>
+							<dt><strong><label for="smf_autov_pwverify">', $txt['verify_pass'], ':</label></strong></dt>
+							<dd><input type="hidden" name="passwrd2" id="smf_autov_pwverify" class="input_password" /></dd>
+						</div>
+						<dt><strong><label for="smf_', $_SESSION['antibotuf']['user'] ,'">', $txt['username'], ':</label></strong></dt>
 						<dd>
-							<input type="text" name="', $_SESSION['antibotuf']['user'] ,'" id="smf_autov_username" size="30" tabindex="', $context['tabindex']++, '" maxlength="25" value="', isset($context['username']) ? $context['username'] : '', '" class="input_text" />
+							<input type="text" name="', $_SESSION['antibotuf']['user'] ,'" id="smf_', $_SESSION['antibotuf']['user'] ,'" size="30" tabindex="', $context['tabindex']++, '" maxlength="25" value="', isset($context['username']) ? $context['username'] : '', '" class="input_text" />
 							<span id="smf_autov_username_div" style="display: none;">
 								<a id="smf_autov_username_link" href="#">
 									<img id="smf_autov_username_img" src="', $settings['images_url'], '/icons/field_check.gif" alt="*" />
 								</a>
 							</span>
 						</dd>
-						<dt><strong><label for="smf_autov_reserve1">', $txt['email'], ':</label></strong></dt>
+						<dt><strong><label for="smf_', $_SESSION['antibotuf']['email'] ,'">', $txt['email'], ':</label></strong></dt>
 						<dd>
-							<input type="text" name="', $_SESSION['antibotuf']['email'] ,'" id="smf_autov_reserve1" size="30" tabindex="', $context['tabindex']++, '" value="', isset($context['email']) ? $context['email'] : '', '" class="input_text" />
+							<input type="text" name="', $_SESSION['antibotuf']['email'] ,'" id="smf_', $_SESSION['antibotuf']['email'] ,'" size="30" tabindex="', $context['tabindex']++, '" value="', isset($context['email']) ? $context['email'] : '', '" class="input_text" />
 						</dd>
 						<dt><strong><label for="allow_email">', $txt['allow_user_email'], ':</label></strong></dt>
 						<dd>
@@ -193,18 +203,18 @@ function template_registration_form()
 
 	echo '
 					<dl class="register_form" id="password1_group">
-						<dt><strong><label for="smf_autov_pwmain">', $txt['choose_pass'], ':</label></strong></dt>
+						<dt><strong><label for="smf', $_SESSION['antibotuf']['passwrd1'] ,'">', $txt['choose_pass'], ':</label></strong></dt>
 						<dd>
-							<input type="password" name="', $_SESSION['antibotuf']['passwrd1'] ,'" id="smf_autov_pwmain" size="30" tabindex="', $context['tabindex']++, '" class="input_password" />
+							<input type="password" name="', $_SESSION['antibotuf']['passwrd1'] ,'" id="smf_', $_SESSION['antibotuf']['passwrd1'] ,'" size="30" tabindex="', $context['tabindex']++, '" />
 							<span id="smf_autov_pwmain_div" style="display: none;">
 								<img id="smf_autov_pwmain_img" src="', $settings['images_url'], '/icons/field_invalid.gif" alt="*" />
 							</span>
 						</dd>
 					</dl>
 					<dl class="register_form" id="password2_group">
-						<dt><strong><label for="smf_autov_pwverify">', $txt['verify_pass'], ':</label></strong></dt>
+						<dt><strong><label for="smf_', $_SESSION['antibotuf']['passwrd2'] ,'">', $txt['verify_pass'], ':</label></strong></dt>
 						<dd>
-							<input type="password" name="', $_SESSION['antibotuf']['passwrd2'] ,'" id="smf_autov_pwverify" size="30" tabindex="', $context['tabindex']++, '" class="input_password" />
+							<input type="password" name="', $_SESSION['antibotuf']['passwrd2'] ,'" id="smf_', $_SESSION['antibotuf']['passwrd2'] ,'" size="30" tabindex="', $context['tabindex']++, '" />
 							<span id="smf_autov_pwverify_div" style="display: none;">
 								<img id="smf_autov_pwverify_img" src="', $settings['images_url'], '/icons/field_valid.gif" alt="*" />
 							</span>

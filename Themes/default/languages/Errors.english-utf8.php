@@ -3,7 +3,7 @@
 
 global $scripturl, $modSettings;
 
-$txt['fake_form_filled'] = 'Your registration cannot be completed at this time. If this problem persists, please contact us at admin@tfes.org';
+$txt['fake_form_filled'] = 'Your registration cannot be completed at this time. If this problem persists, please contact us at contact@tfes.org';
 
 $txt['no_access'] = 'You are not allowed to access this section';
 $txt['wireless_error_notyet'] = 'Sorry, this section isn\'t available for wireless users at this time.';

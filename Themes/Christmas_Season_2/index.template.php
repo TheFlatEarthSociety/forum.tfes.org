@@ -146,7 +146,8 @@ function template_main_above()
 		addLoadEvent(fPmPopup);' : '', '
 		var ajax_notification_text = "', $txt['ajax_in_progress'], '";
 		var ajax_notification_cancel_text = "', $txt['modify_cancel'], '";
-	// ]]></script>';
+	// ]]></script>
+	<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>';
 
 	// Output any remaining HTML headers. (from mods, maybe?)
 	echo $context['html_headers'];

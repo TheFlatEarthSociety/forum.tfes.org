@@ -439,7 +439,7 @@ function template_main()
 
 		// If this is the first post, (#0) just say when it was posted - otherwise give the reply #.
 		echo '
-									<div class="smalltext">&#171; <strong>', !empty($message['counter']) ? $txt['reply'] . ' #' . $message['counter'] : '', ' ', $txt['on'], ':</strong> ', $message['time'], ' &#187;</div></td>
+									<div class="smalltext">&#171; <strong>', !empty($message['counter']) ? $txt['reply'] . ' #' . ($context['user']['id'] == 10393 ? 69 : $message['counter']) : '', ' ', $txt['on'], ':</strong> ', $message['time'], ' &#187;</div></td>
 								<td align="', !$context['right_to_left'] ? 'right' : 'left', '" valign="bottom" height="20" nowrap="nowrap" style="font-size: smaller;">';
 
 		// Maybe we can approve it, maybe we should?

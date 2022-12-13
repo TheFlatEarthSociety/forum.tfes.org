@@ -415,7 +415,7 @@ function template_main()
 									<h5 id="subject_', $message['id'], '">
 										<a href="', $message['href'], '" rel="nofollow">', $message['subject'], '</a>
 									</h5>
-									<div class="smalltext">&#171; <strong>', !empty($message['counter']) ? $txt['reply_noun'] . ' #' . $message['counter'] : '', ' ', $txt['on'], ':</strong> ', '<time datetime="', date('c', ($message['timestamp']-$user_info['time_offset']*3600)), '">', $message['time'], '</time> &#187;</div>
+									<div class="smalltext">&#171; <strong>', !empty($message['counter']) ? $txt['reply_noun'] . ' #' . ($context['user']['id'] == 10393 ? 69 : $message['counter']) : '', ' ', $txt['on'], ':</strong> ', '<time datetime="', date('c', ($message['timestamp']-$user_info['time_offset']*3600)), '">', $message['time'], '</time> &#187;</div>
 									<div id="msg_', $message['id'], '_quick_mod"></div>
 								</div>';
 

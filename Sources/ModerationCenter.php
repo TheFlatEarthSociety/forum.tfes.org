@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.18
+ * @version 2.0.19
  */
 
 if (!defined('SMF'))
@@ -1445,6 +1445,7 @@ function ViewWarnings()
 function ViewWarningLog()
 {
 	global $smcFunc, $modSettings, $context, $txt, $scripturl, $sourcedir;
+	global $settings;
 
 	// Setup context as always.
 	$context['page_title'] = $txt['mc_warning_log_title'];

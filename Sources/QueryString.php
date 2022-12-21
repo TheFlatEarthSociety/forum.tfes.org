@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.18
+ * @version 2.0.19
  */
 
 if (!defined('SMF'))
@@ -489,7 +489,7 @@ function ob_sessrewrite($buffer)
 			function ($m) use ($context)
 			{
 				$repl = '';
-				if (strpos($m[0], $context['session_var']) === false)
+				if (!empty($context['session_var']) && strpos($m[0], $context['session_var']) === false)
 					$repl .= '<input type="hidden" name="' . $context['session_var'] . '" value="' . $context['session_id'] . '"/>';
 
 				return $m[1] . $repl . '</form>';

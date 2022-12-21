@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.18
+ * @version 2.0.19
  */
 
 if (!defined('SMF'))
@@ -384,7 +384,7 @@ function loadForumTests()
 						'subject' => 'string-255',
 						'poster_name' => 'string-255',
 						'poster_email' => 'string-255',
-						'poster_ip' => 'inet',
+						'poster_ip' => 'string-16',
 						'smileys_enabled' => 'int',
 						'body' => 'string-65534',
 						'icon' => 'string-16',

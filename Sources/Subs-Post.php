@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.18
+ * @version 2.0.19
  */
 
 if (!defined('SMF'))
@@ -1440,6 +1440,8 @@ function server_parse($message, $socket, $response)
 	while (substr($server_response, 3, 1) != ' ')
 		if (!($server_response = fgets($socket, 256)))
 		{
+			loadLanguage('index');
+
 			// !!! Change this message to reflect that it may mean bad user/password/server issues/etc.
 			log_error($txt['smtp_bad_response']);
 			return false;
@@ -1450,6 +1452,8 @@ function server_parse($message, $socket, $response)
 
 	if (substr($server_response, 0, 3) != $response)
 	{
+		loadLanguage('index');
+
 		log_error($txt['smtp_error'] . $server_response);
 		return false;
 	}

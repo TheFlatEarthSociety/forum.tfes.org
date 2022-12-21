@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.9
+ * @version 2.0.19
  */
 
 if (!defined('SMF'))
@@ -1667,7 +1667,7 @@ function PlushSearch2()
 					else
 						$_SESSION['search_cache']['num_results'] += $smcFunc['db_affected_rows']();
 				}
-				else
+				elseif ($_SESSION['search_cache']['num_results'] == -1)
 					$_SESSION['search_cache']['num_results'] = 0;
 			}
 		}

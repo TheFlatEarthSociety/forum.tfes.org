@@ -31,11 +31,13 @@ $txt['emails'] = array(
 		'subject' => 'Please verify your account at {FORUMNAME}',
 		'body' => 'Hello, {USERNAME}! Welcome to {FORUMNAME}.
 
-Before you can log in, please activate your account by visiting {ACTIVATIONLINK}.
+Before you can log in, please activate your account by visiting {ACTIVATIONLINK}
+
+Should you have any problems with the activation, please visit {ACTIVATIONLINKWITHOUTCODE} and enter the code "{ACTIVATIONCODE}".
 
 Please also familiarise yourself with the FAQ (https://faq.tfes.org/) and our forum rules (https://forum.tfes.org/index.php?topic=977.0).
 
-If you forget your password, you can always reset it by visiting {FORGOTPASSWORDLINK}.
+If you forget your password, you can always reset it by visiting {FORGOTPASSWORDLINK}
 
 If you were not expecting this e-mail, someone may have provided your e-mail address during registration. Simply ignore this message and the account will not be activated. You will not receive any further communication from us.
 
@@ -115,7 +117,7 @@ This is due to the following reason: {REASON}
 		'subject' => 'Welcome to {FORUMNAME}',
 		'body' => 'Welcome, {NAME}!
 
-Your account has been activated manually by the admin and you can now login and post. Your username is: {USERNAME}. If you forget your password, you can change it at {FORGOTPASSWORDLINK}.
+Your account has been activated manually by the admin and you can now login and post. Your username is: {USERNAME}. If you forget your password, you can change it at {FORGOTPASSWORDLINK}
 
 {REGARDS}',
 	),
@@ -549,11 +551,13 @@ You may change it after you login by going to the profile page, or by visiting t
 		'subject' => 'Please verify your account at {FORUMNAME}',
 		'body' => 'Hello, {USERNAME}! Welcome to {FORUMNAME}.
 
-Before you can log in, please activate your account by visiting {ACTIVATIONLINK}.
+Before you can log in, please activate your account by visiting {ACTIVATIONLINK}
+
+Should you have any problems with the activation, please visit {ACTIVATIONLINKWITHOUTCODE} and enter the code "{ACTIVATIONCODE}".
 
 Please also familiarise yourself with the FAQ (https://faq.tfes.org/) and our forum rules (https://forum.tfes.org/index.php?topic=977.0).
 
-If you forget your password, you can always reset it by visiting {FORGOTPASSWORDLINK}.
+If you forget your password, you can always reset it by visiting {FORGOTPASSWORDLINK}
 
 If you were not expecting this e-mail, someone may have provided your e-mail address during registration. Simply ignore this message and the account will not be activated. You will not receive any further communication from us.
 
@@ -632,7 +636,7 @@ Before you can login, the admin requires consent from your parent/guardian for y
 			@description:
 		*/
 		'subject' => 'Welcome to {FORUMNAME}',
-		'body' => 'Thank you for registering at {FORUMNAME}. Your username is {USERNAME}. If you forget your password, you may change it at {FORGOTPASSWORDLINK}.
+		'body' => 'Thank you for registering at {FORUMNAME}. Your username is {USERNAME}. If you forget your password, you may change it at {FORGOTPASSWORDLINK}
 
 {REGARDS}',
 	),
@@ -668,7 +672,7 @@ You may update your profile by visiting this page after you login:
 		'subject' => 'Welcome to {FORUMNAME}',
 		'body' => 'Your registration request at {FORUMNAME} has been received, {REALNAME}.
 
-The username you registered with was {USERNAME}. If you forget your password, you can change it at {FORGOTPASSWORDLINK}.
+The username you registered with was {USERNAME}. If you forget your password, you can change it at {FORGOTPASSWORDLINK}
 
 Before you can login and start using the forum, your request will be reviewed and approved.  When this happens, you will receive another email from this address.
 

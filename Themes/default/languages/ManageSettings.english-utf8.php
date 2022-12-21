@@ -1,5 +1,5 @@
 <?php
-// Version: 2.0.16; ManageSettings
+// Version: 2.0.19; ManageSettings
 
 global $scripturl;
 
@@ -302,7 +302,7 @@ $txt['core_settings_item_sp_desc'] = 'Enabling this feature will allow administr
 $txt['core_settings_item_w'] = 'Warning System';
 $txt['core_settings_item_w_desc'] = 'This functionality allows administrators and moderators to issue warnings to users; it also includes advanced functionality for automatically removing user rights as their warning level increases. Note to take full advantage of this function &quot;Post Moderation&quot; should be enabled.';
 $txt['core_settings_item_gdpr'] = 'GDPR Compliance';
-$txt['core_settings_item_gdpr_desc'] = 'Enabling this feature will configure a number of settings on your forum to make it compliant with the European Union\'s <a href="https://ec.europa.eu/commission/priorities/justice-and-fundamental-rights/data-protection/2018-reform-eu-data-protection-rules_en" class="bbc_link">General Data Protection Regulation</a>.';
+$txt['core_settings_item_gdpr_desc'] = 'Enabling this feature will configure a number of settings on your forum to make it compliant with the European Union\'s <a href="https://ec.europa.eu/info/law/law-topic/data-protection_en" class="bbc_link">General Data Protection Regulation</a>.';
 $txt['core_settings_privacy_policy_warning'] = 'The GDPR requires you to have a privacy policy for your forum. After you enable this setting, you will be take to a page where you can create one.';
 $txt['core_settings_switch_on'] = 'Click to Enable';
 $txt['core_settings_switch_off'] = 'Click to Disable';

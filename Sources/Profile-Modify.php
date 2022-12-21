@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.18
+ * @version 2.0.19
  */
 
 if (!defined('SMF'))
@@ -125,7 +125,7 @@ if (!defined('SMF'))
 // This defines every profile field known to man.
 function loadProfileFields($force_reload = false)
 {
-	global $context, $profile_fields, $txt, $scripturl, $modSettings, $user_info, $old_profile, $smcFunc, $cur_profile, $language;
+	global $context, $profile_fields, $txt, $scripturl, $modSettings, $user_info, $old_profile, $smcFunc, $cur_profile, $language, $profile_vars;
 
 	// Don't load this twice!
 	if (!empty($profile_fields) && !$force_reload)
@@ -201,27 +201,29 @@ function loadProfileFields($force_reload = false)
 			'preload' => function() use ($cur_profile, &$context)
 			{
 				// Split up the birthdate....
-				list ($uyear, $umonth, $uday) = explode('-', empty($cur_profile['birthdate']) || $cur_profile['birthdate'] === '1004-01-01' ? '--' : $cur_profile['birthdate']);
+				list ($uyear, $umonth, $uday) = explode('-', empty($cur_profile['birthdate']) || $cur_profile['birthdate'] === '0001-01-01' ? '0000-00-00' : $cur_profile['birthdate']);
 				$context['member']['birth_date'] = array(
-					'year' => $uyear,
+					'year' => $uyear == '0004' ? '0000' : $uyear,
 					'month' => $umonth,
 					'day' => $uday,
 				);
 
 				return true;
 			},
-			'input_validate' => function(&$value) use (&$cur_profile, &$profile_vars)
+			'input_validate' => function(&$value)
 			{
+			    global $cur_profile, $profile_vars;
+
 				if (isset($_POST['bday2'], $_POST['bday3']) && $value > 0 && $_POST['bday2'] > 0)
 				{
 					// Set to blank?
 					if ((int) $_POST['bday3'] == 1 && (int) $_POST['bday2'] == 1 && (int) $value == 1)
-						$value = '1004-01-01';
+						$value = '0001-01-01';
 					else
-						$value = checkdate($value, $_POST['bday2'], $_POST['bday3'] < 1004 ? 1004 : $_POST['bday3']) ? sprintf('%04d-%02d-%02d', $_POST['bday3'] < 1004 ? 1004 : $_POST['bday3'], $_POST['bday1'], $_POST['bday2']) : '1004-01-01';
+						$value = checkdate($value, $_POST['bday2'], $_POST['bday3'] < 4 ? 4 : $_POST['bday3']) ? sprintf('%04d-%02d-%02d', $_POST['bday3'] < 4 ? 4 : $_POST['bday3'], $_POST['bday1'], $_POST['bday2']) : '0001-01-01';
 				}
 				else
-					$value = '1004-01-01';
+					$value = '0001-01-01';
 
 				$profile_vars['birthdate'] = $value;
 				$cur_profile['birthdate'] = $value;
@@ -237,12 +239,12 @@ function loadProfileFields($force_reload = false)
 				// @todo Should we check for this year and tell them they made a mistake :P? (based on coppa at least?)
 				if (preg_match('/(\d{4})[\-\., ](\d{2})[\-\., ](\d{2})/', $value, $dates) === 1)
 				{
-					$value = checkdate($dates[2], $dates[3], $dates[1] < 4 ? 4 : $dates[1]) ? sprintf('%04d-%02d-%02d', $dates[1] < 4 ? 4 : $dates[1], $dates[2], $dates[3]) : '1004-01-01';
+					$value = checkdate($dates[2], $dates[3], $dates[1] < 4 ? 4 : $dates[1]) ? sprintf('%04d-%02d-%02d', $dates[1] < 4 ? 4 : $dates[1], $dates[2], $dates[3]) : '0001-01-01';
 					return true;
 				}
 				else
 				{
-					$value = empty($cur_profile['birthdate']) ? '1004-01-01' : $cur_profile['birthdate'];
+					$value = empty($cur_profile['birthdate']) ? '0001-01-01' : $cur_profile['birthdate'];
 					return false;
 				}
 			},
@@ -2594,7 +2596,7 @@ function profileSaveAvatarData(&$value)
 	}
 
 	$downloadedExternalAvatar = false;
-	if ($value == 'external' && allowedTo('profile_remote_avatar') && strtolower(substr($_POST['userpicpersonal'], 0, 7)) == 'http://' && strlen($_POST['userpicpersonal']) > 7 && !empty($modSettings['avatar_download_external']))
+	if ($value == 'external' && allowedTo('profile_remote_avatar') && (strtolower(substr($_POST['userpicpersonal'], 0, 7)) == 'http://' || strtolower(substr($_POST['userpicpersonal'], 0, 8)) == 'https://') && strlen($_POST['userpicpersonal']) > 7 && !empty($modSettings['avatar_download_external']))
 	{
 		if (!is_writable($uploadDir))
 			fatal_lang_error('attachments_no_write', 'critical');

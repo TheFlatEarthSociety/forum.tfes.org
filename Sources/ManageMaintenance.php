@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.16
+ * @version 2.0.19
  */
 
 if (!defined('SMF'))
@@ -825,20 +825,20 @@ function ConvertEntities()
 		if (empty($primary_key) || empty($columns))
 			continue;
 
-		// Get the maximum value for the primary key.
+		// Get the count of records.
 		$request = $smcFunc['db_query']('', '
-			SELECT MAX(' . $primary_key . ')
+			SELECT COUNT(*)
 			FROM {db_prefix}' . $cur_table,
 			array(
 			)
 		);
-		list($max_value) = $smcFunc['db_fetch_row']($request);
+		list($rec_count) = $smcFunc['db_fetch_row']($request);
 		$smcFunc['db_free_result']($request);
 
-		if (empty($max_value))
+		if (empty($rec_count))
 			continue;
 
-		while ($context['start'] <= $max_value)
+		while ($context['start'] <= $rec_count)
 		{
 			// Retrieve a list of rows that has at least one entity to convert.
 			$request = $smcFunc['db_query']('', '
@@ -892,7 +892,7 @@ function ConvertEntities()
 			if (time() - $context['start_time'] > 10)
 			{
 				// Calculate an approximation of the percentage done.
-				$context['continue_percent'] = round(100 * ($context['table'] + ($context['start'] / $max_value)) / $context['num_tables'], 1);
+				$context['continue_percent'] = round(100 * ($context['table'] + ($context['start'] / $rec_count)) / $context['num_tables'], 1);
 				$context['continue_get_data'] = '?action=admin;area=maintain;sa=database;activity=convertentities;table=' . $context['table'] . ';start=' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id'];
 				return;
 			}

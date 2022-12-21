@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.16
+ * @version 2.0.19
  */
 
 if (!defined('SMF'))
@@ -60,6 +60,8 @@ function smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix,
 			'db_sybase' => false,
 			'db_case_sensitive' => false,
 			'db_escape_wildcard_string' => 'smf_db_escape_wildcard_string',
+			'db_connect_error' => 'mysql_connect_error',
+			'db_connect_errno' => 'mysql_connect_errno',
 		);
 
 	if (!empty($db_options['persist']))
@@ -786,7 +788,12 @@ class SMF_DB_MySQLi
 				'db_sybase'                 => false,
 				'db_case_sensitive'         => false,
 				'db_escape_wildcard_string' => array($this, 'escape_wildcard_string'),
+				'db_connect_error'          => 'mysqli_connect_error',
+				'db_connect_errno'          => 'mysqli_connect_errno',
 			);
+
+		// This was the default prior to PHP 8.1, and all our code assumes it.
+		mysqli_report(MYSQLI_REPORT_OFF);
 
 		if (!empty($db_options['persist']))
 			$connection = @mysqli_connect('p:' . $db_server, $db_user, $db_passwd);
@@ -1453,7 +1460,7 @@ class SMF_DB_MySQLi
 	 * @param bool $disable_trans = false
 	 * @param object $connection = null
 	 */
-	public function insert($method = 'replace', $table, $columns, $data, $keys, $disable_trans = false, $connection = null)
+	public function insert($method, $table, $columns, $data, $keys, $disable_trans = false, $connection = null)
 	{
 		global $smcFunc, $db_connection, $db_prefix;
 

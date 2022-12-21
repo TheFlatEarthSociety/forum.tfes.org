@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.16
+ * @version 2.0.19
  */
 
 if (!defined('SMF'))
@@ -530,8 +530,9 @@ function Credits($in_admin = false)
 				array(
 					'title' => $txt['credits_groups_ps'],
 					'members' => array(
-						'Michele &quot;Illori&quot; Davis',
+						'Aleksi &quot;Lex&quot; Kilpinen',
 						// Former Project Managers
+						'Michele &quot;Illori&quot; Davis',
 						'Jessica &quot;Suki&quot; Gonz&aacute;lez',
 						'Will &quot;Kindred&quot; Wagner',
 						'Michael &quot;Oldiesmann&quot; Eshom',
@@ -546,8 +547,9 @@ function Credits($in_admin = false)
 						// Lead Developer
 						'Jon &quot;Sesquipedalian&quot; Stovell',
 						// Developers
+						'Jessica &quot;Suki&quot; Gonz&aacute;lez',
 						'John &quot;live627&quot; Rayes',
-						'Jeremy &quot;SleePy&quot; Darwood',
+						'Oscar &quot;Ozp&quot; Rydhé',
 						'Shawn Bulen',
 
 						// Former Developers
@@ -558,6 +560,7 @@ function Credits($in_admin = false)
 						'Colin Schoen',
 						'emanuele',
 						'Hendrik Jan &quot;Compuart&quot; Visser',
+						'Jeremy &quot;SleePy&quot; Darwood',
 						'Juan &quot;JayBachatero&quot; Hernandez',
 						'Karl &quot;RegularExpression&quot; Benson',
 						$user_info['is_admin'] ? 'Matt &quot;Grudge&quot; Wolf': 'Grudge',
@@ -573,20 +576,20 @@ function Credits($in_admin = false)
 					'title' => $txt['credits_groups_support'],
 					'members' => array(
 						// Lead Support Specialist
-						'Aleksi "Lex" Kilpinen',
-						// Support Specialists
-						'br360',
-						'GigaWatt',
 						'Will &quot;Kindred&quot; Wagner',
+						// Support Specialists
+						'lurkalot',
+						'shadav',
 						'Steve',
-						'ziycon',
 
 						// Former Support Specialists
+						'Aleksi &quot;Lex&quot; Kilpinen',
 						'JimM',
 						'Adish &quot;(F.L.A.M.E.R)&quot; Patel',
 						'Aleksi &quot;Lex&quot; Kilpinen',
 						'Ben Scott',
 						'Bigguy',
+						'br360',
 						'CapadY',
 						'Chalky',
 						'Chas Large',
@@ -594,6 +597,7 @@ function Credits($in_admin = false)
 						'Eliana Tamerin',
 						'Fiery',
 						'Gary M. Gadsdon',
+						'GigaWatt',
 						'gbsothere',
 						'Harro',
 						'Huw',
@@ -604,7 +608,6 @@ function Credits($in_admin = false)
 						'Kevin &quot;greyknight17&quot; Hou',
 						'KGIII',
 						'Kill Em All',
-						'lurkalot',
 						'margarett',
 						'Mattitude',
 						'Mashby',
@@ -621,17 +624,18 @@ function Credits($in_admin = false)
 						'S-Ace',
 						'Wade &quot;s&eta;&sigma;&omega;&quot; Poulsen',
 						'xenovanis',
+						'ziycon',
 					),
 				),
 				array(
 					'title' => $txt['credits_groups_customize'],
 					'members' => array(
 						// Lead Customizer
-						'Sami &quot;SychO&quot; Mazouz',
+						'Gary M. Gadsdon',
 						// Customizers
 						'Diego Andr&eacute;s',
-						'Gary M. Gadsdon',
 						'Jonathan &quot;vbgamer45&quot; Valentin',
+						'Mick.',
 
 						// Former Customizers
 						'Brad &quot;IchBin&trade;&quot; Grow',
@@ -652,13 +656,13 @@ function Credits($in_admin = false)
 						'Kirby',
 						'Matt &quot;SlammedDime&quot; Zuba',
 						'Matthew &quot;Labradoodle-360&quot; Kerle',
-						'Mick.',
 						'NanoSector',
 						'nend',
 						'Nibogo',
 						'Niko',
 						'Peter &quot;Arantor&quot; Spicer',
 						'Ricky.',
+						'Sami &quot;SychO&quot; Mazouz',
 						'snork13',
 						'Spuds',
 						'Steven &quot;Fustrate&quot; Hoffman',
@@ -669,8 +673,9 @@ function Credits($in_admin = false)
 					'title' => $txt['credits_groups_docs'],
 					'members' => array(
 						// Doc Coordinator
-						'Irisado',
+						'Michele &quot;Illori&quot; Davis',
 						// Doc Writers
+						'Irisado',
 
 						// Former Doc Writers
 						'Joshua &quot;groundup&quot; Dickerson',
@@ -705,9 +710,10 @@ function Credits($in_admin = false)
 					'title' => $txt['credits_groups_internationalizers'],
 					'members' => array(
 						// Lead Localizer
-						'Francisco &quot;d3vcho&quot; Domínguez',
-						// Localizers
 						'Nikola &quot;Dzonny&quot; Novaković',
+						// Localizers
+						'Francisco &quot;d3vcho&quot; Domínguez',
+						'm4z',
 						// Former Localizers
 						'Relyana',
 						'Robert.',

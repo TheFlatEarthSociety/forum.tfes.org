@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.18
+ * @version 2.0.19
  */
 
 // TrueType fonts supplied by www.LarabieFonts.com
@@ -416,7 +416,7 @@ function legacyResizeImageFile($source, $destination, $max_width, $max_height, $
 		fclose($fp_destination);
 	}
 	// We can't get to the file.
-	else
+	if (empty($sizes))
 		$sizes = array(-1, -1, -1);
 
 	// Gif? That might mean trouble if gif support is not available.

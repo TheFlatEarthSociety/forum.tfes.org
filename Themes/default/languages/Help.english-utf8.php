@@ -1,5 +1,5 @@
 <?php
-// Version: 2.0.16; Help
+// Version: 2.0.19; Help
 
 global $helptxt;
 
@@ -281,9 +281,9 @@ $helptxt['databaseSession_loose'] = 'Turning this on will decrease the bandwidth
 $helptxt['databaseSession_lifetime'] = 'This is the number of seconds for sessions to last after they haven\'t been accessed.  If a session is not accessed for too long, it is said to have &quot;timed out&quot;.  Anything higher than 2400 is recommended.';
 $helptxt['enableErrorLogging'] = 'This will log any errors, like a failed login, so you can see what went wrong.';
 $helptxt['enableErrorQueryLogging'] = 'This will include the full query sent to the database in the error log.  Requires error logging to be turned on.<br /><br /><strong>Note:  This will affect the ability to filter the error log by the error message.</strong>';
-$helptxt['allow_disableAnnounce'] = 'This will allow users to opt out of notification of topics you announce by checking the &quot;announce topic&quot; checkbox when posting.<br /><br />This setting must be enabled in order to comply with the rules of the <a href="https://ec.europa.eu/commission/priorities/justice-and-fundamental-rights/data-protection/2018-reform-eu-data-protection-rules_en" class="bbc_link">GDPR</a>.';
-$helptxt['announcements_default'] = 'This simply controls whether the the checkbox on the registration form starts as checked or unchecked.<br /><br />This setting must be disabled in order to comply with the rules of the <a href="https://ec.europa.eu/commission/priorities/justice-and-fundamental-rights/data-protection/2018-reform-eu-data-protection-rules_en" class="bbc_link">GDPR</a>.';
-$helptxt['notify_tokens'] = 'When this setting is enabled, the unsubscribe link included in every notification email includes a unique token to identify an unsubscribe request as legitimate. Without this, users must instead log into the forum to verify their identities before being allowed to unsubscribe.<br /><br />This setting must be enabled in order to comply with the rules of the <a href="https://ec.europa.eu/commission/priorities/justice-and-fundamental-rights/data-protection/2018-reform-eu-data-protection-rules_en" class="bbc_link">GDPR</a>.';
+$helptxt['allow_disableAnnounce'] = 'This will allow users to opt out of notification of topics you announce by checking the &quot;announce topic&quot; checkbox when posting.<br /><br />This setting must be enabled in order to comply with the rules of the <a href="https://ec.europa.eu/info/law/law-topic/data-protection_en" class="bbc_link">GDPR</a>.';
+$helptxt['announcements_default'] = 'This simply controls whether the the checkbox on the registration form starts as checked or unchecked.<br /><br />This setting must be disabled in order to comply with the rules of the <a href="https://ec.europa.eu/info/law/law-topic/data-protection_en" class="bbc_link">GDPR</a>.';
+$helptxt['notify_tokens'] = 'When this setting is enabled, the unsubscribe link included in every notification email includes a unique token to identify an unsubscribe request as legitimate. Without this, users must instead log into the forum to verify their identities before being allowed to unsubscribe.<br /><br />This setting must be enabled in order to comply with the rules of the <a href="https://ec.europa.eu/info/law/law-topic/data-protection_en" class="bbc_link">GDPR</a>.';
 $helptxt['disallow_sendBody'] = 'This option removes the option to receive the text of replies and posts in notification emails.<br /><br />Often, members will reply to the notification email, which in most cases means the webmaster receives the reply.';
 $helptxt['compactTopicPagesEnable'] = 'This will just show a selection of the number of pages.<br /><em>Example:</em>
 		&quot;3&quot; to display: 1 ... 4 [5] 6 ... 9 <br />
@@ -457,8 +457,8 @@ $helptxt['password_strength'] = 'This setting determines the strength required f
 		<li><strong>High:</strong> As for medium, except the password must also contain a mixture of upper and lower case letters, and at least one number.</li>
 	</ul>';
 
-$helptxt['requireAgreement'] = 'This setting must be enabled in order to comply with the rules of the <a href="https://ec.europa.eu/commission/priorities/justice-and-fundamental-rights/data-protection/2018-reform-eu-data-protection-rules_en" class="bbc_link">GDPR</a>.';
-$helptxt['requirePolicyAgreement'] = 'This setting must be enabled in order to comply with the rules of the <a href="https://ec.europa.eu/commission/priorities/justice-and-fundamental-rights/data-protection/2018-reform-eu-data-protection-rules_en" class="bbc_link">GDPR</a>.';
+$helptxt['requireAgreement'] = 'This setting must be enabled in order to comply with the rules of the <a href="https://ec.europa.eu/info/law/law-topic/data-protection_en" class="bbc_link">GDPR</a>.';
+$helptxt['requirePolicyAgreement'] = 'This setting must be enabled in order to comply with the rules of the <a href="https://ec.europa.eu/info/law/law-topic/data-protection_en" class="bbc_link">GDPR</a>.';
 
 $helptxt['coppaAge'] = 'The value specified in this box will determine the minimum age that new members must be to be granted immediate access to the forums.
 	On registration they will be prompted to confirm whether they are over this age, and if not will either have their application rejected or suspended awaiting parental approval - dependant on the type of restriction chosen.

@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.4
+ * @version 2.0.19
  */
 
 if (!defined('SMF'))
@@ -50,6 +50,8 @@ function smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, &$db_prefix
 			'db_sybase' => true,
 			'db_case_sensitive' => true,
 			'db_escape_wildcard_string' => 'smf_db_escape_wildcard_string',
+			'db_connect_error' => 'smf_db_connect_error',
+			'db_connect_errno' => 'smf_db_connect_errno',
 		);
 
 	if (!empty($db_options['persist']))
@@ -400,7 +402,7 @@ function smf_db_query($identifier, $db_string, $db_values = array(), $connection
 				$pos2 = strpos($db_string, '\\', $pos + 1);
 				if ($pos1 === false)
 					break;
-				elseif ($pos2 == false || $pos2 > $pos1)
+				elseif ($pos2 === false || $pos2 > $pos1)
 				{
 					$pos = $pos1;
 					break;
@@ -763,6 +765,28 @@ function smf_db_escape_wildcard_string($string, $translate_human_wildcards=false
 		);
 
 	return strtr($string, $replacements);
+}
+
+/**
+ * Function to emulate mysqli_connect_error.
+ * Since pg doesn't have such a function, just return an empty string.
+ *
+ * @return string connection error message
+ */
+function smf_db_connect_error()
+{
+	return '';
+}
+
+/**
+ * Function to emulate mysqli_connect_errno.
+ * Since pg doesn't have such a function, just return an empty string.
+ *
+ * @return string connection error number
+ */
+function smf_db_connect_errno()
+{
+	return '';
 }
 
 ?>

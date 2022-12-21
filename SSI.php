@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.17
+ * @version 2.0.18
  */
 
 // Don't do anything if SMF is already loaded.
@@ -27,8 +27,8 @@ global $image_proxy_enabled, $image_proxy_secret, $image_proxy_maxsize;
 global $auth_secret, $cookie_no_auth_secret;
 
 // Remember the current configuration so it can be set back.
-$ssi_magic_quotes_runtime = function_exists('get_magic_quotes_gpc') && get_magic_quotes_runtime();
-if (function_exists('set_magic_quotes_runtime'))
+$ssi_magic_quotes_runtime = version_compare(PHP_VERSION, '7.4.0') == -1 && function_exists('get_magic_quotes_gpc') && get_magic_quotes_runtime();
+if (version_compare(PHP_VERSION, '7.4.0') == -1 && function_exists('set_magic_quotes_runtime'))
 	@set_magic_quotes_runtime(0);
 $time_start = microtime();
 
@@ -193,7 +193,7 @@ elseif (basename($_SERVER['PHP_SELF']) == 'SSI.php')
 	die(sprintf($txt['ssi_not_direct'], $user_info['is_admin'] ? '\'' . addslashes(__FILE__) . '\'' : '\'SSI.php\''));
 
 error_reporting($ssi_error_reporting);
-if (function_exists('set_magic_quotes_runtime'))
+if (version_compare(PHP_VERSION, '7.4.0') == -1 && function_exists('set_magic_quotes_runtime'))
 	@set_magic_quotes_runtime($ssi_magic_quotes_runtime);
 
 return true;
@@ -1088,7 +1088,7 @@ function ssi_recentPoll($topPollInstead = false, $output_method = 'echo')
 	$smcFunc['db_free_result']($request);
 
 	// This user has voted on all the polls.
-	if ($row === false)
+	if (empty($row))
 		return array();
 
 	// If this is a guest who's voted we'll through ourselves to show poll to show the results.

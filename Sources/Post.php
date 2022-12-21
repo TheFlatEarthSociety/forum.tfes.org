@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.16
+ * @version 2.0.18
  */
 
 if (!defined('SMF'))
@@ -2303,12 +2303,7 @@ function AnnouncementSend()
 
 			// Tokens allow people to unsubscribe without logging in
 			if (!empty($modSettings['notify_tokens']))
-			{
-				require_once($sourcedir . '/Notify.php');
-				$token = createUnsubscribeToken($row['id_member'], $row['email_address'], 'announcements');
-
-				$replacements['UNSUBSCRIBELINK'] .= ';u=' . $row['id_member'] . ';token=' . $token;
-			}
+				$replacements['UNSUBSCRIBELINK'] .= ';u={UNSUBSCRIBE_ID};token={UNSUBSCRIBE_TOKEN}';
 
 			$emaildata = loadEmailTemplate('new_announcement', $replacements, $cur_language);
 
@@ -2326,7 +2321,22 @@ function AnnouncementSend()
 
 	// For each language send a different mail - low priority...
 	foreach ($announcements as $lang => $mail)
-		sendmail($mail['recipients'], $mail['subject'], $mail['body'], null, null, false, 5);
+	{
+		if (!empty($modSettings['notify_tokens']))
+		{
+			foreach ($mail['recipients'] as $member_id => $member_email)
+			{
+				require_once($sourcedir . '/Notify.php');
+				$token = createUnsubscribeToken($member_id, $member_email, 'announcements');
+
+				$body = str_replace(array('{UNSUBSCRIBE_ID}', '{UNSUBSCRIBE_TOKEN}'), array($member_id, $token), $mail['body']);
+
+				sendmail($member_email, $mail['subject'], $body, null, null, false, 5);
+			}
+		}
+		else
+			sendmail($mail['recipients'], $mail['subject'], $mail['body'], null, null, false, 5);
+	}
 
 	$context['percentage_done'] = round(100 * $context['start'] / $modSettings['latestMember'], 1);
 

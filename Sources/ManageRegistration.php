@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.16
+ * @version 2.0.18
  */
 
 if (!defined('SMF'))
@@ -320,7 +320,7 @@ function ModifyRegistrationSettings($return_config = false)
 		'',
 			array('check', 'requireAgreement', 'text_label' => $txt['admin_agreement'], 'value' => !empty($modSettings['force_gdpr']) ? 1 : $modSettings['requireAgreement'], 'disabled' => !empty($modSettings['force_gdpr'])),
 			array('warning', empty($agreement) ? 'error_no_agreement' : ''),
-			array('check', 'requirePolicyAgreement', 'text_label' => $txt['admin_privacy_policy'], 'value' => !empty($modSettings['force_gdpr']) ? 1 : $modSettings['requireAgreement'], 'disabled' => !empty($modSettings['force_gdpr'])),
+			array('check', 'requirePolicyAgreement', 'text_label' => $txt['admin_privacy_policy'], 'value' => !empty($modSettings['force_gdpr']) ? 1 : $modSettings['requirePolicyAgreement'], 'disabled' => !empty($modSettings['force_gdpr'])),
 			array('warning', empty($policy) ? 'error_no_privacy_policy' : ''),
 		'',
 			array('int', 'coppaAge', 'subtext' => $txt['setting_coppaAge_desc'], 'onchange' => 'checkCoppa();'),

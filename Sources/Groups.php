@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.16
+ * @version 2.0.18
  */
 
 if (!defined('SMF'))
@@ -194,16 +194,15 @@ function GroupList()
 					'value' => $txt['name'],
 				),
 				'data' => array(
-					'function' => create_function('$group', '
-						global $scripturl, $context;
+					'function' => function($group) use ($scripturl, $context)
+					{
+						$output = '<a href="' . $scripturl . '?action=' . $context['current_action'] . (isset($context['admin_area']) ? ';area=' . $context['admin_area'] : '') . ';sa=members;group=' . $group['id'] . '" ' . ($group['color'] ? 'style="color: ' . $group['color'] . ';"' : '') . '>' . $group['name'] . '</a>';
 
-						$output = \'<a href="\' . $scripturl . \'?action=\' . $context[\'current_action\'] . (isset($context[\'admin_area\']) ? \';area=\' . $context[\'admin_area\'] : \'\') . \';sa=members;group=\' . $group[\'id\'] . \'" \' . ($group[\'color\'] ? \'style="color: \' . $group[\'color\'] . \';"\' : \'\') . \'>\' . $group[\'name\'] . \'</a>\';
-
-						if ($group[\'desc\'])
-							$output .= \'<div class="smalltext">\' . $group[\'desc\'] . \'</div>\';
+						if ($group['desc'])
+							$output .= '<div class="smalltext">' . $group['desc'] . '</div>';
 
 						return $output;
-					'),
+					},
 					'style' => 'width: 50%;',
 				),
 			),
@@ -220,11 +219,10 @@ function GroupList()
 					'value' => $txt['moderators'],
 				),
 				'data' => array(
-					'function' => create_function('$group', '
-						global $txt;
-
-						return empty($group[\'moderators\']) ? \'<em>\' . $txt[\'membergroups_new_copy_none\'] . \'</em>\' : implode(\', \', $group[\'moderators\']);
-					'),
+					'function' => function($group) use ($txt)
+					{
+						return empty($group['moderators']) ? '<em>' . $txt['membergroups_new_copy_none'] . '</em>' : implode(', ', $group['moderators']);
+					},
 				),
 			),
 			'members' => array(

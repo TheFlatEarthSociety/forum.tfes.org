@@ -142,7 +142,7 @@ String.prototype.php_to8bit = function ()
 {
 	if (smf_charset == 'UTF-8')
 	{
-		return this;
+		return this;	
 	}
 
 	else if (this.oCharsetConversion.from.length == 0)
@@ -267,6 +267,7 @@ String.prototype.php_urlencode = function()
 {
 	if (smf_charset == 'UTF-8')
 		return encodeURIComponent(this);
+
 
 	return escape(this).replace(/\+/g, '%2b').replace('*', '%2a').replace('/', '%2f').replace('@', '%40');
 }

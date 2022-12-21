@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.17
+ * @version 2.0.18
  */
 
 if (!defined('SMF'))
@@ -65,7 +65,7 @@ function ShowXmlFeed()
 	global $query_this_board, $smcFunc, $forum_version, $cdata_override;
 
 	// If it's not enabled, die.
-	if (empty($modSettings['xmlnews_enable']))
+	if (empty($modSettings['xmlnews_enable']) && ($_GET['sa'] !== 'profile' || $_GET['u'] !== $user_info['id']))
 		obExit(false);
 
 	loadLanguage('Stats');
@@ -904,7 +904,7 @@ function getXmlProfile($xml_format)
 			'summary' => cdata_parse(isset($profile['group']) ? $profile['group'] : $profile['post_group']),
 			'author' => array(
 				'name' => $profile['real_name'],
-				'email' => in_array(showEmailAddress(!empty($profile['hide_email']), $profile['id']), array('yes', 'yes_permission_override')) ? $profile['email'] : null,
+				'email' => $user_info['id'] == $profile['id'] || in_array($profile['show_email'], array('yes', 'yes_permission_override')) ? $profile['email'] : null,
 				'uri' => !empty($profile['website']) ? $profile['website']['url'] : ''
 			),
 			'published' => gmstrftime('%Y-%m-%dT%H:%M:%SZ', $user_profile[$profile['id']]['date_registered']),
@@ -969,7 +969,7 @@ function getXmlProfile($xml_format)
 				'bad' => $profile['karma']['bad']
 			);
 
-		if (in_array($profile['show_email'], array('yes', 'yes_permission_override')))
+		if ($user_info['id'] == $profile['id'] || in_array($profile['show_email'], array('yes', 'yes_permission_override')))
 			$data['email'] = $profile['email'];
 
 		if (!empty($profile['birth_date']) && substr($profile['birth_date'], 0, 4) != '0000')

@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.12
+ * @version 2.0.18
  */
 
 if (!defined('SMF'))
@@ -426,7 +426,7 @@ function PackageInstallTest()
 
 						$context['theme_actions'][$mod_action['is_custom']]['actions'][$actual_filename] = array(
 							'type' => $txt['execute_modification'],
-							'action' => $smcFunc['htmlspecialchars'](strtr($mod_action['filename'], array($boarddir => '.'))),
+							'action' => $smcFunc['htmlspecialchars'](strtr($mod_action['filename'], array(strtr($boarddir, '\\', '/') => '.'))),
 							'description' => $failed ? $txt['package_action_failure'] : $txt['package_action_success'],
 							'failed' => $failed,
 						);
@@ -435,7 +435,7 @@ function PackageInstallTest()
 					{
 						$context['actions'][$actual_filename] = array(
 							'type' => $txt['execute_modification'],
-							'action' => $smcFunc['htmlspecialchars'](strtr($mod_action['filename'], array($boarddir => '.'))),
+							'action' => $smcFunc['htmlspecialchars'](strtr($mod_action['filename'], array(strtr($boarddir, '\\', '/') => '.'))),
 							'description' => $failed ? $txt['package_action_failure'] : $txt['package_action_success'],
 							'failed' => $failed,
 						);

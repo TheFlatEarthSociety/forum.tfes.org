@@ -8,7 +8,7 @@
  * @copyright 2011 Simple Machines
  * @license http://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.0.16
+ * @version 2.0.18
  */
 
 if (!defined('SMF'))
@@ -497,7 +497,7 @@ function scheduled_daily_maintenance()
 		while (false !== ($file = readdir($handle)))
 		{
 			// Remove images older than 5 days.
-			if (filemtime($cachedir . '/images/' . $file) < time() - (5 * 86400))
+			if (is_file($cachedir . '/images/' . $file) && !in_array($file, array('index.php', '.htaccess')) && time() - filemtime($cachedir . '/images/' . $file) > 5 * 86400)
 				unlink($cachedir . '/images/' . $file);
 		}
 

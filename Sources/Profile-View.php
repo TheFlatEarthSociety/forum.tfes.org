@@ -688,9 +688,9 @@ function statPanel($memID)
 	{
 		$lurkRatio = $user_profile[$memID]['total_time_logged_in']/$user_profile[$memID]['posts'];
 		$lurkDays = floor($lurkRatio / 86400);
-		$lurkHours = floor(($lurkRatio % 86400) / 3600);
-		$lurkMinutes = floor(($lurkRatio % 3600) / 60);
-		$lurkSeconds = $lurkRatio % 60;
+		$lurkHours = floor(((int) $lurkRatio % 86400) / 3600);
+		$lurkMinutes = floor(((int) $lurkRatio % 3600) / 60);
+		$lurkSeconds = (int) $lurkRatio % 60;
 		$context['lurk_ratio'] = ($lurkDays > 0 ? $lurkDays . " days, " : '') .
 					($lurkHours > 0 ? $lurkHours . " hours, " : '') .
 					($lurkMinutes > 0 ? $lurkMinutes . " minutes, " : '') .

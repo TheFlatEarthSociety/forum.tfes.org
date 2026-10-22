@@ -889,7 +889,7 @@ function permute($array)
 }
 
 // Parse bulletin board code in a string, as well as smileys optionally.
-define(YOUTUBE_PATTERN, '~(?:http|https|)(?::\/\/|)(?:www\.|m\.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[a-z0-9;:@?&%=+\/\$_.-]*~i');
+define('YOUTUBE_PATTERN', '~(?:http|https|)(?::\/\/|)(?:www\.|m\.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[a-z0-9;:@?&%=+\/\$_.-]*~i');
 function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = array())
 {
 	global $txt, $scripturl, $context, $modSettings, $user_info, $smcFunc;
@@ -1623,12 +1623,13 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 				'tag' => 'youtube',
 				'type' => 'unparsed_content',
 				'content' => '<iframe class="youtube_iframe" style="border:0;" width="642" height="392" src="https://www.youtube-nocookie.com/embed/$1?modestbranding=1" allowfullscreen></iframe>',
-				'validate' => create_function('&$tag, &$data, $disabled', '
-				if (isset($disabled[\'url\']))
-					$tag[\'content\'] = \'https://www.youtube.com/watch?v=$1\';
-				$pattern = YOUTUBE_PATTERN;
-				if (preg_match($pattern, $data, $matches))
-					$data = $matches[1];'),
+				'validate' => function(&$tag, &$data, $disabled)
+				{
+					if (isset($disabled['url']))
+						$tag['content'] = 'https://www.youtube.com/watch?v=$1';
+					if (preg_match(YOUTUBE_PATTERN, $data, $matches))
+						$data = $matches[1];
+				},
 				'disabled_content' => 'https://www.youtube.com/watch?v=$1',
 			),
 			array(
@@ -1639,12 +1640,13 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 					'end' => array('optional' => true, 'value' => '&end=$1', 'match' => '(\d+)'),
 				),
 				'content' => '<iframe class="youtube_iframe" style="border:0;" width="642" height="392" src="https://www.youtube-nocookie.com/embed/$1?modestbranding=1{start}{end}" allowfullscreen></iframe>',
-				'validate' => create_function('&$tag, &$data, $disabled', '
-				if (isset($disabled[\'url\']))
-					$tag[\'content\'] = \'https://www.youtube.com/watch?v=$1\';
-				$pattern = YOUTUBE_PATTERN;
-				if (preg_match($pattern, $data, $matches))
-					$data = $matches[1];'),
+				'validate' => function(&$tag, &$data, $disabled)
+				{
+					if (isset($disabled['url']))
+						$tag['content'] = 'https://www.youtube.com/watch?v=$1';
+					if (preg_match(YOUTUBE_PATTERN, $data, $matches))
+						$data = $matches[1];
+				},
 				'disabled_content' => 'https://www.youtube.com/watch?v=$1',
 			),
 			array(
@@ -1717,11 +1719,11 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 				'tag' => 'tex',
 				'type' => 'unparsed_content',
 				'content' => '<img src="//mathtex.tfes.org/$1" alt="$1" class="bbc_tex" />',
-				'validate' => create_function('&$tag, &$data, $disabled', '
-					$data = strtr($data, array(\'&nbsp;\' => \' \', \'<br />\' => \'
-\'));
+				'validate' => function(&$tag, &$data, $disabled)
+				{
+					$data = strtr($data, array('&nbsp;' => ' ', '<br />' => "\n"));
 					$data = rawurlencode($data);
-				'),
+				},
 				'disabled_content' => '($1)',
 		);
     

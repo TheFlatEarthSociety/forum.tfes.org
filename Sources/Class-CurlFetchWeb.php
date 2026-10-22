@@ -58,6 +58,15 @@ class curl_fetch_web_data
 		CURLOPT_POST			=> 0, // no post data unless its passed
 	);
 
+	// Declared so PHP 8.2+ doesn't log "Creation of dynamic property" on every request made.
+	public $max_redirect;
+	public $user_options;
+	public $options;
+	public $post_data;
+	public $headers;
+	public $response;
+	public $current_redirect;
+
 	/**
 	* Start the curl object
 	* - allow for user override values

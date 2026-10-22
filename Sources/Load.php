@@ -175,7 +175,7 @@ function reloadSettings()
 	$ent_list = empty($modSettings['disableEntityCheck']) ? '&(?>#\d{1,7}|quot|amp|lt|gt|nbsp);' : '&(?>#021|quot|amp|lt|gt|nbsp);';
 	$ent_check = empty($modSettings['disableEntityCheck']) ? function($string, $double = false)
 		{
-			$string = preg_replace_callback('~(&' . (!empty($double) ? '(?:amp;)?' : '') . '#(\d{1,7}|x[0-9a-fA-F]{1,6});)~', 'entity_fix__callback', $string);
+			$string = preg_replace_callback('~(&' . (!empty($double) ? '(?:amp;)?' : '') . '#(\d{1,7}|x[0-9a-fA-F]{1,6});)~', 'entity_fix__callback', (string) $string);
 			return $string;
 		} : function($string)
 		{

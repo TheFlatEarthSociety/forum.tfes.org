@@ -39,7 +39,7 @@ function smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, &$db_prefix
 			'db_num_rows' => 'pg_num_rows',
 			'db_data_seek' => 'smf_db_data_seek',
 			'db_num_fields' => 'pg_num_fields',
-			'db_escape_string' => 'pg_escape_string',
+			'db_escape_string' => 'smf_db_escape_string',
 			'db_unescape_string' => 'smf_db_unescape_string',
 			'db_server_info' => 'smf_db_version',
 			'db_affected_rows' => 'smf_db_affected_rows',
@@ -97,7 +97,8 @@ function smf_db_replacement__callback($matches)
 
 	list ($values, $connection) = $db_callback;
 
-	if (!is_resource($connection))
+	// Since PHP 8.1 the connection is a PgSql\Connection object, not a resource.
+	if (empty($connection))
 		db_fatal_error();
 
 	if ($matches[1] === 'db_prefix')
@@ -127,7 +128,7 @@ function smf_db_replacement__callback($matches)
 
 		case 'string':
 		case 'text':
-			return sprintf('\'%1$s\'', pg_escape_string($replacement));
+			return sprintf('\'%1$s\'', pg_escape_string($connection, (string) $replacement));
 		break;
 
 		case 'array_int':
@@ -158,7 +159,7 @@ function smf_db_replacement__callback($matches)
 					smf_db_error_backtrace('Database error, given array of string values is empty. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
 
 				foreach ($replacement as $key => $value)
-					$replacement[$key] = sprintf('\'%1$s\'', pg_escape_string($value));
+					$replacement[$key] = sprintf('\'%1$s\'', pg_escape_string($connection, (string) $value));
 
 				return implode(', ', $replacement);
 			}
@@ -201,14 +202,16 @@ function smf_db_quote($db_string, $db_values, $connection = null)
 	// Only bother if there's something to replace.
 	if (strpos($db_string, '{') !== false)
 	{
-		// This is needed by the callback function.
+		// This is needed by the callback function. Keep any outer query's values: a warning
+		// logged from inside the callback runs a nested query that would overwrite them.
+		$outer_db_callback = $db_callback;
 		$db_callback = array($db_values, $connection == null ? $db_connection : $connection);
 
 		// Do the quoting and escaping
 		$db_string = preg_replace_callback('~{([a-z_]+)(?::([a-zA-Z0-9_-]+))?}~', 'smf_db_replacement__callback', $db_string);
 
 		// Clear this global variable.
-		$db_callback = array();
+		$db_callback = $outer_db_callback;
 	}
 
 	return $db_string;
@@ -348,14 +351,16 @@ function smf_db_query($identifier, $db_string, $db_values = array(), $connection
 
 	if (empty($db_values['security_override']) && (!empty($db_values) || strpos($db_string, '{db_prefix}') !== false))
 	{
-		// Pass some values to the global space for use in the callback function.
+		// Pass some values to the global space for use in the callback function. Keep any outer
+		// query's values: a warning logged from inside the callback runs a nested query.
+		$outer_db_callback = $db_callback;
 		$db_callback = array($db_values, $connection);
 
 		// Inject the values passed to this function.
 		$db_string = preg_replace_callback('~{([a-z_]+)(?::([a-zA-Z0-9_-]+))?}~', 'smf_db_replacement__callback', $db_string);
 
 		// This shouldn't be residing in global space any longer.
-		$db_callback = array();
+		$db_callback = $outer_db_callback;
 	}
 
 	// Debugging.
@@ -545,46 +550,43 @@ function smf_db_error($db_string, $connection = null)
 	fatal_error($context['error_message'], false);
 }
 
-// A PostgreSQL specific function for tracking the current row...
+// Fetch the next row. PHP keeps a row pointer for each result, so let it do the counting:
+// the old counter was keyed by (int) $request, which is 1 for every result since PHP 8.1
+// (results became PgSql\Result objects), so all queries shared one counter.
 function smf_db_fetch_row($request, $counter = false)
 {
-	global $db_row_count;
-
 	if ($counter !== false)
 		return pg_fetch_row($request, $counter);
 
-	// Reset the row counter...
-	if (!isset($db_row_count[(int) $request]))
-		$db_row_count[(int) $request] = 0;
-
-	// Return the right row.
-	return @pg_fetch_row($request, $db_row_count[(int) $request]++);
+	return pg_fetch_row($request);
 }
 
 // Get an associative array
 function smf_db_fetch_assoc($request, $counter = false)
 {
-	global $db_row_count;
-
 	if ($counter !== false)
 		return pg_fetch_assoc($request, $counter);
 
-	// Reset the row counter...
-	if (!isset($db_row_count[(int) $request]))
-		$db_row_count[(int) $request] = 0;
-
-	// Return the right row.
-	return @pg_fetch_assoc($request, $db_row_count[(int) $request]++);
+	return pg_fetch_assoc($request);
 }
 
-// Reset the pointer...
+// Reset the pointer... (the same one pg_fetch_row()/pg_fetch_assoc() use)
 function smf_db_data_seek($request, $counter)
 {
-	global $db_row_count;
-
-	$db_row_count[(int) $request] = $counter;
+	pg_result_seek($request, $counter);
 
 	return true;
+}
+
+// Escape a string for a query. Calling pg_escape_string() without a connection is deprecated
+// since PHP 8.1, and SMF logs that deprecation to the database on every call.
+function smf_db_escape_string($string, $connection = null)
+{
+	global $db_connection;
+
+	$connection = $connection === null ? $db_connection : $connection;
+
+	return empty($connection) ? pg_escape_string((string) $string) : pg_escape_string($connection, (string) $string);
 }
 
 // Unescape an escaped string!
@@ -698,7 +700,10 @@ function smf_db_select_db($db_name, $db_connection)
 // Get the current version.
 function smf_db_version()
 {
-	$version = pg_version();
+	global $db_connection;
+
+	// Pass the connection: relying on the default one is deprecated since PHP 8.1.
+	$version = pg_version($db_connection);
 
 	return $version['client'];
 }

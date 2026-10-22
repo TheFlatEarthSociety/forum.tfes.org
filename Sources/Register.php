@@ -604,7 +604,8 @@ function Register2($verifiedOpenID = false)
 	{
 		call_integration_hook('integrate_activate', array($regOptions['username']));
 
-		setLoginCookie(60 * $modSettings['cookieTime'], $memberID, sha1(sha1(strtolower($regOptions['username']) . $regOptions['password']) . $regOptions['register_vars']['password_salt']));
+		// Same cookie value as DoLogin(): sha1 of the stored (password_hash) value plus salt.
+		setLoginCookie(60 * $modSettings['cookieTime'], $memberID, sha1($regOptions['register_vars']['passwd'] . $regOptions['register_vars']['password_salt']));
 
 		redirectexit('action=login2;sa=check;member=' . $memberID, $context['server']['needs_login_fix']);
 	}

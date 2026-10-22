@@ -39,7 +39,7 @@ function smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, &$db_prefix
 			'db_num_rows' => 'pg_num_rows',
 			'db_data_seek' => 'smf_db_data_seek',
 			'db_num_fields' => 'pg_num_fields',
-			'db_escape_string' => 'pg_escape_string',
+			'db_escape_string' => 'smf_db_escape_string',
 			'db_unescape_string' => 'smf_db_unescape_string',
 			'db_server_info' => 'smf_db_version',
 			'db_affected_rows' => 'smf_db_affected_rows',
@@ -128,7 +128,7 @@ function smf_db_replacement__callback($matches)
 
 		case 'string':
 		case 'text':
-			return sprintf('\'%1$s\'', pg_escape_string($replacement));
+			return sprintf('\'%1$s\'', pg_escape_string($connection, (string) $replacement));
 		break;
 
 		case 'array_int':
@@ -159,7 +159,7 @@ function smf_db_replacement__callback($matches)
 					smf_db_error_backtrace('Database error, given array of string values is empty. (' . $matches[2] . ')', '', E_USER_ERROR, __FILE__, __LINE__);
 
 				foreach ($replacement as $key => $value)
-					$replacement[$key] = sprintf('\'%1$s\'', pg_escape_string($value));
+					$replacement[$key] = sprintf('\'%1$s\'', pg_escape_string($connection, (string) $value));
 
 				return implode(', ', $replacement);
 			}
@@ -202,14 +202,16 @@ function smf_db_quote($db_string, $db_values, $connection = null)
 	// Only bother if there's something to replace.
 	if (strpos($db_string, '{') !== false)
 	{
-		// This is needed by the callback function.
+		// This is needed by the callback function. Keep any outer query's values: a warning
+		// logged from inside the callback runs a nested query that would overwrite them.
+		$outer_db_callback = $db_callback;
 		$db_callback = array($db_values, $connection == null ? $db_connection : $connection);
 
 		// Do the quoting and escaping
 		$db_string = preg_replace_callback('~{([a-z_]+)(?::([a-zA-Z0-9_-]+))?}~', 'smf_db_replacement__callback', $db_string);
 
 		// Clear this global variable.
-		$db_callback = array();
+		$db_callback = $outer_db_callback;
 	}
 
 	return $db_string;
@@ -349,14 +351,16 @@ function smf_db_query($identifier, $db_string, $db_values = array(), $connection
 
 	if (empty($db_values['security_override']) && (!empty($db_values) || strpos($db_string, '{db_prefix}') !== false))
 	{
-		// Pass some values to the global space for use in the callback function.
+		// Pass some values to the global space for use in the callback function. Keep any outer
+		// query's values: a warning logged from inside the callback runs a nested query.
+		$outer_db_callback = $db_callback;
 		$db_callback = array($db_values, $connection);
 
 		// Inject the values passed to this function.
 		$db_string = preg_replace_callback('~{([a-z_]+)(?::([a-zA-Z0-9_-]+))?}~', 'smf_db_replacement__callback', $db_string);
 
 		// This shouldn't be residing in global space any longer.
-		$db_callback = array();
+		$db_callback = $outer_db_callback;
 	}
 
 	// Debugging.
@@ -586,6 +590,17 @@ function smf_db_data_seek($request, $counter)
 	$db_row_count[(int) $request] = $counter;
 
 	return true;
+}
+
+// Escape a string for a query. Calling pg_escape_string() without a connection is deprecated
+// since PHP 8.1, and SMF logs that deprecation to the database on every call.
+function smf_db_escape_string($string, $connection = null)
+{
+	global $db_connection;
+
+	$connection = $connection === null ? $db_connection : $connection;
+
+	return empty($connection) ? pg_escape_string((string) $string) : pg_escape_string($connection, (string) $string);
 }
 
 // Unescape an escaped string!

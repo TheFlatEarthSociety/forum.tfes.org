@@ -521,11 +521,12 @@ function ViewMemberlist()
 					'value' => $txt['username'],
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
+					'function' => function($rowData)
+					{
 						global $scripturl;
-						$url = strtr($scripturl, array(\'%\' => \'%%\')) . \'?action=profile;u=\' . $rowData[\'id_member\'];
-						return sprintfspamer($rowData, $url, \'member_name\', 2);
-					'),
+						$url = strtr($scripturl, array('%' => '%%')) . '?action=profile;u=' . $rowData['id_member'];
+						return sprintfspamer($rowData, $url, 'member_name', 2);
+					},
 				),
 				'sort' => array(
 					'default' => 'member_name',
@@ -537,11 +538,12 @@ function ViewMemberlist()
 					'value' => $txt['display_name'],
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
+					'function' => function($rowData)
+					{
 						global $scripturl;
-						$url = strtr($scripturl, array(\'%\' => \'%%\')) . \'?action=profile;u=\' . $rowData[\'id_member\'];
-						return sprintfspamer($rowData, $url, \'real_name\', 0);
-					'),
+						$url = strtr($scripturl, array('%' => '%%')) . '?action=profile;u=' . $rowData['id_member'];
+						return sprintfspamer($rowData, $url, 'real_name', 0);
+					},
 				),
 				'sort' => array(
 					'default' => 'real_name',
@@ -553,11 +555,11 @@ function ViewMemberlist()
 					'value' => $txt['email_address'],
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
-						global $scripturl;
-						$url = \'mailto:\' . $rowData[\'email_address\'];
-						return sprintfspamer($rowData, $url, \'email_address\', 3);
-					'),
+					'function' => function($rowData)
+					{
+						$url = 'mailto:' . $rowData['email_address'];
+						return sprintfspamer($rowData, $url, 'email_address', 3);
+					},
 				),
 				'sort' => array(
 					'default' => 'email_address',
@@ -569,11 +571,12 @@ function ViewMemberlist()
 					'value' => $txt['ip_address'],
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
+					'function' => function($rowData)
+					{
 						global $scripturl;
-						$url = strtr($scripturl, array(\'%\' => \'%%\')) . \'?action=trackip;searchip=\' . $rowData[\'member_ip\'];
-						return sprintfspamer($rowData, $url, \'member_ip\', 1);
-					'),
+						$url = strtr($scripturl, array('%' => '%%')) . '?action=trackip;searchip=' . $rowData['member_ip'];
+						return sprintfspamer($rowData, $url, 'member_ip', 1);
+					},
 				),
 				'sort' => array(
 					'default' => 'INET_ATON(member_ip)',
@@ -904,11 +907,12 @@ function MembersAwaitingActivation()
 					'value' => $txt['username'],
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
+					'function' => function($rowData)
+					{
 						global $scripturl;
-						$url = strtr($scripturl, array(\'%\' => \'%%\')) . \'?action=profile;u=\' . $rowData[\'id_member\'];
-						return sprintfspamer($rowData, $url, \'member_name\', 2);
-					'),
+						$url = strtr($scripturl, array('%' => '%%')) . '?action=profile;u=' . $rowData['id_member'];
+						return sprintfspamer($rowData, $url, 'member_name', 2);
+					},
 				),
 				'sort' => array(
 					'default' => 'member_name',
@@ -920,11 +924,11 @@ function MembersAwaitingActivation()
 					'value' => $txt['email_address'],
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
-						global $scripturl;
-						$url = \'mailto:\' . $rowData[\'email_address\'];
-						return sprintfspamer($rowData, $url, \'email_address\', 3);
-					'),
+					'function' => function($rowData)
+					{
+						$url = 'mailto:' . $rowData['email_address'];
+						return sprintfspamer($rowData, $url, 'email_address', 3);
+					},
 				),
 				'sort' => array(
 					'default' => 'email_address',
@@ -936,11 +940,12 @@ function MembersAwaitingActivation()
 					'value' => $txt['ip_address'],
 				),
 				'data' => array(
-					'function' => create_function('$rowData', '
+					'function' => function($rowData)
+					{
 						global $scripturl;
-						$url = strtr($scripturl, array(\'%\' => \'%%\')) . \'?action=trackip;searchip=\' . $rowData[\'member_ip\'];
-						return sprintfspamer($rowData, $url, \'member_ip\', 1);
-					'),
+						$url = strtr($scripturl, array('%' => '%%')) . '?action=trackip;searchip=' . $rowData['member_ip'];
+						return sprintfspamer($rowData, $url, 'member_ip', 1);
+					},
 				),
 				'sort' => array(
 					'default' => 'INET_ATON(member_ip)',

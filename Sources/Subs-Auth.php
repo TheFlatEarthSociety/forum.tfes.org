@@ -592,7 +592,7 @@ function resetPassword($memID, $username = null)
 
 	// Generate a random password.
 	$newPassword = substr(preg_replace('/\W/', '', md5(mt_rand())), 0, 10);
-	$newPassword_hash = password_hash($newpassword, PASSWORD_DEFAULT);
+	$newPassword_hash = password_hash($newPassword, PASSWORD_DEFAULT);
 
 	// Do some checks on the username if needed.
 	if ($username !== null)

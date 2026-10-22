@@ -545,8 +545,9 @@ function DisplayStats()
 	$temp_lurk = cache_get_data('stats_lurk_ratio_members', 600);
 	$members_result = $smcFunc['db_query']('', '
 		SELECT id_member, real_name, posts, total_time_logged_in
-		FROM {db_prefix}members ' . (!empty($temp_lurk) ? '
-		WHERE id_member IN ({array_int:member_list_cached})' : 'WHERE posts > {int:no_posts} AND total_time_logged_in > {int:time_logged_in}') . '
+		FROM {db_prefix}members
+		WHERE posts > {int:no_posts} AND total_time_logged_in > {int:time_logged_in}' . (!empty($temp_lurk) ? '
+			AND id_member IN ({array_int:member_list_cached})' : '') . '
 		ORDER BY total_time_logged_in/posts DESC
 		LIMIT 10',
 		array(
@@ -606,8 +607,9 @@ function DisplayStats()
 	$temp_lurk = cache_get_data('stats_worst_lurkers_members', 600);
 	$members_result = $smcFunc['db_query']('', '
 		SELECT id_member, real_name, posts, total_time_logged_in
-		FROM {db_prefix}members ' . (!empty($temp_lurk) ? '
-		WHERE id_member IN ({array_int:member_list_cached})' : 'WHERE posts > {int:no_posts} AND total_time_logged_in > {int:time_logged_in}') . '
+		FROM {db_prefix}members
+		WHERE posts > {int:no_posts} AND total_time_logged_in > {int:time_logged_in}' . (!empty($temp_lurk) ? '
+			AND id_member IN ({array_int:member_list_cached})' : '') . '
 		ORDER BY total_time_logged_in/posts ASC
 		LIMIT 10',
 		array(

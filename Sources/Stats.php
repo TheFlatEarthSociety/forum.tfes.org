@@ -565,9 +565,9 @@ function DisplayStats()
 	
 		// Figure out the days, hours and minutes. Also seconds because we're better than SMF.
 		$timeDays = floor($lurk_ratio / 86400);
-		$timeHours = floor(($lurk_ratio % 86400) / 3600);
-		$timeMinutes = floor(($lurk_ratio % 3600) / 60);
-		$timeSeconds = $lurk_ratio % 60;
+		$timeHours = floor(((int) $lurk_ratio % 86400) / 3600);
+		$timeMinutes = floor(((int) $lurk_ratio % 3600) / 60);
+		$timeSeconds = (int) $lurk_ratio % 60;
 
 		// Figure out which things to show... (days, hours, minutes, etc.)
 		$lurk_ratio_txt = '';
@@ -626,9 +626,9 @@ function DisplayStats()
 	
 		// Figure out the days, hours and minutes. Also seconds because we're better than SMF.
 		$timeDays = floor($lurk_ratio / 86400);
-		$timeHours = floor(($lurk_ratio % 86400) / 3600);
-		$timeMinutes = floor(($lurk_ratio % 3600) / 60);
-		$timeSeconds = $lurk_ratio % 60;
+		$timeHours = floor(((int) $lurk_ratio % 86400) / 3600);
+		$timeMinutes = floor(((int) $lurk_ratio % 3600) / 60);
+		$timeSeconds = (int) $lurk_ratio % 60;
 
 		// Figure out which things to show... (days, hours, minutes, etc.)
 		$lurk_ratio_txt = '';

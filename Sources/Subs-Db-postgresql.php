@@ -700,7 +700,10 @@ function smf_db_select_db($db_name, $db_connection)
 // Get the current version.
 function smf_db_version()
 {
-	$version = pg_version();
+	global $db_connection;
+
+	// Pass the connection: relying on the default one is deprecated since PHP 8.1.
+	$version = pg_version($db_connection);
 
 	return $version['client'];
 }

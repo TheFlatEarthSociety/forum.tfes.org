@@ -73,7 +73,8 @@ function CheckUnsubscribe() {
 	$row = $smcFunc['db_fetch_assoc']($request);
 	$smcFunc['db_free_result']($request);
 
-	if ($row['id_topic'] != $topic)
+	// No row when the member hasn't posted in this topic.
+	if (empty($row) || $row['id_topic'] != $topic)
 		return;
 
 	if ($row['ifnull'] == 0)

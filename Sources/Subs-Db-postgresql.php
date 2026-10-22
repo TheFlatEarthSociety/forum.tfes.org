@@ -97,7 +97,8 @@ function smf_db_replacement__callback($matches)
 
 	list ($values, $connection) = $db_callback;
 
-	if (!is_resource($connection))
+	// Since PHP 8.1 the connection is a PgSql\Connection object, not a resource.
+	if (empty($connection))
 		db_fatal_error();
 
 	if ($matches[1] === 'db_prefix')

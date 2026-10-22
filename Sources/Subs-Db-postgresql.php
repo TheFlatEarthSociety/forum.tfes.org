@@ -550,44 +550,30 @@ function smf_db_error($db_string, $connection = null)
 	fatal_error($context['error_message'], false);
 }
 
-// A PostgreSQL specific function for tracking the current row...
+// Fetch the next row. PHP keeps a row pointer for each result, so let it do the counting:
+// the old counter was keyed by (int) $request, which is 1 for every result since PHP 8.1
+// (results became PgSql\Result objects), so all queries shared one counter.
 function smf_db_fetch_row($request, $counter = false)
 {
-	global $db_row_count;
-
 	if ($counter !== false)
 		return pg_fetch_row($request, $counter);
 
-	// Reset the row counter...
-	if (!isset($db_row_count[(int) $request]))
-		$db_row_count[(int) $request] = 0;
-
-	// Return the right row.
-	return @pg_fetch_row($request, $db_row_count[(int) $request]++);
+	return pg_fetch_row($request);
 }
 
 // Get an associative array
 function smf_db_fetch_assoc($request, $counter = false)
 {
-	global $db_row_count;
-
 	if ($counter !== false)
 		return pg_fetch_assoc($request, $counter);
 
-	// Reset the row counter...
-	if (!isset($db_row_count[(int) $request]))
-		$db_row_count[(int) $request] = 0;
-
-	// Return the right row.
-	return @pg_fetch_assoc($request, $db_row_count[(int) $request]++);
+	return pg_fetch_assoc($request);
 }
 
-// Reset the pointer...
+// Reset the pointer... (the same one pg_fetch_row()/pg_fetch_assoc() use)
 function smf_db_data_seek($request, $counter)
 {
-	global $db_row_count;
-
-	$db_row_count[(int) $request] = $counter;
+	pg_result_seek($request, $counter);
 
 	return true;
 }
